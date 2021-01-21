@@ -41,4 +41,4 @@ Useful sections to add here would be :
 - Olivier Lajoie ([labonnesauce](https://github.com/labonnesauce))
 - Benjamin Girard ([girardb](https://github.com/girardb))
 - Frédéric Paradis ([FredPara](https://github.com/FredPara))
-
+- Félix Bergeron ([FlixBerg](https://github.com/FlixBerg))
