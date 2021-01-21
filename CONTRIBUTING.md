@@ -30,16 +30,24 @@ Useful sections to add here would be :
 
 ## Contributors
 
-- Fabien Roy ([ExiledNarwal28](https://github.com/ExiledNarwal28))
-- Philippe Vincent ([Philrobots](https://github.com/Philrobots))
-- Maxime Miville Deschênes ([maximemvd](https://github.com/maximemvd))
-- Dave Roussel ([davidaroussel](https://github.com/davidaroussel))
-- Virginie D'Astous ([vidas4](https://github.com/vidas4))
-- Vincent Breault ([VinceBro](https://github.com/VinceBro))
-- Dave Caron ([davecaron](https://github.com/davecaron))
-- Gabriel Desjardins ([Gabdesj](https://github.com/Gabdesj))
-- Olivier Lajoie ([labonnesauce](https://github.com/labonnesauce))
-- Benjamin Girard ([girardb](https://github.com/girardb))
+### Electrical engineers
+
 - Frédéric Paradis ([FredPara](https://github.com/FredPara))
 - Félix Bergeron ([FlixBerg](https://github.com/FlixBerg))
+- Gabriel Desjardins ([Gabdesj](https://github.com/Gabdesj))
+
+### Computer engineers
+
+- Dave Roussel ([davidaroussel](https://github.com/davidaroussel)) (project lead)
+- Olivier Lajoie ([labonnesauce](https://github.com/labonnesauce)) (team lead)
+- Dave Caron ([davecaron](https://github.com/davecaron))
+
+### Software engineers
+
+- Fabien Roy ([ExiledNarwal28](https://github.com/ExiledNarwal28)) (team lead)
+- Philippe Vincent ([Philrobots](https://github.com/Philrobots))
 - D.Beno Awoussi ([BeastBeno](https://github.com/BeastBeno))
+- Maxime Miville Deschênes ([maximemvd](https://github.com/maximemvd))
+- Virginie D'Astous ([vidas4](https://github.com/vidas4))
+- Vincent Breault ([VinceBro](https://github.com/VinceBro))
+- Benjamin Girard ([girardb](https://github.com/girardb))
