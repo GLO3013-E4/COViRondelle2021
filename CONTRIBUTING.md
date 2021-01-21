@@ -42,3 +42,4 @@ Useful sections to add here would be :
 - Benjamin Girard ([girardb](https://github.com/girardb))
 - Frédéric Paradis ([FredPara](https://github.com/FredPara))
 - Félix Bergeron ([FlixBerg](https://github.com/FlixBerg))
+- D.Beno Awoussi ([BeastBeno](https://github.com/BeastBeno))
