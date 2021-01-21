@@ -30,21 +30,21 @@ Useful sections to add here would be :
 
 ## Contributors
 
-### Electrical engineers
+### Electrical engineers (GEL)
 
 - Frédéric Paradis ([FredPara](https://github.com/FredPara))
 - Félix Bergeron ([FlixBerg](https://github.com/FlixBerg))
 - Gabriel Desjardins ([Gabdesj](https://github.com/Gabdesj))
 
-### Computer engineers
+### Computer engineers (GIF)
 
 - Dave Roussel ([davidaroussel](https://github.com/davidaroussel)) (project lead)
-- Olivier Lajoie ([labonnesauce](https://github.com/labonnesauce)) (team lead)
+- Olivier Lajoie ([labonnesauce](https://github.com/labonnesauce)) (GEL/GIF team lead)
 - Dave Caron ([davecaron](https://github.com/davecaron))
 
-### Software engineers
+### Software engineers (GLO)
 
-- Fabien Roy ([ExiledNarwal28](https://github.com/ExiledNarwal28)) (team lead)
+- Fabien Roy ([ExiledNarwal28](https://github.com/ExiledNarwal28)) (GLO team lead)
 - Philippe Vincent ([Philrobots](https://github.com/Philrobots))
 - D.Beno Awoussi ([BeastBeno](https://github.com/BeastBeno))
 - Maxime Miville Deschênes ([maximemvd](https://github.com/maximemvd))
