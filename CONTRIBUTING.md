@@ -37,3 +37,5 @@ Useful sections to add here would be :
 - Virginie D'Astous ([vidas4](https://github.com/vidas4))
 - Vincent Breault ([VinceBro](https://github.com/VinceBro))
 - Dave Caron ([davecaron](https://github.com/davecaron))
+- Gabriel Desjardins ([Gabdesj](https://github.com/Gabdesj))
+- Olivier Lajoie ([labonnesauce](https://github.com/labonnesauce))
