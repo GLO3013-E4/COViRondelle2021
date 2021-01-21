@@ -12,12 +12,12 @@ Further information will be placed here when the project will have started.
 
 Useful sections to add here would be : 
 
- - Functionnalities to implement
- - Issues
- - Project board
- -  Bug reporting
- -  Branches and pull requests
- - Definition of done
+- Functionnalities to implement
+- Issues
+- Project board
+- Bug reporting
+- Branches and pull requests
+- Definition of done
 
 ## Development
 
@@ -25,8 +25,8 @@ Further information will be placed here when the project will have started.
 
 Useful sections to add here would be : 
 
- - Code style
- - Test driven development
+- Code style
+- Test driven development
 
 ## Contributors
 
@@ -36,3 +36,4 @@ Useful sections to add here would be :
 - Dave Roussel ([davidaroussel](https://github.com/davidaroussel))
 - Virginie D'Astous ([vidas4](https://github.com/vidas4))
 - Vincent Breault ([VinceBro](https://github.com/VinceBro))
+- Dave Caron ([davecaron](https://github.com/davecaron))
