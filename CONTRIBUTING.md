@@ -39,3 +39,6 @@ Useful sections to add here would be :
 - Dave Caron ([davecaron](https://github.com/davecaron))
 - Gabriel Desjardins ([Gabdesj](https://github.com/Gabdesj))
 - Olivier Lajoie ([labonnesauce](https://github.com/labonnesauce))
+- Benjamin Girard ([girardb](https://github.com/girardb))
+- Frédéric Paradis ([FredPara](https://github.com/FredPara))
+
