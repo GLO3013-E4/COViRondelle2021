@@ -10,7 +10,7 @@ Before contributing to the project, please read our [code of conduct](CODE_OF_CO
 
 ### Functionalities to implement
 
-The functionalities to implement for each iteratio, documentation and drafts for planned features are located on our Google Drive.
+The functionalities to implement for each iteration, documentation and drafts for planned features are located on our Google Drive.
 
 ### Issues
 
@@ -78,7 +78,7 @@ TODOs are okay, as long as they do not make it to the release. They can be used 
 
 ### Test driven development
 
-Every single piece of code added to the application must be written using test driven development. For TDD, we follow the tree basic steps : write failing tests for new feature, write basic code to get tests to pass and finally reformat newly added code. Once the new feature is correctly implemented, commit.
+Almost every single piece of code added to the application must be written using test driven development. Of course, we're in a robotics project, so we don't expect everything so much, but we still aim for it. For TDD, we follow the three basic steps : write failing tests for new feature, write basic code to get tests to pass and finally reformat newly added code. Once the new feature is correctly implemented, commit.
 
 Unit tests must have sections Arrange-Act-Assert separated by one blank line. Set up of tests must be extracted as much as possible from unit tests.
 
