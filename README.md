@@ -6,11 +6,15 @@ Our team is called "Robot culinaire"!
 
 ## Installation
 
-Further information will be placed here when the project will have started.
+```shell
+docker build -t robot ./robot
+```
 
 ## Usage
 
-Further information will be placed here when the project will have started.
+```shell
+docker-compose up
+```
 
 ## Contributing
 

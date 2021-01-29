@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  robot:
+    restart: unless-stopped
+    image: robot:latest
+    ports:
+      - 5000:5000
+    volumes:
+      - ./robot:/usr/src/app
+    command: python main.py
+    tty: true
+    stdin_open: true
