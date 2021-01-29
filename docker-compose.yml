@@ -7,6 +7,16 @@ services:
       - 5000:5000
     volumes:
       - ./robot:/usr/src/app
-    command: python main.py
+    tty: true
+    stdin_open: true
+  station:
+    restart: unless-stopped
+    image: station:latest
+    ports:
+      - 4000:4000
+    volumes:
+      - ./station:/usr/src/app
+    links:
+      - robot
     tty: true
     stdin_open: true

@@ -8,6 +8,7 @@ Our team is called "Robot culinaire"!
 
 ```shell
 docker build -t robot ./robot
+docker build -t station ./station
 ```
 
 ## Usage
