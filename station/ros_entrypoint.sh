@@ -2,4 +2,4 @@
 
 echo 'Hello World! - Sent from my station'
 
-python main.py
+python3 main.py

@@ -2,4 +2,4 @@
 
 echo 'Hello World! - Sent from my robot'
 
-python main.py
+python3 main.py
