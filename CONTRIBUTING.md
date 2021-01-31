@@ -68,9 +68,9 @@ Useful sections to add here would be :
 
 ### Code style
 
-When the technology for our frontend will have been decided, its code style and formatting process will be explained here.
+We use [eslint](https://eslint.org/) for our frontend code style. It is checked pre-commit and during CI check. To format code, use `eslint --fix <filename>`.
 
-We use [pylint](https://www.pylint.org/) for our backend code style. It is checked pre-commit and during CI check. To format code, use `pylint <filename>`.
+We use [pylint](https://www.pylint.org/) for our backend (robot, station and scripts) code style. It is checked pre-commit and during CI check. To format code, use `pylint <filename>`.
 
 No comment should be in the source code. Some exceptions are small explanations. In those rare cases, comments are clear and tiny.
 
