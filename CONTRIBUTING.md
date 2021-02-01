@@ -64,8 +64,6 @@ Issues are closed once all described tasks are confirmed done by the reviewers, 
 
 Further information will be placed here when the project will have started.
 
-Useful sections to add here would be : 
-
 ### Code style
 
 When the technology for our frontend will have been decided, its code style and formatting process will be explained here.
