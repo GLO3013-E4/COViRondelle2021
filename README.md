@@ -12,7 +12,7 @@ We have three main applications and some development scripts, each with their ow
 - `robot` : Python application communicating with `station` using ROS
 - `station` : Python application communicating with `station` using ROS and `frontend` using a Flask API
 - `frontend` : Vue.js application communicating with `station` using API calls
-- [`scripts`](README.md) : Development scripts for testing different functionalities
+- [`scripts`](scripts) : Development scripts for testing different functionalities
 
 ## Installation
 
