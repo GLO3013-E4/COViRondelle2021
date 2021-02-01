@@ -11,7 +11,7 @@ We have three main applications and some development scripts, each with their ow
 
 - `robot` : Python application communicating with `robot` using ROS
 - `station` : Python application communicating with `station` using ROS and `frontend` using websockets
-- `frontend` : Vue.js application communicating with `station` using websockets
+- [`frontend`](frontend) : Vue.js application communicating with `station` using websockets
 - [`scripts`](scripts) : Development scripts for testing different functionalities
 
 ## Installation
