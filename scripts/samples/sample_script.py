@@ -1,10 +1,8 @@
 #!/usr/bin/python
-""" Sample script that serves as a template for scripts """
 import argparse
 
 
 def sum_numbers(numbers):
-    """ Sums given integers"""
     total = 0
 
     for number in numbers:
