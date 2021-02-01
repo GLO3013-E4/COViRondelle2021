@@ -8,7 +8,7 @@ Our team is called "Robot culinaire"!
 
 We have three main applications and some development scripts, each with their own README : 
 
-- `robot` : Python application communicating with `station` using ROS
+- `robot` : Python application communicating with `robot` using ROS
 - `station` : Python application communicating with `station` using ROS and `frontend` using a Flask API
 - `frontend` : Vue.js application communicating with `station` using API calls
 - [`scripts`](scripts) : Development scripts for testing different functionalities
