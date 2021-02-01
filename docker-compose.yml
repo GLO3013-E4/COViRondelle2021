@@ -3,19 +3,15 @@ services:
   robot:
     restart: unless-stopped
     build: ./robot
-    ports:
-      - 5000:5000
     volumes:
-      - ./robot:/usr/src/app
+      - ./robot:/root/catkin_ws/src
     tty: true
     stdin_open: true
   station:
     restart: unless-stopped
     build: ./station
-    ports:
-      - 4000:4000
     volumes:
-      - ./station:/usr/src/app
+      - ./station:/root/catkin_ws/src
     links:
       - robot
     tty: true

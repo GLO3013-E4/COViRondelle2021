@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-
-# TODO : Install / define rospy somehow
-# pylint: disable=import-error
 import rospy
 from std_msgs.msg import String
 

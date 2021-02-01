@@ -28,6 +28,10 @@ Without Docker :
 python script_to_execute.py
 ```
 
+Connect after launching Docker-Compose (covirondelle2021_robot_1 is the name of running robot container, can vary, use ```docker ps``` to find container name)
+```shell
+docker exec -it covirondelle2021_robot_1 /bin/bash
+```
 ## Contributing
 
 Before contributing to the project, please read our [contribution guide](../CONTRIBUTING.md).
