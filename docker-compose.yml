@@ -2,7 +2,7 @@ version: '3.8'
 services:
   robot:
     restart: unless-stopped
-    image: robot:latest
+    build: ./robot
     ports:
       - 5000:5000
     volumes:
@@ -11,7 +11,7 @@ services:
     stdin_open: true
   station:
     restart: unless-stopped
-    image: station:latest
+    build: ./station
     ports:
       - 4000:4000
     volumes:
