@@ -33,8 +33,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Lint scripts
-      run: pylint *
+      run: pylint samples tests
     - name: Test scripts
-      run: |
-        pytest samples
-        pytest tests
+      run: pytest tests
