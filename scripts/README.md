@@ -16,10 +16,24 @@ python script_to_execute.py
 
 ## Contributing
 
-Before contributing to the project, please read our [contribution guide](CONTRIBUTING.md).
+Before contributing to the project, please read our [contribution guide](../CONTRIBUTING.md).
 
-Further information will be placed here when the project will have started.
+Check code style of a single file
+```shell
+pylint module/script_to_check.py
+```
 
-## License
+Check code style of all files
+```shell
+pylint *
+```
 
-`MIT` : [Read full license](LICENSE)
+Run single test file
+```shell
+pytest tests/test_file.py
+```
+
+Run all test files
+```shell
+pytest tests
+```
