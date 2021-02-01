@@ -1,5 +1,7 @@
 # COViRondelle2021
 
+![Scripts CI](https://github.com/GLO3013-E4/COViRondelle2021/workflows/Scripts%20CI/badge.svg)
+
 Project of team 4 for course GLO-3013 at Laval University
 
 Our team is called "Robot culinaire"!
