@@ -2,7 +2,7 @@
 
 Vue.js frontend application for COViRondelle2021
 
-- Communicates with `station` using API calls
+- Communicates with `station` using websockets
 
 ## Installation
 
