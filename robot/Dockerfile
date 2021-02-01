@@ -1,11 +1,17 @@
-FROM ros:noetic-ros-base
+FROM ros:noetic-ros-core
 
-COPY . .
+RUN apt update
 
-EXPOSE 5000
+RUN apt install -y build-essential
 
-RUN chmod +x /ros_entrypoint.sh
+RUN mkdir -p /root/catkin_ws/src
 
-RUN /bin/bash -c "source /opt/ros/noetic/setup.bash"
+COPY . /root/catkin_ws/src
+
+WORKDIR "/root/catkin_ws"
+
+RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_init_workspace /root/catkin_ws/src && catkin_make"
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
+
+CMD ["bash"]

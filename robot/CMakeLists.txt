@@ -1,3 +1,0 @@
-catkin_install_python(PROGRAMS main.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
