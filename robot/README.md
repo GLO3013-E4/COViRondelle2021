@@ -6,12 +6,24 @@ Robot Python application for COViRondelle2021
 
 ## Installation
 
+With Docker : 
+```shell
+docker build -t robot .
+```
+
+Without Docker : 
 ```shell
 pip install -r requirements.txt
 ```
 
 ## Usage
 
+With Docker :
+```shell
+docker run robot
+```
+
+Without Docker : 
 ```shell
 python script_to_execute.py
 ```
