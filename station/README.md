@@ -3,7 +3,7 @@
 Station Python application for COViRondelle2021
 
  - Communicates with [`robot`](../robot) using ROS
- - Communicates with `frontend` using a Flask API
+ - Communicates with `frontend` using websockets
 
 ## Installation
 
