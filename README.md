@@ -28,7 +28,7 @@ Without Docker Compose : refer to each app's README.md file.
 
 Each app will run on : 
 
-- Station : [localhost:3000](http://localhost:3000)
+- Robot : [localhost:3000](http://localhost:3000)
 - Station : [localhost:4000](http://localhost:4000)
 - Frontend : [localhost:5000](http://localhost:5000)
 
