@@ -1,0 +1,5 @@
+name: 'Robot'
+description: 'Robot container for GitHub actions'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
