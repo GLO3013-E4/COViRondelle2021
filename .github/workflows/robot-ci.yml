@@ -19,13 +19,13 @@ jobs:
       COMPOSE_FILE: docker-compose.yml
     steps:
       - uses: actions/checkout@v2
-      - name: Build docker images
+      - name: Build docker image
         run: docker-compose build robot
       - name: Install dependencies
         run: |
-          docker-compose run robot python -m pip install --upgrade pip
-          docker-compose run robot pip install -r requirements.txt
+          docker run robot python -m pip install --upgrade pip
+          docker run robot pip install -r requirements.txt
       - name: Lint scripts
-        run: docker-compose run robot pylint samples tests
+        run: docker run robot pylint main
       - name: Test scripts
-        run: docker-compsoe run pytest tests
+        run: docker run robot pytest tests
