@@ -1,5 +1,20 @@
 version: '3.8'
 services:
+  robot:
+    restart: unless-stopped
+    build: ./robot
+    volumes:
+      - ./robot:/root/catkin_ws/src
+    tty: true
+    stdin_open: true
+  station:
+    restart: unless-stopped
+    build: ./station
+    volumes:
+      - ./station:/root/catkin_ws/src
+    links:
+      - robot
+    tty: true
   frontend:
     restart: unless-stopped
     build: ./frontend
@@ -7,8 +22,5 @@ services:
       - 5000:5000
     volumes:
       - ./frontend:/usr/src/app
-    # TOOD : Link station to frontend
-    # links:
-    #   - station
     tty: true
     stdin_open: true
