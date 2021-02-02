@@ -11,8 +11,8 @@ Our team is called "Robot culinaire"!
 
 We have three main applications and some development scripts, each with their own README : 
 
-- `robot` : Python application communicating with `robot` using ROS
-- `station` : Python application communicating with `station` using ROS and `frontend` using websockets
+- [`robot`](robot) : Python application communicating with `robot` using ROS
+- [`station`](station) : Python application communicating with `station` using ROS and `frontend` using websockets
 - [`frontend`](frontend) : Vue.js application communicating with `station` using websockets
 - [`scripts`](scripts) : Development scripts for testing different functionalities
 
