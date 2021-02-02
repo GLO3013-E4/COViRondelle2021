@@ -1,8 +1,11 @@
 import argparse
+
+import cap
 import cv2
 import lower_color
 import upper_color
 import numpy as np
+import color
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", help="path to the image")
@@ -27,13 +30,13 @@ class ImageDetection:
         green_lower = lower_color.get_green_lower()
         green_upper = upper_color.get_green_upper()
 
-        if color_to_detect == "blue":
+        if self.color_to_detect == color.Color.blue.value:
             self.detect_blue_color()
 
-        elif color_to_detect == "red":
+        elif self.color_to_detect == color.Color.red:
             pass
 
-        elif color_to_detect == "green":
+        elif self.color_to_detect == color.Color.green:
             pass
         else:
             pass
@@ -48,8 +51,11 @@ class ImageDetection:
         self.destroy_windows()
 
     def destroy_windows(self):
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        while 1:
+            if cv2.waitKey(10) & 0xFF == ord('q'):
+                cap.release()
+                cv2.destroyAllWindows()
+                break
 
 
 image_detection = ImageDetection(image_to_detect, color_to_detect)

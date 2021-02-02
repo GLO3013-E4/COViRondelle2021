@@ -21,7 +21,6 @@ while 1:
     red_upper = upper_color.get_red_upper()
     red_mask = cv2.inRange(hsvFrame, red_lower, red_upper)
 
-
     green_lower = lower_color.get_green_lower()
     green_upper = upper_color.get_green_upper()
     green_mask = cv2.inRange(hsvFrame, green_lower, green_upper)
