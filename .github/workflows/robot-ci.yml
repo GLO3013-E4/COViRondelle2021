@@ -12,29 +12,20 @@ on:
     paths:
       - 'robot/**'
 
-defaults:
-  run:
-    working-directory: robot
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.8]
+    env:
+      COMPOSE_FILE: docker-compose.yml
     steps:
       - uses: actions/checkout@v2
-      - name: Robot action step
-        uses: ./robot
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
+      - name: Build docker images
+        run: docker-compose build robot
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          docker-compose run robot python -m pip install --upgrade pip
+          docker-compose run robot pip install -r requirements.txt
       - name: Lint scripts
-        run: pylint samples tests
+        run: docker-compose run robot pylint samples tests
       - name: Test scripts
-        run: pytest tests
+        run: docker-compsoe run pytest tests
