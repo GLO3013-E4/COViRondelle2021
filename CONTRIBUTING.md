@@ -78,7 +78,7 @@ TODOs are okay, as long as they do not make it to the release. They can be used 
 
 Almost every single piece of code added to the application must be written using test driven development. Of course, we're in a robotics project, so we don't expect everything so much, but we still aim for it. For TDD, we follow the three basic steps : write failing tests for new feature, write basic code to get tests to pass and finally reformat newly added code. Once the new feature is correctly implemented, commit.
 
-Unit tests must have sections Arrange-Act-Assert separated by one blank line. Set up of tests must be extracted as much as possible from unit tests.
+Unit tests must have sections Arrange-Act-Assert separated by one blank line. Set up of tests must be extracted as much as possible from unit tests. Unit test names should follow a given, when then structure (example :  `Given obstacle in direct trajectory when creating trajectory then return corrected trajectory`).
 
 ## Contributors
 
