@@ -2,4 +2,4 @@
 
 
 def test_sample():
-    assert True is True
+    assert True is not False
