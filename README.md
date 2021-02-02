@@ -1,9 +1,10 @@
 # COViRondelle2021
 
-![Robot CI](https://github.com/GLO3013-E4/COViRondelle2021/workflows/Robot%20CI/badge.svg)
-![Station CI](https://github.com/GLO3013-E4/COViRondelle2021/workflows/Station%20CI/badge.svg)
-![Frontend CI](https://github.com/GLO3013-E4/COViRondelle2021/workflows/Frontend%20CI/badge.svg)
-![Scripts CI](https://github.com/GLO3013-E4/COViRondelle2021/workflows/Scripts%20CI/badge.svg)
+[![Robot CI](https://github.com/GLO3013-E4/COViRondelle2021/workflows/Robot%20CI/badge.svg)](https://github.com/GLO3013-E4/COViRondelle2021/actions?query=workflow%3A%22Robot+CI%22)
+[![Station CI](https://github.com/GLO3013-E4/COViRondelle2021/workflows/Station%20CI/badge.svg)](https://github.com/GLO3013-E4/COViRondelle2021/actions?query=workflow%3A%22Station+CI%22)
+[![Frontend CI](https://github.com/GLO3013-E4/COViRondelle2021/workflows/Frontend%20CI/badge.svg)](https://github.com/GLO3013-E4/COViRondelle2021/actions?query=workflow%3A%22Frontend+CI%22)
+[![Scripts CI](https://github.com/GLO3013-E4/COViRondelle2021/workflows/Scripts%20CI/badge.svg)](https://github.com/GLO3013-E4/COViRondelle2021/actions?query=workflow%3A%22Scripts+CI%22)
+[![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
 Project of team 4 for course GLO-3013 at Laval University
 
