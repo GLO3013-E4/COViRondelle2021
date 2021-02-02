@@ -36,6 +36,12 @@ docker exec -it covirondelle2021_robot_1 /bin/bash
 
 Before contributing to the project, please read our [contribution guide](../CONTRIBUTING.md).
 
+Create new ros package (If you forget a dependency you should create a new package with the good dependencies and copy the source code instead of trying to modify CMakeLists.txt and package.xml)
+```shell
+cd /root/catkin_ws/src
+catkin_create_pkg <package-name> std_msgs rospy <other-dependencies>
+```
+
 Check code style of a single file
 ```shell
 pylint module/script_to_check.py
