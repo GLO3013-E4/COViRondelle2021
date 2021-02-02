@@ -2,3 +2,6 @@ opencv-python >= 4.5.1.48
 pylint >= 2.6.0
 pytest >= 6.2.2
 pytesseract >= 0.3.7
+
+numpy~=1.20.0
+cap~=0.0.114
