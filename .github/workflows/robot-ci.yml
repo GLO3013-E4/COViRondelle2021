@@ -28,4 +28,4 @@ jobs:
       - name: Lint application
         run: docker run robot pylint src
       - name: Test application
-        run: docker run robot pytest src/tests
+        run: docker run robot pytest src/main/tests
