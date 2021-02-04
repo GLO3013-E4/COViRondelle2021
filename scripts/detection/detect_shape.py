@@ -30,19 +30,28 @@ class DetectShapes:
 
         for contour in contours:
             contour_area = cv2.contourArea(contour)
-            perimeter = cv2.arcLength(contour, False)
 
-            approximation = cv2.approxPolyDP(contour, 0.02 * perimeter, False)
-            object_corner = len(approximation)
+            if contour_area > 20:
 
-            if contour_area > 40:
+                perimeter = cv2.arcLength(contour, False)
 
-                cv2.drawContours(image_copy, contour, -1, (100, 255, 0), 3)
-                print(object_corner)
+                approx_corner = cv2.approxPolyDP(contour, 0.03 * perimeter, False)
 
-                x, y, width, height = cv2.boundingRect(approximation)
+                object_corner = len(approx_corner)
 
-                cv2.rectangle(image_copy, (x, y), (x + width, y + height), (0, 255, 0), 2)
+                x, y, width, height = cv2.boundingRect(approx_corner)
+
+                print(width, height)
+                self.detect_puck(height, image_copy, width, x, y, contour)
+
+    def detect_puck(self, height, image_copy, width, x, y, contours):
+        if 40 < width < 60 and 40 < height < 60:
+            cv2.rectangle(image_copy, (x, y), (x + width, y + height), (0, 255, 0), 2)
+            object_type = "Puck"
+            cv2.putText(image_copy, object_type,
+                        (x + (width//2), y + (height//2)), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                        (255, 0, 15), 2)
+
 
 
 detect_shapes = DetectShapes("images/camera_monde2.jpg")
