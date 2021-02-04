@@ -31,6 +31,7 @@ class PuckDetection:
 
         hsv_image = cv2.cvtColor(self.image, cv2.COLOR_BGR2HSV)
         blue_mask = cv2.inRange(hsv_image, blue_lower, blue_upper)
+
         output_image = cv2.bitwise_and(self.image, self.image, mask=blue_mask)
 
         cv2.imshow("Color detection", np.hstack([output_image]))
