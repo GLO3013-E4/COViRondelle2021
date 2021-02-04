@@ -57,3 +57,4 @@ class TrackBarDetection:
 trackBar = TrackBarDetection()
 
 trackBar.start_track_bar()
+
