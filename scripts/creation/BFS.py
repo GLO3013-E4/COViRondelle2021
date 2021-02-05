@@ -1,5 +1,6 @@
 from PathfinderAlgorithm import PathfinderAlgorithm
 from PathNotFoundException import PathNotFoundException
+from TileRole import TileRole
 
 
 class BFS(PathfinderAlgorithm):
@@ -17,7 +18,7 @@ class BFS(PathfinderAlgorithm):
                 return path
 
             for neighbor in node.neighbors:
-                if neighbor not in visited and (neighbor.role == "empty" or neighbor.role == "end" or neighbor == "start"):
+                if neighbor not in visited and (neighbor.role is TileRole.EMPTY or neighbor.role is TileRole.END or neighbor.role is TileRole.START):
                     queue.append(path + [neighbor])
                     visited.add(neighbor)
 

@@ -1,4 +1,5 @@
 from Node import Node
+from TileRole import TileRole
 
 
 #TODO: ajuster si la destination est une puck et que c'est vu un peu comme un obstacle
@@ -66,14 +67,14 @@ class Map:
     def add_cushion(self, node, distance):
         if distance > 0:
             for neighbor in node.neighbors:
-                if neighbor.role == "empty":
-                    neighbor.role = "obstacle_cushion"
+                if neighbor.role is TileRole.EMPTY:
+                    neighbor.role = TileRole.CUSHION
                 self.add_cushion(neighbor, distance - 1)
 
     def create_obstacles(self):
         for (x, y) in self.obstacles:
             node = self.node_matrix[y // self.node_size][x // self.node_size]
-            node.role = "obstacle"
+            node.role = TileRole.OBSTACLE
 
             # add cushion
             distance = (self.obstacle_cushion_width // self.node_size) + 1
@@ -82,7 +83,7 @@ class Map:
     def create_pucks(self):
         for (x, y) in self.pucks:
             node = self.node_matrix[y // self.node_size][x // self.node_size]
-            node.role = "puck"
+            node.role = TileRole.PUCK
 
             # add cushion
             distance = (self.obstacle_puck_width // self.node_size) + 1
@@ -90,11 +91,11 @@ class Map:
 
     def create_start_node(self):
         start = self.get_start_node()
-        start.role = "start"
+        start.role = TileRole.START
 
     def create_end_node(self):
         end = self.get_end_node()
-        end.role = "end"
+        end.role = TileRole.END
 
     def get_start_node(self):
         return self.node_matrix[self.start_node_location[1]//self.node_size][self.start_node_location[0]//self.node_size]

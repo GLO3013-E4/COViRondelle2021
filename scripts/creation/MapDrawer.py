@@ -1,4 +1,5 @@
 from PIL import ImageDraw
+from TileRole import TileRole
 
 
 class MapDrawer:
@@ -14,24 +15,24 @@ class MapDrawer:
 
         for line in map.get_node_matrix():
             for node in line:
-                if node.role == "obstacle":
+                if node.role is TileRole.OBSTACLE:
                     self.draw_obstacle(node)
 
-                elif node.role == "obstacle_cushion":
+                elif node.role is TileRole.CUSHION:
                     self.draw_cushion(node)
 
-                elif node.role == "puck":
+                elif node.role is TileRole.PUCK:
                     self.draw_puck(node)
 
-                elif node.role == "start":
+                elif node.role is TileRole.START:
                     #TODO:add role start + end juste à cause du drawer?
                     self.draw_start_node(node)
 
-                elif node.role == "end":
+                elif node.role is TileRole.END:
                     #TODO:add role start + end juste à cause du drawer?
                     self.draw_end_node(node)
 
-                elif node.role == "empty":
+                elif node.role is TileRole.EMPTY:
                     pass
 
                 else:
