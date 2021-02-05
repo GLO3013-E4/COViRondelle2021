@@ -1,30 +1,27 @@
 import pytesseract
 import cv2
-import numpy as np
-from matplotlib import pyplot as plt
-
 
 capture = cv2.VideoCapture(0)
 
-if not(capture.isOpened()):
+if not capture.isOpened():
     print("Could not open camera")
 
 
 ret,frame = capture.read()
 ret,threshold = cv2.threshold(frame,127,255,cv2.THRESH_BINARY)
 
-while(True):
+while True:
     cv2.imshow('preview', threshold)
-    if(cv2.waitKey(1) & 0xFF == ord('q')):
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-custom_config = r'--oem 3 --psm 11 -c tessedit_char_whitelist="ABCD"'
-found_letters = pytesseract.image_to_string(threshold, config=custom_config)
+CUSTOM_CONFIG = r'--oem 3 --psm 11 -c tessedit_char_whitelist="ABCD"'
+found_letters = pytesseract.image_to_string(threshold, config=CUSTOM_CONFIG)
 
 print(found_letters)
 good_chars = ['A', 'B', 'C', 'D']
 for i in found_letters:
-    if(i not in good_chars):
+    if i not in good_chars:
         found_letters = found_letters.replace(i, '')
 
 letters = list(found_letters)
@@ -36,5 +33,5 @@ if 1 <= int(number) <= 9:
 else:
     print("Bad value")
 
-capture.release
+capture.release()
 cv2.destroyAllWindows()
