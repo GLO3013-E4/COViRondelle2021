@@ -1,21 +1,31 @@
-import argparse
 import pytesseract
 import cv2
+import numpy as np
+from matplotlib import pyplot as plt
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", type=str, help="path to input image")
-ap.add_argument("-p", "--path", type=str, help="path to tesseract.exe")
-args = vars(ap.parse_args())
-img = cv2.imread(args["image"])
 
-pytesseract.pytesseract.tesseract_cmd = args["path"]
+capture = cv2.VideoCapture(0)
 
-CUSTOM_CONFIG = r'-l eng --oem 1 --psm 11 -c tessedit_char_whitelist="ABCD" '
-found_letters = pytesseract.image_to_string(img, config=CUSTOM_CONFIG)
+if not(capture.isOpened()):
+    print("Could not open camera")
 
-bad_chars = [' ', '\x0c', '\n']
-for i in bad_chars:
-    found_letters = found_letters.replace(i, '')
+
+ret,frame = capture.read()
+ret,threshold = cv2.threshold(frame,127,255,cv2.THRESH_BINARY)
+
+while(True):
+    cv2.imshow('preview', threshold)
+    if(cv2.waitKey(1) & 0xFF == ord('q')):
+        break
+
+custom_config = r'--oem 3 --psm 11 -c tessedit_char_whitelist="ABCD"'
+found_letters = pytesseract.image_to_string(threshold, config=custom_config)
+
+print(found_letters)
+good_chars = ['A', 'B', 'C', 'D']
+for i in found_letters:
+    if(i not in good_chars):
+        found_letters = found_letters.replace(i, '')
 
 letters = list(found_letters)
 print(letters)
@@ -25,3 +35,6 @@ if 1 <= int(number) <= 9:
     print(letters[int(number) - 1])
 else:
     print("Bad value")
+
+capture.release
+cv2.destroyAllWindows()
