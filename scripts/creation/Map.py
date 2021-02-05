@@ -34,13 +34,13 @@ class Map:
     # get node matrix? et l'objet manipule la matrice au lieu que ce soit static-ish?
     def create_nodes(self):
         node_matrix = [
-            [] for _ in range(self.height // self.node_size)
+            [] for _ in range((self.height // self.node_size) + 1)
         ]
 
-        for i in range(self.height // self.node_size):
-            for j in range(self.width // self.node_size):
-                x = i * self.node_size + self.node_size / 2
-                y = j * self.node_size + self.node_size / 2
+        for i in range((self.height // self.node_size)+1):
+            for j in range((self.width // self.node_size)+1):
+                y = i * self.node_size + self.node_size / 2
+                x = j * self.node_size + self.node_size / 2
                 node_matrix[i].append(Node((i, j), (x, y), self.node_size, self.node_size))
 
         return node_matrix
@@ -49,13 +49,13 @@ class Map:
         for i, line in enumerate(self.node_matrix):
             for j, node in enumerate(line):
                 possible_neighbors = [
-                    (x, y)
+                    (y, x)
 
-                    for (x, y) in
+                    for (y, x) in
                     [(node.matrix_center[0] - 1, node.matrix_center[1]), (node.matrix_center[0] + 1, node.matrix_center[1]),
                      (node.matrix_center[0], node.matrix_center[1] - 1), (node.matrix_center[0], node.matrix_center[1] + 1)]
 
-                    if (x >= 0 and x < len(self.node_matrix) and y >= 0 and y < len(self.node_matrix[1]) and (
+                    if (x >= 0 and x < len(self.node_matrix[0]) and y >= 0 and y < len(self.node_matrix) and (
                     x, y) != node.matrix_center)
                 ]
 
@@ -70,8 +70,8 @@ class Map:
                 self.add_cushion(neighbor, distance - 1)
 
     def create_obstacles(self):
-        for (y, x) in self.obstacles:
-            node = self.node_matrix[x // self.node_size][y // self.node_size]
+        for (x, y) in self.obstacles:
+            node = self.node_matrix[y // self.node_size][x // self.node_size]
             node.role = "obstacle"
 
             # add cushion
@@ -83,18 +83,18 @@ class Map:
         pass
 
     def create_start_node(self):
-        end = self.get_end_node()
-        end.role = "end"
-
-    def create_end_node(self):
         start = self.get_start_node()
         start.role = "start"
 
+    def create_end_node(self):
+        end = self.get_end_node()
+        end.role = "end"
+
     def get_start_node(self):
-        return self.node_matrix[self.start_node_location[0]//self.node_size][self.start_node_location[1]//self.node_size]
+        return self.node_matrix[self.start_node_location[1]//self.node_size][self.start_node_location[0]//self.node_size]
 
     def get_end_node(self):
-        return self.node_matrix[self.end_node_location[0] // self.node_size][self.end_node_location[1] // self.node_size]
+        return self.node_matrix[self.end_node_location[1] // self.node_size][self.end_node_location[0] // self.node_size]
 
     def get_image(self):
         return self.image

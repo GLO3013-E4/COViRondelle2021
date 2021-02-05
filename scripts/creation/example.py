@@ -18,7 +18,7 @@ if __name__ == '__main__':
     ]
 
     start = (21, 24)
-    end = (27, 382)
+    end = (382, 27)
 
     pucks = [
         #(175, 27),
@@ -32,10 +32,12 @@ if __name__ == '__main__':
     #image = Image.open("../../../../Desktop/photo_camera_monde/WIN_20210126_11_29_53_Pro.jpg")
     image = Image.open("../../../../Desktop/Q5jkZwR.png")
 
-    pathfinding_algorithm = PathfindingAlgorithmFactory.create(PATHFINDING_ALGORITHM)
+    pathfindingAlgorithmFactory = PathfindingAlgorithmFactory()
+    pathfinding_algorithm = pathfindingAlgorithmFactory.create(PATHFINDING_ALGORITHM)
     board_map = Map(image, NODE_SIZE, SAFETY_CUSHION, ROBOT_WIDTH, OBSTACLE_WIDTH, PUCK_WIDTH, OBSTACLE_CUSHION_WIDTH, obstacles, pucks, start, end)
     map_drawer = MapDrawer(NODE_IDENTIFIER_WIDTH, NODE_SIZE, image)
     pathfinder = Pathfinder(board_map, map_drawer, pathfinding_algorithm)
 
     pathfinder.find_square_matrix_path()
     pathfinder.show()
+

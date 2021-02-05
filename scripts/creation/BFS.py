@@ -17,7 +17,7 @@ class BFS(PathfinderAlgorithm):
                 return path
 
             for neighbor in node.neighbors:
-                if neighbor not in visited and neighbor.role == "empty":
+                if neighbor not in visited and (neighbor.role == "empty" or neighbor.role == "end" or neighbor == "start"):
                     queue.append(path + [neighbor])
                     visited.add(neighbor)
 

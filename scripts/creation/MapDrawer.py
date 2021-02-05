@@ -9,7 +9,7 @@ class MapDrawer:
         self.node_identifier_width = node_identifier_width
         self.node_size = node_size
         self.image = image
-        self.image_height, self.image_width = self.image.size
+        self.width, self.height = self.image.size
         self.draw = ImageDraw.Draw(self.image)
 
     def draw_map(self, map, path):
@@ -40,45 +40,48 @@ class MapDrawer:
                 else:
                     raise  # TODO:
 
-        self.draw_path(draw, path)
+        self.draw_path(path)
 
     def draw_board(self):
-        self.draw_vertical_lines(draw)
-        self.draw_horizontal_lines(draw)
+        self.draw_vertical_lines()
+        self.draw_horizontal_lines()
 
     def draw_vertical_lines(self):
-        for i in range((self.image_width // self.node_size) + 1):
-            self.draw.line((i * self.node_size, 0, i * self.node_size, self.image_height), fill=128)
+        for i in range((self.width // self.node_size) + 1):
+            self.draw.line((i * self.node_size, 0, i * self.node_size, self.height), fill=128)
 
     def draw_horizontal_lines(self):
-        for i in range((self.image_height // self.node_size) + 1):
-            self.draw.line((0, i * self.node_size, self.image_width, i * self.node_size), fill=128)
+        for i in range((self.height // self.node_size) + 1):
+            self.draw.line((0, i * self.node_size, self.width, i * self.node_size), fill=128)
 
     def draw_cushion(self, node):
-        y1, x1 = node.pixel_coordinates_center
-        self.draw.rectangle([(x1 - self.node_identifier_width, y1 - self.node_identifier_width),
-                        (x1 + self.node_identifier_width, y1 + self.node_identifier_width)], fill=(0, 255, 0))
+        x, y = node.pixel_coordinates_center
+        self.draw.rectangle([(x - self.node_identifier_width, y - self.node_identifier_width),
+                             (x + self.node_identifier_width, y + self.node_identifier_width)], fill=(0, 255, 0))
 
     def draw_obstacle(self, node):
-        y, x = node.pixel_coordinates_center
+        x, y = node.pixel_coordinates_center
         self.draw.rectangle([(x - self.node_identifier_width, y - self.node_identifier_width),
-                        (x + self.node_identifier_width, y + self.node_identifier_width)], fill=(255, 255, 255))
+                             (x + self.node_identifier_width, y + self.node_identifier_width)], fill=(255, 255, 255))
 
     def draw_puck(self, node):
         pass
 
     def draw_start_node(self, node):
-        y, x = node.pixel_coordinates_center
+        x, y = node.pixel_coordinates_center
         self.draw.rectangle([(x - self.node_identifier_width, y - self.node_identifier_width),
-                        (x + self.node_identifier_width, y + self.node_identifier_width)], fill=200)
+                             (x + self.node_identifier_width, y + self.node_identifier_width)], fill=200)
 
     def draw_end_node(self, node):
-        y, x = node.pixel_coordinates_center
+        x,y = node.pixel_coordinates_center
         self.draw.rectangle([(x - self.node_identifier_width, y - self.node_identifier_width),
-                        (x + self.node_identifier_width, y + self.node_identifier_width)], fill=120)
+                             (x + self.node_identifier_width, y + self.node_identifier_width)], fill=120)
 
     def draw_path(self, path):
         for node in path:
-            y, x = node.pixel_coordinates_center
+            x,y = node.pixel_coordinates_center
             self.draw.rectangle([(x - self.node_identifier_width, y - self.node_identifier_width),
-                            (x + self.node_identifier_width, y + self.node_identifier_width)], outline=300)
+                                 (x + self.node_identifier_width, y + self.node_identifier_width)], outline=300)
+
+    def get_image(self):
+        return self.image
