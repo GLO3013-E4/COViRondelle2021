@@ -30,7 +30,7 @@ if __name__ == '__main__':
         (1050, 215)
     ]
 
-    image = Image.open("../../../../Desktop/photo_camera_monde/WIN_20210126_11_29_53_Pro.jpg")
+    image = Image.open("./WIN_20210126_11_29_53_Pro.jpg")
 
     pathfindingAlgorithmFactory = PathfindingAlgorithmFactory()
     pathfinding_algorithm = pathfindingAlgorithmFactory.create(PATHFINDING_ALGORITHM)

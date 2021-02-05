@@ -1,8 +1,6 @@
 from Node import Node
 
 
-#TODO: ajouter le drawer
-#TODO: ajouter le gérage des pucks
 #TODO: ajuster si la destination est une puck et que c'est vu un peu comme un obstacle
 #TODO: (l'algo ne réussira jamais à se rendre à la node sans ajustements)
 #TODO: what if l'algo voit que le start/end est dans un obstacle
@@ -34,7 +32,7 @@ class Map:
         self.create_start_node()
         self.create_end_node()
 
-    # get node matrix? et l'objet manipule la matrice au lieu que ce soit static-ish?
+    #TODO: get node matrix? et l'objet manipule la matrice au lieu que ce soit static-ish?
     def create_nodes(self):
         node_matrix = [
             [] for _ in range((self.height // self.node_size) + 1)
@@ -79,7 +77,6 @@ class Map:
 
             # add cushion
             distance = (self.obstacle_cushion_width // self.node_size) + 1
-            # distance = 0
             self.add_cushion(node, distance)
 
     def create_pucks(self):
@@ -89,7 +86,6 @@ class Map:
 
             # add cushion
             distance = (self.obstacle_puck_width // self.node_size) + 1
-            # distance = 0
             self.add_cushion(node, distance)
 
     def create_start_node(self):

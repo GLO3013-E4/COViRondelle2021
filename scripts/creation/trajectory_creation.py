@@ -1,6 +1,6 @@
 import argparse
 
-from PIL import Image, ImageDraw
+from PIL import Image
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", help="path to the image")

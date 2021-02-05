@@ -10,10 +10,6 @@ class Pathfinder:
         end = self.map.get_end_node()
         self.path = self.pathfinding_algorithm.find_path(start, end)
 
-
     def show(self):
-        #TODO: crée l'image ici?
-        #TODO: utilise un drawer passé en argument de constructeur ici pour draw sur l'image?
-        #TODO: penser aux cycles de vie and shit
         self.map_drawer.draw_map(self.map, self.path)
         self.map_drawer.get_image().show()
