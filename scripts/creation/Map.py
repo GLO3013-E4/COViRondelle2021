@@ -1,14 +1,14 @@
-from PIL import Image, ImageDraw
-
-from params import NODE_SIZE, SAFETY_CUSHION, ROBOT_WIDTH, OBSTACLE_WIDTH, PUCK_WIDTH, OBSTACLE_CUSHION_WIDTH
 from Node import Node
 
 
+#TODO: ajouter le drawer
+#TODO: ajouter le gérage des pucks
 #TODO: ajuster si la destination est une puck et que c'est vu un peu comme un obstacle
 #TODO: (l'algo ne réussira jamais à se rendre à la node sans ajustements)
 
+
 class Map:
-    def __init__(self, image, node_size, safety_cushion, robot_width, obstacle_width, puck_width, obstacle_cushion_width):
+    def __init__(self, image, node_size, safety_cushion, robot_width, obstacle_width, puck_width, obstacle_cushion_width, obstacles, pucks, start, end):
         self.node_size = node_size
         self.safety_cushion = safety_cushion
         self.robot_width = robot_width
@@ -18,10 +18,18 @@ class Map:
 
         self.image = image
         self.width, self.height = self.image.size
-        self.draw = ImageDraw.Draw(self.image)
+
+        self.obstacles = obstacles
+        self.pucks = pucks
+        self.start_node_location = start
+        self.end_node_location = end
 
         self.node_matrix = self.create_nodes()
         self.connect_nodes()
+        self.create_obstacles()
+        #self.create_pucks()
+        self.create_start_node()
+        self.create_end_node()
 
     # get node matrix? et l'objet manipule la matrice au lieu que ce soit static-ish?
     def create_nodes(self):
@@ -59,57 +67,37 @@ class Map:
             for neighbor in node.neighbors:
                 if neighbor.role == "empty":
                     neighbor.role = "obstacle_cushion"
-
-                    # draw cushion
-                    #y1, x1 = neighbor.pixel_coordinates_center
-                    #draw.rectangle([(x1 - square_identifier_width, y1 - square_identifier_width),
-                    #                (x1 + square_identifier_width, y1 + square_identifier_width)], fill=(0, 255, 0))
-
                 self.add_cushion(neighbor, distance - 1)
 
     def create_obstacles(self):
-        # add obstacles
-        for (y, x) in obstacles:
-            node = node_matrix[x // space_between_squares][y // space_between_squares]
+        for (y, x) in self.obstacles:
+            node = self.node_matrix[x // self.node_size][y // self.node_size]
             node.role = "obstacle"
 
             # add cushion
-            distance = (obstacle_cushion // space_between_squares) + 1
+            #distance = (self.obstacle_cushion_width // self.node_size) + 1
             # distance = 0
-            recursive_cushion(node, distance)
-
-            # draw obstacle
-            #y1, x1 = node.pixel_coordinates_center
-            #draw.rectangle([(x1 - square_identifier_width, y1 - square_identifier_width),
-            #                (x1 + square_identifier_width, y1 + square_identifier_width)], fill=(255, 255, 255))
+            #self.add_cushion(node, distance)
 
     def create_pucks(self):
         pass
 
+    def create_start_node(self):
+        end = self.get_end_node()
+        end.role = "end"
+
+    def create_end_node(self):
+        start = self.get_start_node()
+        start.role = "start"
+
     def get_start_node(self):
-        start_node = node_matrix[start_node_pixel_center[0]//space_between_squares][start_node_pixel_center[1]//space_between_squares]
-        return start_node
+        return self.node_matrix[self.start_node_location[0]//self.node_size][self.start_node_location[1]//self.node_size]
 
     def get_end_node(self):
-        end_node = node_matrix[end_node_pixel_center[0] // space_between_squares][
-            end_node_pixel_center[1] // space_between_squares]
-        return end_node
-
-    # Draw
-    #y1, x1 = start_node.pixel_coordinates_center
-    #y2, x2 = end_node.pixel_coordinates_center
-    #draw.rectangle([(x1 - square_identifier_width, y1 - square_identifier_width),
-    #                (x1 + square_identifier_width, y1 + square_identifier_width)], fill=200)
-    #draw.rectangle([(x2 - square_identifier_width, y2 - square_identifier_width),
-    #                (x2 + square_identifier_width, y2 + square_identifier_width)], fill=120)
+        return self.node_matrix[self.end_node_location[0] // self.node_size][self.end_node_location[1] // self.node_size]
 
     def get_image(self):
         return self.image
 
-    ## draw path
-    #for node in path:
-    #    y, x = node.pixel_coordinates_center
-    #    draw.rectangle([(x - square_identifier_width, y - square_identifier_width),
-    #                    (x + square_identifier_width, y + square_identifier_width)], outline=300)
-
-
+    def get_node_matrix(self):
+        return self.node_matrix
