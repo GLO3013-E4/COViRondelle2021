@@ -5,16 +5,19 @@ from Node import Node
 #TODO: ajouter le gérage des pucks
 #TODO: ajuster si la destination est une puck et que c'est vu un peu comme un obstacle
 #TODO: (l'algo ne réussira jamais à se rendre à la node sans ajustements)
+#TODO: what if l'algo voit que le start/end est dans un obstacle
+#TODO: what if les seules places que le robot peut se déplacer c'est dans un "obstacle" (peut-être juste ajuster les cushions)
 
 
 class Map:
-    def __init__(self, image, node_size, safety_cushion, robot_width, obstacle_width, puck_width, obstacle_cushion_width, obstacles, pucks, start, end):
+    def __init__(self, image, node_size, safety_cushion, robot_width, obstacle_width, puck_width, obstacle_cushion_width, obstacles, pucks, obstacle_puck_width, start, end):
         self.node_size = node_size
         self.safety_cushion = safety_cushion
         self.robot_width = robot_width
         self.obstacle_width = obstacle_width
         self.puck_width = puck_width
         self.obstacle_cushion_width = obstacle_cushion_width
+        self.obstacle_puck_width = obstacle_puck_width
 
         self.image = image
         self.width, self.height = self.image.size
@@ -27,7 +30,7 @@ class Map:
         self.node_matrix = self.create_nodes()
         self.connect_nodes()
         self.create_obstacles()
-        #self.create_pucks()
+        self.create_pucks()
         self.create_start_node()
         self.create_end_node()
 
@@ -75,12 +78,19 @@ class Map:
             node.role = "obstacle"
 
             # add cushion
-            #distance = (self.obstacle_cushion_width // self.node_size) + 1
+            distance = (self.obstacle_cushion_width // self.node_size) + 1
             # distance = 0
-            #self.add_cushion(node, distance)
+            self.add_cushion(node, distance)
 
     def create_pucks(self):
-        pass
+        for (x, y) in self.pucks:
+            node = self.node_matrix[y // self.node_size][x // self.node_size]
+            node.role = "puck"
+
+            # add cushion
+            distance = (self.obstacle_puck_width // self.node_size) + 1
+            # distance = 0
+            self.add_cushion(node, distance)
 
     def create_start_node(self):
         start = self.get_start_node()

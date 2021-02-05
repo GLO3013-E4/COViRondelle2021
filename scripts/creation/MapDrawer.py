@@ -1,6 +1,3 @@
-#TODO: décider draw au fur et à mésure ou tout d'un coup?
-#TODO: live ça serait tout d'un coup
-
 from PIL import ImageDraw
 
 
@@ -65,7 +62,9 @@ class MapDrawer:
                              (x + self.node_identifier_width, y + self.node_identifier_width)], fill=(255, 255, 255))
 
     def draw_puck(self, node):
-        pass
+        x, y = node.pixel_coordinates_center
+        self.draw.rectangle([(x - self.node_identifier_width, y - self.node_identifier_width),
+                             (x + self.node_identifier_width, y + self.node_identifier_width)], fill=(0, 0, 255))
 
     def draw_start_node(self, node):
         x, y = node.pixel_coordinates_center
