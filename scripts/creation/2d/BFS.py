@@ -4,7 +4,7 @@ from TileRole import TileRole
 
 
 class BFS(PathfinderAlgorithm):
-    def find_path(self, start, end):
+    def find_path(self, start):
         queue = []
         visited = {start}
 
@@ -17,7 +17,7 @@ class BFS(PathfinderAlgorithm):
             if node.role is TileRole.END:
                 return path
 
-            for neighbor in node.neighbors:
+            for neighbor, angle in node.neighbors:
                 if neighbor not in visited and (neighbor.role is TileRole.EMPTY or neighbor.role is TileRole.END or neighbor.role is TileRole.START):
                     queue.append(path + [neighbor])
                     visited.add(neighbor)

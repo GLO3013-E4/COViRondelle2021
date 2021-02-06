@@ -51,22 +51,31 @@ class Map:
         for i, line in enumerate(self.node_matrix):
             for j, node in enumerate(line):
                 possible_neighbors = [
-                    (y, x)
+                    (y, x, z)
 
-                    for (y, x) in
-                    [(node.matrix_center[0] - 1, node.matrix_center[1]), (node.matrix_center[0] + 1, node.matrix_center[1]),
-                     (node.matrix_center[0], node.matrix_center[1] - 1), (node.matrix_center[0], node.matrix_center[1] + 1)]
+                    for (y, x, z) in
+                    [
+                        (node.matrix_center[0] - 1, node.matrix_center[1], "90"),
+                        (node.matrix_center[0] + 1, node.matrix_center[1], "270"),
+                        (node.matrix_center[0], node.matrix_center[1] - 1, "180"),
+                        (node.matrix_center[0], node.matrix_center[1] + 1, "0"),
+
+                        (node.matrix_center[0] - 1, node.matrix_center[1] - 1, "135"),
+                        (node.matrix_center[0] - 1, node.matrix_center[1] + 1, "45"),
+                        (node.matrix_center[0] + 1, node.matrix_center[1] - 1, "225"),
+                        (node.matrix_center[0] + 1, node.matrix_center[1] + 1, "315"),
+                    ]
 
                     if (x >= 0 and x < len(self.node_matrix[0]) and y >= 0 and y < len(self.node_matrix) and (
                     x, y) != node.matrix_center)
                 ]
 
-                for (y, x) in possible_neighbors:
-                    node.neighbors.append(self.node_matrix[y][x])
+                for (y, x, z) in possible_neighbors:
+                    node.neighbors.append((self.node_matrix[y][x], z))
 
     def add_cushion(self, node, distance):
         if distance > 0:
-            for neighbor in node.neighbors:
+            for neighbor, angle in node.neighbors:
                 if neighbor.role is TileRole.EMPTY:
                     neighbor.role = TileRole.CUSHION
                 self.add_cushion(neighbor, distance - 1)
@@ -102,7 +111,7 @@ class Map:
 
     def add_pickup_cushion(self, node, distance):
         if distance > 0:
-            for neighbor in node.neighbors:
+            for neighbor, angle in node.neighbors:
                 if neighbor.role is TileRole.EMPTY:
                     neighbor.role = TileRole.END
                 self.add_pickup_cushion(neighbor, distance - 1)

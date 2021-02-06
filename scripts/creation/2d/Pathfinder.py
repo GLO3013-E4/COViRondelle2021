@@ -7,8 +7,7 @@ class Pathfinder:
 
     def find_square_matrix_path(self):
         start = self.map.get_start_node()
-        end = self.map.get_end_node()
-        self.path = self.pathfinding_algorithm.find_path(start, end)
+        self.path = self.pathfinding_algorithm.find_path(start)
 
     def show(self):
         self.map_drawer.draw_map(self.map, self.path)
