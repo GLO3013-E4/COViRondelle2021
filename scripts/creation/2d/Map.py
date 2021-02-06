@@ -97,6 +97,16 @@ class Map:
         end = self.get_end_node()
         end.role = TileRole.END
 
+        distance = (self.obstacle_puck_width // self.node_size) + 1
+        self.add_pickup_cushion(end, distance)
+
+    def add_pickup_cushion(self, node, distance):
+        if distance > 0:
+            for neighbor in node.neighbors:
+                if neighbor.role is TileRole.EMPTY:
+                    neighbor.role = TileRole.END
+                self.add_pickup_cushion(neighbor, distance - 1)
+
     def get_start_node(self):
         return self.node_matrix[self.start_node_location[1]//self.node_size][self.start_node_location[0]//self.node_size]
 

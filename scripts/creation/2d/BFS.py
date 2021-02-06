@@ -14,7 +14,7 @@ class BFS(PathfinderAlgorithm):
             path = queue.pop(0)  # prendre une actual queue pour que ce soit plus efficace
             node = path[-1]
 
-            if node == end:
+            if node.role is TileRole.END:
                 return path
 
             for neighbor in node.neighbors:
