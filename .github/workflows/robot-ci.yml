@@ -21,8 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install Tesseract
-        run: apt-get install tesseract-ocr
       - name: Build docker image
         run: docker build -t robot .
       - name: Lint application
