@@ -6,11 +6,14 @@ from scripts.processing.process_image_to_black_and_white import process_image_to
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", type=str, help="path to input image")
-ap.add_argument("-e", "--embed-camera", type=bool, help="use embed camera to get image", default=False)
+ap.add_argument("-e", "--embed-camera", type=bool,
+                help="use embed camera to get image", default=False)
 ap.add_argument("-p", "--path", type=str, help="path to tesseract.exe")
 args = vars(ap.parse_args())
 
-image = capture_image_from_embed_camera() if args["embed-camera"] else capture_image_from_path(args["image"])
+image = capture_image_from_embed_camera() \
+    if args["embed-camera"] \
+    else capture_image_from_path(args["image"])
 
 threshold = process_image_to_black_and_white(image)
 
