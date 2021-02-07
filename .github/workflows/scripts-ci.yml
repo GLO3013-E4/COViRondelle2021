@@ -24,13 +24,6 @@ jobs:
       - name: Build docker image
         run: docker build -t scripts .
       - name: Lint application
-        # TODO : Can we just write this in a single command?
-        run: |
-          docker run scripts pylint capture
-          docker run scripts pylint detection
-          docker run scripts pylint mapping
-          docker run scripts pylint processing
-          docker run scripts pylint samples
-          docker run scripts pylint tests
+        run: docker run scripts pylint *
       - name: Test application
         run: docker run scripts pytest tests
