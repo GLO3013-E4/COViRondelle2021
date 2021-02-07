@@ -6,9 +6,8 @@ capture = cv2.VideoCapture(0)
 if not capture.isOpened():
     print("Could not open camera")
 
-
-ret,frame = capture.read()
-ret,threshold = cv2.threshold(frame,127,255,cv2.THRESH_BINARY)
+ret, frame = capture.read()
+ret, threshold = cv2.threshold(frame, 127, 255, cv2.THRESH_BINARY)
 
 while True:
     cv2.imshow('preview', threshold)
