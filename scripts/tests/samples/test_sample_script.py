@@ -1,4 +1,4 @@
-from scripts.samples.sample_script import sum_numbers
+from scripts.src.samples.sample_script import sum_numbers
 
 
 def test_given_no_number_then_return_zero():
