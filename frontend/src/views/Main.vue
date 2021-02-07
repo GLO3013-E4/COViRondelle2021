@@ -11,11 +11,12 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import RobotInformations from "../layouts/RobotInformations.vue";
+import MainLayout from "../layouts/MainLayout.vue";
+
 @Component({
-  components: { RobotInformations },
+  components: { MainLayout: MainLayout }
 })
-export default class MainView extends Vue {}
+export default class Main extends Vue {}
 </script>
 
 <style></style>

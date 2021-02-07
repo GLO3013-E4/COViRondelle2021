@@ -2,6 +2,7 @@
   <v-card width="90%" height="700">
     <v-row>
       <v-col>
+        <!-- TODO : Layout should have components injected. The main view should add these components -->
         <CyclesInformations />
       </v-col>
       <v-col>
@@ -24,11 +25,11 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Consumptions from "../components/Consumptions/Consumptions.vue";
-import CyclesInformations from "../components/CyclesInformations/CyclesInformations.vue";
-import PlannedTrajectory from "../components/PlannedTrajectory/PlannedTrajectory.vue";
-import RealTrajectory from "../components/RealTrajectory/RealTrajectory.vue";
-import StationInformations from "../components/StationInformations/StationInformations.vue";
+import Consumptions from "../components/consumptions/ConsumptionList.vue";
+import CyclesInformations from "../components/cycles/CyclesInformations.vue";
+import PlannedTrajectory from "../components/trajectories/RealTrajectory.vue";
+import RealTrajectory from "../components/trajectories/RealTrajectory.vue";
+import StationInformations from "../components/station/StationInformations.vue";
 
 @Component({
   components: {
@@ -36,8 +37,8 @@ import StationInformations from "../components/StationInformations/StationInform
     CyclesInformations,
     StationInformations,
     PlannedTrajectory,
-    RealTrajectory,
-  },
+    RealTrajectory
+  }
 })
 export default class RobotInformations extends Vue {}
 </script>
