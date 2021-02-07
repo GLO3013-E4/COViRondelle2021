@@ -26,11 +26,11 @@ jobs:
       - name: Lint application
         # TODO : Can we just write this in a single command?
         run: |
-          docker run pylint capture
-          docker run pylint detection
-          docker run pylint mapping
-          docker run pylint processing
-          docker run pylint samples
-          docker run pylint tests
+          docker run scripts pylint capture
+          docker run scripts pylint detection
+          docker run scripts pylint mapping
+          docker run scripts pylint processing
+          docker run scripts pylint samples
+          docker run scripts pylint tests
       - name: Test application
         run: docker run scripts pytest /tests
