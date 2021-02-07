@@ -1,7 +1,5 @@
 # COViRondelle2021 scripts
 
-TODO : Remove this line, I'm testing CI
-
 Development scripts for COViRondelle2021
 
 ## Installation
