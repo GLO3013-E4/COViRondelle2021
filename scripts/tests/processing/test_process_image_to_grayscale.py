@@ -1,15 +1,7 @@
-from scripts.capture.capture_image_from_path import capture_image_from_path
 from scripts.processing.process_image_to_grayscale import process_image_to_grayscale
+from scripts.tests.util.command_panel_helper import command_panel_images
 
-valid_paths = [
-    'data/images/command_panel_example_1.png',
-    'data/images/command_panel_example_2.png'
-]
-
-images = []
-
-for valid_path in valid_paths:
-    images.append(capture_image_from_path(valid_path))
+images = command_panel_images
 
 
 def test_given_image_then_grayscale_is_valid():
