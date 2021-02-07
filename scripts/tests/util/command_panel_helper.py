@@ -1,4 +1,4 @@
-from scripts.capture.capture_image_from_path import capture_image_from_path
+from scripts.src.capture.capture_image_from_path import capture_image_from_path
 
 command_panel_images_path = [
     'data/images/command_panel_example_1.png',

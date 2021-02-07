@@ -1,6 +1,6 @@
-from scripts.mapping.map_letters import map_letters
-from scripts.tests.util.command_panel_helper \
-    import command_panel_images_letters, command_panel_images
+from scripts.src.mapping.map_letters import map_letters
+from scripts.tests.util.command_panel_helper import command_panel_images, \
+    command_panel_images_letters
 
 images = command_panel_images
 expected_letters_for_images = command_panel_images_letters
