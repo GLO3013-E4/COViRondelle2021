@@ -1,25 +1,17 @@
-import pytesseract
+import argparse
+from scripts.capture.capture_image_from_embed_camera import capture_image_from_embed_camera
+from scripts.capture.capture_image_from_path import capture_image_from_path
+from scripts.mapping.map_letters import map_letters
+from scripts.processing.process_image_to_black_and_white import process_image_to_black_and_white
 
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", type=str, help="path to input image")
+ap.add_argument("-e", "--embed-camera", type=bool, help="use embed camera to get image", default=False)
+ap.add_argument("-p", "--path", type=str, help="path to tesseract.exe")
+args = vars(ap.parse_args())
 
-CUSTOM_CONFIG = r'--oem 3 --psm 11 -c'
-CORRECT_AMOUNT_OF_LETTERS = 9
+image = capture_image_from_embed_camera() if args["embed-camera"] else capture_image_from_path(args["image"])
 
+threshold = process_image_to_black_and_white(image)
 
-# TODO : Test this
-def letter_mapping(image):
-    found_letters = pytesseract.image_to_string(image, config=CUSTOM_CONFIG)
-
-    print(f'Found letters : {found_letters}')
-    lookup_letters = ['A', 'B', 'C', 'D']
-    mapped_letters = []
-
-    for found_letter in found_letters:
-        if found_letter in lookup_letters:
-            mapped_letters.append(found_letter)
-
-    print(f'Correct letters : {mapped_letters}')
-
-    if len(mapped_letters) is not CORRECT_AMOUNT_OF_LETTERS:
-        raise Exception(f'Incorrect amount of mapped letters : {len(mapped_letters)} (wanted : {CORRECT_AMOUNT_OF_LETTERS}')
-
-    return mapped_letters
+letters = map_letters(threshold)
