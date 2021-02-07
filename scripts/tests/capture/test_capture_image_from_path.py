@@ -1,6 +1,6 @@
 import pytest
 
-from scripts.capture.capture_image_from_path import capture_image_from_path
+from scripts.src.capture.capture_image_from_path import capture_image_from_path
 from scripts.tests.util.command_panel_helper import command_panel_images_path
 
 

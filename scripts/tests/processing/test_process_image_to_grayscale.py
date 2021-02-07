@@ -1,4 +1,4 @@
-from scripts.processing.process_image_to_grayscale import process_image_to_grayscale
+from scripts.src.processing.process_image_to_grayscale import process_image_to_grayscale
 from scripts.tests.util.command_panel_helper import command_panel_images
 
 images = command_panel_images
