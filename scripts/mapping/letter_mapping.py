@@ -2,7 +2,7 @@ import argparse
 from scripts.capture.capture_image_from_embed_camera import capture_image_from_embed_camera
 from scripts.capture.capture_image_from_path import capture_image_from_path
 from scripts.mapping.map_letters import map_letters
-from scripts.processing.process_image_to_black_and_white import process_image_to_black_and_white
+from scripts.processing.process_image_to_grayscale import process_image_to_grayscale
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", type=str, help="path to input image")
@@ -15,6 +15,6 @@ image = capture_image_from_embed_camera() \
     if args["embed-camera"] \
     else capture_image_from_path(args["image"])
 
-threshold = process_image_to_black_and_white(image)
+grayscale = process_image_to_grayscale(image)
 
-letters = map_letters(threshold)
+letters = map_letters(grayscale)
