@@ -13,6 +13,7 @@ import Main from "./views/Main.vue";
     Main
   }
 })
+
 export default class App extends Vue {}
 </script>
 

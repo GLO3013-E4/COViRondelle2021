@@ -1,66 +1,29 @@
-# COViRondelle2021 frontend
+# frontend2
 
-Vue.js frontend application for COViRondelle2021
-
-- Communicates with `station` using websockets
-
-## Installation
-
-Run the following commands in this directory.
-
-With Docker :
-```shell
-docker build -t frontend .
-docker build --no-cache -t frontend . # If you have issues with packages not updating or installing
+## Project setup
+```
+npm install
 ```
 
-Without Docker :
+### Compiles and hot-reloads for development
 ```
-yarn install
-```
-
-## Usage
-
-### Execute app
-
-Run the following commands in this directory.
-
-With Docker :
-```shell
-docker run frontend
+npm run serve
 ```
 
-Without Docker :
+### Compiles and minifies for production
 ```
-yarn serve
-```
-
-The app will be running on [localhost:5000](http://localhost:5000).
-
-## Contributing
-
-The following commands do not concern Docker.
-
-### Run tests
-
-```
-yarn test
+npm run build
 ```
 
-### Check code style
-
-Verify code style :
+### Run your unit tests
 ```
-yarn lint
+npm run test:unit
 ```
 
-Fix code style :
+### Lints and fixes files
 ```
-yarn lint --fix
+npm run lint
 ```
 
-### Build production app
-
-```
-yarn build
-```
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
