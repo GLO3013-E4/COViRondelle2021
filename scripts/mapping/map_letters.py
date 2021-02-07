@@ -5,7 +5,6 @@ CUSTOM_CONFIG = r'--oem 3 --psm 11 -c'
 CORRECT_AMOUNT_OF_LETTERS = 9
 
 
-# TODO : Test this
 def map_letters(image):
     found_letters = pytesseract.image_to_string(image, config=CUSTOM_CONFIG)
 
