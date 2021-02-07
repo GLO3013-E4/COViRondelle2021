@@ -10,7 +10,7 @@ def capture_image_from_embed_camera():
     if not capture.isOpened():
         raise Exception('Could not open camera')
 
-    ret, frame = capture.read()
+    _, frame = capture.read()
 
     while True:
         cv2.imshow('preview', frame)
