@@ -33,9 +33,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Lint scripts
+      # TODO : Can we just write this in a single command?
       run: |
+        pylint capture
         pylint detection
         pylint mapping
+        pylint processing
         pylint samples
         pylint tests
     - name: Test scripts
