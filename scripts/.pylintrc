@@ -4,3 +4,7 @@ disable=
     C0116, # missing-function-docstring
     E1101, # no-member
     W0511, # fixme
+ignore=
+    Dockerfile,
+    README.md,
+    requirements.txt,
