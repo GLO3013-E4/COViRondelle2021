@@ -33,4 +33,4 @@ jobs:
           docker run scripts pylint samples
           docker run scripts pylint tests
       - name: Test application
-        run: docker run scripts pytest /tests
+        run: docker run scripts pytest tests
