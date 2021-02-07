@@ -1,13 +1,11 @@
 import pytest
 
 from scripts.capture.capture_image_from_path import capture_image_from_path
+from scripts.tests.util.command_panel_helper import command_panel_images_path
 
 
 def test_given_valid_path_then_image_is_valid():
-    valid_paths = [
-        'data/images/command_panel_example_1.png',
-        'data/images/command_panel_example_2.png'
-    ]
+    valid_paths = command_panel_images_path
 
     for valid_path in valid_paths:
         assert_image_is_valid(valid_path)

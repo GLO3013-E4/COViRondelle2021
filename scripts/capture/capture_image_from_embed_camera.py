@@ -3,7 +3,7 @@ import cv2
 STOP_KEY = 'q'  # TODO : Is there a better key we could use?
 
 
-# TODO : Test this
+# TODO : Test this (can we?)
 def capture_image_from_embed_camera():
     capture = cv2.VideoCapture(0)
 

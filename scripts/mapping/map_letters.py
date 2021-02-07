@@ -19,6 +19,7 @@ def map_letters(image):
 
     print(f'Correct letters : {mapped_letters}')
 
+    # TODO : Test incorrect amount of letters
     if len(mapped_letters) is not CORRECT_AMOUNT_OF_LETTERS:
         raise Exception(f'Incorrect amount of mapped letters : {len(mapped_letters)}'
                         f'(wanted : {CORRECT_AMOUNT_OF_LETTERS}')
