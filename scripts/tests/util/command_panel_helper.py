@@ -11,6 +11,6 @@ for path in command_panel_images_path:
     command_panel_images.append(capture_image_from_path(path))
 
 command_panel_images_letters = [
-    ['A', 'B', 'C', 'C', 'B', 'C', 'A', 'D', 'A'],
+    ['A', 'B', 'D', 'C', 'B', 'C', 'A', 'D', 'A'],
     ['C', 'B', 'A', 'B', 'A', 'C', 'D', 'A', 'D']
 ]
