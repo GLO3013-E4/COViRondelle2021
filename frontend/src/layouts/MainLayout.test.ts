@@ -13,10 +13,6 @@ describe("When mounting main layout", () => {
     expect(wrapper.vm).toBeTruthy();
   });
 
-  it("Should contain consumptions", () => {
-    expect(wrapper.findComponent(ConsumptionInformation).vm).toBeTruthy();
-  });
-
   it("Should contain consumption information", () => {
     expect(wrapper.findComponent(ConsumptionInformation).vm).toBeTruthy();
   });
