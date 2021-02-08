@@ -27,7 +27,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import ConsumptionInformation from "../components/consumptions/ConsumptionInformation.vue";
 import CycleInformation from "../components/cycles/CycleInformation.vue";
-import PlannedTrajectory from "../components/trajectories/RealTrajectory.vue";
+import PlannedTrajectory from "../components/trajectories/PlannedTrajectory.vue";
 import RealTrajectory from "../components/trajectories/RealTrajectory.vue";
 import StationInformation from "../components/station/StationInformation.vue";
 

@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "storybook": "start-storybook -p 9001 -c .storybook -s public"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -16,6 +17,7 @@
     "vuetify": "^2.4.3"
   },
   "devDependencies": {
+    "@storybook/vue": "^6.1.17",
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
