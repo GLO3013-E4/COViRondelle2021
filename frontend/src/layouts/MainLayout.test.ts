@@ -2,7 +2,7 @@ import MainLayout from "@/layouts/MainLayout.vue";
 import ConsumptionInformation from "@/components/consumptions/ConsumptionInformation.vue";
 import CycleInformation from "@/components/cycles/CycleInformation.vue";
 import StationInformation from "@/components/station/StationInformation.vue";
-import PlannedTrajectory from "@/components/trajectories/RealTrajectory.vue";
+import PlannedTrajectory from "@/components/trajectories/PlannedTrajectory.vue";
 import RealTrajectory from "@/components/trajectories/RealTrajectory.vue";
 import useVuetify from "@/hooks/useVuetify";
 
