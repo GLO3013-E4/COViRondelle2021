@@ -1,11 +1,11 @@
 import MainLayout from "@/layouts/MainLayout.vue";
 
 export default {
-  title: 'layout/MainLayout',
+  title: 'layouts/MainLayout',
   component: MainLayout,
 };
 
 export const Default = () => ({
   components: { MainLayout },
-  template: `<MainLayout/>`
+  template: `<main-layout/>`
 });

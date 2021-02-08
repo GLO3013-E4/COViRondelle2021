@@ -7,5 +7,5 @@ export default {
 
 export const Default = () => ({
   components: { CycleInformation },
-  template: `<PlannedTrajectory/>`
+  template: `<cycle-information/>`
 });
