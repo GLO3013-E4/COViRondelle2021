@@ -2,6 +2,15 @@
 
 Development scripts for COViRondelle2021
 
+## Dependencies
+
+Using Docker prevents having to install the needed dependencies on the system. For testing purposes, it's really simpler.
+
+Otherwise, here are some links for UNIX-based OS :
+
+- [OpenCV](https://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html)
+- [Tesseract](https://www.pyimagesearch.com/2017/07/03/installing-tesseract-for-ocr/)
+ 
 ## Installation
 
 With Docker :
