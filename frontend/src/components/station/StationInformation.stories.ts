@@ -7,5 +7,5 @@ export default {
 
 export const Default = () => ({
   components: { StationInformation },
-  template: `<PlannedTrajectory/>`
+  template: `<station-information/>`
 });

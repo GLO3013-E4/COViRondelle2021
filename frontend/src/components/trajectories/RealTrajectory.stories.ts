@@ -7,5 +7,5 @@ export default {
 
 export const Default = () => ({
   components: { RealTrajectory },
-  template: `<RealTrajectory/>`
+  template: `<real-trajectory/>`
 });
