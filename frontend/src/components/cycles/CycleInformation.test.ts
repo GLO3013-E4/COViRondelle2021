@@ -1,12 +1,12 @@
 import Vuetify from "vuetify";
 import { mount } from "@vue/test-utils";
 
-import Main from "@/views/Main.vue";
+import CycleInformation from "@/components/cycles/CycleInformation.vue";
 
 const vuetify = new Vuetify();
-const wrapper = mount(Main, { vuetify });
+const wrapper = mount(CycleInformation, { vuetify });
 
-describe("When mounting main view", () => {
+describe("When mounting cycle information", () => {
   it("Should mount", () => {
     expect(wrapper.vm).toBeTruthy();
   });
