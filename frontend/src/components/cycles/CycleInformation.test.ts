@@ -1,10 +1,7 @@
-import Vuetify from "vuetify";
-import { mount } from "@vue/test-utils";
-
 import CycleInformation from "@/components/cycles/CycleInformation.vue";
+import useVuetify from "@/hooks/useVuetify";
 
-const vuetify = new Vuetify();
-const wrapper = mount(CycleInformation, { vuetify });
+const wrapper = useVuetify(CycleInformation);
 
 describe("When mounting cycle information", () => {
   it("Should mount", () => {

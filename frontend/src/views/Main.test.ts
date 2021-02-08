@@ -1,10 +1,7 @@
-import Vuetify from "vuetify";
-import { mount } from "@vue/test-utils";
-
 import Main from "@/views/Main.vue";
+import useVuetify from "@/hooks/useVuetify";
 
-const vuetify = new Vuetify();
-const wrapper = mount(Main, { vuetify });
+const wrapper = useVuetify(Main);
 
 describe("When mounting main view", () => {
   it("Should mount", () => {

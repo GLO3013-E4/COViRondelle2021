@@ -1,10 +1,7 @@
-import Vuetify from "vuetify";
-import { mount } from "@vue/test-utils";
-
+import useVuetify from "@/hooks/useVuetify";
 import RealTrajectory from "@/components/trajectories/RealTrajectory.vue";
 
-const vuetify = new Vuetify();
-const wrapper = mount(RealTrajectory, { vuetify });
+const wrapper = useVuetify(RealTrajectory);
 
 describe("When mounting real trajectory", () => {
   it("Should mount", () => {
