@@ -10,25 +10,10 @@
       </v-row>
       <v-row no-gutters>
         <v-col sm="6">
-          <v-card>
-            <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
-              <h5 class="white--text">
-                Station de résistance
-              </h5>
-            </v-card-title>
-            <v-row>
-              <v-card-text>
-                <h5 class="text-primary">{{ this.resistanceValue }} Ω</h5>
-                <v-avatar
-                  size="30"
-                  v-for="(puckColor, i) in pucksColors"
-                  :key="i"
-                  :color="puckColor"
-                  >{{ i }}
-                </v-avatar>
-              </v-card-text>
-            </v-row>
-          </v-card>
+          <Resistance
+            v-bind:resistanceValue="resistanceValue"
+            v-bind:pucksColors="pucksColors"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -37,9 +22,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import Resistance from "../station/Resistance.vue";
 
 @Component({
-  components: {}
+  components: { Resistance: Resistance }
 })
 export default class StationInformations extends Vue {
   private resistanceValue = 800; //voir l'affichage avec 3 chiffres
