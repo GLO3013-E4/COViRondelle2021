@@ -1,16 +1,16 @@
 <template>
   <v-app>
-    <MainView />
+    <main />
   </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import MainView from "./views/Main.vue";
+import Main from "./views/Main.vue";
 
 @Component({
   components: {
-    MainView
+    Main
   }
 })
 export default class App extends Vue {}

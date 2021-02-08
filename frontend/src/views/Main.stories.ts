@@ -7,5 +7,5 @@ export default {
 
 export const Default = () => ({
   components: { Main },
-  template: `<Main/>`
+  template: `<Main />`
 });
