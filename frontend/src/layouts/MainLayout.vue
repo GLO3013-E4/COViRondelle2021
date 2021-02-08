@@ -40,7 +40,8 @@ import StationInformations from "../components/station/StationInformations.vue";
     RealTrajectory
   }
 })
-export default class RobotInformations extends Vue {}
+
+export default class MainLayout extends Vue {}
 </script>
 
 <style></style>

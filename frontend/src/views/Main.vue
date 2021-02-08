@@ -4,7 +4,7 @@
       <h1 class="font-weight-medium">Robot culinaire</h1>
     </div>
     <div class="d-flex justify-center mt-5">
-      <RobotInformations />
+      <MainLayout />
     </div>
   </v-container>
 </template>
