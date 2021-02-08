@@ -1,11 +1,11 @@
-import MainLayout from "@/layouts/MainLayout.vue";
+import PlannedTrajectory from "@/components/trajectories/PlannedTrajectory.vue";
 
 export default {
-  title: 'layout/MainLayout',
-  component: MainLayout,
+  title: 'components/trajectories/PlannedTrajectory',
+  component: PlannedTrajectory,
 };
 
 export const Default = () => ({
-  components: { MainLayout },
-  template: `<MainLayout/>`
+  components: { PlannedTrajectory },
+  template: `<PlannedTrajectory/>`
 });
