@@ -1,5 +1,5 @@
 <template>
-  <v-card width="90%" height="700">
+  <v-card width="100%" height="700">
     <v-row>
       <v-col>
         <!-- TODO : Layout should have components injected. The main view should add these components -->
@@ -40,7 +40,7 @@ import StationInformations from "../components/station/StationInformations.vue";
     RealTrajectory
   }
 })
-export default class RobotInformations extends Vue {}
+export default class RobotInformation extends Vue {}
 </script>
 
 <style></style>

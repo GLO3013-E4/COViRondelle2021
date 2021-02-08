@@ -4,17 +4,17 @@
       <h1 class="font-weight-medium">Robot culinaire</h1>
     </div>
     <div class="d-flex justify-center mt-5">
-      <RobotInformations />
+      <RobotInformation />
     </div>
   </v-container>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import MainLayout from "../layouts/MainLayout.vue";
+import RobotInformation from "../layouts/MainLayout.vue";
 
 @Component({
-  components: { MainLayout: MainLayout }
+  components: { RobotInformation: RobotInformation }
 })
 export default class Main extends Vue {}
 </script>
