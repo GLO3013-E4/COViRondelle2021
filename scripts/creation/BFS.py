@@ -1,6 +1,6 @@
-from PathfinderAlgorithm import PathfinderAlgorithm
-from PathNotFoundException import PathNotFoundException
-from TileRole import TileRole
+from scripts.creation.PathfinderAlgorithm import PathfinderAlgorithm
+from scripts.creation.PathNotFoundException import PathNotFoundException
+from scripts.creation.TileRole import TileRole
 from collections import deque
 
 

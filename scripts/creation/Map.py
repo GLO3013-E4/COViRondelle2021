@@ -1,5 +1,5 @@
-from Node import Node
-from TileRole import TileRole
+from scripts.creation.Node import Node
+from scripts.creation.TileRole import TileRole
 
 
 #TODO: what if l'algo voit que le start/end est dans un obstacle

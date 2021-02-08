@@ -1,8 +1,8 @@
-from Pathfinder import Pathfinder
-from PathfindingAlgorithmFactory import PathfindingAlgorithmFactory
-from params import NODE_SIZE, SAFETY_CUSHION, ROBOT_WIDTH, OBSTACLE_WIDTH, PUCK_WIDTH, OBSTACLE_CUSHION_WIDTH, NODE_IDENTIFIER_WIDTH, PATHFINDING_ALGORITHM, PUCK_CUSHION_WIDTH
-from Map import Map
-from MapDrawer import MapDrawer
+from scripts.creation.Pathfinder import Pathfinder
+from scripts.creation.PathfindingAlgorithmFactory import PathfindingAlgorithmFactory
+from scripts.creation.params import NODE_SIZE, SAFETY_CUSHION, ROBOT_WIDTH, OBSTACLE_WIDTH, PUCK_WIDTH, OBSTACLE_CUSHION_WIDTH, NODE_IDENTIFIER_WIDTH, PATHFINDING_ALGORITHM, PUCK_CUSHION_WIDTH
+from scripts.creation.Map import Map
+from scripts.creation.MapDrawer import MapDrawer
 
 from PIL import Image
 
