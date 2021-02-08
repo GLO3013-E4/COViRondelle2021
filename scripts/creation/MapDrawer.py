@@ -9,32 +9,25 @@ class MapDrawer:
         self.image = image
         self.width, self.height = self.image.size
         self.draw = ImageDraw.Draw(self.image)
+        self.role_to_drawing_function = self.get_role_to_drawing_function()
+
+    def get_role_to_drawing_function(self):
+        return {
+            TileRole.OBSTACLE: self.draw_obstacle,
+            TileRole.CUSHION: self.draw_cushion,
+            TileRole.PUCK: self.draw_puck,
+            TileRole.START: self.draw_start_node,
+            TileRole.END: self.draw_end_node,
+            TileRole.EMPTY: lambda x: None
+        }
 
     def draw_map(self, map, path):
         self.draw_board()
 
         for line in map.get_node_matrix():
             for node in line:
-                if node.role is TileRole.OBSTACLE:
-                    self.draw_obstacle(node)
-
-                elif node.role is TileRole.CUSHION:
-                    self.draw_cushion(node)
-
-                elif node.role is TileRole.PUCK:
-                    self.draw_puck(node)
-
-                elif node.role is TileRole.START:
-                    self.draw_start_node(node)
-
-                elif node.role is TileRole.END:
-                    self.draw_end_node(node)
-
-                elif node.role is TileRole.EMPTY:
-                    pass
-
-                else:
-                    raise  # TODO:
+                drawing_function = self.role_to_drawing_function[node.role]
+                drawing_function(node)
 
         self.draw_path(path)
 

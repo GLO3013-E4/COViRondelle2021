@@ -6,4 +6,4 @@ class PathfindingAlgorithmFactory:
         if algorithm == "BFS":
             return BFS()
         else:
-            raise  # TODO:
+            raise Exception("Chosen pathfinding has not yet been implemented.")
