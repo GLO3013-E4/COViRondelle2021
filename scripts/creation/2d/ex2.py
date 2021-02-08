@@ -4,8 +4,6 @@ from params import NODE_SIZE, SAFETY_CUSHION, ROBOT_WIDTH, OBSTACLE_WIDTH, PUCK_
 from Map import Map
 from MapDrawer import MapDrawer
 
-import math
-
 from PIL import Image
 
 
@@ -38,27 +36,3 @@ if __name__ == '__main__':
 
     pathfinder.find_square_matrix_path()
     pathfinder.show()
-
-
-
-
-    """
-    #angle entre départ et préhenseur
-    x1, y1 = start
-    x2, y2 = gripper
-    initial_angle = math.atan2(y2-y1, x2-x1)*180/math.pi
-
-    #angle entre final et centre puck
-    x1, y1 = end
-    x2, y2 = pathfinder.path[-1]
-    final_angle = math.atan2(y2-y1,x2-x1)*180/math.pi
-
-
-
-
-    target = 180 - final_angle * 180 / math.pi
-    rotation = target - initial_angle * 180 / math.pi
-    """
-
-
-

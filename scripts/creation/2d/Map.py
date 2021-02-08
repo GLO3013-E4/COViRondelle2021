@@ -2,8 +2,6 @@ from Node import Node
 from TileRole import TileRole
 
 
-#TODO: ajuster si la destination est une puck et que c'est vu un peu comme un obstacle
-#TODO: (l'algo ne réussira jamais à se rendre à la node sans ajustements)
 #TODO: what if l'algo voit que le start/end est dans un obstacle
 #TODO: what if les seules places que le robot peut se déplacer c'est dans un "obstacle" (peut-être juste ajuster les cushions)
 
@@ -60,10 +58,10 @@ class Map:
                         (node.matrix_center[0], node.matrix_center[1] - 1, "180"),
                         (node.matrix_center[0], node.matrix_center[1] + 1, "0"),
 
-                        (node.matrix_center[0] - 1, node.matrix_center[1] - 1, "135"),
-                        (node.matrix_center[0] - 1, node.matrix_center[1] + 1, "45"),
-                        (node.matrix_center[0] + 1, node.matrix_center[1] - 1, "225"),
-                        (node.matrix_center[0] + 1, node.matrix_center[1] + 1, "315"),
+                        #(node.matrix_center[0] - 1, node.matrix_center[1] - 1, "135"),
+                        #(node.matrix_center[0] - 1, node.matrix_center[1] + 1, "45"),
+                        #(node.matrix_center[0] + 1, node.matrix_center[1] - 1, "225"),
+                        #(node.matrix_center[0] + 1, node.matrix_center[1] + 1, "315"),
                     ]
 
                     if (x >= 0 and x < len(self.node_matrix[0]) and y >= 0 and y < len(self.node_matrix) and (
@@ -85,7 +83,6 @@ class Map:
             node = self.node_matrix[y // self.node_size][x // self.node_size]
             node.role = TileRole.OBSTACLE
 
-            # add cushion
             distance = (self.obstacle_cushion_width // self.node_size) + 1
             self.add_cushion(node, distance)
 
@@ -94,7 +91,6 @@ class Map:
             node = self.node_matrix[y // self.node_size][x // self.node_size]
             node.role = TileRole.PUCK
 
-            # add cushion
             distance = (self.obstacle_puck_width // self.node_size) + 1
             self.add_cushion(node, distance)
 

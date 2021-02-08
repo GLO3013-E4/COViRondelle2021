@@ -25,11 +25,9 @@ class MapDrawer:
                     self.draw_puck(node)
 
                 elif node.role is TileRole.START:
-                    #TODO:add role start + end juste à cause du drawer?
                     self.draw_start_node(node)
 
                 elif node.role is TileRole.END:
-                    #TODO:add role start + end juste à cause du drawer?
                     self.draw_end_node(node)
 
                 elif node.role is TileRole.EMPTY:

@@ -1,17 +1,18 @@
 from PathfinderAlgorithm import PathfinderAlgorithm
 from PathNotFoundException import PathNotFoundException
 from TileRole import TileRole
+from collections import deque
 
 
 class BFS(PathfinderAlgorithm):
     def find_path(self, start):
-        queue = []
+        queue = deque()
         visited = {start}
 
         queue.append([start])
 
         while queue:
-            path = queue.pop(0)  # prendre une actual queue pour que ce soit plus efficace
+            path = queue.popleft()
             node = path[-1]
 
             if node.role is TileRole.END:
