@@ -11,7 +11,7 @@ import RealTrajectory from "@/components/trajectories/RealTrajectory.vue";
 const vuetify = new Vuetify();
 const wrapper = mount(MainLayout, { vuetify });
 
-describe("When mounting MainLayout", () => {
+describe("When mounting main layout", () => {
   it("Should mount", () => {
     expect(wrapper.vm).toBeTruthy();
   });
