@@ -1,4 +1,4 @@
-from scripts.creation.BFS import BFS
+from BFS import BFS
 
 
 class PathfindingAlgorithmFactory:

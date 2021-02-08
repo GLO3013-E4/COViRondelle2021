@@ -1,4 +1,4 @@
-from scripts.creation.TileRole import TileRole
+from TileRole import TileRole
 
 
 class Node:
