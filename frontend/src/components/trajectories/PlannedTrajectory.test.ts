@@ -1,10 +1,7 @@
-import Vuetify from "vuetify";
-import { mount } from "@vue/test-utils";
-
 import PlannedTrajectory from "@/components/trajectories/PlannedTrajectory.vue";
+import useVuetify from "@/hooks/useVuetify";
 
-const vuetify = new Vuetify();
-const wrapper = mount(PlannedTrajectory, { vuetify });
+const wrapper = useVuetify(PlannedTrajectory);
 
 describe("When mounting planned trajectory", () => {
   it("Should mount", () => {
