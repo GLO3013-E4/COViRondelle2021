@@ -9,7 +9,7 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-col sm="6">
+        <v-col sm="5">
           <Resistance
             v-bind:resistanceValue="resistanceValue"
             v-bind:pucksColors="pucksColors"
