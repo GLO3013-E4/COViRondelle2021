@@ -1,10 +1,7 @@
-import Vuetify from "vuetify";
-import { mount } from "@vue/test-utils";
-
 import ConsumptionInformation from "@/components/consumptions/ConsumptionInformation.vue";
+import useVuetify from "@/hooks/useVuetify";
 
-const vuetify = new Vuetify();
-const wrapper = mount(ConsumptionInformation, { vuetify });
+const wrapper = useVuetify(ConsumptionInformation);
 
 describe("When mounting consumption information", () => {
   it("Should mount", () => {

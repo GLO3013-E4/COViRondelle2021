@@ -1,15 +1,12 @@
-import Vuetify from "vuetify";
-import { mount } from "@vue/test-utils";
-
 import MainLayout from "@/layouts/MainLayout.vue";
 import ConsumptionInformation from "@/components/consumptions/ConsumptionInformation.vue";
 import CycleInformation from "@/components/cycles/CycleInformation.vue";
 import StationInformation from "@/components/station/StationInformation.vue";
 import PlannedTrajectory from "@/components/trajectories/RealTrajectory.vue";
 import RealTrajectory from "@/components/trajectories/RealTrajectory.vue";
+import useVuetify from "@/hooks/useVuetify";
 
-const vuetify = new Vuetify();
-const wrapper = mount(MainLayout, { vuetify });
+const wrapper = useVuetify(MainLayout);
 
 describe("When mounting main layout", () => {
   it("Should mount", () => {

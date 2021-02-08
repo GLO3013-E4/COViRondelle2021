@@ -1,10 +1,7 @@
-import Vuetify from "vuetify";
-import { mount } from "@vue/test-utils";
-
 import StationInformation from "@/components/station/StationInformation.vue";
+import useVuetify from "@/hooks/useVuetify";
 
-const vuetify = new Vuetify();
-const wrapper = mount(StationInformation, { vuetify });
+const wrapper = useVuetify(StationInformation);
 
 describe("When mounting station information", () => {
   it("Should mount", () => {
