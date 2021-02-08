@@ -1,6 +1,6 @@
 <template>
-  <v-card class="d-flex justify-center" color="#ededed" height="280">
-    <h3>Consumptions</h3>
+  <v-card class="d-flex justify-center" color="#ededed" height="300">
+    <h3>Cycle information</h3>
   </v-card>
 </template>
 
@@ -10,7 +10,7 @@ import { Component, Vue } from "vue-property-decorator";
 @Component({
   components: {}
 })
-export default class Consumptions extends Vue {}
+export default class CycleInformation extends Vue {}
 </script>
 
 <style></style>
