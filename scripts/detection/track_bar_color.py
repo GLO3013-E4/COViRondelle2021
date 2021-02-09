@@ -2,19 +2,11 @@ import cv2
 import numpy as np
 import stack_images
 
-image_black = np.zeros((512, 512, 3), np.uint8)
-
-# just some reminder functions
-
-cv2.line(image_black, (0, 0), (100, 300), (0, 255, 0), 3)
-cv2.rectangle(image_black, (0, 0), (100, 200), (0, 0, 255), 3)
-cv2.putText(image_black, "Hello world !", (300, 400), cv2.FONT_HERSHEY_SIMPLEX, 1, (200, 150, 200), 2)
-
 
 class TrackBarDetection:
+
     def empty(self, value):
         pass
-    # color detection
 
     def start_track_bar(self):
         cv2.namedWindow("TrackBars")
@@ -55,6 +47,4 @@ class TrackBarDetection:
 
 
 trackBar = TrackBarDetection()
-
 trackBar.start_track_bar()
-
