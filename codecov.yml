@@ -1,0 +1,17 @@
+flags:
+  scripts:
+    paths:
+      - scripts
+    carryforward: true
+  robot:
+    paths:
+      - robot
+    carryforward: true
+  station:
+    paths:
+      - station
+    carryforward: true
+  frontend:
+    paths:
+      - frontend
+    carryforward: true

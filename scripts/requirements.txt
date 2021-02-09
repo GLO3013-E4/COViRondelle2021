@@ -1,4 +1,5 @@
 opencv-python >= 4.5.1.48
 pylint >= 2.6.0
 pytest >= 6.2.2
+pytest-cov >= 2.11.1
 pytesseract >= 0.3.7
