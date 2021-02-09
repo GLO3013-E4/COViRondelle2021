@@ -28,7 +28,7 @@ import Resistance from "../station/Resistance.vue";
   components: { Resistance: Resistance }
 })
 export default class StationInformations extends Vue {
-  private resistanceValue = 800; //voir l'affichage avec 3 chiffres
+  private resistanceValue = 800000; //voir l'affichage avec 3 chiffres, pas couleurs associé
   private pucksColors = ["indigo", "red", "orange"]; //Assume que je reçois un array de couleur
 }
 </script>

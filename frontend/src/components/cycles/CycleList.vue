@@ -1,13 +1,12 @@
 <template>
-  <div>
-    <h3>{{ this.message }}</h3>
-  </div>
+  <div></div>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    message: "test"
-  })
-};
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+
+@Component({
+  components: {}
+})
+export default class CycleList extends Vue {}
 </script>
