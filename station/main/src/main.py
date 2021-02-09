@@ -10,7 +10,7 @@ def callback(data):
     rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
 
-def station():
+def sample_rospy():
     rospy.init_node('station', anonymous=True)
     rospy.Subscriber('chatter', String, callback)
 
@@ -18,4 +18,4 @@ def station():
 
 
 if __name__ == '__main__':
-    station()
+    sample_rospy()
