@@ -1,3 +1,3 @@
 class Handler:
-    def handle(self):
+    def handle(self, handled_data=None):
         pass

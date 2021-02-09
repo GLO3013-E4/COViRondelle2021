@@ -3,9 +3,8 @@ class Command:
         self.handler = handler
         self.next_command = next_command
 
-    # TODO : Send handled data to next command
-    def execute(self):
-        self.handler.handle()
+    def execute(self, handled_data=None):
+        handled_data = self.handler.handle(handled_data)
 
         if self.next_command:
-            self.next_command.execute()
+            self.next_command.execute(handled_data)

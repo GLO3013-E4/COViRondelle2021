@@ -1,12 +1,14 @@
 from main.src.commands.command import Command
 from main.src.handlers.handler import Handler
 
+# TODO : Refactor tests to pass handled data
+
 
 class StubHandler(Handler):
     def __init__(self, on_handle):
         self.on_handle = on_handle
 
-    def handle(self):
+    def handle(self, handled_data=None):
         self.on_handle()
 
 
@@ -14,7 +16,7 @@ class StubCommand(Command):
     def __init__(self, on_execute):
         self.on_execute = on_execute
 
-    def execute(self):
+    def execute(self, handled_data=None):
         self.on_execute()
 
 
