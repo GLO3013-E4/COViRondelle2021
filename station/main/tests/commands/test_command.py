@@ -2,7 +2,7 @@ from main.src.commands.command import Command
 from main.src.commands.handler import Handler
 
 
-class StubHandler:
+class StubHandler(Handler):
     def __init__(self, on_handle):
         self.on_handle = on_handle
 
@@ -10,7 +10,7 @@ class StubHandler:
         self.on_handle()
 
 
-class StubCommand:
+class StubCommand(Command):
     def __init__(self, on_execute):
         self.on_execute = on_execute
 
