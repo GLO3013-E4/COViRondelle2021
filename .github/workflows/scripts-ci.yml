@@ -30,6 +30,4 @@ jobs:
       - name: Upload coverage to Codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: |
-          docker run scripts bash <(curl -s https://codecov.io/env)
-          docker run scripts bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -F scripts
+        run: docker run scripts bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -F scripts
