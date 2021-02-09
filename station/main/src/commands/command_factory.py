@@ -2,7 +2,6 @@ from main.src.commands.command import Command
 
 
 class CommandFactory:
-    # TODO : Receive list of handlers
     @staticmethod
     def create(handlers):
         if len(handlers) == 0:
