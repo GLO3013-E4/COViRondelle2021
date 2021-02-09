@@ -7,7 +7,6 @@ from std_msgs.msg import String
 
 from main.src.commands.command_factory import CommandFactory
 from main.src.handlers.read_image_handler import ReadImageHandler
-
 from main.src.readers.image_reader import ImageReader
 
 
@@ -32,6 +31,9 @@ def start_chain_of_commands():
 
 
 if __name__ == '__main__':
-    sample_rospy()
+    try:
+        sample_rospy()
+    except rospy.ROSInterruptException:
+        pass
 
     start_chain_of_commands()

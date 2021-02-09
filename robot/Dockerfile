@@ -6,14 +6,14 @@ RUN apt-get update \
         python3-pip \
         python3-opencv \
         build-essential \
-        poppler-utils
-        tesseract-ocr
-        libtesseract-dev
-        libleptonica-dev
+        poppler-utils \
+        tesseract-ocr \
+        libtesseract-dev \
+        libleptonica-dev \
     && ldconfig \
     && apt-get install -y --no-install-recommends \
         libsm6 \
-        libxext6
+        libxext6 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
