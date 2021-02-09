@@ -11,6 +11,10 @@ class PuckDetection:
     def __init__(self, image, color):
         self.lower_boundary = LowerBoundary()
         self.upper_boundary = UpperBoundary()
+        self.puck_minimum_dimension = 35
+        self.puck_maximum_dimension = 65
+        self.minimum_area = 1440
+        self.maximum_area = 2200
         self.image = cv2.imread(image)
         self.color_to_detect = color
 
@@ -39,26 +43,38 @@ class PuckDetection:
         for contour in contours:
             area = cv2.contourArea(contour)
 
-            if 1440 < area < 2200:
+            if self.is_in_area(area):
                 perimeter = cv2.arcLength(contour, True)
                 zone_approximation = cv2.approxPolyDP(contour, 0.05 * perimeter, True)
                 object_corner = len(zone_approximation)
                 x, y, width, height = cv2.boundingRect(zone_approximation)
 
-                if 35 < width < 65 and 35 < height < 65:
-                    if object_corner >= 4:
-                        object_type = str(self.color_to_detect) + " puck "
-
-                    else:
-                        object_type = "None"
+                if self.object_is_in_range(width, height):
+                    object_type = self.get_object_name(object_corner)
 
                     cv2.rectangle(image_copy, (x, y), (x + width, y + height), (0, 255, 0), 2)
                     cv2.putText(image_copy, object_type, (x + (width // 2) - 30, y + (height // 3) - 30),
                                 cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
                     break
-        return self._generate_puck_position(x, y, width, height)
+        try:
+            puck_position = self.generate_puck_position(x, y, width, height)
+        except NameError:
+            puck_position = self.generate_puck_position(0, 0, 0, 0)
 
-    def _generate_puck_position(self, x, y, width, height):
+        return puck_position
+
+    def get_object_name(self, object_corner):
+        if object_corner >= 4:
+            object_type = str(self.color_to_detect) + " puck "
+        else:
+            object_type = "None"
+        return object_type
+
+    def object_is_in_range(self, width, height):
+        return self.puck_minimum_dimension < width < self.puck_maximum_dimension and \
+               self.puck_minimum_dimension < height < self.puck_maximum_dimension
+
+    def generate_puck_position(self, x, y, width, height):
         return {
             "x_position": x,
             "y_position": y,
@@ -73,6 +89,9 @@ class PuckDetection:
                 cap.release()
                 cv2.destroyAllWindows()
                 break
+
+    def is_in_area(self, area):
+        return self.minimum_area < area < self.maximum_area
 
 
 ap = argparse.ArgumentParser()
