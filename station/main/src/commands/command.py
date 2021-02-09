@@ -3,6 +3,7 @@ class Command:
         self.handler = handler
         self.next_command = next_command
 
+    # TODO : Send handled data to next command
     def execute(self):
         self.handler.handle()
 

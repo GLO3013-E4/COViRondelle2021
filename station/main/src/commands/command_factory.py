@@ -1,10 +1,16 @@
 from main.src.commands.command import Command
-from main.src.commands.read_image_handler import ReadImageHandler
 
 
 class CommandFactory:
+    # TODO : Receive list of handlers
     @staticmethod
-    def create():
-        read_image_command = Command(ReadImageHandler())
+    def create(handlers):
+        if len(handlers) == 0:
+            raise Exception('No handler provided')
 
-        return [read_image_command]
+        command = Command(handlers.pop())
+
+        for handler in handlers[::-1]:
+            command = Command(handler, command)
+
+        return command
