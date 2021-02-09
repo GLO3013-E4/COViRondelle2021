@@ -1,22 +1,20 @@
 import numpy as np
-import color
 
 
 class LowerBoundary:
+    def __init__(self):
+        self.lower_boundaries = {"purple": [117, 20, 94], "white": [33, 15, 160],
+                  "yellow": [24, 190, 127],
+                  "blue": [101, 50, 0], "orange": [0, 196, 123],
+                  "red": [0, 216, 92],
+                  "brown": [0, 121, 15], "green": [47, 89, 0],
+                  "black": [31, 21, 0],
+                  "grey": [22, 6, 54]}
 
-    def get_lower(self, color_to_detect):
-        if color_to_detect == color.Color.red.value:
-            return self._get_red_lower()
-        elif color_to_detect == color.Color.blue.value:
-            return self._get_blue_lower()
-        elif color_to_detect == color.Color.green.value:
-            return self._get_green_lower()
+    def get_lower_boundaries(self, color_to_detect):
+        if color_to_detect in self.lower_boundaries:
+            return np.array( self.lower_boundaries[color_to_detect])
+        else:
+            return np.zeros(3)
 
-    def _get_red_lower(self):
-        return np.array([136, 87, 111], np.uint8)
 
-    def _get_green_lower(self):
-        return np.array([25, 52, 72], np.uint8)
-
-    def _get_blue_lower(self):
-        return np.array([94, 80, 2], np.uint8)

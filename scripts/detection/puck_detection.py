@@ -24,12 +24,11 @@ class PuckDetection:
         cv2.imshow("Color detection", np.hstack([image_copy]))
         self._destroy_windows()
 
-
     def _find_color(self, image_copy):
         image_hsv = cv2.cvtColor(self.image, cv2.COLOR_BGR2HSV)
 
-        color_lower_boundary = self.lower_boundary.get_lower(self.color_to_detect)
-        color_upper_boundary = self.upper_boundary.get_upper_boundary(self.color_to_detect)
+        color_lower_boundary = self.lower_boundary.get_lower_boundaries(self.color_to_detect)
+        color_upper_boundary = self.upper_boundary.get_upper_boundaries(self.color_to_detect)
 
         mask = cv2.inRange(image_hsv, color_lower_boundary, color_upper_boundary)
         return self._get_contours(mask, image_copy)
@@ -40,22 +39,23 @@ class PuckDetection:
         for contour in contours:
             area = cv2.contourArea(contour)
 
-            if 600 < area < 2500:
+            if 1440 < area < 2200:
                 perimeter = cv2.arcLength(contour, True)
                 zone_approximation = cv2.approxPolyDP(contour, 0.05 * perimeter, True)
                 object_corner = len(zone_approximation)
                 x, y, width, height = cv2.boundingRect(zone_approximation)
 
-                if object_corner >= 4:
-                    object_type = "Rondelle " + str(self.color_to_detect)
+                if 35 < width < 65 and 35 < height < 65:
+                    if object_corner >= 4:
+                        object_type = str(self.color_to_detect) + " puck "
 
-                else:
-                    object_type = "None"
+                    else:
+                        object_type = "None"
 
-                cv2.rectangle(image_copy, (x, y), (x + width, y + height), (0, 255, 0), 2)
-                cv2.putText(image_copy, object_type, (x + (width // 2) - 30, y + (height // 3) - 30),
-                            cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
-
+                    cv2.rectangle(image_copy, (x, y), (x + width, y + height), (0, 255, 0), 2)
+                    cv2.putText(image_copy, object_type, (x + (width // 2) - 30, y + (height // 3) - 30),
+                                cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
+                    break
         return self._generate_puck_position(x, y, width, height)
 
     def _generate_puck_position(self, x, y, width, height):
