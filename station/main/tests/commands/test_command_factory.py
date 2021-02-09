@@ -11,7 +11,7 @@ def test_given_no_handler_when_creating_then_raise_exception():
         command_factory.create([])
 
 
-def test_when_given_one_handler_when_creating_then_add_handler_to_command():
+def test_given_one_handler_when_creating_then_add_handler_to_command():
     handler = Handler()
 
     command = command_factory.create([handler])
@@ -20,7 +20,7 @@ def test_when_given_one_handler_when_creating_then_add_handler_to_command():
     assert command.next_command is None
 
 
-def test_when_given_multiple_handlers_when_creating_then_add_handlers_to_commands():
+def test_given_multiple_handlers_when_creating_then_add_handlers_to_commands():
     first_handler = Handler()
     second_handler = Handler()
 
