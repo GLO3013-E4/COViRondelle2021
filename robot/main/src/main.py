@@ -4,6 +4,8 @@ from std_msgs.msg import String
 
 from main.src.commands.command_factory import CommandFactory
 from main.src.handlers.read_image_handler import ReadImageHandler
+from main.src.handlers.map_letters_handler import MapLettersHandler
+from main.src.mappers.letter_mapper import LetterMapper
 from main.src.readers.image_reader import ImageReader
 
 
@@ -21,7 +23,8 @@ def robot():
 # TODO : This is an example. It's how we will chain commands.
 def start_chain_of_commands():
     first_command = CommandFactory().create([
-        ReadImageHandler(ImageReader(), 'src/data/images/command_panel_example_1.png')
+        ReadImageHandler(ImageReader(), 'src/data/images/command_panel_example_1.png'),
+        MapLettersHandler(LetterMapper())
     ])
 
     first_command.execute()
