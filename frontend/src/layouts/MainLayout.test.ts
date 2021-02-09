@@ -2,7 +2,7 @@ import MainLayout from "@/layouts/MainLayout.vue";
 import ConsumptionInformation from "@/components/consumptions/ConsumptionInformation.vue";
 import CycleInformation from "@/components/cycles/CycleInformation.vue";
 import StationInformation from "@/components/station/StationInformation.vue";
-import PlannedTrajectory from "@/components/trajectories/RealTrajectory.vue";
+import PlannedTrajectory from "@/components/trajectories/PlannedTrajectory.vue";
 import RealTrajectory from "@/components/trajectories/RealTrajectory.vue";
 import useVuetify from "@/hooks/useVuetify";
 
@@ -11,10 +11,6 @@ const wrapper = useVuetify(MainLayout);
 describe("When mounting main layout", () => {
   it("Should mount", () => {
     expect(wrapper.vm).toBeTruthy();
-  });
-
-  it("Should contain consumptions", () => {
-    expect(wrapper.findComponent(ConsumptionInformation).vm).toBeTruthy();
   });
 
   it("Should contain consumption information", () => {
