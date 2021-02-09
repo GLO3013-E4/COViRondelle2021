@@ -1,4 +1,4 @@
-from main.src.commands.handler import Handler
+from main.src.handlers.handler import Handler
 
 
 # TODO : This is a sample handler, it should be removed when real handlers will be implemented

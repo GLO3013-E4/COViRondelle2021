@@ -1,5 +1,5 @@
 from main.src.commands.command import Command
-from main.src.commands.handler import Handler
+from main.src.handlers.handler import Handler
 
 
 class StubHandler(Handler):
