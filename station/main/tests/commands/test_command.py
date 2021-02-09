@@ -3,7 +3,7 @@ from unittest.mock import call
 from main.src.commands.command import Command
 from main.src.handlers.handler import Handler
 
-once_handled_data = 'once_handled_data'
+ONCE_HANDLED_DATA = 'ONCE_HANDLED_DATA'
 
 
 class StubHandler(Handler):
@@ -14,7 +14,9 @@ class StubHandler(Handler):
         self.on_handle(handled_data)
 
         if handled_data is None:
-            return once_handled_data
+            return ONCE_HANDLED_DATA
+
+        return None
 
 
 def test_when_executing_then_handle(mocker):
@@ -32,4 +34,4 @@ def test_given_next_command_when_executing_then_pass_handled_data(mocker):
 
     command.execute()
 
-    stub.assert_has_calls([call(None), call(once_handled_data)])
+    stub.assert_has_calls([call(None), call(ONCE_HANDLED_DATA)])
