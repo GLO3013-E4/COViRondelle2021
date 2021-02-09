@@ -29,5 +29,8 @@ jobs:
         run: docker run scripts pytest --cov=./ --cov-report=xml tests
       - name: Upload coverage to Codecov
         env:
+          CI: "true"
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: docker run scripts bash <(curl -s https://codecov.io/bash) -F scripts
+        run: |
+          curl -s https://codecov.io/bash
+          bash -s -- -t $CODECOV_TOKEN
