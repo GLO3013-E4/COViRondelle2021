@@ -2,7 +2,6 @@ import os
 import cv2
 
 
-# TODO : Test this
 class ImageReader:
     @staticmethod
     def read_image_from_path(path):
