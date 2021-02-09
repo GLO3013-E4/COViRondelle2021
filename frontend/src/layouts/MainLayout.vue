@@ -3,20 +3,20 @@
     <v-row>
       <v-col>
         <!-- TODO : Layout should have components injected. The main view should add these components -->
-        <CyclesInformations />
+        <cycle-information />
       </v-col>
       <v-col>
-        <StationInformations />
+        <station-information />
       </v-col>
     </v-row>
     <v-row>
       <v-col>
-        <Consumptions />
+        <consumption-information />
       </v-col>
       <v-col>
         <div class="d-flex flex-column">
-          <PlannedTrajectory />
-          <RealTrajectory />
+          <planned-trajectory />
+          <real-trajectory />
         </div>
       </v-col>
     </v-row>
@@ -25,22 +25,22 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Consumptions from "../components/consumptions/ConsumptionList.vue";
-import CyclesInformations from "../components/cycles/CyclesInformations.vue";
+import ConsumptionInformation from "../components/consumptions/ConsumptionInformation.vue";
+import CycleInformation from "../components/cycles/CycleInformation.vue";
 import PlannedTrajectory from "../components/trajectories/RealTrajectory.vue";
 import RealTrajectory from "../components/trajectories/RealTrajectory.vue";
-import StationInformations from "../components/station/StationInformations.vue";
+import StationInformation from "../components/station/StationInformation.vue";
 
 @Component({
   components: {
-    Consumptions,
-    CyclesInformations,
-    StationInformations,
+    ConsumptionInformation,
+    CycleInformation,
+    StationInformation,
     PlannedTrajectory,
     RealTrajectory
   }
 })
-export default class RobotInformations extends Vue {}
+export default class MainLayout extends Vue {}
 </script>
 
 <style></style>
