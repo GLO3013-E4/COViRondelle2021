@@ -37,15 +37,10 @@ import StationInformation from "../components/station/StationInformation.vue";
     CycleInformation,
     StationInformation,
     PlannedTrajectory,
-    RealTrajectory
-  }
+    RealTrajectory,
+  },
 })
-<<<<<<< HEAD
-export default class RobotInformation extends Vue {}
-=======
-
 export default class MainLayout extends Vue {}
->>>>>>> develop
 </script>
 
 <style></style>
