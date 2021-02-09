@@ -31,6 +31,4 @@ jobs:
         env:
           CI: "true"
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: |
-          curl -s https://codecov.io/bash
-          bash -s -- -t $CODECOV_TOKEN
+        run: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -F scripts
