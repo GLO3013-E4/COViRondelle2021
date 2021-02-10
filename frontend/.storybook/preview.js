@@ -12,7 +12,6 @@ const customViewports = {
 };
 
 export const parameters = {
-  layout: 'centered',
   viewport: { viewports: customViewports },
   defaultViewport: 'responsive',
 }
