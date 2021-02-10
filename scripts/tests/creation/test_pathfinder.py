@@ -1,9 +1,9 @@
 import pytest
 from unittest.mock import Mock
 
-from scripts.creation.Pathfinder import Pathfinder
-from scripts.creation.Node import Node
-from scripts.creation.PathNotFoundException import PathNotFoundException
+from scripts.creation.pathfinder import Pathfinder
+from scripts.creation.node import Node
+from scripts.creation.path_not_found_exception import PathNotFoundException
 
 
 class TestPathfinder:

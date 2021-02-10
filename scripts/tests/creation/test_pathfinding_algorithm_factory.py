@@ -1,5 +1,5 @@
-from scripts.creation.PathfindingAlgorithmFactory import PathfindingAlgorithmFactory
-from scripts.creation.BreadthFirstSearch import BreadthFirstSearch
+from scripts.creation.pathfinding_algorithm_factory import PathfindingAlgorithmFactory
+from scripts.creation.breadth_first_search import BreadthFirstSearch
 
 import pytest
 

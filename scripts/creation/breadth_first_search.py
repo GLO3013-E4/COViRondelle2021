@@ -1,0 +1,30 @@
+from collections import deque
+
+from scripts.creation.pathfinding_algorithm import PathfindingAlgorithm
+from scripts.creation.path_not_found_exception import PathNotFoundException
+from scripts.creation.tile_role import TileRole
+
+
+class BreadthFirstSearch(PathfindingAlgorithm):
+    def find_path(self, start, end):
+        queue = deque()
+        visited = {start}
+
+        queue.append([start])
+
+        while queue:
+            path = queue.popleft()
+            node = path[-1]
+
+            if node.role is TileRole.END:
+                return path
+
+            for neighbor, _ in node.neighbors:
+                if neighbor not in visited and (neighbor.role is TileRole.EMPTY
+                                                or neighbor.role is TileRole.END
+                                                or neighbor.role is TileRole.START
+                                                ):
+                    queue.append(path + [neighbor])
+                    visited.add(neighbor)
+
+        raise PathNotFoundException()

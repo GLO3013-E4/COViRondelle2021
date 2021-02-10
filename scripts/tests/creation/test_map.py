@@ -1,5 +1,5 @@
-from scripts.creation.Map import Map
-from scripts.creation.TileRole import TileRole
+from scripts.creation.map import Map
+from scripts.creation.tile_role import TileRole
 
 from PIL import Image
 

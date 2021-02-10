@@ -1,14 +1,11 @@
-from scripts.creation.Node import Node
-from scripts.creation.TileRole import TileRole
-from scripts.creation.Direction import Direction
-
-
-#TODO: what if l'algo voit que le start/end est dans un obstacle
-#TODO: what if les seules places que le robot peut se déplacer c'est dans un "obstacle" (peut-être juste ajuster les cushions)
+from scripts.creation.node import Node
+from scripts.creation.tile_role import TileRole
+from scripts.creation.direction import Direction
 
 
 class Map:
-    def __init__(self, image, obstacles, pucks, start, end, node_size=25, safety_cushion=0, robot_width=100, obstacle_width=40, puck_width=25):
+    def __init__(self, image, obstacles, pucks, start, end, node_size=25, safety_cushion=0, robot_width=100,
+                 obstacle_width=40, puck_width=25):
         self.node_size = node_size
         self.safety_cushion = safety_cushion
         self.robot_width = robot_width
@@ -49,8 +46,8 @@ class Map:
         self.node_matrix = node_matrix
 
     def connect_nodes(self):
-        for i, line in enumerate(self.node_matrix):
-            for j, node in enumerate(line):
+        for line in self.node_matrix:
+            for node in line:
                 possible_neighbors = [
                     (y, x, z)
 
@@ -67,8 +64,8 @@ class Map:
                         #(node.matrix_center[0] + 1, node.matrix_center[1] + 1, Direction.DOWN_RIGHT),
                     ]
 
-                    if (x >= 0 and x < len(self.node_matrix[0]) and y >= 0 and y < len(self.node_matrix) and (
-                    x, y) != node.matrix_center)
+                    if ((0 <= x < len(self.node_matrix[0]) and 0 <= y < len(self.node_matrix))
+                        and (x, y) != node.matrix_center)
                 ]
 
                 for (y, x, z) in possible_neighbors:

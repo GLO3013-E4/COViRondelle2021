@@ -1,9 +1,9 @@
 import pytest
 
-from scripts.creation.Node import Node
-from scripts.creation.TileRole import TileRole
-from scripts.creation.BreadthFirstSearch import BreadthFirstSearch
-from scripts.creation.PathNotFoundException import PathNotFoundException
+from scripts.creation.node import Node
+from scripts.creation.tile_role import TileRole
+from scripts.creation.breadth_first_search import BreadthFirstSearch
+from scripts.creation.path_not_found_exception import PathNotFoundException
 
 
 class TestBFS:

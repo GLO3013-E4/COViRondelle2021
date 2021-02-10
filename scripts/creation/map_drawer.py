@@ -1,6 +1,6 @@
-from scripts.creation.TileRole import TileRole
-
 from PIL import ImageDraw
+
+from scripts.creation.tile_role import TileRole
 
 
 class MapDrawer:
@@ -65,13 +65,13 @@ class MapDrawer:
                              (x + self.node_identifier_width, y + self.node_identifier_width)], fill=200)
 
     def draw_end_node(self, node):
-        x,y = node.pixel_coordinates_center
+        x, y = node.pixel_coordinates_center
         self.draw.rectangle([(x - self.node_identifier_width, y - self.node_identifier_width),
                              (x + self.node_identifier_width, y + self.node_identifier_width)], fill=120)
 
     def draw_path(self, path):
         for node in path:
-            x,y = node.pixel_coordinates_center
+            x, y = node.pixel_coordinates_center
             self.draw.rectangle([(x - self.node_identifier_width, y - self.node_identifier_width),
                                  (x + self.node_identifier_width, y + self.node_identifier_width)], outline=300)
 

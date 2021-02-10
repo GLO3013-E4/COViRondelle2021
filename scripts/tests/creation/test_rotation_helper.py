@@ -1,4 +1,4 @@
-from scripts.creation.RotationHelper import RotationHelper
+from scripts.creation.rotation_helper import RotationHelper
 
 
 class TestRotationHelper:

@@ -1,4 +1,4 @@
-from scripts.creation.BreadthFirstSearch import BreadthFirstSearch
+from scripts.creation.breadth_first_search import BreadthFirstSearch
 
 
 class PathfindingAlgorithmFactory:
