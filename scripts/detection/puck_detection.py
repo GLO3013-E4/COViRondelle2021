@@ -1,9 +1,10 @@
+from scripts.detection.upper_boundary import UpperBoundary
+from scripts.detection.lower_boundary import LowerBoundary
 import cap
 import cv2
-from lower_boundary import LowerBoundary
-from upper_boundary import UpperBoundary
 import numpy as np
 import argparse
+
 
 
 class PuckDetection:
@@ -23,10 +24,12 @@ class PuckDetection:
 
         image_copy = self.image.copy()
         puck_position = self._find_color(image_copy)
-        print(puck_position)
+
 
         cv2.imshow("Color detection", np.hstack([image_copy]))
         self._destroy_windows()
+
+        return puck_position
 
     def _find_color(self, image_copy):
         image_hsv = cv2.cvtColor(self.image, cv2.COLOR_BGR2HSV)
@@ -51,28 +54,29 @@ class PuckDetection:
 
                 if self.object_is_in_range(width, height):
                     object_type = self.get_object_name(object_corner)
-
-                    cv2.rectangle(image_copy, (x, y), (x + width, y + height), (0, 255, 0), 2)
-                    cv2.putText(image_copy, object_type, (x + (width // 2) - 30, y + (height // 3) - 30),
-                                cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
+                    self.draw_rectangle_on_image(image_copy, x, y, width, height, object_type)
                     break
         try:
             puck_position = self.generate_puck_position(x, y, width, height)
         except NameError:
             puck_position = self.generate_puck_position(0, 0, 0, 0)
-
         return puck_position
+
+    def draw_rectangle_on_image(self, image_copy, x, y, width, height, object_type):
+        cv2.rectangle(image_copy, (x, y), (x + width, y + height), (0, 255, 0), 2)
+        cv2.putText(image_copy, object_type, (x + (width // 2) - 30, y + (height // 3) - 30),
+                    cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
+
 
     def get_object_name(self, object_corner):
         if object_corner >= 4:
-            object_type = str(self.color_to_detect) + " puck "
+            object_type = str(self.color_to_detect) + " puck"
         else:
             object_type = "None"
         return object_type
 
     def object_is_in_range(self, width, height):
-        return self.puck_minimum_dimension < width < self.puck_maximum_dimension and \
-               self.puck_minimum_dimension < height < self.puck_maximum_dimension
+        return self.puck_minimum_dimension < width < self.puck_maximum_dimension and self.puck_minimum_dimension < height < self.puck_maximum_dimension
 
     def generate_puck_position(self, x, y, width, height):
         return {
@@ -86,7 +90,6 @@ class PuckDetection:
     def _destroy_windows(self):
         while 1:
             if cv2.waitKey(10) & 0xFF == ord('q'):
-                cap.release()
                 cv2.destroyAllWindows()
                 break
 
@@ -94,13 +97,14 @@ class PuckDetection:
         return self.minimum_area < area < self.maximum_area
 
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", help="path to the image")
-ap.add_argument("-c", "--color", help="color to detect")
-args = vars(ap.parse_args())
+#ap = argparse.ArgumentParser()
+#ap.add_argument("-i", "--image", help="path to the image")
+#ap.add_argument("-c", "--color", help="color to detect")
+#args = vars(ap.parse_args())
 
-image_to_detect = args["image"]
-color_to_detect = args["color"]
+#image_to_detect = args["image"]
+#color_to_detect = args["color"]
 
-image_detection = PuckDetection(image_to_detect, color_to_detect)
-image_detection.detect_puck()
+#image_detection = PuckDetection(image_to_detect, color_to_detect)
+#coords = image_detection.detect_puck()
+#print(coords)
