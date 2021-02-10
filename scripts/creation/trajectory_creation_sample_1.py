@@ -7,7 +7,9 @@ from PIL import Image
 
 
 if __name__ == '__main__':
-    NODE_IDENTIFIER_WIDTH = 25 / 5  # NODE_SIZE / 5
+    NODE_SIZE = 25
+    NODE_IDENTIFIER_WIDTH = NODE_SIZE / 5
+    PATHFINDING_ALGORITHM = "BreadthFirstSearch"
 
     obstacles = [
         (1142, 290),
@@ -35,7 +37,7 @@ if __name__ == '__main__':
 
     pathfindingAlgorithmFactory = PathfindingAlgorithmFactory()
     pathfinding_algorithm = pathfindingAlgorithmFactory.create(PATHFINDING_ALGORITHM)
-    board_map = Map(image, NODE_SIZE, SAFETY_CUSHION, ROBOT_WIDTH, OBSTACLE_WIDTH, PUCK_WIDTH, OBSTACLE_CUSHION_WIDTH, obstacles, pucks, PUCK_CUSHION_WIDTH, start, end)
+    board_map = Map(image, obstacles, pucks, start, end, node_size=NODE_SIZE)
     map_drawer = MapDrawer(NODE_IDENTIFIER_WIDTH, NODE_SIZE, image)
     pathfinder = Pathfinder(board_map, map_drawer, pathfinding_algorithm)
 
