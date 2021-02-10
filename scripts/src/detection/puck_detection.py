@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import argparse
 
 from scripts.src.detection.lower_boundary import LowerBoundary
 from scripts.src.detection.upper_boundary import UpperBoundary
@@ -48,21 +47,22 @@ class PuckDetection:
                 perimeter = cv2.arcLength(contour, True)
                 zone_approximation = cv2.approxPolyDP(contour, 0.05 * perimeter, True)
                 object_corner = len(zone_approximation)
-                x, y, width, height = cv2.boundingRect(zone_approximation)
+                x_position, y_position, width, height = cv2.boundingRect(zone_approximation)
 
                 if self.object_is_in_range(width, height):
-                    self.draw_rectangle_on_image(image_copy, x, y, width, height, self.get_object_name(object_corner))
+                    self.draw_rectangle_on_image(image_copy, x_position, y_position, width, height,
+                                                 self.get_object_name(object_corner))
                     break
         try:
-            puck_position = self.generate_puck_position(x, y, width, height)
+            puck_position = self.generate_puck_position(x_position, y_position, width, height)
         except NameError:
             puck_position = self.generate_puck_position(0, 0, 0, 0)
         return puck_position
 
-    def draw_rectangle_on_image(self, image_copy, x, y, width, height, object_type):
-        cv2.rectangle(image_copy, (x, y), (x + width, y + height), (0, 255, 0), 2)
-        cv2.putText(image_copy, object_type, (x + (width // 2) - 30, y + (height // 3) - 30),
-                    cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
+    def draw_rectangle_on_image(self, image_copy, x_position, y_position, width, height, object_type):
+        cv2.rectangle( image_copy, (x_position, y_position), (x_position + width, y_position + height), (0, 255, 0), 2 )
+        cv2.putText( image_copy, object_type, (x_position + (width // 2) - 30, y_position + (height // 3) - 30),
+                     cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2 )
 
     def get_object_name(self, object_corner):
         if object_corner >= 4:
@@ -72,12 +72,13 @@ class PuckDetection:
         return object_type
 
     def object_is_in_range(self, width, height):
-        return self.puck_minimum_dimension < width < self.puck_maximum_dimension and self.puck_minimum_dimension < height < self.puck_maximum_dimension
+        return self.puck_minimum_dimension < width < self.puck_maximum_dimension and \
+               self.puck_minimum_dimension < height < self.puck_maximum_dimension
 
-    def generate_puck_position(self, x, y, width, height):
+    def generate_puck_position(self, x_position, y_position, width, height):
         return {
-            "x_position": x,
-            "y_position": y,
+            "x_position": x_position,
+            "y_position": y_position,
             "width": width,
             "height": height
         }
@@ -90,3 +91,4 @@ class PuckDetection:
 
     def is_in_area(self, area):
         return self.minimum_area < area < self.maximum_area
+
