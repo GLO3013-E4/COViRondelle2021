@@ -74,12 +74,12 @@ class Map:
                 for (y, x, z) in possible_neighbors:
                     node.neighbors.append((self.node_matrix[y][x], z))
 
-    def add_cushion(self, node, distance):
+    def add_cushion(self, node, distance, role):
         if distance > 0:
             for neighbor, angle in node.neighbors:
                 if neighbor.role is TileRole.EMPTY:
-                    neighbor.role = TileRole.CUSHION
-                self.add_cushion(neighbor, distance - 1)
+                    neighbor.role = role
+                self.add_cushion(neighbor, distance - 1, role)
 
     def create_obstacles(self):
         for (x, y) in self.obstacles:
@@ -87,7 +87,7 @@ class Map:
             node.role = TileRole.OBSTACLE
 
             distance = (self.obstacle_cushion_width // self.node_size) + 1
-            self.add_cushion(node, distance)
+            self.add_cushion(node, distance, TileRole.CUSHION)
 
     def create_pucks(self):
         for (x, y) in self.pucks:
@@ -95,7 +95,7 @@ class Map:
             node.role = TileRole.PUCK
 
             distance = (self.obstacle_puck_width // self.node_size) + 1
-            self.add_cushion(node, distance)
+            self.add_cushion(node, distance, TileRole.CUSHION)
 
     def create_start_node(self):
         start = self.get_start_node()
@@ -106,23 +106,25 @@ class Map:
         end.role = TileRole.END
 
         distance = (self.obstacle_puck_width // self.node_size) + 1
-        self.add_pickup_cushion(end, distance)
-
-    def add_pickup_cushion(self, node, distance):
-        if distance > 0:
-            for neighbor, angle in node.neighbors:
-                if neighbor.role is TileRole.EMPTY:
-                    neighbor.role = TileRole.END
-                self.add_pickup_cushion(neighbor, distance - 1)
+        self.add_cushion(end, distance, TileRole.END)
 
     def get_start_node(self):
-        return self.node_matrix[self.start_node_location[1]//self.node_size][self.start_node_location[0]//self.node_size]
+        return self.get_node_from_pixel(self.start_node_location)
 
     def get_end_node(self):
-        return self.node_matrix[self.end_node_location[1] // self.node_size][self.end_node_location[0] // self.node_size]
+        return self.get_node_from_pixel(self.end_node_location)
 
     def get_image(self):
         return self.image
 
     def get_node_matrix(self):
         return self.node_matrix
+
+    def get_node_from_pixel(self, pixel):
+        x = pixel[0] // self.node_size
+        y = pixel[1] // self.node_size
+        return self.node_matrix[y][x]
+
+    def get_node_from_matrix_coordinates(self, coordinates):
+        x, y = coordinates
+        return self.node_matrix[y][x]
