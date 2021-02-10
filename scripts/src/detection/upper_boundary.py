@@ -2,7 +2,6 @@ import numpy as np
 
 
 class UpperBoundary:
-
     def __init__(self):
         self.upper_boundaries = {"purple": [143, 255, 233], "white": [62, 50, 255],
                                  "yellow": [79, 255, 228],
@@ -15,5 +14,4 @@ class UpperBoundary:
     def get_upper_boundaries(self, color_to_detect):
         if color_to_detect in self.upper_boundaries:
             return np.array(self.upper_boundaries[color_to_detect])
-        else:
-            return np.zeros(3)
+        return np.zeros(3)
