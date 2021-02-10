@@ -7,14 +7,14 @@ from scripts.creation.TileRole import TileRole
 
 
 class Map:
-    def __init__(self, image, node_size, safety_cushion, robot_width, obstacle_width, puck_width, obstacle_cushion_width, obstacles, pucks, obstacle_puck_width, start, end):
+    def __init__(self, image, obstacles, pucks, start, end, node_size=25, safety_cushion=0, robot_width=100, obstacle_width=40, puck_width=25):
         self.node_size = node_size
         self.safety_cushion = safety_cushion
         self.robot_width = robot_width
         self.obstacle_width = obstacle_width
         self.puck_width = puck_width
-        self.obstacle_cushion_width = obstacle_cushion_width
-        self.obstacle_puck_width = obstacle_puck_width
+        self.obstacle_cushion_width = self.safety_cushion + self.robot_width + self.obstacle_width
+        self.obstacle_puck_width = self.safety_cushion + self.robot_width + self.puck_width
 
         self.image = image
         self.width, self.height = self.image.size
@@ -24,7 +24,10 @@ class Map:
         self.start_node_location = start
         self.end_node_location = end
 
-        self.node_matrix = self.create_nodes()
+        self.node_matrix = []
+
+    def render_map(self):
+        self.create_nodes()
         self.connect_nodes()
         self.create_obstacles()
         self.create_pucks()
@@ -43,7 +46,7 @@ class Map:
                 x = j * self.node_size + self.node_size / 2
                 node_matrix[i].append(Node((i, j), (x, y), self.node_size, self.node_size))
 
-        return node_matrix
+        self.node_matrix = node_matrix
 
     def connect_nodes(self):
         for i, line in enumerate(self.node_matrix):
