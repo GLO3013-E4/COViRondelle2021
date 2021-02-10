@@ -17,6 +17,7 @@
     "vuetify": "^2.4.3"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^6.1.17",
     "@storybook/vue": "^6.1.17",
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
