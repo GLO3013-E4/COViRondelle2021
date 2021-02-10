@@ -31,7 +31,7 @@ if __name__ == '__main__':
         (1150, 215)
     ]
 
-    image = Image.open("./WIN_20210126_11_29_53_Pro.jpg")
+    image = Image.open("./scripts/data/images/trajectory_example_1.jpg")
 
     pathfindingAlgorithmFactory = PathfindingAlgorithmFactory()
     pathfinding_algorithm = pathfindingAlgorithmFactory.create(PATHFINDING_ALGORITHM)
