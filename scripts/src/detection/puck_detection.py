@@ -1,7 +1,9 @@
-from scripts.detection.upper_boundary import UpperBoundary
-from scripts.detection.lower_boundary import LowerBoundary
+
 import cv2
 import numpy as np
+
+from scripts.src.detection.lower_boundary import LowerBoundary
+from scripts.src.detection.upper_boundary import UpperBoundary
 
 
 class PuckDetection:
