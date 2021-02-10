@@ -1,5 +1,6 @@
+from scripts.creation.TileRole import TileRole
+
 from PIL import ImageDraw
-from TileRole import TileRole
 
 
 class MapDrawer:
