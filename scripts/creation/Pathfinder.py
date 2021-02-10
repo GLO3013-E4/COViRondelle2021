@@ -3,7 +3,7 @@ class Pathfinder:
         self.map = map
         self.map_drawer = map_drawer
         self.pathfinding_algorithm = pathfinding_algorithm
-        self.path = None #TODO: j'aime pas ça tant que ça
+        self.path = []
 
     def find_square_matrix_path(self):
         start = self.map.get_start_node()
