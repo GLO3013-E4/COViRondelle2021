@@ -27,7 +27,7 @@ class TestPathfinder:
     def test_initial_path_is_empty(self):
         assert not self.pathfinder.path
 
-    def test_find_square_matrix_path_then_path_is_found(self):
+    def test_when_find_square_matrix_path_then_path_is_found(self):
         self.Map.get_start_node.return_value = self.A_NODE
 
         self.pathfinder.find_square_matrix_path()
@@ -35,30 +35,30 @@ class TestPathfinder:
         self.Map.get_start_node.assert_called_once()
         self.pathfinding_algorithm.find_path.assert_called_once_with(self.A_NODE, self.A_NODE)
 
-    def test_find_square_matrix_path_successful_then_update_path(self):
+    def test_given_successful_path_when_find_square_matrix_path_then_update_path(self):
         self.pathfinding_algorithm.find_path.return_value = self.A_PATH
 
         self.pathfinder.find_square_matrix_path()
 
         assert self.pathfinder.path == self.A_PATH
 
-    def test_find_square_matrix_path_unsuccessful_then_throw_exception(self):
+    def test_given_unsuccessful_path_when_find_square_matrix_path_then_throw_exception(self):
         self.pathfinding_algorithm.find_path.side_effect = PathNotFoundException()
 
         with pytest.raises(PathNotFoundException):
             self.pathfinder.find_square_matrix_path()
 
-    def test_show_then_draw_image(self):
+    def test_when_show_then_draw_image(self):
         self.pathfinder.show()
 
         self.map_drawer.draw_map.assert_called_once_with(self.Map, self.pathfinder.path)
 
-    def test_show_then_get_image(self):
+    def test_when_show_then_get_image(self):
         self.pathfinder.show()
 
         self.map_drawer.get_image.assert_called_once_with()
 
-    def test_show_then_show_image(self):
+    def test_when_show_then_show_image(self):
         self.map_drawer.get_image.return_value = self.image
 
         self.pathfinder.show()

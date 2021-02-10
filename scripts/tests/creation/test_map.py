@@ -58,27 +58,27 @@ class TestMap:
         }
         self.Map = Map(self.AN_IMAGE, self.SOME_OBSTACLES, self.SOME_PUCKS, self.A_STARTING_POSITION, self.AN_ENDING_POSITION, self.A_NODE_SIZE, self.A_SAFETY_CUSHION, self.A_ROBOT_WIDTH, self.AN_OBSTACLE_WIDTH, self.A_PUCK_WIDTH)
 
-    def test_create_nodes_then_node_matrix_is_not_empty(self):
+    def test_when_create_nodes_then_node_matrix_is_not_empty(self):
         self.Map.create_nodes()
 
         assert self.Map.node_matrix
 
-    def test_create_nodes_then_number_of_nodes_in_each_row_is_as_expected(self):
+    def test_when_create_nodes_then_number_of_nodes_in_each_row_is_as_expected(self):
         self.Map.create_nodes()
 
         assert len(self.Map.node_matrix[0]) == self.EXPECTED_NUMBER_OF_NODES_PER_ROW
 
-    def test_create_nodes_then_number_of_columns_is_as_expected(self):
+    def test_when_create_nodes_then_number_of_columns_is_as_expected(self):
         self.Map.create_nodes()
 
         assert len(self.Map.node_matrix) == self.EXPECTED_NUMBER_OF_COLUMNS
 
-    def test_create_nodes_then_number_of_nodes_created_is_as_expected(self):
+    def test_when_create_nodes_then_number_of_nodes_created_is_as_expected(self):
         self.Map.create_nodes()
 
         assert sum([len(row) for row in self.Map.node_matrix]) == self.EXPECTED_NUMBER_OF_TOTAL_NODES
 
-    def test_connect_nodes_then_each_node_has_an_expected_number_of_neighbors(self):
+    def test_when_connect_nodes_then_each_node_has_an_expected_number_of_neighbors(self):
         self.Map.create_nodes()
 
         self.Map.connect_nodes()
@@ -87,7 +87,7 @@ class TestMap:
             for node in line:
                 assert len(node.neighbors) in self.EXPECTED_NUMBER_OF_NEIGHBORS
 
-    def test_connect_nodes_then_each_neighbor_is_an_expected_distance_away_from_the_original_node(self):
+    def test_when_connect_nodes_then_each_neighbor_is_an_expected_distance_away_from_the_original_node(self):
         self.Map.create_nodes()
 
         self.Map.connect_nodes()
@@ -102,7 +102,7 @@ class TestMap:
 
                     assert distance == self.EXPECTED_NEIGHBOR_DISTANCE
 
-    def test_add_cushion_then_expected_nodes_are_seen_as_cushions(self):
+    def test_when_add_cushion_then_expected_nodes_are_seen_as_cushions(self):
         self.Map.create_nodes()
         self.Map.connect_nodes()
         start_node = self.Map.get_node_from_matrix_coordinates(self.A_NODE_POSITION)
@@ -119,7 +119,7 @@ class TestMap:
         assert all(seen for seen in self.EXPECTED_CUSHION_NODES_POSITION.values())
         assert sum(self.EXPECTED_CUSHION_NODES_POSITION.values()) == obstacles_seen
 
-    def test_add_cushion_with_zero_distance_then_zero_nodes_are_seen_as_cushions(self):
+    def test_given_zero_distance_when_add_cushion_then_zero_nodes_are_seen_as_cushions(self):
         self.Map.create_nodes()
         self.Map.connect_nodes()
         node = self.Map.get_node_from_matrix_coordinates(self.A_NODE_POSITION)
@@ -133,7 +133,7 @@ class TestMap:
                     obstacles_seen += 1
         assert not obstacles_seen
 
-    def test_add_cushion_with_negative_distance_then_zero_nodes_are_seen_as_cushions(self):
+    def test_given_negative_distance_when_add_cushion_then_zero_nodes_are_seen_as_cushions(self):
         self.Map.create_nodes()
         self.Map.connect_nodes()
         node = self.Map.get_node_from_matrix_coordinates(self.A_NODE_POSITION)
@@ -147,7 +147,7 @@ class TestMap:
                     obstacles_seen += 1
         assert not obstacles_seen
 
-    def test_create_obstacles_then_add_obstacle_role_to_expected_nodes(self):
+    def test_when_create_obstacles_then_add_obstacle_role_to_expected_nodes(self):
         self.Map.create_nodes()
         self.Map.connect_nodes()
 
@@ -157,7 +157,7 @@ class TestMap:
             node = self.Map.get_node_from_pixel(obstacle_pixel_position)
             assert node.role is TileRole.OBSTACLE
 
-    def test_create_obstacles_without_obstacles_then_there_is_no_obstacle_node(self):
+    def test_when_create_obstacles_without_obstacles_then_there_is_no_obstacle_node(self):
         self.Map.create_nodes()
         self.Map.connect_nodes()
         self.Map.obstacles = []
@@ -166,7 +166,7 @@ class TestMap:
 
         assert not [node for line in self.Map.node_matrix for node in line if node.role is TileRole.OBSTACLE]
 
-    def test_create_pucks_then_add_puck_role_to_expected_nodes(self):
+    def test_when_create_pucks_then_add_puck_role_to_expected_nodes(self):
         self.Map.create_nodes()
         self.Map.connect_nodes()
 
@@ -176,7 +176,7 @@ class TestMap:
             node = self.Map.get_node_from_pixel(puck_pixel_position)
             assert node.role is TileRole.PUCK
 
-    def test_create_pucks_without_pucks_then_there_is_no_obstacle_node(self):
+    def test_when_create_pucks_without_pucks_then_there_is_no_obstacle_node(self):
         self.Map.create_nodes()
         self.Map.connect_nodes()
         self.Map.pucks = []
@@ -185,7 +185,7 @@ class TestMap:
 
         assert not [node for line in self.Map.node_matrix for node in line if node.role is TileRole.PUCK]
 
-    def test_create_start_node_then_expected_node_has_start_role(self):
+    def test_when_create_start_node_then_expected_node_has_start_role(self):
         self.Map.create_nodes()
         self.Map.connect_nodes()
 
@@ -193,7 +193,7 @@ class TestMap:
 
         assert self.Map.get_node_from_pixel(self.A_STARTING_POSITION).role is TileRole.START
 
-    def test_create_end_node_then_expected_node_has_end_role(self):
+    def test_when_create_end_node_then_expected_node_has_end_role(self):
         self.Map.create_nodes()
         self.Map.connect_nodes()
 
@@ -201,7 +201,7 @@ class TestMap:
 
         assert self.Map.get_node_from_pixel(self.AN_ENDING_POSITION).role is TileRole.END
 
-    def test_get_start_node(self):
+    def test_when_get_start_node_then_return_starting_node(self):
         self.Map.create_nodes()
         self.Map.create_start_node()
 
@@ -210,7 +210,7 @@ class TestMap:
         assert node.role is TileRole.START
         assert self.Map.get_node_from_pixel(self.A_STARTING_POSITION) is node
 
-    def test_get_end_node(self):
+    def test_when_get_end_node_then_return_end_node(self):
         self.Map.create_nodes()
         self.Map.connect_nodes()
         self.Map.create_end_node()
@@ -220,19 +220,19 @@ class TestMap:
         assert node.role is TileRole.END
         assert self.Map.get_node_from_pixel(self.AN_ENDING_POSITION) is node
 
-    def test_render_map_then_node_matrix_is_not_empty(self):
+    def test_when_render_map_then_node_matrix_is_not_empty(self):
         self.Map.render_map()
 
         assert self.Map.node_matrix
 
-    def test_get_node_from_pixel(self):
+    def test_when_get_node_from_pixel_then_return_expected_node(self):
         self.Map.create_nodes()
 
         node = self.Map.get_node_from_pixel(self.A_STARTING_POSITION)
 
         assert node.matrix_center == self.EXPECTED_MATRIX_POSITION
 
-    def test_get_node_from_matrix_coordinates(self):
+    def test_when_get_node_from_matrix_coordinates_then_return_expected_node(self):
         self.Map.create_nodes()
 
         node = self.Map.get_node_from_matrix_coordinates(self.A_MATRIX_POSITION)

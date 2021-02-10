@@ -25,20 +25,20 @@ class TestBFS:
     def setup_method(self):
         self.BFS = BreadthFirstSearch()
 
-    def test_given_unconnected_graph_without_end_role_then_raise_path_does_not_exist(self):
+    def test_given_unconnected_graph_without_end_role_when_find_path_then_raise_path_does_not_exist(self):
         start_node = self.given_unconnected_graph_without_end_role()
 
         with pytest.raises(PathNotFoundException):
             self.BFS.find_path(start_node, self.SOME_NODE)
 
-    def test_given_connected_graph_with_end_role_then_path_is_valid(self):
+    def test_given_connected_graph_with_end_role_when_find_path_then_path_is_valid(self):
         start_node = self.given_connected_graph_with_end_role()
 
         path = self.BFS.find_path(start_node, self.SOME_NODE)
 
         assert path
 
-    def test_given_connected_graph_without_end_role_then_raise_path_does_not_exist(self):
+    def test_given_connected_graph_without_end_role_when_find_path_then_raise_path_does_not_exist(self):
         start_node = self.given_connected_graph_without_end_role()
 
         with pytest.raises(PathNotFoundException):

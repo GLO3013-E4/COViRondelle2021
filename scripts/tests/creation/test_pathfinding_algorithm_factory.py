@@ -14,11 +14,11 @@ class TestPathfindingAlgorithmFactory:
     def setup_method(self):
         self.pathfinding_algorithm_factory = PathfindingAlgorithmFactory()
 
-    def test_create_with_bfs_algorithm_then_return_bfs_object(self):
+    def test_when_create_with_bfs_algorithm_then_return_bfs_object(self):
         algorithm = self.pathfinding_algorithm_factory.create(self.BREADTH_FIRST_SEARCH_ALGORITHM_NAME)
 
         assert isinstance(algorithm, self.BREADTH_FIRST_SEARCH_CLASS)
 
-    def test_create_with_not_implemented_algorithm_then_raise_exception(self):
+    def test_when_create_with_not_implemented_algorithm_then_raise_exception(self):
         with pytest.raises(Exception):
             self.pathfinding_algorithm_factory.create(self.NOT_IMPLEMENTED_ALGORITHM_NAME)

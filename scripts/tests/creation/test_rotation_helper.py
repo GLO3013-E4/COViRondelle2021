@@ -20,22 +20,22 @@ class TestRotationHelper:
     def setup_method(self):
         self.rotation_helper = RotationHelper()
 
-    def test_find_angle_to_turn_quadrant_1(self):
+    def test_when_find_angle_to_turn_quadrant_1_then_return_expected_angle(self):
         target_angle = self.rotation_helper.find_angle_to_turn(self.A_START_POSITION, self.A_GRIPPER_POSITION, self.A_CENTER_DESTINATION_POSITION, self.A_FIRST_QUADRANT_FINAL_NODE_POSITION)
 
         assert target_angle == self.EXPECTED_FIRST_QUADRANT_TARGET_ANGLE
 
-    def test_find_angle_to_turn_quadrant_2(self):
+    def test_when_find_angle_to_turn_quadrant_2_then_return_expected_angle(self):
         target_angle = self.rotation_helper.find_angle_to_turn(self.A_START_POSITION, self.A_GRIPPER_POSITION, self.A_CENTER_DESTINATION_POSITION, self.A_SECOND_QUADRANT_FINAL_NODE_POSITION)
 
         assert target_angle == self.EXPECTED_SECOND_QUADRANT_TARGET_ANGLE
 
-    def test_find_angle_to_turn_quadrant_3(self):
+    def test_when_find_angle_to_turn_quadrant_3_then_return_expected_angle(self):
         target_angle = self.rotation_helper.find_angle_to_turn(self.A_START_POSITION, self.A_GRIPPER_POSITION, self.A_CENTER_DESTINATION_POSITION, self.A_THIRD_QUADRANT_FINAL_NODE_POSITION)
 
         assert target_angle == self.EXPECTED_THIRD_QUADRANT_TARGET_ANGLE
 
-    def test_find_angle_to_turn_quadrant_4(self):
+    def test_when_find_angle_to_turn_quadrant_4_then_return_expected_angle(self):
         target_angle = self.rotation_helper.find_angle_to_turn(self.A_START_POSITION, self.A_GRIPPER_POSITION, self.A_CENTER_DESTINATION_POSITION, self.A_FOURTH_QUADRANT_FINAL_NODE_POSITION)
 
         assert target_angle == self.EXPECTED_FOURTH_QUADRANT_TARGET_ANGLE
