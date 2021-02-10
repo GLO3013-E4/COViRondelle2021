@@ -34,7 +34,6 @@ class Map:
         self.create_start_node()
         self.create_end_node()
 
-    #TODO: get node matrix? et l'objet manipule la matrice au lieu que ce soit static-ish?
     def create_nodes(self):
         node_matrix = [
             [] for _ in range((self.height // self.node_size) + 1)
