@@ -5,8 +5,8 @@ from scripts.creation.TileRole import TileRole
 from collections import deque
 
 
-class BFS(PathfinderAlgorithm):
-    def find_path(self, start):
+class BreadthFirstSearch(PathfinderAlgorithm):
+    def find_path(self, start, end):
         queue = deque()
         visited = {start}
 

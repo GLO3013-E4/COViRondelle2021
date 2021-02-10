@@ -1,5 +1,6 @@
 from scripts.creation.Node import Node
 from scripts.creation.TileRole import TileRole
+from scripts.creation.Direction import Direction
 
 
 #TODO: what if l'algo voit que le start/end est dans un obstacle
@@ -55,15 +56,15 @@ class Map:
 
                     for (y, x, z) in
                     [
-                        (node.matrix_center[0] - 1, node.matrix_center[1], "90"),
-                        (node.matrix_center[0] + 1, node.matrix_center[1], "270"),
-                        (node.matrix_center[0], node.matrix_center[1] - 1, "180"),
-                        (node.matrix_center[0], node.matrix_center[1] + 1, "0"),
+                        (node.matrix_center[0] - 1, node.matrix_center[1], Direction.UP),
+                        (node.matrix_center[0] + 1, node.matrix_center[1], Direction.DOWN),
+                        (node.matrix_center[0], node.matrix_center[1] - 1, Direction.LEFT),
+                        (node.matrix_center[0], node.matrix_center[1] + 1, Direction.RIGHT),
 
-                        #(node.matrix_center[0] - 1, node.matrix_center[1] - 1, "135"),
-                        #(node.matrix_center[0] - 1, node.matrix_center[1] + 1, "45"),
-                        #(node.matrix_center[0] + 1, node.matrix_center[1] - 1, "225"),
-                        #(node.matrix_center[0] + 1, node.matrix_center[1] + 1, "315"),
+                        #(node.matrix_center[0] - 1, node.matrix_center[1] - 1, Direction.TOP_LEFT),
+                        #(node.matrix_center[0] - 1, node.matrix_center[1] + 1, Direction.TOP_RIGHT),
+                        #(node.matrix_center[0] + 1, node.matrix_center[1] - 1, Direction.DOWN_LEFT),
+                        #(node.matrix_center[0] + 1, node.matrix_center[1] + 1, Direction.DOWN_RIGHT),
                     ]
 
                     if (x >= 0 and x < len(self.node_matrix[0]) and y >= 0 and y < len(self.node_matrix) and (

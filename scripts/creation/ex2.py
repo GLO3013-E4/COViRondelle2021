@@ -1,6 +1,5 @@
 from scripts.creation.Pathfinder import Pathfinder
 from scripts.creation.PathfindingAlgorithmFactory import PathfindingAlgorithmFactory
-from scripts.creation.params import NODE_SIZE, SAFETY_CUSHION, ROBOT_WIDTH, OBSTACLE_WIDTH, PUCK_WIDTH, OBSTACLE_CUSHION_WIDTH, NODE_IDENTIFIER_WIDTH, PATHFINDING_ALGORITHM, PUCK_CUSHION_WIDTH
 from scripts.creation.Map import Map
 from scripts.creation.MapDrawer import MapDrawer
 
@@ -8,6 +7,8 @@ from PIL import Image
 
 
 if __name__ == '__main__':
+    NODE_IDENTIFIER_WIDTH = 25 / 5  # NODE_SIZE / 5
+
     obstacles = [
         (1142, 290),
         (657, 761),

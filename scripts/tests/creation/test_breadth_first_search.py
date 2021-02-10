@@ -2,7 +2,7 @@ import pytest
 
 from scripts.creation.Node import Node
 from scripts.creation.TileRole import TileRole
-from scripts.creation.BFS import BFS
+from scripts.creation.BreadthFirstSearch import BreadthFirstSearch
 from scripts.creation.PathNotFoundException import PathNotFoundException
 
 
@@ -16,20 +16,25 @@ class TestBFS:
         cls.SOME_PIXEL_COORDINATES = (8, 9)
         cls.SOME_OTHER_PIXEL_COORDINATES = (10, 11)
         cls.SOME_ANGLE = "40"
+        cls.A_MATRIX_POSITION = (11, 15)
+        cls.A_PIXEL_POSITION = (144, 5)
+        cls.A_WIDTH = 12
+        cls.A_HEIGHT = 9
+        cls.SOME_NODE = Node(cls.A_MATRIX_POSITION, cls.A_PIXEL_POSITION, cls.A_WIDTH, cls.A_HEIGHT)
 
     def setup_method(self):
-        self.BFS = BFS()
+        self.BFS = BreadthFirstSearch()
 
     def test_given_unconnected_graph_without_end_role_then_raise_path_does_not_exist(self):
         start_node = self.given_unconnected_graph_without_end_role()
 
         with pytest.raises(PathNotFoundException):
-            self.BFS.find_path(start_node)
+            self.BFS.find_path(start_node, self.SOME_NODE)
 
     def test_given_connected_graph_with_end_role_then_path_is_valid(self):
         start_node = self.given_connected_graph_with_end_role()
 
-        path = self.BFS.find_path(start_node)
+        path = self.BFS.find_path(start_node, self.SOME_NODE)
 
         assert path
 
@@ -37,7 +42,7 @@ class TestBFS:
         start_node = self.given_connected_graph_without_end_role()
 
         with pytest.raises(PathNotFoundException):
-            self.BFS.find_path(start_node)
+            self.BFS.find_path(start_node, self.SOME_NODE)
 
     def given_unconnected_graph_without_end_role(self):
         start_node = Node(self.SOME_MATRIX_COORDINATES, self.SOME_PIXEL_COORDINATES, self.A_WIDTH, self.A_HEIGHT)
