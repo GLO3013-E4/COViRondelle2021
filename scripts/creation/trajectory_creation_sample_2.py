@@ -34,6 +34,7 @@ if __name__ == '__main__':
     pathfindingAlgorithmFactory = PathfindingAlgorithmFactory()
     pathfinding_algorithm = pathfindingAlgorithmFactory.create(PATHFINDING_ALGORITHM)
     board_map = Map(image, obstacles, pucks, start, end, node_size=NODE_SIZE)
+    board_map.render_map()
     map_drawer = MapDrawer(NODE_IDENTIFIER_WIDTH, NODE_SIZE, image)
     pathfinder = Pathfinder(board_map, map_drawer, pathfinding_algorithm)
 

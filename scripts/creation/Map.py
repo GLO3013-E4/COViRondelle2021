@@ -82,16 +82,16 @@ class Map:
                 self.add_cushion(neighbor, distance - 1, role)
 
     def create_obstacles(self):
-        for (x, y) in self.obstacles:
-            node = self.node_matrix[y // self.node_size][x // self.node_size]
+        for pixel_position in self.obstacles:
+            node = self.get_node_from_pixel(pixel_position)
             node.role = TileRole.OBSTACLE
 
             distance = (self.obstacle_cushion_width // self.node_size) + 1
             self.add_cushion(node, distance, TileRole.CUSHION)
 
     def create_pucks(self):
-        for (x, y) in self.pucks:
-            node = self.node_matrix[y // self.node_size][x // self.node_size]
+        for pixel_position in self.pucks:
+            node = self.get_node_from_pixel(pixel_position)
             node.role = TileRole.PUCK
 
             distance = (self.obstacle_puck_width // self.node_size) + 1
