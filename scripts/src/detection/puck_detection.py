@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import argparse
 
 from scripts.src.detection.lower_boundary import LowerBoundary
 from scripts.src.detection.upper_boundary import UpperBoundary
@@ -90,3 +89,4 @@ class PuckDetection:
 
     def is_in_area(self, area):
         return self.minimum_area < area < self.maximum_area
+
