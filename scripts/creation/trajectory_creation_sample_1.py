@@ -42,4 +42,3 @@ if __name__ == '__main__':
 
     pathfinder.find_square_matrix_path()
     pathfinder.show()
-
