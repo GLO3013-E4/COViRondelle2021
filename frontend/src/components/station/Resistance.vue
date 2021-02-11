@@ -5,7 +5,7 @@
         Station de résistance
       </h5>
     </v-card-title>
-    <v-container>
+    <v-container class="grey lighten-3">
       <v-row align="center">
         <v-col sm="5">
           <div class="d-flex justify-center">{{ this.resistanceValue }} Ω</div>
@@ -16,7 +16,7 @@
             v-for="(puckColor, i) in pucksColors"
             :key="i"
             :color="puckColor"
-            class="cyan--text"
+            class="grey--text text--lighten-2 font-weight-bold"
           >
             {{ i + 1 }}
           </v-avatar>
