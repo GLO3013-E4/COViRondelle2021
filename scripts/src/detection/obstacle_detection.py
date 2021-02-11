@@ -1,28 +1,18 @@
 import cv2
-import numpy as np
 
-from object_detection import ObjectDetection
+from scripts.src.detection.object_detection import ObjectDetection
 
 
 class ObstacleDetection(ObjectDetection):
     def __init__(self, image):
-        super().__init__(image)
-        self.obstacle_minimum_dimension = 20
-        self.obstacle_maximum_dimension = 300
-        self.minimum_area = 2
-        self.maximum_area = 3000
-        self.obstacle_side = 50
-        self.name = "obstacle"
+        super().__init__(image, "obstacle", 60, 120)
 
     def detect_obstacle(self):
         cv2.namedWindow('Color detection', cv2.WINDOW_NORMAL)
-
-        image_copy = self.image.copy()
-        mask = self.find_obstacle(image_copy)
-
-        cv2.imshow("Color detection", np.hstack([image_copy]))
-        cv2.waitKey(10000)
-        return 2
+        image_copy = self.copy_image()
+        obstacle_position = self.find_obstacle(image_copy)
+        self.show_image(image_copy)
+        return obstacle_position
 
     def find_obstacle(self, image_copy):
         image_hsv = cv2.cvtColor(self.image, cv2.COLOR_BGR2HSV)
@@ -36,29 +26,16 @@ class ObstacleDetection(ObjectDetection):
     def get_contours(self, mask, image_copy):
         contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
+        obstacles_position = []
+
         for contour in contours:
 
             perimeter = cv2.arcLength(contour, True)
             zone_approximation = cv2.approxPolyDP(contour, 0.05 * perimeter, True)
-            object_corner = len(zone_approximation)
-            print(object_corner)
             x_position, y_position, width, height = cv2.boundingRect(zone_approximation)
 
             if self.object_is_in_range(width, height):
-                self.draw_contours(x_position, y_position, width, height, image_copy)
+                self.draw_rectangle_on_image(image_copy, x_position, y_position, width, height, self.name)
+                obstacles_position.append(self.generate_puck_position(x_position, y_position, width, height))
 
-
-
-    def object_is_in_range(self, width, height):
-        return self.obstacle_minimum_dimension < width < self.obstacle_maximum_dimension and\
-               self.obstacle_minimum_dimension < height < self.obstacle_maximum_dimension
-
-
-    def draw_contours(self, x_position, y_position, width, height, image_copy):
-        cv2.rectangle(image_copy, (x_position, y_position), (x_position + width, y_position + height), (0, 255, 0), 2)
-        cv2.putText(image_copy, self.name, (x_position + (width // 2) - 30, y_position + (height // 3) - 30),
-                    cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
-
-
-obstacle_test = ObstacleDetection("monde3.jpg")
-obstacle_test.detect_obstacle()
+        return obstacles_position

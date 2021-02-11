@@ -2,7 +2,7 @@ from scripts.src.detection.puck_detection import PuckDetection
 
 A_COLOR = "blue"
 
-detection_puck = PuckDetection( "images/monde2.jpg", A_COLOR)
+detection_puck = PuckDetection("monde.jpg", A_COLOR)
 
 
 def test_given_an_area_in_range_then_return_true():
@@ -83,9 +83,3 @@ def test_given_an_object_within_invalid_height_and_width_then_should_not_be_in_r
     assert not object_is_in_range
 
 
-def test_given_an_image_with_blue_detection_required_then_return_right_positions():
-    puck_detection = PuckDetection("monde.jpg", "red")
-
-    position = puck_detection.detect_puck()
-
-    assert isinstance(position, dict)
