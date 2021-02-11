@@ -92,7 +92,7 @@ Unit tests must have sections Arrange-Act-Assert separated by one blank line. Se
 
 ### Computer engineers (GIF)
 
-- Dave Roussel ([davidaroussel](https://github.com/davidaroussel)) (project lead)
+- David Roussel ([davidaroussel](https://github.com/davidaroussel)) (project lead)
 - Olivier Lajoie ([labonnesauce](https://github.com/labonnesauce)) (GEL/GIF team lead)
 - Dave Caron ([davecaron](https://github.com/davecaron))
 
