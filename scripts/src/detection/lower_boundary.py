@@ -9,7 +9,7 @@ class LowerBoundary:
                                  "red": [0, 216, 92],
                                  "brown": [0, 121, 15], "green": [47, 89, 0],
                                  "black": [31, 21, 0],
-                                 "grey": [22, 6, 54]}
+                                 "grey": [22, 6, 54], "obstacle" : [28, 169, 74]}
 
     def get_lower_boundaries(self, color_to_detect):
         if color_to_detect in self.lower_boundaries:
