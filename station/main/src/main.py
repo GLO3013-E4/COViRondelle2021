@@ -5,9 +5,9 @@
 import rospy
 from std_msgs.msg import String
 
-from main.src.commands.command_factory import CommandFactory
-from main.src.handlers.read_image_handler import ReadImageHandler
-from main.src.readers.image_reader import ImageReader
+from station.main.src.commands.command_factory import CommandFactory
+from station.main.src.handlers.read_image_handler import ReadImageHandler
+from station.main.src.readers.image_reader import ImageReader
 
 
 def callback(data):

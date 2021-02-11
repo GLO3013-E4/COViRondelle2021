@@ -9,15 +9,15 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /root/catkin_ws/src
-COPY . /root/catkin_ws/src
+RUN mkdir -p /root/catkin_ws/src/station
+COPY . /root/catkin_ws/src/station
 
 WORKDIR "/root/catkin_ws"
 COPY .pylintrc .
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 
-RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_init_workspace /root/catkin_ws/src && catkin_make"
+RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_init_workspace /root/catkin_ws/src/station && catkin_make"
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
 

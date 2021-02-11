@@ -1,4 +1,4 @@
-from main.src.handlers.read_image_handler import ReadImageHandler
+from station.main.src.handlers.read_image_handler import ReadImageHandler
 
 IMAGE_PATH = 'IMAGE_PATH'
 EXPECTED_HANDLED_DATA = 'EXPECTED_HANDLED_DATA'
