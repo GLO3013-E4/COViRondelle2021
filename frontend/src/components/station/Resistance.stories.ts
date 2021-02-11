@@ -18,14 +18,14 @@ const Template = (args: any, { argTypes }: any) => ({
     pucksColors: [StateFactory.get(), StateFactory.get(), StateFactory.get()],
   };
 
-  export const WhiteAndBlackResistance = Template.bind({}) as any;
-  WhiteAndBlackResistance.args = {
+  export const WhiteAndBlackPuck = Template.bind({}) as any;
+  WhiteAndBlackPuck.args = {
     resistanceValue: 100000,
     pucksColors: ["white", "black", "grey"],
   };  
 
-  export const YellowResistance = Template.bind({}) as any;
-  YellowResistance.args = {
+  export const YellowPuck = Template.bind({}) as any;
+  YellowPuck.args = {
     resistanceValue: 100000,
     pucksColors: ["yellow", StateFactory.get(), StateFactory.get()],
   }; 
