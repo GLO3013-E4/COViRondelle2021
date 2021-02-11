@@ -1,15 +1,12 @@
 import cv2
 import numpy as np
 
-from lower_boundary import LowerBoundary
-from upper_boundary import UpperBoundary
+from object_detection import ObjectDetection
 
 
-class ObstacleDetection:
+class ObstacleDetection(ObjectDetection):
     def __init__(self, image):
-        self.image = cv2.imread(image)
-        self.lower_boundary = LowerBoundary()
-        self.upper_boundary = UpperBoundary()
+        super().__init__(image)
         self.obstacle_minimum_dimension = 20
         self.obstacle_maximum_dimension = 300
         self.minimum_area = 2
@@ -24,7 +21,7 @@ class ObstacleDetection:
         mask = self.find_obstacle(image_copy)
 
         cv2.imshow("Color detection", np.hstack([image_copy]))
-        cv2.waitKey(100000)
+        cv2.waitKey(10000)
         return 2
 
     def find_obstacle(self, image_copy):

@@ -1,20 +1,16 @@
 import cv2
 import numpy as np
 
-from scripts.src.detection.lower_boundary import LowerBoundary
-from scripts.src.detection.upper_boundary import UpperBoundary
+from object_detection import ObjectDetection
 
-
-class PuckDetection:
+class PuckDetection(ObjectDetection):
 
     def __init__(self, image, color):
-        self.lower_boundary = LowerBoundary()
-        self.upper_boundary = UpperBoundary()
+        super().__init__(image)
         self.puck_minimum_dimension = 35
         self.puck_maximum_dimension = 65
         self.minimum_area = 1440
         self.maximum_area = 2200
-        self.image = cv2.imread(image)
         self.color_to_detect = color
 
     def detect_puck(self):
@@ -24,7 +20,11 @@ class PuckDetection:
         puck_position = self._find_color(image_copy)
 
         cv2.imshow("Color detection", np.hstack([image_copy]))
+
         cv2.waitKey(10000)
+
+        print(puck_position)
+
 
         return puck_position
 
@@ -75,21 +75,11 @@ class PuckDetection:
         return self.puck_minimum_dimension < width < self.puck_maximum_dimension and \
                self.puck_minimum_dimension < height < self.puck_maximum_dimension
 
-    def generate_puck_position(self, x_position, y_position, width, height):
-        return {
-            "x_position": x_position,
-            "y_position": y_position,
-            "width": width,
-            "height": height
-        }
-
-    def _destroy_windows(self):
-        while 1:
-            if cv2.waitKey(10) & 0xFF == ord('q'):
-                cv2.destroyAllWindows()
-                break
 
     def is_in_area(self, area):
         return self.minimum_area < area < self.maximum_area
 
 
+puck_detection = PuckDetection("monde3.jpg", "purple")
+position = puck_detection.detect_puck()
+print(position)
