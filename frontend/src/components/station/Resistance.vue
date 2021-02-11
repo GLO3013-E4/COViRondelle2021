@@ -16,7 +16,7 @@
             v-for="(puckColor, i) in pucksColors"
             :key="i"
             :color="puckColor"
-            class="white--text"
+            class="cyan--text"
           >
             {{ i + 1 }}
           </v-avatar>
