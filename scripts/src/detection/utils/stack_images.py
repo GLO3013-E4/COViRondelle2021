@@ -2,7 +2,6 @@ import numpy as np
 import cv2
 
 
-# just a function to help us detect color
 def stackImages(scale, image_array):
     rows = len(image_array)
     cols = len(image_array[0])

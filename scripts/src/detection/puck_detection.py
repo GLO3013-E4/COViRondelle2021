@@ -24,7 +24,7 @@ class PuckDetection:
         puck_position = self._find_color(image_copy)
 
         cv2.imshow("Color detection", np.hstack([image_copy]))
-        cv2.waitKey(2000)
+        cv2.waitKey(10000)
 
         return puck_position
 
@@ -91,4 +91,5 @@ class PuckDetection:
 
     def is_in_area(self, area):
         return self.minimum_area < area < self.maximum_area
+
 
