@@ -83,7 +83,7 @@ def test_given_an_object_within_invalid_height_and_width_then_should_not_be_in_r
 
 
 def test_given_an_image_with_blue_detection_required_then_return_right_positions():
-    puck_detection = PuckDetection("monde3.jpg", "black")
+    puck_detection = PuckDetection("monde3.jpg", "blue")
 
     position = puck_detection.detect_puck()
 
