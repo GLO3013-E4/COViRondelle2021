@@ -1,15 +1,13 @@
 <template>
   <v-card class="d-flex justify-center" color="#ededed" height="300">
     <h3>Cycles informations</h3>
-    <CycleList />
   </v-card>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import CycleList from "../cycles/CycleList.vue";
 @Component({
-  components: { CycleList: CycleList },
+  components: {},
 })
 export default class CycleInformation extends Vue {}
 </script>

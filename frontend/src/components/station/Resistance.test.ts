@@ -10,44 +10,39 @@ describe("When mounting Resistance component", () => {
   });
 });
 
-describe("When specify props to Resistance component", () => {
-  const wrapper = mount(Resistance, {
-      propsData: {
-          resistanceValue: 100000,
-          pucksColors: ['red', 'blue', 'yellow']
-      }
-    })
-
-    it("Should be the right ones", () => {
-          expect(wrapper.props().resistanceValue).toBe(100000)
-          expect(wrapper.props().pucksColors).toStrictEqual(['red', 'blue', 'yellow'])
-    });
-  });
-
-  describe("When mounting Resistance component with props", () => {
+describe("Given props", () => {
+  const props = {
+    resistanceValue: 100000,
+    pucksColors: ['red', 'blue', 'yellow']
+  }
+  describe("When mounting Resistance", () => {
     const wrapper = mount(Resistance, {
-      propsData: {
-          resistanceValue: 100000,
-          pucksColors: ['red', 'blue', 'yellow']
-      }
-    })
+        propsData: props
+      })
 
-    it("Should contains resistanceValue", () => {
-      const resistanceValue = wrapper.findComponent({ref: 'resistanceValue'}) 
+      it("Should be the right props", () => {
+            expect(wrapper.props().resistanceValue).toBe(100000)
+            expect(wrapper.props().pucksColors).toStrictEqual(['red', 'blue', 'yellow'])
+      });
 
-      expect(resistanceValue.exists()).toBe(true)
-      expect(resistanceValue.text()).toBe('100000 Ω')
-    });
+      it("Should contains the right resistanceValue", () => {
+        const resistanceValue = wrapper.findComponent({ref: 'resistanceValue'}) 
+    
+        expect(resistanceValue.exists()).toBe(true)
+        expect(resistanceValue.text()).toBe('100000 Ω')
+      });  
 
-    it("Should contains pucks", () => {
-      const pucks = wrapper.findAllComponents({ref: 'pucks'})
-
-      expect(pucks.exists()).toBe(true)
-      expect(pucks).toHaveLength(3)
-    });
+      it("Should contains the right number of pucks", () => {
+        const pucks = wrapper.findAllComponents({ref: 'pucks'})
+      
+        expect(pucks.exists()).toBe(true)
+        expect(pucks).toHaveLength(3)
+      });
   });
+});
 
-  
+
+describe("Given no props", () => {
   describe("When mounting Resistance component without props", () => {
     const wrapper = mount(Resistance,{})
 
@@ -65,3 +60,4 @@ describe("When specify props to Resistance component", () => {
       expect(pucks).toHaveLength(0)
     });
   });
+});
