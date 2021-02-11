@@ -5,20 +5,20 @@ import stack_images
 
 class TrackBarDetection:
 
-    def empty(self, value):
-        pass
+    def on_track_bar_change(self, value):
+        print(self, value)
 
     def start_track_bar(self):
         cv2.namedWindow("TrackBars")
         cv2.resizeWindow("TrackBars", 640, 240)
-        cv2.createTrackbar("Hue Min", "TrackBars", 0, 179, self.empty)
-        cv2.createTrackbar("Hue Max", "TrackBars", 179, 179, self.empty)
-        cv2.createTrackbar("Sat Min", "TrackBars", 0, 255, self.empty)
-        cv2.createTrackbar("Sat Max", "TrackBars", 255, 255, self.empty)
-        cv2.createTrackbar("Val Min", "TrackBars", 0, 255, self.empty)
-        cv2.createTrackbar("Val Max", "TrackBars", 255, 255, self.empty)
+        cv2.createTrackbar("Hue Min", "TrackBars", 0, 179, self.on_track_bar_change)
+        cv2.createTrackbar("Hue Max", "TrackBars", 179, 179, self.on_track_bar_change)
+        cv2.createTrackbar("Sat Min", "TrackBars", 0, 255, self.on_track_bar_change)
+        cv2.createTrackbar("Sat Max", "TrackBars", 255, 255, self.on_track_bar_change)
+        cv2.createTrackbar("Val Min", "TrackBars", 0, 255, self.on_track_bar_change)
+        cv2.createTrackbar("Val Max", "TrackBars", 255, 255, self.on_track_bar_change)
 
-        image_camera_monde = cv2.imread("images/monde1.jpg")
+        image_camera_monde = cv2.imread("monde2.jpg")
 
         while True:
             hsv_image = cv2.cvtColor(image_camera_monde, cv2.COLOR_BGR2HSV)

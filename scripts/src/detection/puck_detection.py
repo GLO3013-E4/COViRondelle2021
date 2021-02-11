@@ -14,7 +14,6 @@ def generate_puck_position(x_position, y_position, width, height):
     }
 
 
-#pylint: disable=too-many-arguments
 def draw_rectangle_on_image(image_copy, x_position, y_position, width, height, object_type):
     cv2.rectangle(image_copy, (x_position, y_position), (x_position + width, y_position + height),
                   (0, 255, 0), 2)
@@ -32,8 +31,6 @@ def _destroy_windows():
 
 class PuckDetection:
     """Puck Detection class"""
-
-    #pylint: disable=too-many-instance-attributes
 
     def __init__(self, image, color):
         self.lower_boundary = LowerBoundary()
