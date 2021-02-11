@@ -94,11 +94,11 @@ class TestMap:
 
         for line in self.Map.node_matrix:
             for node in line:
-                x1, y1 = node.matrix_center
+                first_node_x, first_node_y = node.matrix_center
 
                 for neighbor, angle in node.neighbors:
-                    x2, y2 = neighbor.matrix_center
-                    distance = abs(x2-x1) + abs(y2-y1)
+                    second_node_x, second_node_y = neighbor.matrix_center
+                    distance = abs(second_node_x-first_node_x) + abs(second_node_y-first_node_y)
 
                     assert distance == self.EXPECTED_NEIGHBOR_DISTANCE
 

@@ -23,18 +23,18 @@ class TestBFS:
         cls.SOME_NODE = Node(cls.A_MATRIX_POSITION, cls.A_PIXEL_POSITION, cls.A_WIDTH, cls.A_HEIGHT)
 
     def setup_method(self):
-        self.BFS = BreadthFirstSearch()
+        self.breadth_first_search = BreadthFirstSearch()
 
     def test_given_unconnected_graph_without_end_role_when_find_path_then_raise_path_does_not_exist(self):
         start_node = self.given_unconnected_graph_without_end_role()
 
         with pytest.raises(PathNotFoundException):
-            self.BFS.find_path(start_node, self.SOME_NODE)
+            self.breadth_first_search.find_path(start_node, self.SOME_NODE)
 
     def test_given_connected_graph_with_end_role_when_find_path_then_path_is_valid(self):
         start_node = self.given_connected_graph_with_end_role()
 
-        path = self.BFS.find_path(start_node, self.SOME_NODE)
+        path = self.breadth_first_search.find_path(start_node, self.SOME_NODE)
 
         assert path
 
@@ -42,7 +42,7 @@ class TestBFS:
         start_node = self.given_connected_graph_without_end_role()
 
         with pytest.raises(PathNotFoundException):
-            self.BFS.find_path(start_node, self.SOME_NODE)
+            self.breadth_first_search.find_path(start_node, self.SOME_NODE)
 
     def given_unconnected_graph_without_end_role(self):
         start_node = Node(self.SOME_MATRIX_COORDINATES, self.SOME_PIXEL_COORDINATES, self.A_WIDTH, self.A_HEIGHT)

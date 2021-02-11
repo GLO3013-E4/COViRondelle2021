@@ -18,22 +18,22 @@ class TestPathfinder:
         cls.A_PATH = [cls.A_NODE, cls.ANOTHER_NODE]
 
     def setup_method(self):
-        self.Map = Mock()
+        self._map = Mock()
         self.map_drawer = Mock()
         self.pathfinding_algorithm = Mock()
         self.image = Mock()
-        self.pathfinder = Pathfinder(self.Map, self.map_drawer, self.pathfinding_algorithm)
+        self.pathfinder = Pathfinder(self._map, self.map_drawer, self.pathfinding_algorithm)
 
     def test_initial_path_is_empty(self):
         assert not self.pathfinder.path
 
     def test_when_find_square_matrix_path_then_path_is_found(self):
-        self.Map.get_start_node.return_value = self.A_NODE
-        self.Map.get_end_node.return_value = self.ANOTHER_NODE
+        self._map.get_start_node.return_value = self.A_NODE
+        self._map.get_end_node.return_value = self.ANOTHER_NODE
 
         self.pathfinder.find_square_matrix_path()
 
-        self.Map.get_start_node.assert_called_once()
+        self._map.get_start_node.assert_called_once()
         self.pathfinding_algorithm.find_path.assert_called_once_with(self.A_NODE, self.ANOTHER_NODE)
 
     def test_given_successful_path_when_find_square_matrix_path_then_update_path(self):
@@ -52,7 +52,7 @@ class TestPathfinder:
     def test_when_show_then_draw_image(self):
         self.pathfinder.show()
 
-        self.map_drawer.draw_map.assert_called_once_with(self.Map, self.pathfinder.path)
+        self.map_drawer.draw_map.assert_called_once_with(self._map, self.pathfinder.path)
 
     def test_when_show_then_get_image(self):
         self.pathfinder.show()
