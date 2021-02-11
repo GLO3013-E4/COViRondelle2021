@@ -14,8 +14,8 @@ def generate_puck_position(x_position, y_position, width, height):
     }
 
 
-def draw_rectangle_on_image(image_copy, x_position, y_position, width, height, object_type):  # pylint:
-    # disable=too-many-arguments
+#pylint: disable=too-many-arguments
+def draw_rectangle_on_image(image_copy, x_position, y_position, width, height, object_type):
     cv2.rectangle(image_copy, (x_position, y_position), (x_position + width, y_position + height),
                   (0, 255, 0), 2)
     cv2.putText(image_copy, object_type, (x_position + (width // 2) - 30, y_position + (height // 3)
@@ -33,7 +33,7 @@ def _destroy_windows():
 class PuckDetection:
     """Puck Detection class"""
 
-    # pylint: disable=too-many-instance-attributes
+    #pylint: disable=too-many-instance-attributes
 
     def __init__(self, image, color):
         self.lower_boundary = LowerBoundary()
@@ -66,7 +66,7 @@ class PuckDetection:
         return self._get_contours(mask, image_copy)
 
     def _get_contours(self, image_mask, image_copy):
-        contours = cv2.findContours(image_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        contours, hierarchy = cv2.findContours(image_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
         for contour in contours:
             area = cv2.contourArea(contour)

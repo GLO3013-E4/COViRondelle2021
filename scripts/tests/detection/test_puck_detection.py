@@ -2,7 +2,7 @@ from scripts.src.detection.puck_detection import PuckDetection, generate_puck_po
 
 A_COLOR = "blue"
 
-detection_puck = PuckDetection( "images/monde2.jpg", A_COLOR)
+detection_puck = PuckDetection( "images/monde3.jpg", A_COLOR)
 
 
 def test_given_an_area_in_range_then_return_true():
@@ -52,7 +52,7 @@ def test_given_an_object_within_puck_dimension_then_should_be_in_range():
 
     object_is_in_range = detection_puck.object_is_in_range(width, height)
 
-    assert object_is_in_range == True
+    assert object_is_in_range is True
 
 
 def test_given_an_object_within_invalid_width_then_should_not_be_in_range():
@@ -61,7 +61,7 @@ def test_given_an_object_within_invalid_width_then_should_not_be_in_range():
 
     object_is_in_range = detection_puck.object_is_in_range(width, height)
 
-    assert object_is_in_range == False
+    assert object_is_in_range is False
 
 
 def test_given_an_object_within_invalid_height_then_should_not_be_in_range():
@@ -70,7 +70,7 @@ def test_given_an_object_within_invalid_height_then_should_not_be_in_range():
 
     object_is_in_range = detection_puck.object_is_in_range(width, height)
 
-    assert object_is_in_range == False
+    assert object_is_in_range is False
 
 
 def test_given_an_object_within_invalid_height_and_width_then_should_not_be_in_range():
@@ -79,12 +79,12 @@ def test_given_an_object_within_invalid_height_and_width_then_should_not_be_in_r
 
     object_is_in_range = detection_puck.object_is_in_range(width, height)
 
-    assert object_is_in_range == False
+    assert object_is_in_range is False
 
 
 def test_given_an_image_with_blue_detection_required_then_return_right_positions():
-    puck_detection = PuckDetection("monde.jpg", "red")
+    puck_detection = PuckDetection("monde3.jpg", "black")
 
     position = puck_detection.detect_puck()
 
-    assert isinstance(position, dict) == True
+    assert isinstance(position, dict) is True
