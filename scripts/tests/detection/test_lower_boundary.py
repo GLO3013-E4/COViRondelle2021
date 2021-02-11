@@ -4,6 +4,7 @@ RED_COLOR = "red"
 BROWN_COLOR = "brown"
 GREEN_COLOR = "green"
 NOT_A_COLOR = "Uncle"
+OBSTACLE = "obstacle"
 
 lower_boundary = LowerBoundary()
 
@@ -30,6 +31,14 @@ def test_given_green_color_then_should_return_right_lower_boundary():
     expected_boundaries = [47, 89, 0]
 
     actual_boundaries= lower_boundary.get_lower_boundaries(GREEN_COLOR)
+
+    assert len(actual_boundaries) == len(expected_boundaries)
+    assert all([a == b for a, b in zip(actual_boundaries, expected_boundaries)])
+
+def test_given_obstacle_color_then_should_return_right_lower_boundary():
+    expected_boundaries = [28, 169, 74]
+
+    actual_boundaries= lower_boundary.get_lower_boundaries(OBSTACLE)
 
     assert len(actual_boundaries) == len(expected_boundaries)
     assert all([a == b for a, b in zip(actual_boundaries, expected_boundaries)])
