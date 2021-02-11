@@ -10,7 +10,9 @@ class ObstacleDetection:
         self.image = cv2.imread(image)
         self.lower_boundary = LowerBoundary()
         self.upper_boundary = UpperBoundary()
-        self.minimum_area = 500
+        self.obstacle_minimum_dimension = 20
+        self.obstacle_maximum_dimension = 300
+        self.minimum_area = 2
         self.maximum_area = 3000
         self.obstacle_side = 50
         self.name = "obstacle"
@@ -22,7 +24,7 @@ class ObstacleDetection:
         mask = self.find_obstacle(image_copy)
 
         cv2.imshow("Color detection", np.hstack([image_copy]))
-        cv2.waitKey(10000)
+        cv2.waitKey(100000)
         return 2
 
     def find_obstacle(self, image_copy):
@@ -38,19 +40,22 @@ class ObstacleDetection:
         contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
         for contour in contours:
-            obstacle_area = cv2.contourArea(contour)
 
-            if self.is_obstacle_in_are(obstacle_area):
-                perimeter = cv2.arcLength(contour, True)
-                zone_approximation = cv2.approxPolyDP(contour, 0.05 * perimeter, True)
-                object_corner = len(zone_approximation)
-                print(object_corner)
-                x_position, y_position, width, height = cv2.boundingRect(zone_approximation)
+            perimeter = cv2.arcLength(contour, True)
+            zone_approximation = cv2.approxPolyDP(contour, 0.05 * perimeter, True)
+            object_corner = len(zone_approximation)
+            print(object_corner)
+            x_position, y_position, width, height = cv2.boundingRect(zone_approximation)
+
+            if self.object_is_in_range(width, height):
                 self.draw_contours(x_position, y_position, width, height, image_copy)
 
 
-    def is_obstacle_in_are(self, obstacle_area):
-        return True;
+
+    def object_is_in_range(self, width, height):
+        return self.obstacle_minimum_dimension < width < self.obstacle_maximum_dimension and\
+               self.obstacle_minimum_dimension < height < self.obstacle_maximum_dimension
+
 
     def draw_contours(self, x_position, y_position, width, height, image_copy):
         cv2.rectangle(image_copy, (x_position, y_position), (x_position + width, y_position + height), (0, 255, 0), 2)
