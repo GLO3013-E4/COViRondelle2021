@@ -14,9 +14,12 @@ def generate_puck_position(x_position, y_position, width, height):
     }
 
 
-def draw_rectangle_on_image(image_copy, x_position, y_position, width, height, object_type):
-    cv2.rectangle(image_copy, (x_position, y_position), (x_position + width, y_position + height), (0, 255, 0), 2)
-    cv2.putText(image_copy, object_type, (x_position + (width // 2) - 30, y_position + (height // 3) - 30),
+def draw_rectangle_on_image(image_copy, x_position, y_position, width, height, object_type):  # pylint:
+    # disable=too-many-arguments
+    cv2.rectangle(image_copy, (x_position, y_position), (x_position + width, y_position + height),
+                  (0, 255, 0), 2)
+    cv2.putText(image_copy, object_type, (x_position + (width // 2) - 30, y_position + (height // 3)
+                                          - 30),
                 cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
 
 
@@ -28,6 +31,9 @@ def _destroy_windows():
 
 
 class PuckDetection:
+    """Puck Detection class"""
+
+    # pylint: disable=too-many-instance-attributes
 
     def __init__(self, image, color):
         self.lower_boundary = LowerBoundary()

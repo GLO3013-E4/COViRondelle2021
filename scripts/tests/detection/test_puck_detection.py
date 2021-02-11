@@ -22,7 +22,6 @@ def test_given_coordinates_width_and_height_return_right_position():
     position_y = 120
     width = 47
     height = 50
-
     position_return = generate_puck_position(position_x, position_y, width, height)
 
     assert position_return["x_position"] == position_x
