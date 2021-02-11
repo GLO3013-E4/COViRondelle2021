@@ -67,7 +67,7 @@ class PuckDetection:
 
     def _get_contours(self, image_mask, image_copy):
         contours, hierarchy = cv2.findContours(image_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-
+        print(hierarchy)
         for contour in contours:
             area = cv2.contourArea(contour)
 
