@@ -1,11 +1,17 @@
 FROM jjanzic/docker-python3-opencv:latest
 
-RUN apt-get update
-RUN apt-get install -y poppler-utils
-RUN apt-get install -y tesseract-ocr
-RUN apt-get install -y libtesseract-dev
-RUN apt-get install -y libleptonica-dev && ldconfig
-RUN apt-get install -y libsm6 libxext6
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        poppler-utils \
+        tesseract-ocr \
+        libtesseract-dev \
+        libleptonica-dev \
+    && ldconfig \
+    && apt-get install -y --no-install-recommends \
+        libsm6 \
+        libxext6 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN tesseract --version
 

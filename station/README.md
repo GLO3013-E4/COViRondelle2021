@@ -5,6 +5,15 @@ Station Python application for COViRondelle2021
  - Communicates with [`robot`](../robot) using ROS
  - Communicates with [`frontend`](../frontend) using websockets
 
+## Dependencies
+
+Using Docker prevents having to install the needed dependencies on the system. For testing purposes, it's really simpler.
+
+Otherwise, here are some links for UNIX-based OS :
+
+- [ROS](http://wiki.ros.org/Installation/Ubuntu)
+- [OpenCV](https://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html)
+
 ## Installation
 
 With Docker :
