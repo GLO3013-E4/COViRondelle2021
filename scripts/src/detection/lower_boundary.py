@@ -1,7 +1,8 @@
 import numpy as np
 
 
-class LowerBoundary:
+class LowerBoundary: # pylint: disable=too-few-public-methods
+    """Lower boundaries of colors of pucks"""
     def __init__(self):
         self.lower_boundaries = {"purple": [117, 20, 94], "white": [33, 15, 160],
                                  "yellow": [24, 190, 127],

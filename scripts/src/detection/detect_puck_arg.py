@@ -1,6 +1,6 @@
 import argparse
 
-import puck_detection
+from scripts.src.detection import puck_detection
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", help="path to the image")

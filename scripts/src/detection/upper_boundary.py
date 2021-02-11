@@ -1,7 +1,8 @@
 import numpy as np
 
 
-class UpperBoundary:
+class UpperBoundary: # pylint: disable=too-few-public-methods
+    """Upper boundaries of colors of pucks"""
     def __init__(self):
         self.upper_boundaries = {"purple": [143, 255, 233], "white": [62, 50, 255],
                                  "yellow": [79, 255, 228],
