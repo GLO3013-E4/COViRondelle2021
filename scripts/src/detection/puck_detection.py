@@ -14,7 +14,7 @@ class PuckDetection(ObjectDetection):
         cv2.namedWindow('Color detection', cv2.WINDOW_NORMAL)
         image_copy = self.copy_image()
         puck_position = self._find_color(image_copy)
-        self.show_image(image_copy)
+        self._show_image(image_copy)
         return puck_position
 
     def _find_color(self, image_copy):

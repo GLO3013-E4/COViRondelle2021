@@ -11,7 +11,7 @@ class ObstacleDetection(ObjectDetection):
         cv2.namedWindow('Color detection', cv2.WINDOW_NORMAL)
         image_copy = self.copy_image()
         obstacle_position = self.find_obstacle(image_copy)
-        self.show_image(image_copy)
+        self._show_image(image_copy)
         return obstacle_position
 
     def find_obstacle(self, image_copy):

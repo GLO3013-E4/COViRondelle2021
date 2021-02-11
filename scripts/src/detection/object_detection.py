@@ -36,7 +36,7 @@ class ObjectDetection:
                 cv2.destroyAllWindows()
                 break
 
-    def show_image(self, image_copy):
+    def _show_image(self, image_copy):
         cv2.imshow("Color detection", np.hstack([image_copy]))
         cv2.waitKey(5000)
 
