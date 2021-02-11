@@ -1,8 +1,9 @@
-from main.src.readers.image_reader import ImageReader
+from robot.main.src.readers.image_reader import ImageReader
 
+# TODO : This will throw in local environment.
 command_panel_images_path = [
-    'src/data/images/command_panel_example_1.png',
-    'src/data/images/command_panel_example_2.png'
+    'src/robot/data/images/command_panel_example_1.png',
+    'src/robot/data/images/command_panel_example_2.png'
 ]
 
 command_panel_images = []

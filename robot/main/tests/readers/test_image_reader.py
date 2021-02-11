@@ -1,7 +1,7 @@
 import pytest
 
-from main.tests.util.command_panel_helper import command_panel_images_path
-from main.src.readers.image_reader import ImageReader
+from robot.main.tests.util.command_panel_helper import command_panel_images_path
+from robot.main.src.readers.image_reader import ImageReader
 
 image_reader = ImageReader()
 

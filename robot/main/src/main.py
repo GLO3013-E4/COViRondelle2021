@@ -2,11 +2,11 @@
 import rospy
 from std_msgs.msg import String
 
-from main.src.commands.command_factory import CommandFactory
-from main.src.handlers.read_image_handler import ReadImageHandler
-from main.src.handlers.map_letters_handler import MapLettersHandler
-from main.src.mappers.letter_mapper import LetterMapper
-from main.src.readers.image_reader import ImageReader
+from robot.main.src.commands.command_factory import CommandFactory
+from robot.main.src.handlers.read_image_handler import ReadImageHandler
+from robot.main.src.handlers.map_letters_handler import MapLettersHandler
+from robot.main.src.mappers.letter_mapper import LetterMapper
+from robot.main.src.readers.image_reader import ImageReader
 
 
 def robot():

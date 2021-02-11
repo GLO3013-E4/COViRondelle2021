@@ -1,6 +1,6 @@
-from main.tests.util.command_panel_helper import command_panel_images_letters, command_panel_images
-
-from main.src.mappers.letter_mapper import LetterMapper
+from robot.main.tests.util.command_panel_helper import command_panel_images_letters, \
+    command_panel_images
+from robot.main.src.mappers.letter_mapper import LetterMapper
 
 images = command_panel_images
 expected_letters_for_images = command_panel_images_letters

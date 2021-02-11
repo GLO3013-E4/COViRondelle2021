@@ -1,5 +1,5 @@
-from main.src.handlers.map_letters_handler import MapLettersHandler
-from main.tests.util.command_panel_helper import command_panel_images
+from robot.main.src.handlers.map_letters_handler import MapLettersHandler
+from robot.main.tests.util.command_panel_helper import command_panel_images
 
 sent_image = command_panel_images[0]
 EXPECTED_MAPPED_LETTERS = ['L', 'O', 'L']

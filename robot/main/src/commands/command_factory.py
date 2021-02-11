@@ -1,4 +1,4 @@
-from main.src.commands.command import Command
+from robot.main.src.commands.command import Command
 
 
 class CommandFactory:
