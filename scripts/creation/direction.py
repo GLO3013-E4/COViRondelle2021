@@ -1,7 +1,10 @@
+"""Enum that specifies the directions the robot can move in its graph"""
+
 from enum import Enum, auto
 
 
 class Direction(Enum):
+    """Enum that specifies the directions the robot can move in its graph"""
     RIGHT = auto()
     TOP_RIGHT = auto()
     UP = auto()

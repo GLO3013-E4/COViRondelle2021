@@ -29,11 +29,12 @@ class TestPathfinder:
 
     def test_when_find_square_matrix_path_then_path_is_found(self):
         self.Map.get_start_node.return_value = self.A_NODE
+        self.Map.get_end_node.return_value = self.ANOTHER_NODE
 
         self.pathfinder.find_square_matrix_path()
 
         self.Map.get_start_node.assert_called_once()
-        self.pathfinding_algorithm.find_path.assert_called_once_with(self.A_NODE, self.A_NODE)
+        self.pathfinding_algorithm.find_path.assert_called_once_with(self.A_NODE, self.ANOTHER_NODE)
 
     def test_given_successful_path_when_find_square_matrix_path_then_update_path(self):
         self.pathfinding_algorithm.find_path.return_value = self.A_PATH

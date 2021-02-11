@@ -1,15 +1,12 @@
-from PIL import Image
+"""Example of how to find a path between the robot and a specific puck
+given the obstacles, a start position, an end position and where the other pucks are."""
 
-from scripts.creation.pathfinder import Pathfinder
-from scripts.creation.pathfinding_algorithm_factory import PathfindingAlgorithmFactory
-from scripts.creation.map import Map
-from scripts.creation.map_drawer import MapDrawer
+from scripts.creation.trajectory_creation_sample_1 import show_path
 
 
 if __name__ == '__main__':
     NODE_SIZE = 25
-    NODE_IDENTIFIER_WIDTH = NODE_SIZE / 5
-    PATHFINDING_ALGORITHM = "BreadthFirstSearch"
+    ALGORITHM = "BreadthFirstSearch"
 
     OBSTACLES = [
         (1142, 290),
@@ -27,14 +24,6 @@ if __name__ == '__main__':
         (245, 581)
     ]
 
-    IMAGE = Image.open("./scripts/data/images/trajectory_example_1.jpg")
+    IMAGE_PATH = "./scripts/data/images/trajectory_example_1.jpg"
 
-    pathfindingAlgorithmFactory = PathfindingAlgorithmFactory()
-    pathfinding_algorithm = pathfindingAlgorithmFactory.create(PATHFINDING_ALGORITHM)
-    board_map = Map(IMAGE, OBSTACLES, PUCKS, START, END, node_size=NODE_SIZE)
-    board_map.render_map()
-    map_drawer = MapDrawer(NODE_IDENTIFIER_WIDTH, NODE_SIZE, IMAGE)
-    pathfinder = Pathfinder(board_map, map_drawer, pathfinding_algorithm)
-
-    pathfinder.find_square_matrix_path()
-    pathfinder.show()
+    show_path(NODE_SIZE, ALGORITHM, OBSTACLES, START, END, PUCKS, IMAGE_PATH)

@@ -1,3 +1,6 @@
+"""Example of how to find a path between the robot and a specific puck
+given the obstacles, a start position, an end position and where the other pucks are."""
+
 from PIL import Image
 
 from scripts.creation.pathfinder import Pathfinder
@@ -6,10 +9,27 @@ from scripts.creation.map import Map
 from scripts.creation.map_drawer import MapDrawer
 
 
+def show_path(node_size, algorithm, obstacles, start, end, pucks, image_path):
+    """Example of how to find a path between the robot and a specific puck
+    given the obstacles, a start position, an end position and where the other pucks are."""
+    node_identifier_width = node_size / 5
+    image = Image.open(image_path)
+
+    pathfinding_algorithm_factory = PathfindingAlgorithmFactory()
+    pathfinding_algorithm = pathfinding_algorithm_factory.create(algorithm)
+    board_map = Map(image, obstacles, pucks, start, end, node_size=node_size)
+    board_map.render_map()
+    map_drawer = MapDrawer(node_identifier_width, node_size, image)
+    pathfinder = Pathfinder(board_map, map_drawer, pathfinding_algorithm)
+
+    pathfinder.find_square_matrix_path()
+    pathfinder.show()
+
+
 if __name__ == '__main__':
     NODE_SIZE = 25
     NODE_IDENTIFIER_WIDTH = NODE_SIZE / 5
-    PATHFINDING_ALGORITHM = "BreadthFirstSearch"
+    ALGORITHM = "BreadthFirstSearch"
 
     OBSTACLES = [
         (1142, 290),
@@ -31,14 +51,5 @@ if __name__ == '__main__':
         (1150, 215)
     ]
 
-    IMAGE = Image.open("./scripts/data/images/trajectory_example_1.jpg")
-
-    pathfindingAlgorithmFactory = PathfindingAlgorithmFactory()
-    pathfinding_algorithm = pathfindingAlgorithmFactory.create(PATHFINDING_ALGORITHM)
-    board_map = Map(IMAGE, OBSTACLES, PUCKS, START, END, node_size=NODE_SIZE)
-    board_map.render_map()
-    map_drawer = MapDrawer(NODE_IDENTIFIER_WIDTH, NODE_SIZE, IMAGE)
-    pathfinder = Pathfinder(board_map, map_drawer, pathfinding_algorithm)
-
-    pathfinder.find_square_matrix_path()
-    pathfinder.show()
+    IMAGE_PATH = "./scripts/data/images/trajectory_example_1.jpg"
+    show_path(NODE_SIZE, ALGORITHM, OBSTACLES, START, END, PUCKS, IMAGE_PATH)
