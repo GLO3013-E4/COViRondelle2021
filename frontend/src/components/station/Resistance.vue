@@ -8,10 +8,11 @@
     <v-container class="grey lighten-3">
       <v-row align="center">
         <v-col sm="5">
-          <div class="d-flex justify-center">{{ this.resistanceValue }} Ω</div>
+          <div ref="resistanceValue" class="d-flex justify-center font-weight-bold">{{ this.resistanceValue }} Ω</div>
         </v-col>
         <v-col sm="7">
           <v-avatar
+            ref="pucks"
             size="30"
             v-for="(puckColor, i) in pucksColors"
             :key="i"
