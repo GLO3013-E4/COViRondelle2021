@@ -16,8 +16,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         libsm6 \
         libxext6 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean
 
 RUN mkdir -p /root/catkin_ws/src
 COPY . /root/catkin_ws/src
