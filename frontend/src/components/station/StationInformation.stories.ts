@@ -1,4 +1,4 @@
-import StationInformation from "@/components/station/StationInformation.vue";
+import StationInformation from '@/components/station/StationInformation.vue';
 
 export default {
   title: 'components/station/StationInformation',
@@ -7,5 +7,5 @@ export default {
 
 export const Default = () => ({
   components: { StationInformation },
-  template: `<station-information/>`
+  template: `<station-information/>`,
 });

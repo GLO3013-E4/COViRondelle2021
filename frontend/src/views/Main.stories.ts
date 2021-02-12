@@ -1,4 +1,4 @@
-import Main from "@/views/Main.vue";
+import Main from '@/views/Main.vue';
 
 export default {
   title: 'views/Main',
@@ -7,5 +7,5 @@ export default {
 
 export const Default = () => ({
   components: { Main },
-  template: `<Main />`
+  template: `<Main />`,
 });

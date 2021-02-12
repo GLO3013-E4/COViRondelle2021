@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import MainLayout from "../layouts/MainLayout.vue";
+import { Component, Vue } from 'vue-property-decorator';
+import MainLayout from '../layouts/MainLayout.vue';
 @Component({
   components: { MainLayout },
 })
