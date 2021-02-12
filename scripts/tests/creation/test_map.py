@@ -1,10 +1,11 @@
+from PIL import Image
+
 from scripts.creation.map import Map
 from scripts.creation.tile_role import TileRole
 
-from PIL import Image
-
 
 class TestMap:
+    """Test Map class"""
     @classmethod
     def setup_class(cls):
         cls.AN_IMAGE_WIDTH = 300
@@ -56,7 +57,17 @@ class TestMap:
             (6, 6): 0,
             (5, 7): 0
         }
-        self.Map = Map(self.AN_IMAGE, self.SOME_OBSTACLES, self.SOME_PUCKS, self.A_STARTING_POSITION, self.AN_ENDING_POSITION, self.A_NODE_SIZE, self.A_SAFETY_CUSHION, self.A_ROBOT_WIDTH, self.AN_OBSTACLE_WIDTH, self.A_PUCK_WIDTH)
+        self.Map = Map(
+            self.AN_IMAGE,
+            self.SOME_OBSTACLES,
+            self.SOME_PUCKS,
+            self.A_STARTING_POSITION,
+            self.AN_ENDING_POSITION,
+            self.A_NODE_SIZE,
+            self.A_SAFETY_CUSHION,
+            self.A_ROBOT_WIDTH,
+            self.AN_OBSTACLE_WIDTH,
+            self.A_PUCK_WIDTH)
 
     def test_when_create_nodes_then_node_matrix_is_not_empty(self):
         self.Map.create_nodes()
@@ -87,7 +98,7 @@ class TestMap:
             for node in line:
                 assert len(node.neighbors) in self.EXPECTED_NUMBER_OF_NEIGHBORS
 
-    def test_when_connect_nodes_then_each_neighbor_is_an_expected_distance_away_from_the_original_node(self):
+    def test_when_connect_nodes_then_each_neighbor_is_an_expected_distance_away(self):
         self.Map.create_nodes()
 
         self.Map.connect_nodes()
@@ -96,7 +107,7 @@ class TestMap:
             for node in line:
                 first_node_x, first_node_y = node.matrix_center
 
-                for neighbor, angle in node.neighbors:
+                for neighbor, _ in node.neighbors:
                     second_node_x, second_node_y = neighbor.matrix_center
                     distance = abs(second_node_x-first_node_x) + abs(second_node_y-first_node_y)
 
@@ -164,7 +175,11 @@ class TestMap:
 
         self.Map.create_obstacles()
 
-        assert not [node for line in self.Map.node_matrix for node in line if node.role is TileRole.OBSTACLE]
+        assert not [
+            node
+            for line in self.Map.node_matrix for node in line
+            if node.role is TileRole.OBSTACLE
+        ]
 
     def test_when_create_pucks_then_add_puck_role_to_expected_nodes(self):
         self.Map.create_nodes()
@@ -183,7 +198,11 @@ class TestMap:
 
         self.Map.create_pucks()
 
-        assert not [node for line in self.Map.node_matrix for node in line if node.role is TileRole.PUCK]
+        assert not [
+            node
+            for line in self.Map.node_matrix for node in line
+            if node.role is TileRole.PUCK
+        ]
 
     def test_when_create_start_node_then_expected_node_has_start_role(self):
         self.Map.create_nodes()

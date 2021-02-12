@@ -1,10 +1,11 @@
+import pytest
+
 from scripts.creation.pathfinding_algorithm_factory import PathfindingAlgorithmFactory
 from scripts.creation.breadth_first_search import BreadthFirstSearch
 
-import pytest
-
 
 class TestPathfindingAlgorithmFactory:
+    """Test path-finding algorithm factory"""
     @classmethod
     def setup_class(cls):
         cls.BREADTH_FIRST_SEARCH_ALGORITHM_NAME = "BreadthFirstSearch"
@@ -15,7 +16,8 @@ class TestPathfindingAlgorithmFactory:
         self.pathfinding_algorithm_factory = PathfindingAlgorithmFactory()
 
     def test_when_create_with_bfs_algorithm_then_return_bfs_object(self):
-        algorithm = self.pathfinding_algorithm_factory.create(self.BREADTH_FIRST_SEARCH_ALGORITHM_NAME)
+        algorithm = self.pathfinding_algorithm_factory.create(
+            self.BREADTH_FIRST_SEARCH_ALGORITHM_NAME)
 
         assert isinstance(algorithm, self.BREADTH_FIRST_SEARCH_CLASS)
 

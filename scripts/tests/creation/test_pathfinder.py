@@ -1,5 +1,5 @@
-import pytest
 from unittest.mock import Mock
+import pytest
 
 from scripts.creation.pathfinder import Pathfinder
 from scripts.creation.node import Node
