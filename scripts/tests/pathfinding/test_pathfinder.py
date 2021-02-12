@@ -14,7 +14,8 @@ class TestPathfinder:
         cls.A_WIDTH = 12
         cls.A_HEIGHT = 9
         cls.A_NODE = Node(cls.A_MATRIX_POSITION, cls.A_PIXEL_POSITION, cls.A_WIDTH, cls.A_HEIGHT)
-        cls.ANOTHER_NODE = Node(cls.A_MATRIX_POSITION, cls.A_PIXEL_POSITION, cls.A_WIDTH, cls.A_HEIGHT)
+        cls.ANOTHER_NODE = Node(cls.A_MATRIX_POSITION, cls.A_PIXEL_POSITION,
+                                cls.A_WIDTH, cls.A_HEIGHT)
         cls.A_PATH = [cls.A_NODE, cls.ANOTHER_NODE]
 
     def setup_method(self):
