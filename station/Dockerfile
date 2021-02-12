@@ -6,6 +6,7 @@ RUN apt-get update \
         python3-pip \
         python3-opencv \
         build-essential \
+	ros-noetic-usb-cam \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

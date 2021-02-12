@@ -1,0 +1,40 @@
+<template>
+  <v-card>
+    <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
+      <h5 class="white--text">
+        Station de résistance
+      </h5>
+    </v-card-title>
+    <v-container class="grey lighten-3">
+      <v-row align="center">
+        <v-col sm="5">
+          <div ref="resistanceValue" class="d-flex justify-center font-weight-bold">{{ this.resistanceValue }} Ω</div>
+        </v-col>
+        <v-col sm="7">
+          <v-avatar
+            ref="pucks"
+            size="30"
+            v-for="(puckColor, i) in pucksColors"
+            :key="i"
+            :color="puckColor"
+            class="grey--text text--lighten-2 font-weight-bold"
+          >
+            {{ i + 1 }}
+          </v-avatar>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-card>
+</template>
+
+<script lang="ts">
+import { Component, Vue, Prop } from "vue-property-decorator";
+
+@Component({
+  components: {}
+})
+export default class Resistance extends Vue {
+  @Prop() readonly resistanceValue!: number;
+  @Prop() readonly pucksColors!: Array<string>;
+}
+</script>

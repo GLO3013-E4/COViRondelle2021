@@ -1,5 +1,5 @@
 <template>
-  <v-card width="90%" height="700">
+  <v-card width="100%" height="700">
     <v-row>
       <v-col>
         <!-- TODO : Layout should have components injected. The main view should add these components -->
@@ -37,10 +37,9 @@ import StationInformation from "../components/station/StationInformation.vue";
     CycleInformation,
     StationInformation,
     PlannedTrajectory,
-    RealTrajectory
-  }
+    RealTrajectory,
+  },
 })
-
 export default class MainLayout extends Vue {}
 </script>
 
