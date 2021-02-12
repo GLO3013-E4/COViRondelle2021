@@ -1,8 +1,8 @@
 import Resistance from '@/components/station/Resistance.vue';
-import useVuetify from '@/hooks/useVuetify';
+import wrapWithVuetify from '@/util/wrapWithVuetify';
 import { mount } from '@vue/test-utils';
 
-const wrapper = useVuetify(Resistance);
+const wrapper = wrapWithVuetify(Resistance);
 
 describe('When mounting Resistance component', () => {
   it('Should mount', () => {

@@ -4,9 +4,9 @@ import CycleInformation from '@/components/cycles/CycleInformation.vue';
 import StationInformation from '@/components/station/StationInformation.vue';
 import PlannedTrajectory from '@/components/trajectories/PlannedTrajectory.vue';
 import RealTrajectory from '@/components/trajectories/RealTrajectory.vue';
-import useVuetify from '@/hooks/useVuetify';
+import wrapWithVuetify from '@/util/wrapWithVuetify';
 
-const wrapper = useVuetify(MainLayout);
+const wrapper = wrapWithVuetify(MainLayout);
 
 describe('When mounting main layout', () => {
   it('Should mount', () => {
