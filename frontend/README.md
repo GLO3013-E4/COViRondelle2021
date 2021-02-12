@@ -59,6 +59,13 @@ Fix code style :
 yarn lint --fix
 ```
 
+Start storybook
+```
+yarn storybook
+```
+
+Storybook will be running on [localhost:9001](localhost:9001).
+
 ### Build production app
 
 ```
