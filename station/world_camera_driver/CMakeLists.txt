@@ -1,14 +1,15 @@
-cmake_minimum_required(VERSION 3.0.2)
-project(main)
+cmake_minimum_required(VERSION 2.8.3)
+project(world_camera_driver)
 
 find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
+  usb_cam
 )
 
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES main
+#  LIBRARIES world_camera_driver
 #  CATKIN_DEPENDS rospy std_msgs
 #  DEPENDS system_lib
 )
