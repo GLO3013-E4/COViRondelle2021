@@ -1,7 +1,7 @@
-import PlannedTrajectory from "@/components/trajectories/PlannedTrajectory.vue";
+import PlannedTrajectory from '@/components/trajectories/PlannedTrajectory.vue';
 
 export default {
-  title: "components/trajectories/PlannedTrajectory",
+  title: 'components/trajectories/PlannedTrajectory',
   component: PlannedTrajectory,
 };
 

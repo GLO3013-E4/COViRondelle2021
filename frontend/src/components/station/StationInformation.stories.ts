@@ -1,7 +1,7 @@
-import StationInformation from "@/components/station/StationInformation.vue";
+import StationInformation from '@/components/station/StationInformation.vue';
 
 export default {
-  title: "components/station/StationInformation",
+  title: 'components/station/StationInformation',
   component: StationInformation,
 };
 

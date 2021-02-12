@@ -1,7 +1,7 @@
-import ConsumptionInformation from "@/components/consumptions/ConsumptionInformation.vue";
+import ConsumptionInformation from '@/components/consumptions/ConsumptionInformation.vue';
 
 export default {
-  title: "components/cycles/ConsumptionInformation",
+  title: 'components/cycles/ConsumptionInformation',
   component: ConsumptionInformation,
 };
 

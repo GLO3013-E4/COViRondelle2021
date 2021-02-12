@@ -1,7 +1,7 @@
-import CycleInformation from "@/components/cycles/CycleInformation.vue";
+import CycleInformation from '@/components/cycles/CycleInformation.vue';
 
 export default {
-  title: "components/cycles/CycleInformation",
+  title: 'components/cycles/CycleInformation',
   component: CycleInformation,
 };
 

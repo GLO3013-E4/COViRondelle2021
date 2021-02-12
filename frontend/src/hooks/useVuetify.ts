@@ -1,5 +1,5 @@
-import Vuetify from "vuetify";
-import { mount, VueClass } from "@vue/test-utils";
+import Vuetify from 'vuetify';
+import { mount, VueClass } from '@vue/test-utils';
 
 const useVuetify = (component: VueClass<any>) => {
   const vuetify = new Vuetify();

@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import Main from "./views/Main.vue";
+import { Component, Vue } from 'vue-property-decorator';
+import Main from './views/Main.vue';
 @Component({
   components: {
     Main,

@@ -1,8 +1,8 @@
-import Resistance from "@/components/station/Resistance.vue";
-import { ColorFactory } from "@/factories/ColorFactory";
+import Resistance from '@/components/station/Resistance.vue';
+import { ColorFactory } from '@/factories/ColorFactory';
 
 export default {
-  title: "components/station/Resistance",
+  title: 'components/station/Resistance',
   component: Resistance,
 };
 
@@ -21,11 +21,11 @@ Default.args = {
 export const WhiteAndBlackPuck = Template.bind({}) as any;
 WhiteAndBlackPuck.args = {
   resistanceValue: 100000,
-  pucksColors: ["white", "black", "grey"],
+  pucksColors: ['white', 'black', 'grey'],
 };
 
 export const YellowPuck = Template.bind({}) as any;
 YellowPuck.args = {
   resistanceValue: 100000,
-  pucksColors: ["yellow", ColorFactory.get(), ColorFactory.get()],
+  pucksColors: ['yellow', ColorFactory.get(), ColorFactory.get()],
 };

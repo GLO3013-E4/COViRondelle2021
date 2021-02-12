@@ -1,7 +1,7 @@
-import MainLayout from "@/layouts/MainLayout.vue";
+import MainLayout from '@/layouts/MainLayout.vue';
 
 export default {
-  title: "layouts/MainLayout",
+  title: 'layouts/MainLayout',
   component: MainLayout,
 };
 

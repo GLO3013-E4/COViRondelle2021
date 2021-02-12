@@ -1,7 +1,7 @@
-import Main from "@/views/Main.vue";
+import Main from '@/views/Main.vue';
 
 export default {
-  title: "views/Main",
+  title: 'views/Main',
   component: Main,
 };
 

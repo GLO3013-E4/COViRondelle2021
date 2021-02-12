@@ -1,7 +1,7 @@
-import RealTrajectory from "@/components/trajectories/RealTrajectory.vue";
+import RealTrajectory from '@/components/trajectories/RealTrajectory.vue';
 
 export default {
-  title: "components/trajectories/RealTrajectory",
+  title: 'components/trajectories/RealTrajectory',
   component: RealTrajectory,
 };
 
