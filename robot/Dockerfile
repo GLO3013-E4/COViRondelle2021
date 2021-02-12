@@ -1,10 +1,11 @@
-FROM ros:noetic-ros-core
+FROM ros:melodic-ros-core
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         python3 \
         python3-pip \
         python3-opencv \
+        python3-setuptools \
         build-essential \
         poppler-utils \
         tesseract-ocr \
@@ -23,9 +24,10 @@ COPY . /root/catkin_ws/src
 WORKDIR "/root/catkin_ws"
 COPY .pylintrc .
 COPY requirements.txt .
+RUN pip3 install scikit-build
 RUN pip3 install -r requirements.txt
 
-RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin_init_workspace /root/catkin_ws/src && catkin_make"
+RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && catkin_init_workspace /root/catkin_ws/src && catkin_make"
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
 
