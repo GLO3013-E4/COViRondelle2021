@@ -9,7 +9,7 @@ RUN apt-get update \
         build-essential \
 	    ros-melodic-usb-cam \
         iputils-ping \
-    && apt-get clean \
+    && apt-get clean
 
 RUN mkdir -p /root/catkin_ws/src
 COPY . /root/catkin_ws/src
