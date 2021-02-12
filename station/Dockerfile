@@ -1,4 +1,4 @@
-FROM ros:noetic-ros-core
+FROM ros:melodic-ros-core
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -7,9 +7,9 @@ RUN apt-get update \
         python3-opencv \
         python3-setuptools \
         build-essential \
-	ros-noetic-usb-cam \
+	    ros-melodic-usb-cam \
+        iputils-ping \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /root/catkin_ws/src
 COPY . /root/catkin_ws/src
@@ -18,7 +18,9 @@ WORKDIR "/root/catkin_ws"
 COPY .pylintrc .
 COPY requirements.txt .
 RUN pip3 install scikit-build
+RUN pip3 install --upgrade setuptools pip
 RUN pip3 install -r requirements.txt
+RUN echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && catkin_init_workspace /root/catkin_ws/src && catkin_make"
 

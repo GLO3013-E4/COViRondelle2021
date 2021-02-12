@@ -19,7 +19,7 @@ services:
         ipv4_address: 172.18.1.4
     environment:
       - "ROS_MASTER_URI=http://station:11311"
-      - "ROS_HOSTNAME=station"
+      - "ROS_HOSTNAME=robot"
     extra_hosts:
       station: 172.18.1.2
       robot: 172.18.1.4
@@ -37,7 +37,7 @@ services:
         ipv4_address: 172.18.1.2
     environment:
       - "ROS_MASTER_URI=http://station:11311"
-      - "ROS_HOSTNAME=robot"
+      - "ROS_HOSTNAME=station"
     extra_hosts:
       station: 172.18.1.2
       robot: 172.18.1.4
