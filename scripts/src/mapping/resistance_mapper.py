@@ -1,6 +1,8 @@
 class ResistanceMapper:
+    """Class used to map resistances to colors"""
     def __init__(self):
-        # TODO: est-ce les couleurs devraient être dans un enum ou ils devraient être des couleurs de opencv/pillow/autre?
+        # TODO: est-ce les couleurs devraient être dans un enum ou
+        #  ils devraient être des couleurs de opencv/pillow/autre?
         self.number_to_color = {
             0: 'noir',
             1: 'marron',

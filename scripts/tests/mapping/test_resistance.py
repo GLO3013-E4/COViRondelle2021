@@ -2,6 +2,7 @@ from scripts.src.mapping.resistance import Resistance
 
 
 class TestResistance:
+    """Test Resistance class"""
     @classmethod
     def setup_class(cls):
         cls.A_RESISTANCE_1 = 3553

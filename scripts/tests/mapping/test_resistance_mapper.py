@@ -1,9 +1,11 @@
-import pytest
 from unittest.mock import Mock
+import pytest
+
 from scripts.src.mapping.resistance_mapper import ResistanceMapper
 
 
 class TestResistanceMapper:
+    """Test ResistanceMapper class"""
     @classmethod
     def setup_class(cls):
         cls.FIRST_DIGIT_1 = 3
