@@ -1,7 +1,7 @@
 from PIL import Image
 
-from scripts.creation.map import Map
-from scripts.creation.tile_role import TileRole
+from scripts.src.pathfinding.map import Map
+from scripts.src.pathfinding.tile_role import TileRole
 
 
 class TestMap:

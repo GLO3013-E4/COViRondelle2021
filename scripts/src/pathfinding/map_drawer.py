@@ -5,7 +5,7 @@ as well as the path found by the algorithm
 
 from PIL import ImageDraw
 
-from scripts.creation.tile_role import TileRole
+from scripts.src.pathfinding.tile_role import TileRole
 
 
 class MapDrawer:

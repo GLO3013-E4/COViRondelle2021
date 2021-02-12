@@ -1,11 +1,10 @@
 """Example of how to find a path between the robot and a specific puck
 given the obstacles, a start position, an end position and where the other pucks are."""
-
-from scripts.creation.trajectory_creation_sample_1 import show_path
-
+from scripts.src.pathfinding.show_path import show_path
 
 if __name__ == '__main__':
     NODE_SIZE = 25
+    NODE_IDENTIFIER_WIDTH = NODE_SIZE / 5
     ALGORITHM = "BreadthFirstSearch"
 
     OBSTACLES = [
@@ -14,16 +13,19 @@ if __name__ == '__main__':
     ]
 
     START = (1048, 504)
-    END = (244, 370)
-
-    GRIPPER = (1034, 432)
+    END = (526, 418)
 
     PUCKS = [
         (241, 288),
-        (242, 479),
-        (245, 581)
+        (373, 277),
+        (332, 515),
+        (250, 588),
+        (807, 341),
+        (800, 435),
+        (745, 787),
+        (1093, 655),
+        (1150, 215)
     ]
 
     IMAGE_PATH = "./scripts/data/images/trajectory_example_1.jpg"
-
     show_path(NODE_SIZE, ALGORITHM, OBSTACLES, START, END, PUCKS, IMAGE_PATH)

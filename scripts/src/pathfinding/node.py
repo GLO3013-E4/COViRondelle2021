@@ -1,6 +1,6 @@
 """Node class that represents each square from the matrix drawn on the image"""
 
-from scripts.creation.tile_role import TileRole
+from scripts.src.pathfinding.tile_role import TileRole
 
 
 class Node:

@@ -1,4 +1,4 @@
-from scripts.creation.rotation_helper import RotationHelper
+from scripts.src.pathfinding.rotation_helper import RotationHelper
 
 
 class TestRotationHelper:
