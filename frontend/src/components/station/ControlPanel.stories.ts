@@ -20,6 +20,12 @@ Default.args = {
     colorFirstPuck: ColorFactory.get(),
 };
 
+export const noData = Template.bind({}) as any;
+noData.args = {
+    controlPanelResult: new ControlPanelResult(""),
+    colorFirstPuck: ColorFactory.get(),
+};
+
 export const coinA = Template.bind({}) as any;
 coinA.args = {
     controlPanelResult: new ControlPanelResult("A"),

@@ -42,7 +42,11 @@ export default class StationInformations extends Vue {
   //TODO: par default devra être 0 (avant de recevoir info)
   private resistanceValue = 800000; //voir l'affichage avec 6 chiffres, pas couleurs associé
   //TODO: par defaut devra être liste vide (avant de recevoir info)
-  private pucksColors = [ColorFactory.get(), ColorFactory.get(), ColorFactory.get()]; //Assume que je reçois un array de couleur
+  private pucksColors = [
+    ColorFactory.get(),
+    ColorFactory.get(),
+    ColorFactory.get(),
+  ]; //Assume que je reçois un array de couleur
 
   private controlPanelResult = ControlPanelResultFactory.get();
   private colorFirstPuck = this.pucksColors[0];

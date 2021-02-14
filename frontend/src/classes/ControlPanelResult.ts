@@ -1,5 +1,5 @@
 export default class ControlPanelResult {
-    corner:string | undefined;
+    corner:string;
     placementLeft:boolean;
     placementBottom:boolean;
 

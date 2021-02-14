@@ -30,11 +30,11 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
   components: {},
 })
 export default class ControlPanel extends Vue {
-  @Prop() readonly controlPanelResult!: ControlPanelResult;
+  @Prop({ default: () => new ControlPanelResult('') }) readonly controlPanelResult!: ControlPanelResult;
   @Prop() readonly colorFirstPuck!:string;
 
-  private letterCorner = this.controlPanelResult.corner;
-  private placementLeft = this.controlPanelResult.placementLeft;
-  private placementBottom = this.controlPanelResult.placementBottom;
+  private get letterCorner(): string { return this.controlPanelResult.corner };
+  private get placementLeft(): boolean { return this.controlPanelResult.placementLeft};
+  private get placementBottom(): boolean { return this.controlPanelResult.placementBottom };
 }
 </script>
