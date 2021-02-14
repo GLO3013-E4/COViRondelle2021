@@ -15,6 +15,11 @@
             v-bind:pucksColors="pucksColors"
           />
         </v-col>
+        <v-col sm="3">
+          <ControlPanel
+            v-bind:controlPanelResult="controlPanelResult"
+          />
+        </v-col>
       </v-row>
     </v-container>
   </v-card>
@@ -23,15 +28,21 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Resistance from '../station/Resistance.vue';
+import ControlPanel from '../station/ControlPanel.vue';
+
+//TODO: à enlever quand on recevra les vrai valeurs
+import { ControlPanelResultFactory } from '../../factories/ControlPanelResult';
 
 @Component({
-  components: { Resistance: Resistance },
+  components: { Resistance: Resistance, ControlPanel: ControlPanel },
 })
 export default class StationInformations extends Vue {
   //TODO: par default devra être 0 (avant de recevoir info)
   private resistanceValue = 800000; //voir l'affichage avec 6 chiffres, pas couleurs associé
   //TODO: par defaut devra être liste vide (avant de recevoir info)
   private pucksColors = ['red', 'blue', 'orange']; //Assume que je reçois un array de couleur
+
+  private controlPanelResult = ControlPanelResultFactory.get();
 }
 </script>
 

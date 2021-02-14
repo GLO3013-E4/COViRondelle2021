@@ -1,9 +1,9 @@
 <template>
-  <v-card>
+  <v-card class="grey lighten-3">
     <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
       <h5 class="white--text">Station de résistance</h5>
     </v-card-title>
-    <v-container class="grey lighten-3">
+    <v-container>
       <v-row align="center">
         <v-col sm="5">
           <div
