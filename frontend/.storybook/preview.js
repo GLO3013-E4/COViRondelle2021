@@ -13,7 +13,7 @@ const customViewports = {
 
 export const parameters = {
   viewport: { viewports: customViewports },
-  defaultViewport: customViewports,
+  defaultViewport: customViewports.station,
 }
 
 addDecorator(() => ({
