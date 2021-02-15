@@ -1,4 +1,4 @@
-import RealTrajectory from "@/components/trajectories/RealTrajectory.vue";
+import RealTrajectory from '@/components/trajectories/RealTrajectory.vue';
 
 export default {
   title: 'components/trajectories/RealTrajectory',
@@ -7,5 +7,5 @@ export default {
 
 export const Default = () => ({
   components: { RealTrajectory },
-  template: `<real-trajectory/>`
+  template: `<real-trajectory/>`,
 });

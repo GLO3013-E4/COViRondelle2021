@@ -1,4 +1,4 @@
-import PlannedTrajectory from "@/components/trajectories/PlannedTrajectory.vue";
+import PlannedTrajectory from '@/components/trajectories/PlannedTrajectory.vue';
 
 export default {
   title: 'components/trajectories/PlannedTrajectory',
@@ -7,5 +7,5 @@ export default {
 
 export const Default = () => ({
   components: { PlannedTrajectory },
-  template: `<planned-trajectory/>`
+  template: `<planned-trajectory/>`,
 });

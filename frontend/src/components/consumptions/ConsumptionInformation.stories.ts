@@ -1,4 +1,4 @@
-import ConsumptionInformation from "@/components/consumptions/ConsumptionInformation.vue";
+import ConsumptionInformation from '@/components/consumptions/ConsumptionInformation.vue';
 
 export default {
   title: 'components/cycles/ConsumptionInformation',
@@ -7,5 +7,5 @@ export default {
 
 export const Default = () => ({
   components: { ConsumptionInformation },
-  template: `<consumption-information/>`
+  template: `<consumption-information/>`,
 });

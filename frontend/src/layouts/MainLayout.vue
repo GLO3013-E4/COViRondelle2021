@@ -1,5 +1,5 @@
 <template>
-  <v-card width="90%" height="700">
+  <v-card width="100%" height="700">
     <v-row>
       <v-col>
         <!-- TODO : Layout should have components injected. The main view should add these components -->
@@ -24,12 +24,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import ConsumptionInformation from "../components/consumptions/ConsumptionInformation.vue";
-import CycleInformation from "../components/cycles/CycleInformation.vue";
-import PlannedTrajectory from "../components/trajectories/PlannedTrajectory.vue";
-import RealTrajectory from "../components/trajectories/RealTrajectory.vue";
-import StationInformation from "../components/station/StationInformation.vue";
+import { Component, Vue } from 'vue-property-decorator';
+import ConsumptionInformation from '../components/consumptions/ConsumptionInformation.vue';
+import CycleInformation from '../components/cycles/CycleInformation.vue';
+import PlannedTrajectory from '../components/trajectories/PlannedTrajectory.vue';
+import RealTrajectory from '../components/trajectories/RealTrajectory.vue';
+import StationInformation from '../components/station/StationInformation.vue';
 
 @Component({
   components: {
@@ -37,10 +37,9 @@ import StationInformation from "../components/station/StationInformation.vue";
     CycleInformation,
     StationInformation,
     PlannedTrajectory,
-    RealTrajectory
-  }
+    RealTrajectory,
+  },
 })
-
 export default class MainLayout extends Vue {}
 </script>
 

@@ -1,4 +1,4 @@
-import CycleInformation from "@/components/cycles/CycleInformation.vue";
+import CycleInformation from '@/components/cycles/CycleInformation.vue';
 
 export default {
   title: 'components/cycles/CycleInformation',
@@ -7,5 +7,5 @@ export default {
 
 export const Default = () => ({
   components: { CycleInformation },
-  template: `<cycle-information/>`
+  template: `<cycle-information/>`,
 });
