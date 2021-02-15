@@ -3,8 +3,8 @@ import {
   SOCKET_ROBOT_CONSUMPTION,
   SOCKET_RESISTANCE_AND_PUCK_COLORS,
   SOCKET_PUCK_FIRST_CORNER,
-  SOCKET_ADD_PLANNED_TRAJECTORY_COORDINATE,
-  SOCKET_ADD_REAL_TRAJECTORY_COORDINATE,
+  SOCKET_PLANNED_TRAJECTORY_COORDINATE,
+  SOCKET_REAL_TRAJECTORY_COORDINATE,
 } from './mutation-types';
 import { defaultState, State } from './state';
 import { Message } from '@/types/message';
@@ -13,8 +13,8 @@ export type Mutations<S = State> = {
   [SOCKET_ROBOT_CONSUMPTION](state: S, message: Message): void;
   [SOCKET_RESISTANCE_AND_PUCK_COLORS](state: S, message: Message): void;
   [SOCKET_PUCK_FIRST_CORNER](state: S, message: Message): void;
-  [SOCKET_ADD_PLANNED_TRAJECTORY_COORDINATE](state: S, message: Message): void;
-  [SOCKET_ADD_REAL_TRAJECTORY_COORDINATE](state: S, message: Message): void;
+  [SOCKET_PLANNED_TRAJECTORY_COORDINATE](state: S, message: Message): void;
+  [SOCKET_REAL_TRAJECTORY_COORDINATE](state: S, message: Message): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -34,12 +34,12 @@ export const mutations: MutationTree<State> & Mutations = {
     state.puckFirstCorner =
       message.puckFirstCorner || defaultState.puckFirstCorner;
   },
-  [SOCKET_ADD_PLANNED_TRAJECTORY_COORDINATE](state: State, message: Message) {
+  [SOCKET_PLANNED_TRAJECTORY_COORDINATE](state: State, message: Message) {
     // TODO : Implement get planned trajectory coordinate from state in associated component
     if (message.plannedTrajectoryCoordinate)
       state.plannedTrajectory.push(message.plannedTrajectoryCoordinate);
   },
-  [SOCKET_ADD_REAL_TRAJECTORY_COORDINATE](state: State, message: Message) {
+  [SOCKET_REAL_TRAJECTORY_COORDINATE](state: State, message: Message) {
     // TODO : Implement get real trajectory coordinate from state in associated component
     if (message.realTrajectoryCoordinate)
       state.realTrajectory.push(message.realTrajectoryCoordinate);
