@@ -8,7 +8,7 @@ class Resistance:
         self.resistance = resistance
 
     def round(self):
-        return (self.resistance + 99) // 100 * 100
+        return round(self.resistance / 100) * 100
 
     def get_exponent(self):
         resistance = self.round()

@@ -8,19 +8,19 @@ class TestResistance:
         cls.A_RESISTANCE_1 = 3553
         cls.A_RESISTANCE_2 = 3933
         cls.A_RESISTANCE_3 = 9233
-        cls.A_RESISTANCE_4 = 9933
+        cls.A_RESISTANCE_4 = 9973
 
         cls.EXPECTED_RESISTANCE_1 = 3600
-        cls.EXPECTED_RESISTANCE_2 = 4000
-        cls.EXPECTED_RESISTANCE_3 = 9300
+        cls.EXPECTED_RESISTANCE_2 = 3900
+        cls.EXPECTED_RESISTANCE_3 = 9200
         cls.EXPECTED_RESISTANCE_4 = 10000
         cls.EXPECTED_FIRST_DIGIT_1 = 3
-        cls.EXPECTED_FIRST_DIGIT_2 = 4
+        cls.EXPECTED_FIRST_DIGIT_2 = 3
         cls.EXPECTED_FIRST_DIGIT_3 = 9
         cls.EXPECTED_FIRST_DIGIT_4 = 1
         cls.EXPECTED_SECOND_DIGIT_1 = 6
-        cls.EXPECTED_SECOND_DIGIT_2 = 0
-        cls.EXPECTED_SECOND_DIGIT_3 = 3
+        cls.EXPECTED_SECOND_DIGIT_2 = 9
+        cls.EXPECTED_SECOND_DIGIT_3 = 2
         cls.EXPECTED_SECOND_DIGIT_4 = 0
         cls.EXPECTED_EXPONENT_1 = 2
         cls.EXPECTED_EXPONENT_2 = 2

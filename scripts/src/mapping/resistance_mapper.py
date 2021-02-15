@@ -1,19 +1,20 @@
+from scripts.src.mapping.color import Color
+
+
 class ResistanceMapper:
     """Class used to map resistances to colors"""
     def __init__(self):
-        # TODO: est-ce les couleurs devraient être dans un enum ou
-        #  ils devraient être des couleurs de opencv/pillow/autre?
         self.number_to_color = {
-            0: 'noir',
-            1: 'marron',
-            2: 'rouge',
-            3: 'orange',
-            4: 'jaune',
-            5: 'vert',
-            6: 'bleu',
-            7: 'violet',
-            8: 'gris',
-            9: 'blanc'
+            0: Color.BLACK,
+            1: Color.BROWN,
+            2: Color.RED,
+            3: Color.ORANGE,
+            4: Color.YELLOW,
+            5: Color.GREEN,
+            6: Color.BLUE,
+            7: Color.VIOLET,
+            8: Color.GREY,
+            9: Color.WHITE
         }
 
     def find_colors(self, resistance):

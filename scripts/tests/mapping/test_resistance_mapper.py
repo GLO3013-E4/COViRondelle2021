@@ -2,6 +2,7 @@ from unittest.mock import Mock
 import pytest
 
 from scripts.src.mapping.resistance_mapper import ResistanceMapper
+from scripts.src.mapping.color import Color
 
 
 class TestResistanceMapper:
@@ -16,8 +17,8 @@ class TestResistanceMapper:
         cls.EXPONENT_2 = 6
         cls.UNEXPECTED_DIGIT = -1
 
-        cls.EXPECTED_COLORS_1 = ['orange', 'vert', 'orange']
-        cls.EXPECTED_COLORS_2 = ['jaune', 'violet', 'bleu']
+        cls.EXPECTED_COLORS_1 = [Color.ORANGE, Color.GREEN, Color.ORANGE]
+        cls.EXPECTED_COLORS_2 = [Color.YELLOW, Color.VIOLET, Color.BLUE]
 
     def setup_method(self):
         self.resistance_mapper = ResistanceMapper()
