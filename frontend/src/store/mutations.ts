@@ -1,11 +1,16 @@
 import { MutationTree } from 'vuex/types';
-import { SOCKET_RESISTANCE, SOCKET_ROBOT_CONSUMPTION } from './mutation-types';
+import {
+  SOCKET_PUCK_COLORS,
+  SOCKET_RESISTANCE,
+  SOCKET_ROBOT_CONSUMPTION,
+} from './mutation-types';
 import { defaultState, State } from './state';
 import { Message } from '@/types/message';
 
 export type Mutations<S = State> = {
   [SOCKET_RESISTANCE](state: S, message: Message): void;
   [SOCKET_ROBOT_CONSUMPTION](state: S, message: Message): void;
+  [SOCKET_PUCK_COLORS](state: S, message: Message): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -17,5 +22,9 @@ export const mutations: MutationTree<State> & Mutations = {
     // TODO : Implement get robot consumption from state in associated component
     state.robotConsumption =
       message.robotConsumption || defaultState.robotConsumption;
+  },
+  [SOCKET_PUCK_COLORS](state: State, message: Message) {
+    // TODO : Implement get puck colors from state in associated component
+    state.puckColors = message.puckColors || defaultState.puckColors;
   },
 };
