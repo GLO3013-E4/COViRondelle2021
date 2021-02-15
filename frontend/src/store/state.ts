@@ -1,6 +1,7 @@
 import { Color } from '@/types/color';
 import { RobotConsumption } from '@/types/robotConsumption';
 import { Corner } from '@/types/corner';
+import { Coordinate } from '@/types/coordinate';
 
 export const defaultState = {
   cycleStarted: false,
@@ -11,6 +12,8 @@ export const defaultState = {
   } as RobotConsumption,
   puckColors: [] as Array<Color>,
   puckFirstCorner: null as Corner | unknown,
+  plannedTrajectory: [] as Array<Coordinate>,
+  realTrajectory: [] as Array<Coordinate>,
 };
 
 export const state = {
@@ -19,6 +22,8 @@ export const state = {
   robotConsumption: defaultState.robotConsumption,
   puckColors: defaultState.puckColors,
   puckFirstCorner: defaultState.puckFirstCorner,
+  plannedTrajectory: defaultState.plannedTrajectory,
+  realTrajectory: defaultState.realTrajectory,
   // TODO : Implement other state values
 };
 
