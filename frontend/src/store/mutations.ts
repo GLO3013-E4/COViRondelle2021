@@ -31,6 +31,7 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [SOCKET_ONMESSAGE](state: State, message: any) {
     // TODO : Handle each message type
+    // TODO : Use message type enum
     console.info(state, message);
   },
   [SOCKET_RECONNECT](state: State, count: number) {
