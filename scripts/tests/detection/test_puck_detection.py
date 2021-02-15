@@ -1,6 +1,7 @@
 from scripts.src.detection.puck_detection import PuckDetection, generate_puck_position
+from scripts.src.mapping.color import Color
 
-A_COLOR = "blue"
+A_COLOR = Color["BLUE"]
 
 detection_puck = PuckDetection( "images/monde3.jpg", A_COLOR)
 
