@@ -23,7 +23,6 @@ services:
     extra_hosts:
       station: 172.18.1.2
       robot: 172.18.1.4
-    
   station:
     restart: unless-stopped
     build: ./station
@@ -41,7 +40,6 @@ services:
     extra_hosts:
       station: 172.18.1.2
       robot: 172.18.1.4
-
   frontend:
     restart: unless-stopped
     build: ./frontend

@@ -1,10 +1,9 @@
 import Vue from 'vue';
-import { SEND_START_CYCLE } from './action-types';
+import { EMIT_SOCKET_START_CYCLE } from './action-types';
 
 export const actions = {
-  [SEND_START_CYCLE]() {
-    // TODO : Implement correctly sending messages
-    // TODO : Use message type enum
-    Vue.prototype.$socket.send('Start cycle!');
+  // TODO : Implement emitSocketStartCycle in associated button
+  [EMIT_SOCKET_START_CYCLE]() {
+    Vue.prototype.$socket.client.emit('start_cycle');
   },
 };

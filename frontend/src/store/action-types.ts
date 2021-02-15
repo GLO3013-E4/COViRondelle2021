@@ -1,3 +1,3 @@
-const SEND_START_CYCLE = 'Sending message using socket';
+const EMIT_SOCKET_START_CYCLE = 'emitSocketStartCycle';
 
-export { SEND_START_CYCLE };
+export { EMIT_SOCKET_START_CYCLE };
