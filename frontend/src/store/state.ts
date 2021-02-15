@@ -3,6 +3,7 @@ import { RobotConsumption } from '@/types/robotConsumption';
 import { Corner } from '@/types/corner';
 import { Coordinate } from '@/types/coordinate';
 import { GripState } from '@/types/gripState';
+import { Step } from '@/types/step';
 
 export const defaultState = {
   cycleStarted: false,
@@ -16,6 +17,7 @@ export const defaultState = {
   plannedTrajectory: [] as Array<Coordinate>,
   realTrajectory: [] as Array<Coordinate>,
   gripState: GripState.released,
+  currentStep: Step.CycleNotStarted,
 };
 
 export const state = {
@@ -27,7 +29,7 @@ export const state = {
   plannedTrajectory: defaultState.plannedTrajectory,
   realTrajectory: defaultState.realTrajectory,
   gripState: defaultState.gripState,
-  // TODO : Implement other state values
+  currentStep: defaultState.currentStep,
 };
 
 export type State = typeof state;

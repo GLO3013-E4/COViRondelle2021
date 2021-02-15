@@ -6,6 +6,7 @@ import {
   SOCKET_PLANNED_TRAJECTORY_COORDINATE,
   SOCKET_REAL_TRAJECTORY_COORDINATE,
   SOCKET_GRIP_STATE,
+  SOCKET_CURRENT_STEP,
 } from './mutation-types';
 import { defaultState, State } from './state';
 import { Message } from '@/types/message';
@@ -17,6 +18,7 @@ export type Mutations<S = State> = {
   [SOCKET_PLANNED_TRAJECTORY_COORDINATE](state: S, message: Message): void;
   [SOCKET_REAL_TRAJECTORY_COORDINATE](state: S, message: Message): void;
   [SOCKET_GRIP_STATE](state: S, message: Message): void;
+  [SOCKET_CURRENT_STEP](state: S, message: Message): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -49,5 +51,9 @@ export const mutations: MutationTree<State> & Mutations = {
   [SOCKET_GRIP_STATE](state: State, message: Message) {
     // TODO : Implement get puck grip state from state in associated component
     state.gripState = message.gripState || defaultState.gripState;
+  },
+  [SOCKET_CURRENT_STEP](state: State, message: Message) {
+    // TODO : Implement get current step from state in associated component
+    state.currentStep = message.currentStep || defaultState.currentStep;
   },
 };
