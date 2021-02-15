@@ -8,11 +8,11 @@ class Resistance:
         self.resistance = resistance
 
     def round(self):
-        return round(self.resistance / 100) * 100
+        return round(self.resistance / 10**int(math.log10(self.resistance)-1))*10**int(math.log10(self.resistance)-1)
 
     def get_exponent(self):
         resistance = self.round()
-        return int(math.log10(resistance) - 1)
+        return math.floor(math.log10(resistance) - 1)
 
     def find_first_digits(self):
         resistance = self.round()
