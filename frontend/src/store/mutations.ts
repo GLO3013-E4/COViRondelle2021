@@ -34,8 +34,6 @@ export const mutations: MutationTree<State> & Mutations = {
     state.tableImage = message.tableImage || defaultState.tableImage;
   },
   [SOCKET_RESISTANCE_AND_PUCK_COLORS](state: State, message: Message) {
-    // TODO : Implement get resistance from state in associated component
-    // TODO : Implement get puck colors from state in associated component
     state.resistance = message.resistance || defaultState.resistance;
     state.puckColors = message.puckColors || defaultState.puckColors;
   },
