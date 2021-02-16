@@ -1,5 +1,10 @@
 import Resistance from '@/components/station/Resistance.vue';
 import { ColorFactory } from '@/factories/ColorFactory';
+import { Color } from '@/types/color';
+import Vuex from 'vuex';
+import Vue from 'vue';
+
+Vue.use(Vuex);
 
 export default {
   title: 'components/station/Resistance',
@@ -8,24 +13,26 @@ export default {
 
 const Template = (args: any, { argTypes }: any) => ({
   components: { Resistance },
-  props: Object.keys(argTypes),
-  template: '<Resistance v-bind="$props"/>',
+  store: new Vuex.Store({
+    state: args,
+  }),
+  template: '<Resistance />',
 });
 
 export const Default = Template.bind({}) as any;
 Default.args = {
-  resistanceValue: 100000,
-  pucksColors: [ColorFactory.get(), ColorFactory.get(), ColorFactory.get()],
+  resistance: 100000,
+  puckColors: [ColorFactory.get(), ColorFactory.get(), ColorFactory.get()],
 };
 
 export const WhiteAndBlackPuck = Template.bind({}) as any;
 WhiteAndBlackPuck.args = {
-  resistanceValue: 100000,
-  pucksColors: ['white', 'black', 'grey'],
+  resistance: 100000,
+  puckColors: [Color.White, Color.Black, Color.Grey],
 };
 
 export const YellowPuck = Template.bind({}) as any;
 YellowPuck.args = {
-  resistanceValue: 100000,
-  pucksColors: ['yellow', ColorFactory.get(), ColorFactory.get()],
+  resistance: 100000,
+  puckColors: [Color.Yellow, ColorFactory.get(), ColorFactory.get()],
 };
