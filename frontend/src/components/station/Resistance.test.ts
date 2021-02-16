@@ -4,18 +4,18 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import { Color } from '@/types/color';
 
-const wrapper = wrapWithVuetifyAndStore(Resistance);
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
-
 describe('When mounting Resistance component', () => {
+  const wrapper = wrapWithVuetifyAndStore(Resistance);
+
   it('Should mount', () => {
     expect(wrapper.vm).toBeTruthy();
   });
 });
 
 describe('Given state', () => {
+  const localVue = createLocalVue();
+  localVue.use(Vuex);
+
   const store = new Vuex.Store({
     state: {
       resistance: 100000,
@@ -44,6 +44,8 @@ describe('Given state', () => {
 
 describe('Given no state', () => {
   describe('When mounting Resistance', () => {
+    const wrapper = wrapWithVuetifyAndStore(Resistance);
+
     it('Should not contain resistanceValue', () => {
       const resistanceValue = wrapper.findComponent({ ref: 'resistanceValue' });
 
