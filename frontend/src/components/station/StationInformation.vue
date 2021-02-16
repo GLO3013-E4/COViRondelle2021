@@ -13,10 +13,7 @@
           <Resistance />
         </v-col>
         <v-col sm="3">
-          <ControlPanel
-            v-bind:controlPanelResult="controlPanelResult"
-            v-bind:colorFirstPuck="colorFirstPuck"
-          />
+          <ControlPanel />
         </v-col>
       </v-row>
     </v-container>

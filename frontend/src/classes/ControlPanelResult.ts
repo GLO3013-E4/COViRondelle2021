@@ -1,9 +1,11 @@
+import { Corner } from '@/types/corner';
+
 export default class ControlPanelResult {
-  corner: string;
+  corner: Corner;
   placementLeft: boolean;
   placementBottom: boolean;
 
-  constructor(corner: string) {
+  constructor(corner: Corner) {
     this.corner = corner;
 
     this.placementLeft = false;
@@ -13,17 +15,17 @@ export default class ControlPanelResult {
 
   private initializePlacement() {
     switch (this.corner) {
-      case 'A': {
+      case Corner.A: {
         this.placementLeft = true;
         this.placementBottom = false;
         break;
       }
-      case 'C': {
+      case Corner.B: {
         this.placementLeft = false;
         this.placementBottom = true;
         break;
       }
-      case 'D': {
+      case Corner.C: {
         this.placementLeft = true;
         this.placementBottom = true;
         break;
