@@ -7,9 +7,10 @@ export const StateFactory = factory<State>((fake) => ({
   // TODO : Fake what isn't faked when implementing
   cycleStarted: defaultState.cycleStarted,
   tableImage: defaultState.tableImage,
+  // TODO : Find a way to implement ResistanceFactory
   resistance: fake.random.number(10000),
   robotConsumption: defaultState.robotConsumption,
-  puckColors: [ColorFactory.get(), ColorFactory.get(), ColorFactory.get()],
+  puckColors: ColorFactory.get(3),
   puckFirstCorner: CornerFactory.get(),
   plannedTrajectory: defaultState.plannedTrajectory,
   realTrajectory: defaultState.realTrajectory,

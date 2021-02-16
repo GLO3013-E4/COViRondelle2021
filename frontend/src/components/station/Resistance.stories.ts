@@ -22,7 +22,7 @@ const Template = (args: any) => ({
 export const Default = Template.bind({}) as any;
 Default.args = {
   resistance: 100000,
-  puckColors: [ColorFactory.get(), ColorFactory.get(), ColorFactory.get()],
+  puckColors: ColorFactory.get(3),
 };
 
 export const WhiteAndBlackPuck = Template.bind({}) as any;

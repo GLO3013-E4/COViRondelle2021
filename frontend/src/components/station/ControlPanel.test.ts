@@ -20,7 +20,7 @@ describe('Given state', () => {
   const store = new Vuex.Store({
     state: {
       puckFirstCorner: CornerFactory.get(),
-      puckColors: [ColorFactory.get()],
+      puckColors: ColorFactory.get(1),
     },
   });
 
