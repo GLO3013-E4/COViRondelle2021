@@ -1,4 +1,4 @@
-import {Corner} from '@/types/corner';
+import { Corner } from '@/types/corner';
 
 export default class ControlPanelResult {
   corner: Corner;
