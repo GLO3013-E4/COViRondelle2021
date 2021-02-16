@@ -29,12 +29,20 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 @Component({
   components: {},
 })
+// TODO : Use store instead of props
 export default class ControlPanel extends Vue {
-  @Prop({ default: () => new ControlPanelResult('') }) readonly controlPanelResult!: ControlPanelResult;
-  @Prop() readonly colorFirstPuck!:string;
+  @Prop({ default: () => new ControlPanelResult('') })
+  readonly controlPanelResult!: ControlPanelResult;
+  @Prop() readonly colorFirstPuck!: string;
 
-  private get letterCorner(): string { return this.controlPanelResult.corner };
-  private get placementLeft(): boolean { return this.controlPanelResult.placementLeft};
-  private get placementBottom(): boolean { return this.controlPanelResult.placementBottom };
+  private get letterCorner(): string {
+    return this.controlPanelResult.corner;
+  }
+  private get placementLeft(): boolean {
+    return this.controlPanelResult.placementLeft;
+  }
+  private get placementBottom(): boolean {
+    return this.controlPanelResult.placementBottom;
+  }
 }
 </script>

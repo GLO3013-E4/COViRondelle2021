@@ -1,11 +1,11 @@
 import ControlPanel from '@/components/station/ControlPanel.vue';
-import wrapWithVuetify from '@/util/wrapWithVuetify';
 import { shallowMount } from '@vue/test-utils';
 import { ControlPanelResultFactory } from '@/factories/ControlPanelResult';
 import { ColorFactory } from '@/factories/ColorFactory';
 import ControlPanelResult from '@/classes/ControlPanelResult';
+import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 
-const wrapper = wrapWithVuetify(ControlPanel);
+const wrapper = wrapWithVuetifyAndStore(ControlPanel);
 
 describe('When mounting ControlPanel component', () => {
   it('Should mount', () => {
@@ -14,8 +14,8 @@ describe('When mounting ControlPanel component', () => {
 });
 
 describe('Given props', () => {
-    const controlPanelResultExpected = ControlPanelResultFactory.get() as ControlPanelResult;
-    const colorFirstPuckExpected = ColorFactory.get();
+  const controlPanelResultExpected = ControlPanelResultFactory.get() as ControlPanelResult;
+  const colorFirstPuckExpected = ColorFactory.get();
 
   const props = {
     controlPanelResult: controlPanelResultExpected,
@@ -27,7 +27,9 @@ describe('Given props', () => {
     });
 
     it('Should be the right props', () => {
-      expect(wrapper.props().controlPanelResult).toBe(controlPanelResultExpected);
+      expect(wrapper.props().controlPanelResult).toBe(
+        controlPanelResultExpected
+      );
       expect(wrapper.props().colorFirstPuck).toBe(colorFirstPuckExpected);
     });
 
