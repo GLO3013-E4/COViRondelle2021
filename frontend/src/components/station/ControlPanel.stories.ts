@@ -23,29 +23,29 @@ const Template = (args: any) => ({
 export const Default = Template.bind({}) as any;
 Default.args = {
   puckFirstCorner: CornerFactory.get(),
-  puckColors: [ColorFactory.get(), ColorFactory.get(), ColorFactory.get()],
+  puckColors: [ColorFactory.get()],
 };
 
 export const cornerA = Template.bind({}) as any;
 cornerA.args = {
   puckFirstCorner: Corner.A,
-  puckColors: [ColorFactory.get(), ColorFactory.get(), ColorFactory.get()],
+  puckColors: [ColorFactory.get()],
 };
 
 export const cornerB = Template.bind({}) as any;
 cornerB.args = {
   puckFirstCorner: Corner.B,
-  puckColors: [ColorFactory.get(), ColorFactory.get(), ColorFactory.get()],
+  puckColors: [ColorFactory.get()],
 };
 
 export const cornerC = Template.bind({}) as any;
 cornerC.args = {
   puckFirstCorner: Corner.C,
-  puckColors: [ColorFactory.get(), ColorFactory.get(), ColorFactory.get()],
+  puckColors: [ColorFactory.get()],
 };
 
 export const cornerD = Template.bind({}) as any;
 cornerD.args = {
   puckFirstCorner: Corner.D,
-  puckColors: [ColorFactory.get(), ColorFactory.get(), ColorFactory.get()],
+  puckColors: [ColorFactory.get()],
 };

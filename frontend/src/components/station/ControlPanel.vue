@@ -55,7 +55,9 @@ export default class ControlPanel extends Vue {
   }
 
   private get firstPuckColor(): string {
-    return this.puckColors.length > 0 ? this.puckColors[0] : '';
+    return this.puckColors && this.puckColors.length > 0
+      ? this.puckColors[0]
+      : '';
   }
 }
 </script>

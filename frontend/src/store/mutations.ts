@@ -38,7 +38,6 @@ export const mutations: MutationTree<State> & Mutations = {
     state.puckColors = message.puckColors || defaultState.puckColors;
   },
   [SOCKET_PUCK_FIRST_CORNER](state: State, message: Message) {
-    // TODO : Implement get puck first corner from state in associated component
     state.puckFirstCorner =
       message.puckFirstCorner || defaultState.puckFirstCorner;
   },

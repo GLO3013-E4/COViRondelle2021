@@ -1,51 +1,45 @@
 import ControlPanel from '@/components/station/ControlPanel.vue';
-import { shallowMount } from '@vue/test-utils';
-import { ControlPanelResultFactory } from '@/factories/ControlPanelResult';
+import { createLocalVue, shallowMount } from '@vue/test-utils';
 import { ColorFactory } from '@/factories/ColorFactory';
-import ControlPanelResult from '@/classes/ControlPanelResult';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
-
-const wrapper = wrapWithVuetifyAndStore(ControlPanel);
+import Vuex from 'vuex';
+import { CornerFactory } from '@/factories/CornerFactory';
 
 describe('When mounting ControlPanel component', () => {
+  const wrapper = wrapWithVuetifyAndStore(ControlPanel);
+
   it('Should mount', () => {
     expect(wrapper.vm).toBeTruthy();
   });
 });
 
-describe('Given props', () => {
-  const controlPanelResultExpected = ControlPanelResultFactory.get() as ControlPanelResult;
-  const colorFirstPuckExpected = ColorFactory.get();
+describe('Given state', () => {
+  const localVue = createLocalVue();
+  localVue.use(Vuex);
 
-  const props = {
-    controlPanelResult: controlPanelResultExpected,
-    colorFirstPuck: colorFirstPuckExpected,
-  };
+  const store = new Vuex.Store({
+    state: {
+      puckFirstCorner: CornerFactory.get(),
+      puckColors: [ColorFactory.get()],
+    },
+  });
+
   describe('When mounting ControlPanel', () => {
-    const wrapper = shallowMount(ControlPanel, {
-      propsData: props,
-    });
-
-    it('Should be the right props', () => {
-      expect(wrapper.props().controlPanelResult).toBe(
-        controlPanelResultExpected
-      );
-      expect(wrapper.props().colorFirstPuck).toBe(colorFirstPuckExpected);
-    });
+    const wrapper = shallowMount(ControlPanel, { store, localVue });
 
     it('Should contains the right letter of corner', () => {
       const letterCorner = wrapper.findComponent({ ref: 'corner' });
 
       expect(letterCorner.exists()).toBe(true);
-      expect(letterCorner.text()).toBe(controlPanelResultExpected.corner);
+      expect(letterCorner.text()).toBe(store.state.puckFirstCorner.toString());
     });
   });
 });
 
-describe('Given no props', () => {
-  describe('When mounting ControlPanel component without props', () => {
-    const wrapper = shallowMount(ControlPanel, {});
+describe('Given no state', () => {
+  const wrapper = wrapWithVuetifyAndStore(ControlPanel);
 
+  describe('When mounting ControlPanel component without props', () => {
     it('Should not contains resistanceValue', () => {
       const letterCorner = wrapper.findComponent({ ref: 'corner' });
 
