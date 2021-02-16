@@ -1,4 +1,4 @@
-import { Corner } from '@/types/corner';
+import {Corner} from '@/types/corner';
 
 export default class ControlPanelResult {
   corner: Corner;
@@ -22,17 +22,17 @@ export default class ControlPanelResult {
       }
       case Corner.B: {
         this.placementLeft = false;
-        this.placementBottom = true;
+        this.placementBottom = false;
         break;
       }
       case Corner.C: {
-        this.placementLeft = true;
+        this.placementLeft = false;
         this.placementBottom = true;
         break;
       }
-      default: {
-        this.placementLeft = false;
-        this.placementBottom = false;
+      case Corner.D: {
+        this.placementLeft = true;
+        this.placementBottom = true;
         break;
       }
     }
