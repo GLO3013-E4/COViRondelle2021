@@ -2,7 +2,6 @@ import { RobotConsumption } from '@/types/robotConsumption';
 import { Color } from '@/types/color';
 import { Corner } from '@/types/corner';
 import { Coordinate } from '@/types/coordinate';
-import { GripState } from '@/types/gripState';
 import { Step } from '@/types/step';
 
 export interface Message {
@@ -13,6 +12,6 @@ export interface Message {
   puckFirstCorner?: Corner;
   plannedTrajectoryCoordinate?: Coordinate;
   realTrajectoryCoordinate?: Coordinate;
-  gripState?: GripState;
+  puckInGrip?: boolean;
   currentStep?: Step;
 }
