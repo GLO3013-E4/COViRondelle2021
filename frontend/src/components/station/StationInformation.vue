@@ -12,6 +12,12 @@
         <v-col sm="5">
           <Resistance />
         </v-col>
+        <v-col sm="3">
+          <ControlPanel
+            v-bind:controlPanelResult="controlPanelResult"
+            v-bind:colorFirstPuck="colorFirstPuck"
+          />
+        </v-col>
       </v-row>
     </v-container>
   </v-card>
@@ -20,9 +26,14 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Resistance from '../station/Resistance.vue';
+import ControlPanel from '../station/ControlPanel.vue';
+
+//TODO: à enlever quand on recevra les vrai valeurs
+import { ControlPanelResultFactory } from '../../factories/ControlPanelResult';
+import { ColorFactory } from '@/factories/ColorFactory';
 
 @Component({
-  components: { Resistance: Resistance },
+  components: { Resistance: Resistance, ControlPanel: ControlPanel },
 })
 export default class StationInformation extends Vue {}
 </script>
