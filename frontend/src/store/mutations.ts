@@ -53,7 +53,7 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [SOCKET_GRIP_STATE](state: State, message: Message) {
     // TODO : Implement get puck grip state from state in associated component
-    state.gripState = message.gripState || defaultState.gripState;
+    state.puckInGrip = message.gripState || defaultState.puckInGrip;
   },
   [SOCKET_CURRENT_STEP](state: State, message: Message) {
     // TODO : Implement get current step from state in associated component

@@ -2,7 +2,6 @@ import { Color } from '@/types/color';
 import { RobotConsumption } from '@/types/robotConsumption';
 import { Corner } from '@/types/corner';
 import { Coordinate } from '@/types/coordinate';
-import { GripState } from '@/types/gripState';
 import { Step } from '@/types/step';
 
 export const defaultState = {
@@ -17,7 +16,7 @@ export const defaultState = {
   puckFirstCorner: null as Corner | unknown,
   plannedTrajectory: [] as Array<Coordinate>,
   realTrajectory: [] as Array<Coordinate>,
-  gripState: GripState.released,
+  puckInGrip: false,
   currentStep: Step.CycleNotStarted,
 };
 
@@ -30,7 +29,7 @@ export const state = {
   puckFirstCorner: defaultState.puckFirstCorner,
   plannedTrajectory: defaultState.plannedTrajectory,
   realTrajectory: defaultState.realTrajectory,
-  gripState: defaultState.gripState,
+  puckInGrip: defaultState.puckInGrip,
   currentStep: defaultState.currentStep,
 };
 

@@ -4,7 +4,7 @@ import { ColorFactory } from '@/factories/ColorFactory';
 import { CornerFactory } from '@/factories/CornerFactory';
 
 export const StateFactory = factory<State>((fake) => ({
-  // TODO : Fake what isn't fake when implementing
+  // TODO : Fake what isn't faked when implementing
   cycleStarted: defaultState.cycleStarted,
   tableImage: defaultState.tableImage,
   resistance: fake.random.number(10000),
@@ -13,6 +13,6 @@ export const StateFactory = factory<State>((fake) => ({
   puckFirstCorner: CornerFactory.get(),
   plannedTrajectory: defaultState.plannedTrajectory,
   realTrajectory: defaultState.realTrajectory,
-  gripState: defaultState.gripState,
+  puckInGrip: defaultState.puckInGrip,
   currentStep: defaultState.currentStep,
 }));
