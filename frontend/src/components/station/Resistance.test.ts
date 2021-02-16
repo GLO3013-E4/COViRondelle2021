@@ -1,33 +1,30 @@
 import Resistance from '@/components/station/Resistance.vue';
-import wrapWithVuetify from '@/util/wrapWithVuetify';
-import { mount } from '@vue/test-utils';
-
-const wrapper = wrapWithVuetify(Resistance);
+import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
+import Vuex from 'vuex';
+import { Color } from '@/types/color';
 
 describe('When mounting Resistance component', () => {
+  const wrapper = wrapWithVuetifyAndStore(Resistance);
+
   it('Should mount', () => {
     expect(wrapper.vm).toBeTruthy();
   });
 });
 
-describe('Given props', () => {
-  const props = {
-    resistanceValue: 100000,
-    pucksColors: ['red', 'blue', 'yellow'],
-  };
-  describe('When mounting Resistance', () => {
-    const wrapper = mount(Resistance, {
-      propsData: props,
-    });
+describe('Given state', () => {
+  const localVue = createLocalVue();
+  localVue.use(Vuex);
 
-    it('Should be the right props', () => {
-      expect(wrapper.props().resistanceValue).toBe(100000);
-      expect(wrapper.props().pucksColors).toStrictEqual([
-        'red',
-        'blue',
-        'yellow',
-      ]);
-    });
+  const store = new Vuex.Store({
+    state: {
+      resistance: 100000,
+      puckColors: [Color.Red, Color.Blue, Color.Yellow],
+    },
+  });
+
+  describe('When mounting Resistance', () => {
+    const wrapper = shallowMount(Resistance, { store, localVue });
 
     it('Should contains the right resistanceValue', () => {
       const resistanceValue = wrapper.findComponent({ ref: 'resistanceValue' });
@@ -45,18 +42,18 @@ describe('Given props', () => {
   });
 });
 
-describe('Given no props', () => {
-  describe('When mounting Resistance component without props', () => {
-    const wrapper = mount(Resistance, {});
+describe('Given no state', () => {
+  describe('When mounting Resistance', () => {
+    const wrapper = wrapWithVuetifyAndStore(Resistance);
 
-    it('Should not contains resistanceValue', () => {
+    it('Should not contain resistanceValue', () => {
       const resistanceValue = wrapper.findComponent({ ref: 'resistanceValue' });
 
       expect(resistanceValue.exists()).toBe(true);
       expect(resistanceValue.text()).toBe('Ω');
     });
 
-    it('Should not contains pucks', () => {
+    it('Should not contain pucks', () => {
       const pucks = wrapper.findAllComponents({ ref: 'pucks' });
 
       expect(pucks.exists()).toBe(false);

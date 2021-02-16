@@ -1,17 +1,4 @@
 import { enumFactory } from 'node-factory';
+import { Color } from '@/types/color';
 
-export const COLORS = [
-  'yellow',
-  'brown',
-  'red',
-  'pink',
-  'orange',
-  'black',
-  'white',
-  'green',
-  'blue',
-  'purple',
-  'grey',
-];
-
-export const ColorFactory = enumFactory<string>(COLORS);
+export const ColorFactory = enumFactory<Color>(Object.values(Color));

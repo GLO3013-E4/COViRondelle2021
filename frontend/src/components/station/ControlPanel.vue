@@ -11,9 +11,9 @@
               dot
               :bottom="this.placementBottom"
               :left="this.placementLeft"
-              :color="this.colorFirstPuck"
+              :color="firstPuckColor"
             >
-              {{ this.letterCorner }}
+              {{ this.puckFirstCorner }}
             </v-badge>
           </div>
         </v-col>
@@ -23,18 +23,32 @@
 </template>
 
 <script lang="ts">
-import ControlPanelResult from '@/classes/ControlPanelResult';
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
+import { mapState } from 'vuex';
+import { Corner } from '@/types/corner';
+import { Color } from '@/types/color';
 
 @Component({
-  components: {},
+  computed: {
+    ...mapState(['puckFirstCorner', 'puckColors']),
+  },
 })
 export default class ControlPanel extends Vue {
-  @Prop({ default: () => new ControlPanelResult('') }) readonly controlPanelResult!: ControlPanelResult;
-  @Prop() readonly colorFirstPuck!:string;
+  private puckFirstCorner!: Corner;
+  private puckColors!: Array<Color>;
 
-  private get letterCorner(): string { return this.controlPanelResult.corner };
-  private get placementLeft(): boolean { return this.controlPanelResult.placementLeft};
-  private get placementBottom(): boolean { return this.controlPanelResult.placementBottom };
+  private get placementLeft(): boolean {
+    return this.puckFirstCorner == Corner.A || this.puckFirstCorner == Corner.D;
+  }
+
+  private get placementBottom(): boolean {
+    return this.puckFirstCorner == Corner.C || this.puckFirstCorner == Corner.D;
+  }
+
+  private get firstPuckColor(): string {
+    return this.puckColors && this.puckColors.length > 0
+      ? this.puckColors[0]
+      : '';
+  }
 }
 </script>
