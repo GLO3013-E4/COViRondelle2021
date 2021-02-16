@@ -11,7 +11,7 @@ export default {
   component: Resistance,
 };
 
-const Template = (args: any, { argTypes }: any) => ({
+const Template = (args: any) => ({
   components: { Resistance },
   store: new Vuex.Store({
     state: args,

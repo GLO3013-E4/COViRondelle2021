@@ -28,10 +28,6 @@ import { Component, Vue } from 'vue-property-decorator';
 import Resistance from '../station/Resistance.vue';
 import ControlPanel from '../station/ControlPanel.vue';
 
-//TODO: à enlever quand on recevra les vrai valeurs
-import { ControlPanelResultFactory } from '../../factories/ControlPanelResult';
-import { ColorFactory } from '@/factories/ColorFactory';
-
 @Component({
   components: { Resistance: Resistance, ControlPanel: ControlPanel },
 })
