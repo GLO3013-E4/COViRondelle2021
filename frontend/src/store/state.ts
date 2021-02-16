@@ -7,6 +7,7 @@ import { Step } from '@/types/step';
 
 export const defaultState = {
   cycleStarted: false,
+  tableImage: '', // TODO : Table image most likely won't be a string, this is temporary
   resistance: 0,
   robotConsumption: {
     batteryPercentage: 0,
@@ -22,6 +23,7 @@ export const defaultState = {
 
 export const state = {
   cycleStarted: defaultState.cycleStarted,
+  tableImage: defaultState.tableImage,
   resistance: defaultState.resistance,
   robotConsumption: defaultState.robotConsumption,
   puckColors: defaultState.puckColors,
