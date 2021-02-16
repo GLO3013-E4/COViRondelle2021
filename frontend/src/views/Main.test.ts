@@ -1,7 +1,7 @@
 import Main from '@/views/Main.vue';
-import wrapWithVuetify from '@/util/wrapWithVuetify';
+import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 
-const wrapper = wrapWithVuetify(Main);
+const wrapper = wrapWithVuetifyAndStore(Main);
 
 describe('When mounting main view', () => {
   it('Should mount', () => {

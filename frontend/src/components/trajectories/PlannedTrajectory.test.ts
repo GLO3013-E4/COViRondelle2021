@@ -1,7 +1,7 @@
 import PlannedTrajectory from '@/components/trajectories/PlannedTrajectory.vue';
-import wrapWithVuetify from '@/util/wrapWithVuetify';
+import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 
-const wrapper = wrapWithVuetify(PlannedTrajectory);
+const wrapper = wrapWithVuetifyAndStore(PlannedTrajectory);
 
 describe('When mounting planned trajectory', () => {
   it('Should mount', () => {

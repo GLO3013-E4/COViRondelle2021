@@ -1,7 +1,7 @@
 import StationInformation from '@/components/station/StationInformation.vue';
-import wrapWithVuetify from '@/util/wrapWithVuetify';
+import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 
-const wrapper = wrapWithVuetify(StationInformation);
+const wrapper = wrapWithVuetifyAndStore(StationInformation);
 
 describe('When mounting station information', () => {
   it('Should mount', () => {
