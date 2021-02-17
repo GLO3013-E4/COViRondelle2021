@@ -10,7 +10,7 @@ export interface Message {
   robotConsumption?: RobotConsumption;
   puckColors?: Array<Color>;
   puckFirstCorner?: Corner;
-  plannedTrajectoryCoordinate?: Coordinate;
+  plannedTrajectoryCoordinates?: Array<Coordinate>;
   realTrajectoryCoordinate?: Coordinate;
   puckInGrip?: boolean;
   currentStep?: Step;

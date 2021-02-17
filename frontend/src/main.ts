@@ -8,7 +8,7 @@ import VueSocketIOExt from 'vue-socket.io-extended';
 Vue.config.productionTip = false;
 
 // TODO : Change socket server URL
-const STATION_URL = 'http://localhost:4000'
+const STATION_URL = 'http://localhost:4000';
 const socket = io(STATION_URL);
 Vue.use(VueSocketIOExt, socket, { store });
 

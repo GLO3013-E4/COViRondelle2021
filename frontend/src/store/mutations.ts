@@ -4,26 +4,32 @@ import {
   SOCKET_TABLE_IMAGE,
   SOCKET_RESISTANCE_AND_PUCK_COLORS,
   SOCKET_PUCK_FIRST_CORNER,
-  SOCKET_PLANNED_TRAJECTORY_COORDINATE,
+  SOCKET_PLANNED_TRAJECTORY_COORDINATES,
   SOCKET_REAL_TRAJECTORY_COORDINATE,
   SOCKET_GRIP_STATE,
   SOCKET_CURRENT_STEP,
+  SOCKET_CYCLE_READY,
 } from './mutation-types';
 import { defaultState, State } from './state';
 import { Message } from '@/types/message';
 
 export type Mutations<S = State> = {
+  [SOCKET_CYCLE_READY](state: S): void;
   [SOCKET_ROBOT_CONSUMPTION](state: S, message: Message): void;
   [SOCKET_TABLE_IMAGE](state: S, message: Message): void;
   [SOCKET_RESISTANCE_AND_PUCK_COLORS](state: S, message: Message): void;
   [SOCKET_PUCK_FIRST_CORNER](state: S, message: Message): void;
-  [SOCKET_PLANNED_TRAJECTORY_COORDINATE](state: S, message: Message): void;
+  [SOCKET_PLANNED_TRAJECTORY_COORDINATES](state: S, message: Message): void;
   [SOCKET_REAL_TRAJECTORY_COORDINATE](state: S, message: Message): void;
   [SOCKET_GRIP_STATE](state: S, message: Message): void;
   [SOCKET_CURRENT_STEP](state: S, message: Message): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
+  [SOCKET_CYCLE_READY](state: State) {
+    // TODO : Implement get cycle ready from state in associated component
+    state.cycleReady = true;
+  },
   [SOCKET_ROBOT_CONSUMPTION](state: State, message: Message) {
     // TODO : Implement get robot consumption from state in associated component
     state.robotConsumption =
@@ -41,10 +47,10 @@ export const mutations: MutationTree<State> & Mutations = {
     state.puckFirstCorner =
       message.puckFirstCorner || defaultState.puckFirstCorner;
   },
-  [SOCKET_PLANNED_TRAJECTORY_COORDINATE](state: State, message: Message) {
+  [SOCKET_PLANNED_TRAJECTORY_COORDINATES](state: State, message: Message) {
     // TODO : Implement get planned trajectory coordinate from state in associated component
-    if (message.plannedTrajectoryCoordinate)
-      state.plannedTrajectory.push(message.plannedTrajectoryCoordinate);
+    if (message.plannedTrajectoryCoordinates)
+      state.plannedTrajectory.push(...message.plannedTrajectoryCoordinates);
   },
   [SOCKET_REAL_TRAJECTORY_COORDINATE](state: State, message: Message) {
     // TODO : Implement get real trajectory coordinate from state in associated component

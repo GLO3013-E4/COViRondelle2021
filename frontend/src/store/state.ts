@@ -5,6 +5,7 @@ import { Coordinate } from '@/types/coordinate';
 import { Step } from '@/types/step';
 
 export const defaultState = {
+  cycleReady: false,
   cycleStarted: false,
   tableImage: '', // TODO : Table image most likely won't be a string, this is temporary
   resistance: 0,
@@ -21,6 +22,7 @@ export const defaultState = {
 };
 
 export const state = {
+  cycleReady: defaultState.cycleReady,
   cycleStarted: defaultState.cycleStarted,
   tableImage: defaultState.tableImage,
   resistance: defaultState.resistance,
