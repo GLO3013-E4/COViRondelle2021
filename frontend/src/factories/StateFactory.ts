@@ -5,6 +5,7 @@ import { CornerFactory } from '@/factories/CornerFactory';
 
 export const StateFactory = factory<State>((fake) => ({
   // TODO : Fake what isn't faked when implementing
+  cycleReady: defaultState.cycleReady,
   cycleStarted: defaultState.cycleStarted,
   tableImage: defaultState.tableImage,
   // TODO : Find a way to implement ResistanceFactory
