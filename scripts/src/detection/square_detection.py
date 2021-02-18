@@ -12,16 +12,14 @@ class SquareDetection(ObjectDetection):
         self.maximum_area = 28000
 
     def detect_square(self):
-        cv2.namedWindow('Square detection', cv2.WINDOW_NORMAL)
         image_copy = self.copy_image()
-        square_position = self._find_color(image_copy)
-        return square_position
+        return self._find_color(image_copy)
 
     def _find_color(self, image_copy):
         image_hsv = cv2.cvtColor(self.image, cv2.COLOR_BGR2HSV)
 
-        color_lower_boundary = self.lower_boundary.get_lower_boundaries( self.object_to_detect )
-        color_upper_boundary = self.upper_boundary.get_upper_boundaries( self.object_to_detect )
+        color_lower_boundary = self.lower_boundary.get_lower_boundaries(self.object_to_detect)
+        color_upper_boundary = self.upper_boundary.get_upper_boundaries(self.object_to_detect)
 
         mask = cv2.inRange(image_hsv, color_lower_boundary, color_upper_boundary)
         return self._get_contours(mask, image_copy)
@@ -42,27 +40,21 @@ class SquareDetection(ObjectDetection):
 
     def _get_contours(self, image_mask, image_copy):
         contours, hierarchy = cv2.findContours(image_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        corner_position = self.generate_four_corners(0, 0, 0, 0)
 
         for contour in contours:
             area = cv2.contourArea(contour)
-
             if self.is_in_area(area):
                 perimeter = cv2.arcLength(contour, True)
                 zone_approximation = cv2.approxPolyDP(contour, 0.05 * perimeter, True)
-                object_corner = len(zone_approximation)
                 x_position, y_position, width, height = cv2.boundingRect(zone_approximation)
 
                 if self.object_is_in_range(width, height):
-                    self.draw_rectangle_on_image(image_copy, x_position, y_position, width, height,
-                                                 self.get_object_name(object_corner))
-                    try:
-                        corner_position = self.generate_four_corners(x_position, y_position,
-                                                                     width, height)
-                    except NameError:
-                        corner_position = self.generate_four_corners(0, 0, 0, 0)
+                    corner_position = self.generate_four_corners(x_position, y_position,
+                                                                 width, height)
 
-                    return corner_position
-        return 0
+        return corner_position
+
 
     def get_object_name(self, object_corner):
         if object_corner == 8:
