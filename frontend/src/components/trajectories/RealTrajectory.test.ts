@@ -1,7 +1,7 @@
-import wrapWithVuetify from '@/util/wrapWithVuetify';
+import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import RealTrajectory from '@/components/trajectories/RealTrajectory.vue';
 
-const wrapper = wrapWithVuetify(RealTrajectory);
+const wrapper = wrapWithVuetifyAndStore(RealTrajectory);
 
 describe('When mounting real trajectory', () => {
   it('Should mount', () => {

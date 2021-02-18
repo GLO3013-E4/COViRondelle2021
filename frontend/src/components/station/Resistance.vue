@@ -1,25 +1,25 @@
 <template>
-  <v-card>
+  <v-card class="grey lighten-3">
     <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
       <h5 class="white--text">Station de résistance</h5>
     </v-card-title>
-    <v-container class="grey lighten-3">
+    <v-container>
       <v-row align="center">
         <v-col sm="5">
           <div
             ref="resistanceValue"
             class="d-flex justify-center font-weight-bold"
           >
-            {{ this.resistanceValue }} Ω
+            {{ this.resistance }} Ω
           </div>
         </v-col>
         <v-col sm="7">
           <v-avatar
             ref="pucks"
             size="30"
-            v-for="(puckColor, i) in pucksColors"
+            v-for="(puckColor, i) in puckColors"
             :key="i"
-            :color="puckColor"
+            :color="puckColor.toString()"
             class="grey--text text--lighten-2 font-weight-bold"
           >
             {{ i + 1 }}
@@ -31,13 +31,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
+import { mapState } from 'vuex';
+import { Color } from '@/types/color';
 
 @Component({
-  components: {},
+  computed: {
+    ...mapState(['resistance', 'puckColors']),
+  },
 })
 export default class Resistance extends Vue {
-  @Prop() readonly resistanceValue!: number;
-  @Prop() readonly pucksColors!: Array<string>;
+  public resistance!: number;
+  public puckColors!: Array<Color>;
 }
 </script>

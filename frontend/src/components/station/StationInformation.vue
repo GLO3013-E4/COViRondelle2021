@@ -10,10 +10,10 @@
       </v-row>
       <v-row no-gutters>
         <v-col sm="5">
-          <Resistance
-            v-bind:resistanceValue="resistanceValue"
-            v-bind:pucksColors="pucksColors"
-          />
+          <Resistance />
+        </v-col>
+        <v-col sm="3">
+          <ControlPanel />
         </v-col>
       </v-row>
     </v-container>
@@ -23,16 +23,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Resistance from '../station/Resistance.vue';
+import ControlPanel from '../station/ControlPanel.vue';
 
 @Component({
-  components: { Resistance: Resistance },
+  components: { Resistance: Resistance, ControlPanel: ControlPanel },
 })
-export default class StationInformations extends Vue {
-  //TODO: par default devra être 0 (avant de recevoir info)
-  private resistanceValue = 800000; //voir l'affichage avec 6 chiffres, pas couleurs associé
-  //TODO: par defaut devra être liste vide (avant de recevoir info)
-  private pucksColors = ['red', 'blue', 'orange']; //Assume que je reçois un array de couleur
-}
+export default class StationInformation extends Vue {}
 </script>
 
 <style></style>

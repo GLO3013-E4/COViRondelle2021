@@ -1,8 +1,9 @@
 from scripts.src.detection.lower_boundary import LowerBoundary
+from scripts.src.mapping.color import Color
 
-RED_COLOR = "red"
-BROWN_COLOR = "brown"
-GREEN_COLOR = "green"
+RED_COLOR = Color["RED"]
+BROWN_COLOR = Color["BROWN"]
+GREEN_COLOR = Color["GREEN"]
 NOT_A_COLOR = "Uncle"
 
 lower_boundary = LowerBoundary()

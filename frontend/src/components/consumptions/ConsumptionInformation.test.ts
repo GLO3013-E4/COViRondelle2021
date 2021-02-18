@@ -1,7 +1,7 @@
 import ConsumptionInformation from '@/components/consumptions/ConsumptionInformation.vue';
-import wrapWithVuetify from '@/util/wrapWithVuetify';
+import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 
-const wrapper = wrapWithVuetify(ConsumptionInformation);
+const wrapper = wrapWithVuetifyAndStore(ConsumptionInformation);
 
 describe('When mounting consumption information', () => {
   it('Should mount', () => {
