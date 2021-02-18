@@ -24,12 +24,6 @@ def test_given_an_invalid_image_then_should_raise_type_error():
         qr_detection_with_invalid_image.detect_qr_code(ROBOT_TYPE)
 
 
-def test_given_valid_image_when_detect_robot_should_return_dictionary_with_four_point():
-    expected_position = qr_detection.detect_qr_code(ROBOT_TYPE)
-
-    assert len(expected_position) == 4
-
-
 def test_given_valid_image_when_detect_robot_should_return_dictionary_of_number_wit_x_postion():
     expected_position = qr_detection.detect_qr_code(ROBOT_TYPE)
 
