@@ -42,7 +42,8 @@ class PuckDetection(ObjectDetection):
                     self.draw_rectangle_on_image(image_copy, x_position, y_position, width, height,
                                                  self.get_object_name(object_corner))
                     try:
-                        puck_position = self.generate_puck_position(x_position, y_position, width, height)
+                        puck_position = self.generate_puck_position(x_position, y_position,
+                                                                    width, height)
                     except NameError:
                         puck_position = self.generate_puck_position(0, 0, 0, 0)
                     return puck_position

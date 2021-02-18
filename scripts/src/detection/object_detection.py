@@ -7,11 +7,11 @@ from scripts.src.detection.upper_boundary import UpperBoundary
 
 class ObjectDetection:
 
-    def __init__(self, image, name, minimum_dimension, maximum_dimension):
+    def __init__(self, image, object_to_detect, minimum_dimension, maximum_dimension):
         self.image = cv2.imread(image)
         self.lower_boundary = LowerBoundary()
         self.upper_boundary = UpperBoundary()
-        self.name = name
+        self.object_to_detect = object_to_detect
         self.object_minimum_dimension = minimum_dimension
         self.object_maximum_dimension = maximum_dimension
 
