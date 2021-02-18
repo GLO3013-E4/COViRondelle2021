@@ -1,5 +1,4 @@
-
-from scripts.src.detection.square_detection import SquareDetection
+    from scripts.src.detection.square_detection import SquareDetection
 
 A_VALID_IMAGE = "camera_monde_qr.jpg"
 A_NUMBER_LOWER_THAN_AREA = 2600
