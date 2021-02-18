@@ -18,8 +18,8 @@ class ObjectDetection:
     def copy_image(self):
         try:
             image = self.image.copy()
-        except AttributeError as InvalidImage:
-            raise AttributeError("L'image est invalide") from InvalidImage
+        except AttributeError as invalid_image:
+            raise AttributeError("L'image est invalide") from invalid_image
         return image
 
     def generate_puck_position(self, x_position, y_position, width, height):
