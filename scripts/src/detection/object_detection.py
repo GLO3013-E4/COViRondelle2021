@@ -18,8 +18,8 @@ class ObjectDetection:
     def copy_image(self):
         try:
             image = self.image.copy()
-        except AttributeError:
-            raise AttributeError("L'image est invalide")
+        except AttributeError as InvalidImage:
+            raise AttributeError("L'image est invalide") from InvalidImage
         return image
 
     def generate_puck_position(self, x_position, y_position, width, height):
@@ -40,9 +40,12 @@ class ObjectDetection:
         cv2.imshow("Color detection", np.hstack([image_copy]))
         cv2.waitKey(50000)
 
-    def draw_rectangle_on_image(self, image_copy, x_position, y_position, width, height, object_type):
-        cv2.rectangle(image_copy, (x_position, y_position), (x_position + width, y_position + height), (0, 255, 0), 2)
-        cv2.putText(image_copy, object_type, (x_position + (width // 2) - 30, y_position + (height // 3) - 30),
+    def draw_rectangle_on_image(self, image_copy, x_position, y_position, width,
+                                height, object_type):
+        cv2.rectangle(image_copy, (x_position, y_position), (x_position + width,
+                                                             y_position + height), (0, 255, 0), 2)
+        cv2.putText(image_copy, object_type, (x_position + (width // 2) - 30,
+                                              y_position + (height // 3) - 30),
                     cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
 
     def object_is_in_range(self, width, height):

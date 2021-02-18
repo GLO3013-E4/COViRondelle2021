@@ -15,6 +15,7 @@ disable=
     R0201, # no-self-use
     E0401, # import-error
     R1705, # no-else-return
+    W0612, # unused-variable
 ignore=
     Dockerfile,
     README.md,

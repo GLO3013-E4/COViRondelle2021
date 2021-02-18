@@ -52,22 +52,26 @@ def test_given_valid_square_then_should_return_dictionary_of_four_point():
 def test_given_valid_square_then_point_a_and_point_b_should_have_the_same_x_position():
     expected_fours_corners = square_detection.detect_square()
 
-    assert expected_fours_corners["corner_A"].get_position_x() == expected_fours_corners["corner_B"].get_position_x()
+    assert expected_fours_corners["corner_A"].get_position_x()\
+           == expected_fours_corners["corner_B"].get_position_x()
 
 
 def test_given_valid_square_then_point_c_and_point_d_should_have_the_same_x_position():
     expected_fours_corners = square_detection.detect_square()
 
-    assert expected_fours_corners["corner_C"].get_position_x() == expected_fours_corners["corner_D"].get_position_x()
+    assert expected_fours_corners["corner_C"].get_position_x()\
+           == expected_fours_corners["corner_D"].get_position_x()
 
 
 def test_given_valid_square_then_point_a_and_point_d_should_have_the_same_y_position():
     expected_fours_corners = square_detection.detect_square()
 
-    assert expected_fours_corners["corner_A"].get_position_y() == expected_fours_corners["corner_D"].get_position_y()
+    assert expected_fours_corners["corner_A"].get_position_y()\
+           == expected_fours_corners["corner_D"].get_position_y()
 
 
 def test_given_valid_square_then_point_b_and_point_c_should_have_the_same_y_position():
     expected_fours_corners = square_detection.detect_square()
 
-    assert expected_fours_corners["corner_B"].get_position_y() == expected_fours_corners["corner_C"].get_position_y()
+    assert expected_fours_corners["corner_B"].get_position_y()\
+           == expected_fours_corners["corner_C"].get_position_y()

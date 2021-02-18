@@ -20,13 +20,13 @@ class SquareDetection(ObjectDetection):
     def _find_color(self, image_copy):
         image_hsv = cv2.cvtColor(self.image, cv2.COLOR_BGR2HSV)
 
-        color_lower_boundary = self.lower_boundary.get_lower_boundaries(self.name)
-        color_upper_boundary = self.upper_boundary.get_upper_boundaries(self.name)
+        color_lower_boundary = self.lower_boundary.get_lower_boundaries( self.object_to_detect )
+        color_upper_boundary = self.upper_boundary.get_upper_boundaries( self.object_to_detect )
 
         mask = cv2.inRange(image_hsv, color_lower_boundary, color_upper_boundary)
         return self._get_contours(mask, image_copy)
 
-    def generate_four_corners(self, x_position, y_position, width, height, image_copy):
+    def generate_four_corners(self, x_position, y_position, width, height):
         corner_a = Point(x_position + width, y_position)
         corner_b = Point(x_position + width, y_position + height)
         corner_c = Point(x_position, y_position + height)
@@ -56,16 +56,17 @@ class SquareDetection(ObjectDetection):
                     self.draw_rectangle_on_image(image_copy, x_position, y_position, width, height,
                                                  self.get_object_name(object_corner))
                     try:
-                        corner_position = self.generate_four_corners(x_position, y_position, width, height, image_copy)
+                        corner_position = self.generate_four_corners(x_position, y_position,
+                                                                     width, height)
                     except NameError:
-                        corner_position = self.generate_four_corners(x_position, y_position)
+                        corner_position = self.generate_four_corners(0, 0, 0, 0)
 
                     return corner_position
         return 0
 
     def get_object_name(self, object_corner):
         if object_corner == 8:
-            object_type = str(self.name)
+            object_type = str( self.object_to_detect )
         else:
             object_type = "None"
         return object_type
