@@ -26,11 +26,12 @@ class SquareDetection(ObjectDetection):
         mask = cv2.inRange(image_hsv, color_lower_boundary, color_upper_boundary)
         return self._get_contours(mask, image_copy)
 
-    def generate_four_corners(self, x_position, y_position, width, height):
+    def generate_four_corners(self, x_position, y_position, width, height, image_copy):
         corner_a = Point(x_position + width, y_position)
         corner_b = Point(x_position + width, y_position + height)
         corner_c = Point(x_position, y_position + height)
         corner_d = Point(x_position, y_position)
+
         four_corners = {
             "corner_A": corner_a,
             "corner_B": corner_b,
@@ -55,7 +56,7 @@ class SquareDetection(ObjectDetection):
                     self.draw_rectangle_on_image(image_copy, x_position, y_position, width, height,
                                                  self.get_object_name(object_corner))
                     try:
-                        corner_position = self.generate_four_corners(x_position, y_position, width, height)
+                        corner_position = self.generate_four_corners(x_position, y_position, width, height, image_copy)
                     except NameError:
                         corner_position = self.generate_four_corners(x_position, y_position)
 

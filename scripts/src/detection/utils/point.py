@@ -8,3 +8,6 @@ class Point:
 
     def get_position_y(self):
         return self.position_y
+
+    def get_coordinates(self):
+        return tuple((self.position_x, self.position_y))

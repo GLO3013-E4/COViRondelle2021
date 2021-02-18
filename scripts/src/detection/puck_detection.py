@@ -41,12 +41,12 @@ class PuckDetection(ObjectDetection):
                 if self.object_is_in_range(width, height):
                     self.draw_rectangle_on_image(image_copy, x_position, y_position, width, height,
                                                  self.get_object_name(object_corner))
-                    break
-        try:
-            puck_position = self.generate_puck_position(x_position, y_position, width, height)
-        except NameError:
-            puck_position = self.generate_puck_position(0, 0, 0, 0)
-        return puck_position
+                    try:
+                        puck_position = self.generate_puck_position(x_position, y_position, width, height)
+                    except NameError:
+                        puck_position = self.generate_puck_position(0, 0, 0, 0)
+                    return puck_position
+        return 0
 
     def get_object_name(self, object_corner):
         if object_corner >= 4:
@@ -57,3 +57,4 @@ class PuckDetection(ObjectDetection):
 
     def is_in_area(self, area):
         return self.minimum_area < area < self.maximum_area
+
