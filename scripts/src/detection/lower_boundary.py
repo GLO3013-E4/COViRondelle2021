@@ -2,7 +2,7 @@ import numpy as np
 
 
 class LowerBoundary:
-    """Lower boundaries of colors of pucks"""
+    """Lower boundaries of colors of objects"""
     def __init__(self):
         self.lower_boundaries = {"purple": [117, 20, 94], "white": [33, 15, 160],
                                  "yellow": [24, 190, 127],
@@ -10,7 +10,7 @@ class LowerBoundary:
                                  "red": [0, 216, 92],
                                  "brown": [0, 121, 15], "green": [47, 89, 0],
                                  "black": [31, 21, 0],
-                                 "grey": [22, 6, 54]}
+                                 "grey": [22, 6, 54], "square": [57, 33, 13]}
 
     def get_lower_boundaries(self, color_to_detect):
         if color_to_detect in self.lower_boundaries:

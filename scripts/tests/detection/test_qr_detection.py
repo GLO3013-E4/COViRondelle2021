@@ -51,19 +51,19 @@ def test_given_valid_image_when_detect_robot_should_return_dictionary_of_number_
 def test_given_valid_image_when_detect_robot_should_return_dictionary_of_x_positive_number():
     expected_position = qr_detection.detect_qr_code(ROBOT_TYPE)
 
-    assert expected_position["point 1"].x  > 0
-    assert expected_position["point 2"].x  > 0
-    assert expected_position["point 2"].x  > 0
-    assert expected_position["point 2"].x  > 0
+    assert expected_position["point 1"].x > 0
+    assert expected_position["point 2"].x > 0
+    assert expected_position["point 2"].x > 0
+    assert expected_position["point 2"].x > 0
 
 
 def test_given_valid_image_when_detect_robot_should_return_dictionary_of_y_positive_number():
     expected_position = qr_detection.detect_qr_code(ROBOT_TYPE)
 
-    assert expected_position["point 1"].y  > 0
-    assert expected_position["point 2"].y  > 0
-    assert expected_position["point 2"].y  > 0
-    assert expected_position["point 2"].y  > 0
+    assert expected_position["point 1"].y > 0
+    assert expected_position["point 2"].y > 0
+    assert expected_position["point 2"].y > 0
+    assert expected_position["point 2"].y > 0
 
 
 def test_given_valid_image_when_detect_obstacle_should_return_array_of_length_two():
