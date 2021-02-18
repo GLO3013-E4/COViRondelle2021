@@ -110,6 +110,13 @@ class Map:
                     neighbor.role = role
                 self.add_cushion(neighbor, distance - 1, role)
 
+    def add_cushion_in_direction(self, node, distance, role, direction):
+        if distance > 0:
+            for neighbor, neighbor_direction in node.neighbors:
+                if neighbor.role is TileRole.EMPTY and neighbor_direction is direction:
+                    neighbor.role = role
+                    self.add_cushion_in_direction(neighbor, distance - 1, role, direction)
+
     def create_obstacles(self):
         """Specifies which nodes should be considered as obstacles and then adds their padding."""
         for pixel_position in self.obstacles:
@@ -146,7 +153,11 @@ class Map:
         end.role = TileRole.END
 
         distance = (self.obstacle_puck_width // self.node_size) + 1
-        self.add_cushion(end, distance, TileRole.END)
+        #self.add_cushion(end, distance, TileRole.END)
+        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.DOWN)
+        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.LEFT)
+        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.UP)
+        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.RIGHT)
 
     def get_start_node(self):
         """Gets the starting node"""
