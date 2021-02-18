@@ -26,7 +26,7 @@ class SquareDetection(ObjectDetection):
         mask = cv2.inRange(image_hsv, color_lower_boundary, color_upper_boundary)
         return self._get_contours(mask, image_copy)
 
-    def generate_four_corners(self, x_position, y_position, width, height, image_copy):
+    def generate_four_corners(self, x_position, y_position, width, height):
         corner_a = (x_position + width, y_position)
         corner_b = (x_position + width, y_position + height)
         corner_c = (x_position, y_position + height)
