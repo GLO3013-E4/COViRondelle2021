@@ -18,10 +18,9 @@ class QrDetection:
                 return self._detect_obstacle()
             elif code_to_detect == QrCodeTypes.ROBOT_AND_OBSTACLE.value:
                 return self._detect_robot_and_obstacle()
-            else:
-                return 0
-        except TypeError:
-            raise TypeError("Image invalide")
+            return 0
+        except TypeError as invalid_image:
+            raise TypeError("Image invalide") from invalid_image
 
 
     def _detect_robot(self):
@@ -47,7 +46,8 @@ class QrDetection:
         for qr_code in decode(self.image):
             message = qr_code.data.decode('utf-8')
             if message == QrCodeTypes.OBSTACLE.value:
-                objects_position["obstacles"].append(self._generate_qr_code_position(qr_code.polygon))
+                objects_position["obstacles"].append(
+                    self._generate_qr_code_position(qr_code.polygon))
             elif message == QrCodeTypes.ROBOT.value:
                 objects_position["robot"].append(self._generate_qr_code_position(qr_code.polygon))
         return objects_position

@@ -12,6 +12,7 @@ disable=
     R0903, # too-few-public-methods
     W0511, # fixme
     W0201, # attribute-defined-outside-init
+    R0201, # no-self-use
 ignore=
     Dockerfile,
     README.md,
