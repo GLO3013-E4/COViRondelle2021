@@ -38,7 +38,7 @@ class SquareDetection(ObjectDetection):
         }
         return four_corners
 
-    def _get_contours(self, image_mask, image_copy):
+    def _get_contours(self, image_mask):
         contours, hierarchy = cv2.findContours(image_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
         corner_position = self.generate_four_corners(0, 0, 0, 0)
 
