@@ -12,15 +12,6 @@ servo1 = GPIO.PWM(12, 50)
 GPIO.setup(33, GPIO.OUT)
 servo2 = GPIO.PWM(33, 50)
 
-
-def angle_to_per(angle):
-    start = 2
-    end = 12
-    ratio = (end - start) / 180
-    angle_p = angle * ratio
-    return start + angle_p
-
-
 servo1.start(0)
 servo2.start(0)
 
@@ -37,14 +28,35 @@ x_medium = int(cols / 2)
 x_center = int(cols / 2)
 y_medium = int(rows / 2)
 y_center = int(rows / 2)
-X_POSITION = 90
-Y_POSITION = 90
+x_position = 90
+y_position = 90
 
 MOVEMENT_THRESHOLD = 30
 
 
+def angle_to_per(angle):
+    start = 2
+    end = 12
+    ratio = (end - start) / 180
+    angle_p = angle * ratio
+    return start + angle_p
+
+
 def contour_area(contour):
     return cv2.contourArea(contour)
+
+
+def adjust_position(original, medium, center):
+    if original > 180 or original < 0:
+        return original
+
+    position = original
+
+    if medium < center - MOVEMENT_THRESHOLD:
+        position -= 1
+    elif medium > center + MOVEMENT_THRESHOLD:
+        position += 1
+    return angle_to_per(position)
 
 
 while True:
@@ -65,17 +77,11 @@ while True:
         y_medium = int((y + y + h) / 2)
         break
 
-    if x_medium < x_center - MOVEMENT_THRESHOLD:
-        X_POSITION -= 1
-    elif x_medium > x_center + MOVEMENT_THRESHOLD:
-        X_POSITION += 1
-    servo2.ChangeDutyCycle(angle_to_per(X_POSITION))
+    x_position = adjust_position(x_position, x_medium, x_center)
+    servo2.ChangeDutyCycle(angle_to_per(x_position))
 
-    if y_medium < y_center - MOVEMENT_THRESHOLD:
-        Y_POSITION += 1
-    elif y_medium > y_center + MOVEMENT_THRESHOLD:
-        Y_POSITION -= 1
-    servo1.ChangeDutyCycle(angle_to_per(Y_POSITION))
+    y_position = adjust_position(y_position, y_medium, y_center)
+    servo1.ChangeDutyCycle(angle_to_per(y_position))
 
     cv2.line(frame, (x_medium, 0), (x_medium, CAP_WIDTH), (0, 255, 0), 2)
     cv2.line(frame, (0, y_medium), (CAP_WIDTH, y_medium), (0, 255, 0), 2)
