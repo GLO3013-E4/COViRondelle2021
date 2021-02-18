@@ -38,12 +38,6 @@ def test_given_invalid_square_object_corner_of_eight_should_return_object_name_o
     assert expected_result == "None"
 
 
-def test_given_valid_square_then_should_return_dictionary_of_four_point():
-    expected_fours_corners = square_detection.detect_square()
-
-    assert len(expected_fours_corners) == 4
-
-
 def test_given_valid_square_then_point_a_and_point_b_should_have_the_same_x_position():
     expected_fours_corners = square_detection.detect_square()
 
