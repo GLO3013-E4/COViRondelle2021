@@ -1,6 +1,7 @@
 import cv2
 
 from scripts.src.detection.object_detection import ObjectDetection
+from scripts.src.detection.utils.point import Point
 
 
 class SquareDetection(ObjectDetection):
@@ -14,7 +15,6 @@ class SquareDetection(ObjectDetection):
         cv2.namedWindow('Square detection', cv2.WINDOW_NORMAL)
         image_copy = self.copy_image()
         square_position = self._find_color(image_copy)
-        self._show_image(image_copy)
         return square_position
 
     def _find_color(self, image_copy):
@@ -27,10 +27,10 @@ class SquareDetection(ObjectDetection):
         return self._get_contours(mask, image_copy)
 
     def generate_four_corners(self, x_position, y_position, width, height):
-        corner_a = (x_position + width, y_position)
-        corner_b = (x_position + width, y_position + height)
-        corner_c = (x_position, y_position + height)
-        corner_d = (x_position, y_position)
+        corner_a = Point(x_position + width, y_position)
+        corner_b = Point(x_position + width, y_position + height)
+        corner_c = Point(x_position, y_position + height)
+        corner_d = Point(x_position, y_position)
         four_corners = {
             "corner_A": corner_a,
             "corner_B": corner_b,
