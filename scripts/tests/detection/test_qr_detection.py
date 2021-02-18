@@ -18,13 +18,7 @@ def test_given_invalid_qr_code_then_return_zero():
     assert expected_position == 0
 
 
-def test_given_an_invalid_image_then_should_raise_type_error():
-
-    with pytest.raises(TypeError):
-        qr_detection_with_invalid_image.detect_qr_code(ROBOT_TYPE)
-
-
-def test_given_valid_image_when_detect_robot_should_return_dictionary_of_number_wit_x_postion():
+def test_given_valid_image_when_detect_robot_should_return_dictionary_of_number_wit_x_position():
     expected_position = qr_detection.detect_qr_code(ROBOT_TYPE)
 
     assert isinstance(expected_position["point 1"].x, int) is True
