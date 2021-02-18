@@ -28,11 +28,6 @@ def test_given_an_area_with_number_higher_then_range_then_should_return_false():
     assert is_in_area is False
 
 
-def test_given_invalid_image_position_then_should_return_zero():
-    expected_result = invalid_square_detection.detect_square()
-    assert expected_result == 0
-
-
 def test_given_valid_square_object_corner_of_eight_should_return_object_name_of_square():
     expected_result = square_detection.get_object_name(8)
     assert expected_result == "square"
