@@ -11,24 +11,21 @@ class QrDetection:
         self.image = cv2.imread(image)
 
     def detect_qr_code(self, code_to_detect):
-        try:
-            if code_to_detect == QrCodeTypes.ROBOT.value:
-                return self._detect_robot()
-            elif code_to_detect == QrCodeTypes.OBSTACLE.value:
-                return self._detect_obstacle()
-            elif code_to_detect == QrCodeTypes.ROBOT_AND_OBSTACLE.value:
-                return self._detect_robot_and_obstacle()
-            return 0
-        except TypeError as invalid_image:
-            raise TypeError("Image invalide") from invalid_image
-
+        if code_to_detect == QrCodeTypes.ROBOT.value:
+            return self._detect_robot()
+        elif code_to_detect == QrCodeTypes.OBSTACLE.value:
+            return self._detect_obstacle()
+        elif code_to_detect == QrCodeTypes.ROBOT_AND_OBSTACLE.value:
+            return self._detect_robot_and_obstacle()
+        return 0
 
     def _detect_robot(self):
+        robot_position = {}
         for qr_code in decode(self.image):
             message = qr_code.data.decode('utf-8')
             if message == QrCodeTypes.ROBOT.value:
-                return self._generate_qr_code_position(qr_code.polygon)
-        return 0
+                robot_position = self._generate_qr_code_position(qr_code.polygon)
+        return robot_position
 
     def _detect_obstacle(self):
         obstacles_position = []
