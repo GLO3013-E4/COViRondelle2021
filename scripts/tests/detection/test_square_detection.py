@@ -4,6 +4,10 @@ A_VALID_IMAGE = "camera_monde_qr.jpg"
 A_NUMBER_LOWER_THAN_AREA = 2600
 A_NUMBER_IN_AREA = 27000
 A_NUMBER_HIGHER_THAN_AREA = 32000
+X_POSITION = 20
+Y_POSITION = 40
+A_HEIGHT = 100
+A_WIDTH = 100
 
 square_detection = SquareDetection(A_VALID_IMAGE)
 
@@ -33,3 +37,9 @@ def test_given_valid_square_object_corner_of_eight_should_return_object_name_of_
 def test_given_invalid_square_object_corner_of_eight_should_return_object_name_of_square():
     expected_result = square_detection.get_object_name(4)
     assert expected_result == "None"
+
+def test_given_square_when_generate_four_corner_then_point_a_and_point_b_should_have_same_x():
+    expected_result = square_detection.generate_four_corners\
+        (X_POSITION, Y_POSITION, A_WIDTH, A_HEIGHT)
+
+    assert expected_result["corner_A"].get_position_x() == expected_result["corner_B"].get_position_x()
