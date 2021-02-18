@@ -1,3 +1,5 @@
+import os
+
 import cv2
 import numpy as np
 from pyzbar.pyzbar import decode
@@ -8,9 +10,13 @@ from scripts.src.detection.qr_code_type import QrCodeTypes
 class QrDetection:
 
     def __init__(self, image):
-        self.image = cv2.imread(image)
+        absolute_path = os.path.join(os.getcwd(), image)
+        self.image = cv2.imread(absolute_path)
+
 
     def detect_qr_code(self, code_to_detect):
+        if self.image is None:
+            return 0
         if code_to_detect == QrCodeTypes.ROBOT.value:
             return self._detect_robot()
         elif code_to_detect == QrCodeTypes.OBSTACLE.value:
