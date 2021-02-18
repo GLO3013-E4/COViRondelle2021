@@ -12,17 +12,16 @@ class SquareDetection(ObjectDetection):
         self.maximum_area = 28000
 
     def detect_square(self):
-        image_copy = self.copy_image()
-        return self._find_color(image_copy)
+        return self._find_color()
 
-    def _find_color(self, image_copy):
+    def _find_color(self):
         image_hsv = cv2.cvtColor(self.image, cv2.COLOR_BGR2HSV)
 
         color_lower_boundary = self.lower_boundary.get_lower_boundaries(self.object_to_detect)
         color_upper_boundary = self.upper_boundary.get_upper_boundaries(self.object_to_detect)
 
         mask = cv2.inRange(image_hsv, color_lower_boundary, color_upper_boundary)
-        return self._get_contours(mask, image_copy)
+        return self._get_contours(mask)
 
     def generate_four_corners(self, x_position, y_position, width, height):
         corner_a = Point(x_position + width, y_position)
@@ -58,7 +57,7 @@ class SquareDetection(ObjectDetection):
 
     def get_object_name(self, object_corner):
         if object_corner == 8:
-            object_type = str( self.object_to_detect )
+            object_type = str(self.object_to_detect)
         else:
             object_type = "None"
         return object_type
