@@ -102,7 +102,7 @@ def test_given_valid_image_detect_robot_obstacle_should_return_dictionary_with_o
     assert len(expected_position["robot"]) == 1
 
 
-def test_given_valid_image_detect_robot_obstacle_should_return_dictionary_with_two_obstacle_position():
+def test_given_valid_image_detect_robot_obstacle_should_return_dictionary_with_two_obstacle():
     expected_position = qr_detection.detect_qr_code(ROBOT_AND_OBSTACLE_TYPE)
 
     assert len(expected_position["obstacles"]) == 2
