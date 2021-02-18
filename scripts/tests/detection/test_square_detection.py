@@ -42,4 +42,5 @@ def test_given_square_when_generate_four_corner_then_point_a_and_point_b_should_
     expected_result = square_detection.generate_four_corners\
         (X_POSITION, Y_POSITION, A_WIDTH, A_HEIGHT)
 
-    assert expected_result["corner_A"].get_position_x() == expected_result["corner_B"].get_position_x()
+    assert expected_result["corner_A"].get_position_x() == \
+           expected_result["corner_B"].get_position_x()

@@ -48,6 +48,7 @@ class QrDetection:
         if len(obstacles_position) == 0:
             obstacles_position.append(empty_position)
             obstacles_position.append(empty_position)
+        return obstacles_position
 
     def detect_robot_and_obstacle(self):
         objects_position = {
