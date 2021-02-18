@@ -1,4 +1,3 @@
-import pytest
 from scripts.src.detection.qr_code_detection import QrDetection
 
 INVALID_QR_CODE = "HelloWorld"
