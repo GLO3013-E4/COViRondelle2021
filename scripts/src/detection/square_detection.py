@@ -1,6 +1,6 @@
 import cv2
 
-from object_detection import ObjectDetection
+from scripts.src.detection.object_detection import ObjectDetection
 
 
 class SquareDetection(ObjectDetection):
@@ -54,13 +54,13 @@ class SquareDetection(ObjectDetection):
                 if self.object_is_in_range(width, height):
                     self.draw_rectangle_on_image(image_copy, x_position, y_position, width, height,
                                                  self.get_object_name(object_corner))
+                    try:
+                        corner_position = self.generate_four_corners(x_position, y_position, width, height)
+                    except NameError:
+                        corner_position = self.generate_four_corners(x_position, y_position)
 
-        try:
-            corner_position = self.generate_four_corners(x_position, y_position, width, height, image_copy)
-        except NameError:
-            corner_position = self.generate_four_corners(x_position, y_position, image_copy)
-
-        return corner_position
+                    return corner_position
+        return 0
 
     def get_object_name(self, object_corner):
         if object_corner == 8:
@@ -71,7 +71,3 @@ class SquareDetection(ObjectDetection):
 
     def is_in_area(self, area):
         return self.minimum_area < area < self.maximum_area
-
-
-square_detection = SquareDetection("monde2.jpg")
-square_detection.detect_square()
