@@ -25,19 +25,21 @@ class QrDetection:
             return self.generate_empty_qr_code_position()
 
     def detect_robot(self):
-        robot_position = {}
-        for qr_code in decode(self.image):
-            message = qr_code.data.decode('utf-8')
-            if message == QrCodeTypes.ROBOT.value:
-                robot_position = self._generate_qr_code_position(qr_code.polygon)
+        robot_position = self.generate_empty_qr_code_position()
+        if self.image is not None:
+            for qr_code in decode(self.image):
+                message = qr_code.data.decode('utf-8')
+                if message == QrCodeTypes.ROBOT.value:
+                    robot_position = self._generate_qr_code_position(qr_code.polygon)
         return robot_position
 
     def detect_obstacle(self):
         obstacles_position = []
-        for qr_code in decode(self.image):
-            message = qr_code.data.decode('utf-8')
-            if message == QrCodeTypes.OBSTACLE.value:
-                obstacles_position.append(self._generate_qr_code_position(qr_code.polygon))
+        if self.image is not None:
+            for qr_code in decode(self.image):
+                message = qr_code.data.decode('utf-8')
+                if message == QrCodeTypes.OBSTACLE.value:
+                    obstacles_position.append(self._generate_qr_code_position(qr_code.polygon))
         self.add_empty_position_if_not_all_obstacle_found(obstacles_position)
         return obstacles_position
 
@@ -55,14 +57,15 @@ class QrDetection:
             "obstacles": [],
             "robot": []
         }
-        for qr_code in decode(self.image):
-            message = qr_code.data.decode('utf-8')
-            if message == QrCodeTypes.OBSTACLE.value:
-                objects_position["obstacles"].append(
-                    self._generate_qr_code_position(qr_code.polygon))
-            elif message == QrCodeTypes.ROBOT.value:
-                objects_position["robot"].append(self._generate_qr_code_position(qr_code.polygon))
-            self.add_empty_position_if_not_all_obstacle_found(objects_position["obstacles"])
+        if self.image is not None:
+            for qr_code in decode(self.image):
+                message = qr_code.data.decode('utf-8')
+                if message == QrCodeTypes.OBSTACLE.value:
+                    objects_position["obstacles"].append(
+                        self._generate_qr_code_position(qr_code.polygon))
+                elif message == QrCodeTypes.ROBOT.value:
+                    objects_position["robot"].append(self._generate_qr_code_position(qr_code.polygon))
+        self.add_empty_position_if_not_all_obstacle_found(objects_position["obstacles"])
         return objects_position
 
     def _show_image(self):
