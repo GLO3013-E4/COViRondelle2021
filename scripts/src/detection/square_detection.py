@@ -26,6 +26,19 @@ class SquareDetection(ObjectDetection):
         mask = cv2.inRange(image_hsv, color_lower_boundary, color_upper_boundary)
         return self._get_contours(mask, image_copy)
 
+    def generate_four_corners(self, x_position, y_position, width, height, image_copy):
+        corner_a = (x_position + width, y_position)
+        corner_b = (x_position + width, y_position + height)
+        corner_c = (x_position, y_position + height)
+        corner_d = (x_position, y_position)
+        four_corners = {
+            "corner_A": corner_a,
+            "corner_B": corner_b,
+            "corner_C": corner_c,
+            "corner_D": corner_d
+        }
+        return four_corners
+
     def _get_contours(self, image_mask, image_copy):
         contours, hierarchy = cv2.findContours(image_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
@@ -43,10 +56,11 @@ class SquareDetection(ObjectDetection):
                                                  self.get_object_name(object_corner))
 
         try:
-            puck_position = self.generate_puck_position(x_position, y_position, width, height)
+            corner_position = self.generate_four_corners(x_position, y_position, width, height, image_copy)
         except NameError:
-            puck_position = self.generate_puck_position(0, 0, 0, 0)
-        return puck_position
+            corner_position = self.generate_four_corners(x_position, y_position, image_copy)
+
+        return corner_position
 
     def get_object_name(self, object_corner):
         if object_corner == 8:
