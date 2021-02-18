@@ -46,7 +46,7 @@ def contour_area(contour):
     return cv2.contourArea(contour)
 
 
-def adjust_position(original, medium, center):
+def adjust_position_for_x(original, medium, center):
     if original > 180 or original < 0:
         return original
 
@@ -56,6 +56,21 @@ def adjust_position(original, medium, center):
         position -= 1
     elif medium > center + MOVEMENT_THRESHOLD:
         position += 1
+
+    return angle_to_per(position)
+
+
+def adjust_position_for_y(original, medium, center):
+    if original > 180 or original < 0:
+        return original
+
+    position = original
+
+    if medium < center - MOVEMENT_THRESHOLD:
+        position += 1
+    elif medium > center + MOVEMENT_THRESHOLD:
+        position -= 1
+
     return angle_to_per(position)
 
 
@@ -77,10 +92,10 @@ while True:
         y_medium = int((y + y + h) / 2)
         break
 
-    x_position = adjust_position(x_position, x_medium, x_center)
+    x_position = adjust_position_for_x(x_position, x_medium, x_center)
     servo2.ChangeDutyCycle(angle_to_per(x_position))
 
-    y_position = adjust_position(y_position, y_medium, y_center)
+    y_position = adjust_position_for_y(y_position, y_medium, y_center)
     servo1.ChangeDutyCycle(angle_to_per(y_position))
 
     cv2.line(frame, (x_medium, 0), (x_medium, CAP_WIDTH), (0, 255, 0), 2)
