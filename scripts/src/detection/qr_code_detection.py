@@ -4,6 +4,8 @@ from pyzbar.pyzbar import decode
 
 from scripts.src.detection.qr_code_type import QrCodeTypes
 
+from scripts.src.detection.utils.point import Point
+
 
 class QrDetection:
 
@@ -12,14 +14,15 @@ class QrDetection:
 
     def detect_qr_code(self, code_to_detect):
         if self.image is None:
-            return 0
-        if code_to_detect == QrCodeTypes.ROBOT.value:
+            return self.generate_empty_qr_code_position()
+        elif code_to_detect == QrCodeTypes.ROBOT.value:
             return self._detect_robot()
         elif code_to_detect == QrCodeTypes.OBSTACLE.value:
             return self._detect_obstacle()
         elif code_to_detect == QrCodeTypes.ROBOT_AND_OBSTACLE.value:
             return self._detect_robot_and_obstacle()
-        return 0
+        else:
+            return self.generate_empty_qr_code_position()
 
     def _detect_robot(self):
         robot_position = {}
@@ -35,7 +38,16 @@ class QrDetection:
             message = qr_code.data.decode('utf-8')
             if message == QrCodeTypes.OBSTACLE.value:
                 obstacles_position.append(self._generate_qr_code_position(qr_code.polygon))
+        self.add_empty_position_if_not_all_obstacle_found(obstacles_position)
         return obstacles_position
+
+    def add_empty_position_if_not_all_obstacle_found(self, obstacles_position):
+        empty_position = self.generate_empty_qr_code_position()
+        if len(obstacles_position) == 1:
+            obstacles_position.append(empty_position)
+        if len(obstacles_position) == 0:
+            obstacles_position.append(empty_position)
+            obstacles_position.append(empty_position)
 
     def _detect_robot_and_obstacle(self):
         objects_position = {
@@ -49,6 +61,7 @@ class QrDetection:
                     self._generate_qr_code_position(qr_code.polygon))
             elif message == QrCodeTypes.ROBOT.value:
                 objects_position["robot"].append(self._generate_qr_code_position(qr_code.polygon))
+            self.add_empty_position_if_not_all_obstacle_found(objects_position["obstacles"])
         return objects_position
 
     def _show_image(self):
@@ -63,5 +76,13 @@ class QrDetection:
     def _generate_qr_code_position(self, qr_code_points):
         point_dictionary = {}
         for index, qr_point in enumerate(qr_code_points):
-            point_dictionary[f"point {index + 1}"] = qr_point
+            qr_position_point = Point(qr_point.x, qr_point.y)
+            point_dictionary[f"point{index + 1}"] = qr_position_point
+        return point_dictionary
+
+    def generate_empty_qr_code_position(self):
+        point_dictionary = {}
+        point_with_position_of_zero = Point(0, 0)
+        for index in range(0, 4):
+            point_dictionary[f"point{index + 1}"] = point_with_position_of_zero
         return point_dictionary
