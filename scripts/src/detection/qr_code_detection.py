@@ -39,7 +39,8 @@ class QrDetection:
             for qr_code in decode(self.image):
                 message = qr_code.data.decode('utf-8')
                 if message == QrCodeTypes.OBSTACLE.value:
-                    obstacles_position.append(self._generate_qr_code_position(qr_code.polygon))
+                    obstacles_position.append(self._generate_qr_code_position(
+                        qr_code.polygon))
         self.add_empty_position_if_not_all_obstacle_found(obstacles_position)
         return obstacles_position
 
@@ -64,7 +65,8 @@ class QrDetection:
                     objects_position["obstacles"].append(
                         self._generate_qr_code_position(qr_code.polygon))
                 elif message == QrCodeTypes.ROBOT.value:
-                    objects_position["robot"].append(self._generate_qr_code_position(qr_code.polygon))
+                    objects_position["robot"].append(
+                        self._generate_qr_code_position(qr_code.polygon))
         self.add_empty_position_if_not_all_obstacle_found(objects_position["obstacles"])
         return objects_position
 
