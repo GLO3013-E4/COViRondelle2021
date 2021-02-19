@@ -7,8 +7,8 @@ class PuckDetection(ObjectDetection):
 
     def __init__(self, image, color):
         super().__init__(image, color, 35, 65)
-        self.minimum_area = 1040
-        self.maximum_area = 2400
+        self.minimum_area = 1440
+        self.maximum_area = 2800
 
     def detect_puck(self):
         cv2.namedWindow('Color detection', cv2.WINDOW_NORMAL)
@@ -61,5 +61,5 @@ class PuckDetection(ObjectDetection):
         return self.minimum_area < area < self.maximum_area
 
 
-puck_detection = PuckDetection("monde4.jpg", "grey")
+puck_detection = PuckDetection("monde2.jpg", "black")
 puck_detection.detect_puck()
