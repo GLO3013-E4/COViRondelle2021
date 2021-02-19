@@ -2,9 +2,9 @@ import cv2
 import numpy as np
 from pyzbar.pyzbar import decode
 
-from scripts.src.detection.qr_code_type import QrCodeTypes
+from qr_code_type import QrCodeTypes
 
-from scripts.src.detection.utils.point import Point
+from utils.point import Point
 
 
 class QrDetection:
@@ -61,6 +61,7 @@ class QrDetection:
         if self.image is not None:
             for qr_code in decode(self.image):
                 message = qr_code.data.decode('utf-8')
+                self._draw_on_image(qr_code)
                 if message == QrCodeTypes.OBSTACLE.value:
                     objects_position["obstacles"].append(
                         self._generate_qr_code_position(qr_code.polygon))
@@ -68,6 +69,7 @@ class QrDetection:
                     objects_position["robot"].append(
                         self._generate_qr_code_position(qr_code.polygon))
         self.add_empty_position_if_not_all_obstacle_found(objects_position["obstacles"])
+        self._show_image()
         return objects_position
 
     def _show_image(self):
@@ -92,3 +94,6 @@ class QrDetection:
         for index in range(0, 4):
             point_dictionary[f"point{index + 1}"] = point_with_position_of_zero
         return point_dictionary
+
+qr_detection = QrDetection("camera_monde_qr.jpg")
+qr_detection.detect_qr_code("both")

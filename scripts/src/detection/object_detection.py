@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
 
-from scripts.src.detection.lower_boundary import LowerBoundary
-from scripts.src.detection.upper_boundary import UpperBoundary
+from lower_boundary import LowerBoundary
+from upper_boundary import UpperBoundary
 
 
 class ObjectDetection:
@@ -39,6 +39,8 @@ class ObjectDetection:
     def _show_image(self, image_copy):
         cv2.imshow("Color detection", np.hstack([image_copy]))
         cv2.waitKey(50000)
+
+
 
     def draw_rectangle_on_image(self, image_copy, x_position, y_position, width,
                                 height, object_type):
