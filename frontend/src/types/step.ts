@@ -9,7 +9,7 @@ export enum Step {
   GrabFirstPuck = "grabFirstPuck",
   toFirstCorner = "toFirstCorner",
   ToSecondPuck = "toSecondPuck",
-  GrabSeoncdPuck = "grabFirstPuck",
+  GrabSeoncdPuck = "grabSecondPuck",
   toSecondCorner = "toSecondCorner",
   ToLastPuck = "toLastPuck",
   GrabLastPuck = "grabLastPuck",
