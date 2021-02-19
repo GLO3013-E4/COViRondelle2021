@@ -8,7 +8,9 @@
         ref="switch"
         v-model="puckInGrip"
         inset
+        disabled
         :label="puckInGrip ? 'puck in grip' : 'no puck'"
+        color="green"
       ></v-switch>
     </div>
   </v-card>
