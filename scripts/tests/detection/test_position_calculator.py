@@ -1,6 +1,6 @@
-from scripts.src.detection.utils.position import Position
+from scripts.src.detection.position import Position
 
-from scripts.src.detection.utils.PositionCalculator import PositionCalculator
+from scripts.src.detection.PositionCalculator import PositionCalculator
 
 A_POSITION = Position(0, 10)
 A_POSITION_TO_DETECT_ANGLE = Position(20, 30)

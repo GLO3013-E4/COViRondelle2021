@@ -2,7 +2,7 @@ import cv2
 
 from object_detection import ObjectDetection
 
-from scripts.src.detection.utils.position import Position
+from scripts.src.detection.position import Position
 
 
 class SquareDetection(ObjectDetection):

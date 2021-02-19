@@ -4,7 +4,7 @@ from pyzbar.pyzbar import decode
 
 from qr_code_type import QrCodeTypes
 
-from scripts.src.detection.utils.position import Position
+from scripts.src.detection.position import Position
 
 
 class QrDetection:
