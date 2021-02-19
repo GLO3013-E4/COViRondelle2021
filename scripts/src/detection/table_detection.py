@@ -1,7 +1,8 @@
 import cv2
 
 from object_detection import ObjectDetection
-from utils.point import Point
+
+from utils.position import Position
 
 
 class TableDetection(ObjectDetection):
@@ -20,11 +21,11 @@ class TableDetection(ObjectDetection):
     def _find_color(self, image_copy):
         image_hsv = cv2.cvtColor( self.image, cv2.COLOR_BGR2HSV )
 
-        color_lower_boundary = self.lower_boundary.get_lower_boundaries( self.object_to_detect )
-        color_upper_boundary = self.upper_boundary.get_upper_boundaries( self.object_to_detect )
+        color_lower_boundary = self.lower_boundary.get_lower_boundaries(self.object_to_detect)
+        color_upper_boundary = self.upper_boundary.get_upper_boundaries(self.object_to_detect)
 
-        mask = cv2.inRange( image_hsv, color_lower_boundary, color_upper_boundary )
-        return self._get_contours( mask, image_copy )
+        mask = cv2.inRange(image_hsv, color_lower_boundary, color_upper_boundary)
+        return self._get_contours(mask, image_copy)
 
     def _get_contours(self, image_mask, image_copy):
         contours, hierarchy = cv2.findContours(image_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -48,29 +49,18 @@ class TableDetection(ObjectDetection):
         return corner_position
 
 
-
     def generate_four_corners(self, x_position, y_position, width, height, image_copy):
-        corner_a = Point(x_position, y_position)
-        corner_b = Point(x_position + width, y_position)
-        corner_c = Point(x_position + width, y_position + height)
-        corner_d = Point(x_position, y_position + height)
+        corner_a = Position(x_position, y_position)
+        corner_b = Position(x_position + width, y_position)
+        corner_c = Position(x_position + width, y_position + height)
+        corner_d = Position(x_position, y_position + height)
 
-        print(corner_a.get_coordinates())
-        print(corner_b.get_coordinates())
-        print(corner_c.get_coordinates())
-        print(corner_d.get_coordinates())
+        left_side = x_position
+        right_side = x_position + width
+        top_side = y_position
+        bottom_side = y_position + height
 
-        cv2.putText(image_copy, "A", (corner_a.get_coordinates()),
-                     cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
-
-        cv2.putText( image_copy, "B", (corner_b.get_coordinates()),
-                     cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2 )
-
-        cv2.putText( image_copy, "C", (corner_c.get_coordinates()),
-                     cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2 )
-
-        cv2.putText( image_copy, "D", (corner_d.get_coordinates()),
-                     cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2 )
+        print(left_side, right_side, top_side, bottom_side)
 
         four_corners = {
             "corner_A": corner_a,
@@ -81,7 +71,7 @@ class TableDetection(ObjectDetection):
         return four_corners
 
     def get_object_name(self, object_corner):
-        if object_corner == 8:
+        if object_corner == 4:
             object_type = str( self.object_to_detect )
         else:
             object_type = "None"

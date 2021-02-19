@@ -1,7 +1,8 @@
 import cv2
 
 from object_detection import ObjectDetection
-from utils.point import Point
+
+from scripts.src.detection.utils.position import Position
 
 
 class SquareDetection(ObjectDetection):
@@ -28,10 +29,10 @@ class SquareDetection(ObjectDetection):
         return self._get_contours(mask, image_copy)
 
     def generate_four_corners(self, x_position, y_position, width, height, image_copy):
-        corner_a = Point(x_position + width, y_position)
-        corner_b = Point(x_position + width, y_position + height)
-        corner_c = Point(x_position, y_position + height)
-        corner_d = Point(x_position, y_position)
+        corner_a = Position( x_position + width, y_position )
+        corner_b = Position( x_position + width, y_position + height )
+        corner_c = Position( x_position, y_position + height )
+        corner_d = Position( x_position, y_position )
 
         cv2.putText( image_copy, "A", (corner_a.get_position_x(), corner_a.get_position_y()),
                      cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2 )

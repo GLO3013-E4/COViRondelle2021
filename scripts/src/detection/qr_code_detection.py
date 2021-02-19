@@ -4,7 +4,7 @@ from pyzbar.pyzbar import decode
 
 from qr_code_type import QrCodeTypes
 
-from utils.point import Point
+from scripts.src.detection.utils.position import Position
 
 
 class QrDetection:
@@ -84,13 +84,13 @@ class QrDetection:
     def _generate_qr_code_position(self, qr_code_points):
         point_dictionary = {}
         for index, qr_point in enumerate(qr_code_points):
-            qr_position_point = Point(qr_point.x, qr_point.y)
+            qr_position_point = Position( qr_point.x, qr_point.y )
             point_dictionary[f"point{index + 1}"] = qr_position_point
         return point_dictionary
 
     def generate_empty_qr_code_position(self):
         point_dictionary = {}
-        point_with_position_of_zero = Point(0, 0)
+        point_with_position_of_zero = Position( 0, 0 )
         for index in range(0, 4):
             point_dictionary[f"point{index + 1}"] = point_with_position_of_zero
         return point_dictionary
