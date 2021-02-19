@@ -1,4 +1,5 @@
 export enum Step {
+  CycleNotStarted = "cycleNotStarted",
   CycleReady = "cycleReady", //waiting mode, all booted up
   CycleStarted = "cycleStarted", //display all robot comsumtion at this moment
   ToResistanceStation = "toResistanceStation",
