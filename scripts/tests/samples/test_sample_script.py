@@ -1,7 +1,7 @@
 from scripts.src.samples.sample_script import sum_numbers
 
 
-def test_given_no_number_then_return_zero():
+def test_given_image_then_return_point():
     expected_sum = 0
 
     actual_sum = sum_numbers([])

@@ -42,6 +42,13 @@ def suppress_redundant_coin(my_list):
     return list(set(my_list))
 
 
+def detect_center(my_list):
+    x = [p[0] for p in my_list]
+    y = [p[1] for p in my_list]
+    centroid = (sum(x) / len(my_list), sum(y) / len(my_list))
+    return centroid
+
+
 def detect_the_green_area():
     ap = argparse.ArgumentParser()
     ap.add_argument("-i", "--image", help="path to the image")
@@ -56,7 +63,6 @@ def detect_the_green_area():
     ret, labels, stats, centroids = cv2.connectedComponentsWithStats(dst)
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.02)
     corners = cv2.cornerSubPix(gray, np.float32(centroids), (5, 5), (-1, -1), criteria)
-    font = cv2.FONT_HERSHEY_SIMPLEX
     start_area_corners_list = []
     for i in corners:
         x, y = i.ravel()
@@ -70,11 +76,17 @@ def detect_the_green_area():
     cv2.dilate(dst, None)
     start_area_corners_list = detect_square(start_area_corners_list)
     start_area_corners_list = suppress_redundant_coin(start_area_corners_list)
-    for (x, y) in start_area_corners_list:
-        cv2.circle(img, (int(x), int(y)), 3, (0, 0, 255), 2)
-        cv2.putText(img, str(x) + ',  ' +
-                    str(y), (int(x), int(y)), font, 1, (0, 0, 255), 2)
-    cv2.imshow('Start Area', img)
-    if cv2.waitKey(0) & 0xff == 27:
-        cv2.destroyAllWindows()
+    # Remove the comments bellow to see the corner on the interface
+    # font = cv2.FONT_HERSHEY_SIMPLEX
+    # center = detect_center(start_area_corners_list)
+    # cv2.circle(img, (int(center[0]), int(center[1])), 3, (255, 0, 255), 2)
+    # cv2.putText(img, str(center[0]) + ',  ' +
+    #             str(center[1]), (int(center[0]), int(center[1])), font, 1, (255, 0, 255), 2)
+    # for (x, y) in start_area_corners_list:
+    #     cv2.circle(img, (int(x), int(y)), 3, (0, 0, 255), 2)
+    #     cv2.putText(img, str(x) + ',  ' +
+    #                 str(y), (int(x), int(y)), font, 1, (0, 0, 255), 2)
+    # cv2.imshow('Start Area', img)
+    # if cv2.waitKey(0) & 0xff == 27:
+    #     cv2.destroyAllWindows()
     return start_area_corners_list
