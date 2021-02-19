@@ -1,4 +1,4 @@
-from scripts.src.detection.puck_detection import PuckDetection, generate_puck_position
+from scripts.src.detection.puck_detection import PuckDetection
 from scripts.src.mapping.color import Color
 
 A_COLOR = Color["BLUE"]
@@ -23,7 +23,7 @@ def test_given_coordinates_width_and_height_return_right_position():
     position_y = 120
     width = 47
     height = 50
-    position_return = generate_puck_position(position_x, position_y, width, height)
+    position_return = detection_puck.generate_puck_position(position_x, position_y, width, height)
 
     assert position_return["x_position"] == position_x
     assert position_return["y_position"] == position_y

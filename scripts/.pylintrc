@@ -14,6 +14,10 @@ disable=
     R0903, # too-few-public-methods
     W0511, # fixme
     W0201, # attribute-defined-outside-init
+    R0201, # no-self-use
+    E0401, # import-error
+    R1705, # no-else-return
+    W0612, # unused-variable
 ignore=
     Dockerfile,
     README.md,

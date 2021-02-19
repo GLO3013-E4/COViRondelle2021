@@ -12,7 +12,7 @@ class LowerBoundary:
                                  Color.RED: [0, 216, 92],
                                  Color.BROWN: [0, 121, 15], Color.GREEN: [47, 89, 0],
                                  Color.BLACK: [31, 21, 0],
-                                 Color.GREY: [22, 6, 54]}
+                                 Color.GREY: [22, 6, 54],  "square": [57, 33, 13]}
 
     def get_lower_boundaries(self, color_to_detect):
         if color_to_detect in self.lower_boundaries:

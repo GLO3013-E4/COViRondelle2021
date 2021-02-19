@@ -12,7 +12,7 @@ class UpperBoundary:
                                  Color.RED: [179, 255, 106],
                                  Color.BROWN: [26, 255, 39], Color.GREEN: [75, 255, 255],
                                  Color.BLACK: [126, 255,17],
-                                 Color.GREY: [70, 113, 74]}
+                                 Color.GREY: [70, 113, 74], "square": [104, 255, 125]}
 
     def get_upper_boundaries(self, color_to_detect):
         if color_to_detect in self.upper_boundaries:
