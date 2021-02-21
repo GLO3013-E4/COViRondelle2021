@@ -1,10 +1,10 @@
-import PuckInClamp from '@/components/station/PuckInClamp.vue';
+import PuckInGrip from '@/components/station/PuckInGrip.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import { shallowMount, createLocalVue  } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-describe('When mounting PuckInClamp component', () => {
-  const wrapper = wrapWithVuetifyAndStore(PuckInClamp);
+describe('When mounting PuckInGrip component', () => {
+  const wrapper = wrapWithVuetifyAndStore(PuckInGrip);
 
   it('Should mount', () => {
     expect(wrapper.vm).toBeTruthy();
@@ -20,8 +20,8 @@ describe('Given state', () => {
         puckInGrip: true
     },
 });
-describe('When mounting PuckInClamp', () => {
-    const wrapper = shallowMount(PuckInClamp, { store, localVue });
+describe('When mounting PuckInGrip', () => {
+    const wrapper = shallowMount(PuckInGrip, { store, localVue });
 
     it('Should contain the right value', () => {
       const switchComponent = wrapper.findComponent({ref: "switch"})
