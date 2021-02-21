@@ -24,7 +24,7 @@ import { mapState } from 'vuex';
     ...mapState(['puckInGrip']),
   },
 })
-export default class PuckInClamp extends Vue {
+export default class PuckInGrip extends Vue {
   public puckInGrip!: boolean;
 }
 </script>

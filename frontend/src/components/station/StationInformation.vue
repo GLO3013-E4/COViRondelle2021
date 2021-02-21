@@ -17,7 +17,7 @@
         </v-col>
 
         <v-col sm="6">
-          <PuckInClamp />
+          <PuckInGrip />
         </v-col>
       </v-row>
     </v-container>
@@ -28,13 +28,13 @@
 import { Component, Vue } from 'vue-property-decorator';
 import Resistance from '../station/Resistance.vue';
 import ControlPanel from '../station/ControlPanel.vue';
-import PuckInClamp from '../station/PuckInClamp.vue';
+import PuckInGrip from '../station/PuckInGrip.vue';
 
 @Component({
   components: {
     Resistance: Resistance,
     ControlPanel: ControlPanel,
-    PuckInClamp: PuckInClamp,
+    PuckInGrip: PuckInGrip,
   },
 })
 export default class StationInformation extends Vue {}
