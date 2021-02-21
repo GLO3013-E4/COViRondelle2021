@@ -1,7 +1,7 @@
 export enum Step {
   CycleNotStarted = "cycleNotStarted",
-  CycleReady = "cycleReady",
-  CycleStarted = "cycleStarted",
+  CycleReadyInWaitingMode = "cycleReadyInWaitingMode",
+  CycleStartedAndDisplayAllConsumptions = "cycleStartedAndDisplayAllConsumptions",
   ToResistanceStation = "toResistanceStation",
   CalculateResistance = "calculateResistance",
   ToControlPanel = "toControlPanel",
@@ -15,6 +15,6 @@ export enum Step {
   ToLastPuck = "toLastPuck",
   GrabLastPuck = "grabLastPuck",
   ToLastCorner = "toLastCorner",
-  FinalRobotPlacement = "finalRobotPlacement",
-  CycleEnded = 'cycleEnded',
+  FinalRobotPlacementInGreenSquare = "finalRobotPlacementInGreenSquare",
+  CycleEndedAndRedLedOn = 'cycleEndedAndRedLedOn',
 }
