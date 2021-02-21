@@ -1,7 +1,7 @@
 export enum Step {
   CycleNotStarted = "cycleNotStarted",
-  CycleReady = "cycleReady", //waiting mode, all booted up
-  CycleStarted = "cycleStarted", //display all robot comsumtion at this moment
+  CycleReady = "cycleReady",
+  CycleStarted = "cycleStarted",
   ToResistanceStation = "toResistanceStation",
   CalculateResistance = "calculateResistance",
   ToControlPanel = "toControlPanel",
@@ -15,6 +15,6 @@ export enum Step {
   ToLastPuck = "toLastPuck",
   GrabLastPuck = "grabLastPuck",
   ToLastCorner = "toLastCorner",
-  FinalRobotPlacement = "finalRobotPlacement", //into green square
-  CycleEnded = 'cycleEnded',//RED LED to show its finished
+  FinalRobotPlacement = "finalRobotPlacement",
+  CycleEnded = 'cycleEnded',
 }
