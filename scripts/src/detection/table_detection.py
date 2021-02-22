@@ -73,11 +73,11 @@ class TableDetection(ObjectDetection):
             object_type = "None"
         return object_type
 
-    def is_point_in_table(self, point, top_left_corner, width, height):
+    def is_point_in_table(self, position, top_left_corner, width, height):
         top_left_corner_x = top_left_corner.get_position_x()
         top_left_corner_y = top_left_corner.get_position_y()
-        if top_left_corner_x < point.get_position_x() < top_left_corner_x + width and \
-                top_left_corner_y < point.get_position_y() < top_left_corner_y + height:
+        if top_left_corner_x < position.get_position_x() < top_left_corner_x + width and \
+                top_left_corner_y < position.get_position_y() < top_left_corner_y + height:
             return True
         return False
 
