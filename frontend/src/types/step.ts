@@ -1,5 +1,20 @@
 export enum Step {
-  CycleNotStarted = 'cycleNotStarted',
-  // TODO : Add remaining cycle steps
-  CycleEnded = 'cycleEnded',
+  CycleNotStarted = "cycleNotStarted",
+  CycleReadyInWaitingMode = "cycleReadyInWaitingMode",
+  CycleStartedAndDisplayAllConsumptions = "cycleStartedAndDisplayAllConsumptions",
+  ToResistanceStation = "toResistanceStation",
+  CalculateResistance = "calculateResistance",
+  ToControlPanel = "toControlPanel",
+  DecodeControlPanel = "decodeControlPanel",
+  ToFirstPuck = "toFirstPuck",
+  GrabFirstPuck = "grabFirstPuck",
+  ToFirstCornerAndReleaseFirstPuck = "toFirstCornerAndReleaseFirstPuck",
+  ToSecondPuck = "toSecondPuck",
+  GrabSecondPuck = "grabSecondPuck",
+  ToSecondCornerAndReleaseSecondPuck = "toSecondCornerAndReleaseSecondPuck",
+  ToThirdPuck = "toThirdPuck",
+  GrabThirdPuck = "grabThirdPuck",
+  ToThirdCornerAndReleaseThirdPuck = "toThirdCornerAndReleaseThirdPuck",
+  FinalRobotPlacementInGreenSquare = "finalRobotPlacementInGreenSquare",
+  CycleEndedAndRedLedOn = 'cycleEndedAndRedLedOn',
 }
