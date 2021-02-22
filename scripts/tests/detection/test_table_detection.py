@@ -83,8 +83,8 @@ def test_given_table_when_generate_four_corner_then_point_b_and_point_c_should_h
 def test_given_point_in_table_area_should_return_true():
     top_left_corner_point_table = Position(TOP_LEFT_CORNER_TABLE_X, TOP_LEFT_CORNER_TABLE_Y)
     point_in_table = Position(X_POSITION_POINT_IN_TABLE, Y_POSITION_POINT_IN_TABLE)
-    expected_result = table_detection.is_point_in_table(point_in_table,
-                                                        top_left_corner_point_table, A_WIDTH, A_HEIGHT)
+    expected_result = table_detection.is_point_in_table(point_in_table,top_left_corner_point_table,
+                                                        A_WIDTH, A_HEIGHT)
 
     assert expected_result is True
 
@@ -93,6 +93,7 @@ def test_given_point_not_in_table_area_should_return_false():
     top_left_corner_point_table = Position(TOP_LEFT_CORNER_TABLE_X, TOP_LEFT_CORNER_TABLE_Y)
     point_in_table = Position(X_POSITION_POINT_NOT_IN_TABLE, Y_POSITION_POINT_NOT_IN_TABLE)
     expected_result = table_detection.is_point_in_table(point_in_table,
-                                                        top_left_corner_point_table, A_WIDTH, A_HEIGHT)
+                                                        top_left_corner_point_table,
+                                                        A_WIDTH, A_HEIGHT)
 
     assert expected_result is False
