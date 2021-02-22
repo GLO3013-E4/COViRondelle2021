@@ -18,6 +18,7 @@ disable=
     E0401, # import-error
     R1705, # no-else-return
     W0612, # unused-variable
+    R1729, # use-a-generator
 ignore=
     Dockerfile,
     README.md,

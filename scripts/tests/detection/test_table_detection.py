@@ -19,7 +19,6 @@ def test_given_an_area_with_number_lower_than_range_then_should_return_false():
     assert is_in_area is False
 
 
-
 def test_given_an_area_with_number_in_range_then_should_return_false():
     is_in_area = table_detection.is_in_area(A_NUMBER_IN_AREA)
 

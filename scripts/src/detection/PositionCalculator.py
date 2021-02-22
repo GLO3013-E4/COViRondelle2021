@@ -1,5 +1,6 @@
 from math import atan2, degrees
 
+
 class PositionCalculator:
 
     @staticmethod
