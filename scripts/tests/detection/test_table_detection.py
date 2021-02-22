@@ -1,4 +1,5 @@
 from scripts.src.detection.table_detection import TableDetection
+from scripts.src.detection.utils.point import Point
 
 A_VALID_IMAGE = "camera_monde_qr.jpg"
 A_NUMBER_LOWER_THAN_AREA = 1100000
@@ -8,7 +9,12 @@ X_POSITION = 10
 Y_POSITION = 10
 A_HEIGHT = 2000
 A_WIDTH = 5000
-
+TOP_LEFT_CORNER_TABLE_X = 10
+TOP_LEFT_CORNER_TABLE_Y = 15
+X_POSITION_POINT_IN_TABLE = 400
+Y_POSITION_POINT_IN_TABLE = 500
+X_POSITION_POINT_NOT_IN_TABLE = 0
+Y_POSITION_POINT_NOT_IN_TABLE = -2
 
 table_detection = TableDetection(A_VALID_IMAGE)
 
@@ -72,3 +78,20 @@ def test_given_table_when_generate_four_corner_then_point_b_and_point_c_should_h
 
     assert expected_result["corner_C"].get_position_y() == \
            expected_result["corner_D"].get_position_y()
+
+
+def test_given_point_in_table_area_should_return_true():
+    top_left_corner_point_table = Point(TOP_LEFT_CORNER_TABLE_X, TOP_LEFT_CORNER_TABLE_Y)
+    point_in_table = Point(X_POSITION_POINT_IN_TABLE, Y_POSITION_POINT_IN_TABLE)
+    expected_result = table_detection.is_point_in_table(point_in_table, top_left_corner_point_table, A_WIDTH, A_HEIGHT)
+
+    assert expected_result is True
+
+
+def test_given_point_not_in_table_area_should_return_false():
+    top_left_corner_point_table = Point(TOP_LEFT_CORNER_TABLE_X, TOP_LEFT_CORNER_TABLE_Y)
+    point_in_table = Point(X_POSITION_POINT_NOT_IN_TABLE, Y_POSITION_POINT_NOT_IN_TABLE)
+    expected_result = table_detection.is_point_in_table(point_in_table, top_left_corner_point_table, A_WIDTH, A_HEIGHT)
+
+    assert expected_result is False
+

@@ -38,6 +38,10 @@ class TableDetection(ObjectDetection):
                 zone_approximation = cv2.approxPolyDP(contour, 0.05 * perimeter, True)
                 object_corner = len( zone_approximation )
                 x_position, y_position, width, height = cv2.boundingRect(zone_approximation)
+                self.top_left_corner_x = x_position
+                self.top_left_corner_y = y_position
+                self.width = width
+                self.height = height
 
                 if self.object_is_in_range(width, height):
                     self.draw_rectangle_on_image( image_copy, x_position, y_position, width, height,
@@ -55,14 +59,12 @@ class TableDetection(ObjectDetection):
         corner_c = Position(x_position + width, y_position + height)
         corner_d = Position(x_position, y_position + height)
 
-
-        four_corners = {
+        return {
             "corner_A": corner_a,
             "corner_B": corner_b,
             "corner_C": corner_c,
             "corner_D": corner_d
         }
-        return four_corners
 
     def get_object_name(self, object_corner):
         if object_corner == 4:
@@ -70,6 +72,15 @@ class TableDetection(ObjectDetection):
         else:
             object_type = "None"
         return object_type
+
+    def is_point_in_table(self, point, top_left_corner, width, height):
+        top_left_corner_x = top_left_corner.get_position_x()
+        top_left_corner_y = top_left_corner.get_position_y()
+        if top_left_corner_x < point.get_position_x() < top_left_corner_x + width and \
+                top_left_corner_y < point.get_position_y() < top_left_corner_y + height:
+            return True
+        return False
+
 
     def is_in_area(self, area):
         return self.minimum_area < area < self.maximum_area
