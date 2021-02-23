@@ -25,6 +25,8 @@ from controller.src.handlers.get_next_corner_position_handler import GetNextCorn
 from controller.src.handlers.release_puck.release_puck_handler import ReleasePuckHandler
 from controller.src.handlers.release_puck.send_puck_released_state_handler import SendPuckReleasedStateHandler
 from controller.src.handlers.get_start_square_center_position_handler import GetStartSquareCenterPositionHandler
+from controller.src.handlers.end_cycle.turn_on_red_light_handler import TurnOnRedLightHandler
+from controller.src.handlers.end_cycle.send_cycle_ended_step_handler import SendCycleEndedStepHandler
 
 command_builder = CommandBuilder()
 
@@ -152,6 +154,13 @@ def test_given_release_puck_step_when_building_then_return_release_puck_command(
 def test_given_get_start_square_center_position_step_when_building_then_return_get_start_square_center_position_command():
     step = Step.GetStartSquareCenterPosition
     handler_classes = [GetStartSquareCenterPositionHandler]
+
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
+
+
+def test_given_end_cycle_step_when_building_then_return_end_cycle_command():
+    step = Step.EndCycle
+    handler_classes = [TurnOnRedLightHandler, SendCycleEndedStepHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
