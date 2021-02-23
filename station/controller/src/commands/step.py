@@ -8,3 +8,4 @@ class Step(Enum):
     GetResistanceStationPosition = 'GetResistanceStationPosition'
     MoveRobot = 'MoveRobot'
     ReadResistance = 'ReadResistance'
+    MapResistanceToPuckColors = 'MapResistanceToPuckColors'

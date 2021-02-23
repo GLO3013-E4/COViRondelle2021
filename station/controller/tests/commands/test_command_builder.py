@@ -12,6 +12,8 @@ from controller.src.handlers.move_robot.send_planned_trajectory_handler import S
 from controller.src.handlers.move_robot.send_real_trajectory_coordinate_handler import SendRealTrajectoryCoordinateHandler
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
+from controller.src.handlers.map_resistance_to_puck_colors.map_resistance_to_puck_colors_handler import MapResistanceToPuckColorsHandler
+from controller.src.handlers.map_resistance_to_puck_colors.send_resistance_and_puck_colors_handler import SendResistanceAndPuckColorsHandler
 
 command_builder = CommandBuilder()
 
@@ -95,3 +97,14 @@ def test_given_read_resistance_step_when_building_then_return_read_resistance_co
     assert len(commands) == 1
     assert len(commands[0].handlers) == 1
     assert isinstance(commands[0].handlers[0], ReadResistanceHandler)
+
+
+def test_given_map_resistance_to_puck_colors_step_when_building_then_return_map_resistance_to_puck_colors_command():
+    steps = [Step.MapResistanceToPuckColors]
+
+    commands = command_builder.with_steps(steps).build_many()
+
+    assert len(commands) == 1
+    assert len(commands[0].handlers) == 2
+    assert isinstance(commands[0].handlers[0], MapResistanceToPuckColorsHandler)
+    assert isinstance(commands[0].handlers[1], SendResistanceAndPuckColorsHandler)

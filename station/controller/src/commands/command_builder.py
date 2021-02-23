@@ -12,6 +12,8 @@ from controller.src.handlers.move_robot.send_planned_trajectory_handler import S
 from controller.src.handlers.move_robot.send_real_trajectory_coordinate_handler import SendRealTrajectoryCoordinateHandler
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
+from controller.src.handlers.map_resistance_to_puck_colors.map_resistance_to_puck_colors_handler import MapResistanceToPuckColorsHandler
+from controller.src.handlers.map_resistance_to_puck_colors.send_resistance_and_puck_colors_handler import SendResistanceAndPuckColorsHandler
 
 
 class CommandBuilder:
@@ -25,6 +27,7 @@ class CommandBuilder:
 
         return self
 
+    # TODO : Implement sending cycle steps handlers
     def _with_step(self, step):
         if step == Step.WaitForReadyState:
             self._commands.append(Command([WaitForReadyStateHandler()]))
@@ -44,6 +47,8 @@ class CommandBuilder:
             ]))
         elif step == Step.ReadResistance:
             self._commands.append(Command([ReadResistanceHandler()]))
+        elif step == Step.MapResistanceToPuckColors:
+            self._commands.append(Command([MapResistanceToPuckColorsHandler(), SendResistanceAndPuckColorsHandler()]))
         # TODO : Implement rest of steps
 
     def build_many(self):
