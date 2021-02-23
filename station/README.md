@@ -56,7 +56,7 @@ catkin_create_pkg <package-name> std_msgs rospy <other-dependencies>
 
 Check code style of a single file
 ```shell
-pylint module/script_to_check.py
+pylint module/file_to_check.py
 ```
 
 Check code style of a module
@@ -64,12 +64,12 @@ Check code style of a module
 pylint module
 ```
 
-Run single test file
+Run single test file within a module
 ```shell
-pytest tests/test_file.py
+pytest module/tests/test_file.py
 ```
 
-Run all test files
+Run all test files within a module
 ```shell
-pytest tests
+pytest module/tests
 ```

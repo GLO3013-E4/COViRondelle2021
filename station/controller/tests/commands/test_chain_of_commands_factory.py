@@ -1,6 +1,6 @@
 import pytest
 
-from controller.src.commands.command_factory import ChainOfCommandsFactory
+from controller.src.commands.chain_of_commands_factory import ChainOfCommandsFactory
 from controller.src.handlers.handler import Handler
 
 chain_of_commands_factory = ChainOfCommandsFactory()
