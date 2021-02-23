@@ -1,7 +1,7 @@
 from controller.src.commands.command import Command
 
 
-class CommandFactory:
+class ChainOfCommandsFactory:
     @staticmethod
     def create(handlers):
         if len(handlers) == 0:
