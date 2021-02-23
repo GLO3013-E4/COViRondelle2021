@@ -9,6 +9,7 @@ from main.src.mappers.letter_mapper import LetterMapper
 from main.src.readers.image_reader import ImageReader
 
 
+# TODO : Remove main package and the data it uses
 def robot():
     pub = rospy.Publisher('chatter', String, queue_size=10)
     rospy.init_node('robot', anonymous=True)
