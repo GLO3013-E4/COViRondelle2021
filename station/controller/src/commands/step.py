@@ -9,3 +9,4 @@ class Step(Enum):
     MoveRobot = 'MoveRobot'
     ReadResistance = 'ReadResistance'
     MapResistanceToPuckColors = 'MapResistanceToPuckColors'
+    GetCommandPanelPosition = 'GetCommandPanelPosition'

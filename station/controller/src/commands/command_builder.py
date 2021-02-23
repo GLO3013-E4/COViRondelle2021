@@ -14,6 +14,7 @@ from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import Wa
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 from controller.src.handlers.map_resistance_to_puck_colors.map_resistance_to_puck_colors_handler import MapResistanceToPuckColorsHandler
 from controller.src.handlers.map_resistance_to_puck_colors.send_resistance_and_puck_colors_handler import SendResistanceAndPuckColorsHandler
+from controller.src.handlers.get_command_panel_position_handler import GetCommandPanelPositionHandler
 
 
 class CommandBuilder:
@@ -49,6 +50,8 @@ class CommandBuilder:
             self._commands.append(Command([ReadResistanceHandler()]))
         elif step == Step.MapResistanceToPuckColors:
             self._commands.append(Command([MapResistanceToPuckColorsHandler(), SendResistanceAndPuckColorsHandler()]))
+        elif step == Step.GetCommandPanelPosition:
+            self._commands.append(Command([GetCommandPanelPositionHandler()]))
         # TODO : Implement rest of steps
 
     def build_many(self):

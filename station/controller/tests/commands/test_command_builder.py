@@ -14,6 +14,7 @@ from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import Wa
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 from controller.src.handlers.map_resistance_to_puck_colors.map_resistance_to_puck_colors_handler import MapResistanceToPuckColorsHandler
 from controller.src.handlers.map_resistance_to_puck_colors.send_resistance_and_puck_colors_handler import SendResistanceAndPuckColorsHandler
+from controller.src.handlers.get_command_panel_position_handler import GetCommandPanelPositionHandler
 
 command_builder = CommandBuilder()
 
@@ -108,3 +109,13 @@ def test_given_map_resistance_to_puck_colors_step_when_building_then_return_map_
     assert len(commands[0].handlers) == 2
     assert isinstance(commands[0].handlers[0], MapResistanceToPuckColorsHandler)
     assert isinstance(commands[0].handlers[1], SendResistanceAndPuckColorsHandler)
+
+
+def test_given_get_command_panel_station_position_step_when_building_then_return_get_command_panel_position_command():
+    steps = [Step.GetCommandPanelPosition]
+
+    commands = command_builder.with_steps(steps).build_many()
+
+    assert len(commands) == 1
+    assert len(commands[0].handlers) == 1
+    assert isinstance(commands[0].handlers[0], GetCommandPanelPositionHandler)
