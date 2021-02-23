@@ -15,8 +15,26 @@ class ChainOfCommandsFactory:
         Step.MoveRobot,
         Step.ReadLetters,
         Step.MapLettersToPuckCorners,
-        Step.GetNextPuckPosition
-        # TODO : Add rest of steps
+        Step.GetNextPuckPosition,
+        Step.MoveRobot,
+        Step.GripPuck,
+        Step.GetNextCornerPosition,
+        Step.MoveRobot,
+        Step.ReleasePuck,
+        Step.GetNextPuckPosition,
+        Step.MoveRobot,
+        Step.GripPuck,
+        Step.GetNextCornerPosition,
+        Step.MoveRobot,
+        Step.ReleasePuck,
+        Step.GetNextPuckPosition,
+        Step.MoveRobot,
+        Step.GripPuck,
+        Step.GetNextCornerPosition,
+        Step.MoveRobot,
+        Step.ReleasePuck,
+        Step.GetStartSquareCenterPosition,
+        Step.EndCycle
     ]
 
     def __init__(self, command_builder):

@@ -13,3 +13,8 @@ class Step(Enum):
     ReadLetters = 'ReadLetters'
     MapLettersToPuckCorners = 'MapLettersToPuckCorners'
     GetNextPuckPosition = 'GetNextPuckPosition'
+    GripPuck = 'GripPuck'
+    GetNextCornerPosition = 'GetNextCornerPosition'
+    ReleasePuck = 'ReleasePuck'
+    GetStartSquareCenterPosition = 'GetStartSquareCenterPosition'
+    EndCycle = 'EndCycle'
