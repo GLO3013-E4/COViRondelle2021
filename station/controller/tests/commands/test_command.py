@@ -28,6 +28,15 @@ def test_when_executing_then_handle(mocker):
     stub.assert_called_once_with(None)
 
 
+def test_given_multiple_handlers_when_executing_then_handle(mocker):
+    stub = mocker.stub(name='on_handle_stub')
+    command = Command([StubHandler(stub), StubHandler(stub)])
+
+    command.execute()
+
+    stub.assert_has_calls([call(None), call(ONCE_HANDLED_DATA)])
+
+
 def test_given_next_command_when_executing_then_pass_handled_data(mocker):
     stub = mocker.stub(name='on_handle_stub')
     command = Command([StubHandler(stub)], Command([StubHandler(stub)]))
