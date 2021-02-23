@@ -16,6 +16,8 @@ class ChainOfCommandsFactory:
 
         next_command = commands.pop()
 
-        # TODO : Create chain of commands
+        for command in commands[::-1]:
+            command.next_command = next_command
+            next_command = command
 
         return next_command
