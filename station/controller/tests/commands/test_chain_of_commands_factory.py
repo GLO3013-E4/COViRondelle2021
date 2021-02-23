@@ -18,7 +18,8 @@ class MockCommandBuilder(CommandBuilder):
         if steps is sent_steps:
             self.has_sent_steps = True
             return self
-        elif steps is cycle_steps:
+
+        if steps is cycle_steps:
             return self
 
         return None
@@ -26,8 +27,8 @@ class MockCommandBuilder(CommandBuilder):
     def build_many(self):
         if self.has_sent_steps:
             return [command_for_sent_steps]
-        else:
-            return [first_command, second_command, third_command]
+
+        return [first_command, second_command, third_command]
 
 
 chain_of_commands_factory = ChainOfCommandsFactory(MockCommandBuilder())

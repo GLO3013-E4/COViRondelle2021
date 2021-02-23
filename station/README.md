@@ -71,5 +71,5 @@ pytest module/tests/test_file.py
 
 Run all test files within a module
 ```shell
-pytest module/tests
+pytest module
 ```

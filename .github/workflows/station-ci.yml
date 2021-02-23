@@ -26,4 +26,4 @@ jobs:
       - name: Lint application
         run: docker run station pylint src
       - name: Test application
-        run: docker run station pytest src/controller/tests
+        run: docker run station pytest src/controller
