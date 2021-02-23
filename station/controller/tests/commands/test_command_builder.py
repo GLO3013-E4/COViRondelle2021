@@ -9,11 +9,14 @@ from controller.src.handlers.get_resistance_station_position_handler import GetR
 from controller.src.handlers.move_robot.get_robot_position_handler import GetRobotPositionHandler
 from controller.src.handlers.move_robot.calculate_trajectory_handler import CalculateTrajectoryHandler
 from controller.src.handlers.move_robot.send_planned_trajectory_handler import SendPlannedTrajectoryHandler
-from controller.src.handlers.move_robot.send_real_trajectory_coordinate_handler import SendRealTrajectoryCoordinateHandler
+from controller.src.handlers.move_robot.send_real_trajectory_coordinate_handler import \
+    SendRealTrajectoryCoordinateHandler
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
-from controller.src.handlers.map_resistance_to_puck_colors.map_resistance_to_puck_colors_handler import MapResistanceToPuckColorsHandler
-from controller.src.handlers.map_resistance_to_puck_colors.send_resistance_and_puck_colors_handler import SendResistanceAndPuckColorsHandler
+from controller.src.handlers.map_resistance_to_puck_colors.map_resistance_to_puck_colors_handler import \
+    MapResistanceToPuckColorsHandler
+from controller.src.handlers.map_resistance_to_puck_colors.send_resistance_and_puck_colors_handler import \
+    SendResistanceAndPuckColorsHandler
 from controller.src.handlers.get_command_panel_position_handler import GetCommandPanelPositionHandler
 
 command_builder = CommandBuilder()
@@ -36,86 +39,72 @@ def test_given_multiple_steps_when_building_then_list_of_length_of_steps():
 
 
 def test_given_wait_for_ready_state_step_when_building_then_return_wait_for_ready_command():
-    steps = [Step.WaitForReadyState]
+    step = Step.WaitForReadyState
+    handler_classes = [WaitForReadyStateHandler]
 
-    commands = command_builder.with_steps(steps).build_many()
-
-    assert len(commands) == 1
-    assert len(commands[0].handlers) == 1
-    assert isinstance(commands[0].handlers[0], WaitForReadyStateHandler)
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_send_ready_state_step_when_building_then_return_send_ready_command():
-    steps = [Step.SendReadyState]
+    step = Step.SendReadyState
+    handler_classes = [SendReadyStateHandler]
 
-    commands = command_builder.with_steps(steps).build_many()
-
-    assert len(commands) == 1
-    assert len(commands[0].handlers) == 1
-    assert isinstance(commands[0].handlers[0], SendReadyStateHandler)
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_send_table_image_step_when_building_then_return_send_table_image_command():
-    steps = [Step.SendTableImage]
+    step = Step.SendTableImage
+    handler_classes = [CaptureTableImageHandler, SendTableImageHandler]
 
-    commands = command_builder.with_steps(steps).build_many()
-
-    assert len(commands) == 1
-    assert len(commands[0].handlers) == 2
-    assert isinstance(commands[0].handlers[0], CaptureTableImageHandler)
-    assert isinstance(commands[0].handlers[1], SendTableImageHandler)
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_get_resistance_station_position_step_when_building_then_return_get_resistance_station_position_command():
-    steps = [Step.GetResistanceStationPosition]
+    step = Step.GetResistanceStationPosition
+    handler_classes = [GetResistanceStationPositionHandler]
 
-    commands = command_builder.with_steps(steps).build_many()
-
-    assert len(commands) == 1
-    assert len(commands[0].handlers) == 1
-    assert isinstance(commands[0].handlers[0], GetResistanceStationPositionHandler)
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_move_robot_step_when_building_then_return_move_robot_command():
-    steps = [Step.MoveRobot]
+    step = Step.MoveRobot
+    handler_classes = [
+        GetRobotPositionHandler,
+        CalculateTrajectoryHandler,
+        SendPlannedTrajectoryHandler,
+        SendRealTrajectoryCoordinateHandler,
+        WaitForRobotArrivalHandler
+    ]
 
-    commands = command_builder.with_steps(steps).build_many()
-
-    assert len(commands) == 1
-    assert len(commands[0].handlers) == 5
-    assert isinstance(commands[0].handlers[0], GetRobotPositionHandler)
-    assert isinstance(commands[0].handlers[1], CalculateTrajectoryHandler)
-    assert isinstance(commands[0].handlers[2], SendPlannedTrajectoryHandler)
-    assert isinstance(commands[0].handlers[3], SendRealTrajectoryCoordinateHandler)
-    assert isinstance(commands[0].handlers[4], WaitForRobotArrivalHandler)
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_read_resistance_step_when_building_then_return_read_resistance_command():
-    steps = [Step.ReadResistance]
+    step = Step.ReadResistance
+    handler_classes = [ReadResistanceHandler]
 
-    commands = command_builder.with_steps(steps).build_many()
-
-    assert len(commands) == 1
-    assert len(commands[0].handlers) == 1
-    assert isinstance(commands[0].handlers[0], ReadResistanceHandler)
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_map_resistance_to_puck_colors_step_when_building_then_return_map_resistance_to_puck_colors_command():
-    steps = [Step.MapResistanceToPuckColors]
+    step = Step.MapResistanceToPuckColors
+    handler_classes = [MapResistanceToPuckColorsHandler, SendResistanceAndPuckColorsHandler]
 
-    commands = command_builder.with_steps(steps).build_many()
-
-    assert len(commands) == 1
-    assert len(commands[0].handlers) == 2
-    assert isinstance(commands[0].handlers[0], MapResistanceToPuckColorsHandler)
-    assert isinstance(commands[0].handlers[1], SendResistanceAndPuckColorsHandler)
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_get_command_panel_station_position_step_when_building_then_return_get_command_panel_position_command():
-    steps = [Step.GetCommandPanelPosition]
+    step = Step.GetCommandPanelPosition
+    handler_classes = [GetCommandPanelPositionHandler]
 
-    commands = command_builder.with_steps(steps).build_many()
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
+
+
+def given_single_step_when_building_then_return_correct_command(step, handler_classes):
+    commands = command_builder.with_steps([step]).build_many()
 
     assert len(commands) == 1
-    assert len(commands[0].handlers) == 1
-    assert isinstance(commands[0].handlers[0], GetCommandPanelPositionHandler)
+    assert len(commands[0].handlers) == len(handler_classes)
+
+    for idx, handler_class in enumerate(handler_classes):
+        assert isinstance(commands[0].handlers[idx], handler_class)
