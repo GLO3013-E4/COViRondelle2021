@@ -21,7 +21,7 @@ class StubHandler(Handler):
 
 def test_when_executing_then_handle(mocker):
     stub = mocker.stub(name='on_handle_stub')
-    command = Command(StubHandler(stub))
+    command = Command([StubHandler(stub)])
 
     command.execute()
 
@@ -30,7 +30,7 @@ def test_when_executing_then_handle(mocker):
 
 def test_given_next_command_when_executing_then_pass_handled_data(mocker):
     stub = mocker.stub(name='on_handle_stub')
-    command = Command(StubHandler(stub), Command(StubHandler(stub)))
+    command = Command([StubHandler(stub)], Command([StubHandler(stub)]))
 
     command.execute()
 
