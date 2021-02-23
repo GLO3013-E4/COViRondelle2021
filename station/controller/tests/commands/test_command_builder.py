@@ -12,7 +12,7 @@ def test_given_no_step_when_building_then_return_empty_list():
 
     commands = command_builder.with_steps(steps).build_many()
 
-    assert len(commands) is 0
+    assert len(commands) == 0
 
 
 def test_given_multiple_steps_when_building_then_list_of_length_of_steps():
@@ -20,7 +20,7 @@ def test_given_multiple_steps_when_building_then_list_of_length_of_steps():
 
     commands = command_builder.with_steps(steps).build_many()
 
-    assert len(commands) is len(steps)
+    assert len(commands) == len(steps)
 
 
 def test_given_wait_for_ready_state_step_when_building_then_return_wait_for_ready_step_command():
@@ -28,8 +28,8 @@ def test_given_wait_for_ready_state_step_when_building_then_return_wait_for_read
 
     commands = command_builder.with_steps(steps).build_many()
 
-    assert len(commands) is 1
-    assert len(commands[0].handlers) is 1
+    assert len(commands) == 1
+    assert len(commands[0].handlers) == 1
     assert isinstance(commands[0].handlers[0], WaitForReadyStateHandler)
 
 
@@ -38,6 +38,6 @@ def test_given_send_ready_state_step_when_building_then_return_send_ready_step_c
 
     commands = command_builder.with_steps(steps).build_many()
 
-    assert len(commands) is 1
-    assert len(commands[0].handlers) is 1
+    assert len(commands) == 1
+    assert len(commands[0].handlers) == 1
     assert isinstance(commands[0].handlers[0], SendReadyStateHandler)
