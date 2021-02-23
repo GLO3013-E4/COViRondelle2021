@@ -9,7 +9,7 @@ third_command = Command([])
 
 class MockCommandBuilder(CommandBuilder):
     def with_steps(self, steps):
-        if steps is ChainOfCommandsFactory.steps:
+        if steps is ChainOfCommandsFactory.cycle_steps:
             return self
 
         return None

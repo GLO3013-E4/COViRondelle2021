@@ -2,7 +2,7 @@ from controller.src.commands.step import Step
 
 
 class ChainOfCommandsFactory:
-    steps = [
+    cycle_steps = [
         Step.WaitForReadyState,
         Step.SendReadyState,
         Step.SendTableImage
@@ -15,7 +15,7 @@ class ChainOfCommandsFactory:
     # TODO : Add create_with_steps(self, steps) for testing purposes
 
     def create(self):
-        commands = self.command_builder.with_steps(self.steps).build_many()
+        commands = self.command_builder.with_steps(self.cycle_steps).build_many()
 
         next_command = commands.pop()
 
