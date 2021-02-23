@@ -2,7 +2,6 @@ from controller.src.commands.command import Command
 from controller.src.commands.step import Step
 
 
-# TODO : Test CommandBuilder
 class CommandBuilder:
     _commands = []
 
