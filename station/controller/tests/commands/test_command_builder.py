@@ -19,7 +19,11 @@ from controller.src.handlers.read_letters_handler import ReadLettersHandler
 from controller.src.handlers.map_letters_to_puck_corners.map_letters_to_puck_corners_handler import MapLettersToPuckCornersHandler
 from controller.src.handlers.map_letters_to_puck_corners.send_first_puck_corner_handler import SendFirstPuckCornerHandler
 from controller.src.handlers.get_next_puck_position_handler import GetNextPuckPositionHandler
+from controller.src.handlers.grip_puck.grip_puck_handler import GripPuckHandler
+from controller.src.handlers.grip_puck.send_puck_gripped_state_handler import SendPuckGrippedStateHandler
 from controller.src.handlers.get_next_corner_position_handler import GetNextCornerPositionHandler
+from controller.src.handlers.release_puck.release_puck_handler import ReleasePuckHandler
+from controller.src.handlers.release_puck.send_puck_released_state_handler import SendPuckReleasedStateHandler
 from controller.src.handlers.get_start_square_center_position_handler import GetStartSquareCenterPositionHandler
 
 command_builder = CommandBuilder()
@@ -124,9 +128,23 @@ def test_given_get_next_puck_position_step_when_building_then_return_get_next_pu
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
+def test_given_grip_puck_step_when_building_then_return_grip_puck_command():
+    step = Step.GripPuck
+    handler_classes = [GripPuckHandler, SendPuckGrippedStateHandler]
+
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
+
+
 def test_given_get_next_corner_position_step_when_building_then_return_get_next_corner_position_command():
     step = Step.GetNextCornerPosition
     handler_classes = [GetNextCornerPositionHandler]
+
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
+
+
+def test_given_release_puck_step_when_building_then_return_release_puck_command():
+    step = Step.ReleasePuck
+    handler_classes = [ReleasePuckHandler, SendPuckReleasedStateHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
