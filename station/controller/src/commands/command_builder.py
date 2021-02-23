@@ -6,6 +6,8 @@ from controller.src.handlers.send_ready_state_handler import SendReadyStateHandl
 from controller.src.handlers.send_table_image.capture_table_image_handler \
     import CaptureTableImageHandler
 from controller.src.handlers.send_table_image.send_table_image_handler import SendTableImageHandler
+from controller.src.handlers.get_resistance_station_position_handler \
+    import GetResistanceStationPositionHandler
 
 
 class CommandBuilder:
@@ -26,6 +28,8 @@ class CommandBuilder:
             self._commands.append(Command([SendReadyStateHandler()]))
         if step == Step.SendTableImage:
             self._commands.append(Command([CaptureTableImageHandler(), SendTableImageHandler()]))
+        if step == Step.GetResistanceStationPosition:
+            self._commands.append(Command([GetResistanceStationPositionHandler()]))
         # TODO : Implement rest of steps
 
     def build_many(self):

@@ -6,6 +6,8 @@ from controller.src.handlers.send_ready_state_handler import SendReadyStateHandl
 from controller.src.handlers.send_table_image.capture_table_image_handler \
     import CaptureTableImageHandler
 from controller.src.handlers.send_table_image.send_table_image_handler import SendTableImageHandler
+from controller.src.handlers.get_resistance_station_position_handler \
+    import GetResistanceStationPositionHandler
 
 command_builder = CommandBuilder()
 
@@ -26,7 +28,7 @@ def test_given_multiple_steps_when_building_then_list_of_length_of_steps():
     assert len(commands) == len(steps)
 
 
-def test_given_wait_for_ready_state_step_when_building_then_return_wait_for_ready_step_command():
+def test_given_wait_for_ready_state_step_when_building_then_return_wait_for_ready_command():
     steps = [Step.WaitForReadyState]
 
     commands = command_builder.with_steps(steps).build_many()
@@ -36,7 +38,7 @@ def test_given_wait_for_ready_state_step_when_building_then_return_wait_for_read
     assert isinstance(commands[0].handlers[0], WaitForReadyStateHandler)
 
 
-def test_given_send_ready_state_step_when_building_then_return_send_ready_step_command():
+def test_given_send_ready_state_step_when_building_then_return_send_ready_command():
     steps = [Step.SendReadyState]
 
     commands = command_builder.with_steps(steps).build_many()
@@ -55,3 +57,13 @@ def test_given_send_table_image_step_when_building_then_return_send_table_image_
     assert len(commands[0].handlers) == 2
     assert isinstance(commands[0].handlers[0], CaptureTableImageHandler)
     assert isinstance(commands[0].handlers[1], SendTableImageHandler)
+
+
+def test_given_get_resistance_station_position_step_when_building_then_return_get_resistance_station_position_command():
+    steps = [Step.GetResistanceStationPosition]
+
+    commands = command_builder.with_steps(steps).build_many()
+
+    assert len(commands) == 1
+    assert len(commands[0].handlers) == 1
+    assert isinstance(commands[0].handlers[0], GetResistanceStationPositionHandler)

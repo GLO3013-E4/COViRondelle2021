@@ -5,7 +5,8 @@ class ChainOfCommandsFactory:
     cycle_steps = [
         Step.WaitForReadyState,
         Step.SendReadyState,
-        Step.SendTableImage
+        Step.SendTableImage,
+        Step.GetResistanceStationPosition
         # TODO : Add rest of steps
     ]
 
