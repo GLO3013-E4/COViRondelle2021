@@ -3,6 +3,9 @@ from controller.src.commands.command_builder import CommandBuilder
 
 from controller.src.handlers.wait_for_ready_state_handler import WaitForReadyStateHandler
 from controller.src.handlers.send_ready_state_handler import SendReadyStateHandler
+from controller.src.handlers.send_table_image.capture_table_image_handler \
+    import CaptureTableImageHandler
+from controller.src.handlers.send_table_image.send_table_image_handler import SendTableImageHandler
 
 command_builder = CommandBuilder()
 
@@ -41,3 +44,14 @@ def test_given_send_ready_state_step_when_building_then_return_send_ready_step_c
     assert len(commands) == 1
     assert len(commands[0].handlers) == 1
     assert isinstance(commands[0].handlers[0], SendReadyStateHandler)
+
+
+def test_given_send_table_image_step_when_building_then_return_send_table_image_command():
+    steps = [Step.SendTableImage]
+
+    commands = command_builder.with_steps(steps).build_many()
+
+    assert len(commands) == 1
+    assert len(commands[0].handlers) == 2
+    assert isinstance(commands[0].handlers[0], CaptureTableImageHandler)
+    assert isinstance(commands[0].handlers[1], SendTableImageHandler)

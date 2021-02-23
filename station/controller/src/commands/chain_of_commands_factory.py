@@ -5,11 +5,14 @@ class ChainOfCommandsFactory:
     steps = [
         Step.WaitForReadyState,
         Step.SendReadyState,
+        Step.SendTableImage
         # TODO : Add rest of steps
     ]
 
     def __init__(self, command_builder):
         self.command_builder = command_builder
+
+    # TODO : Add create_with_steps(self, steps) for testing purposes
 
     def create(self):
         commands = self.command_builder.with_steps(self.steps).build_many()
