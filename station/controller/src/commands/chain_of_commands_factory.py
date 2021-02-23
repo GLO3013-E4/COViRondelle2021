@@ -1,48 +1,13 @@
-from controller.src.commands.step import Step
+from controller.src.commands.cycle_steps import cycle_steps
 
 
 class ChainOfCommandsFactory:
-    # TODO : Move cycle_steps definition
-    cycle_steps = [
-        Step.WaitForReadyState,
-        Step.SendReadyState,
-        Step.SendTableImage,
-        Step.GetResistanceStationPosition,
-        Step.MoveRobot,
-        Step.ReadResistance,
-        Step.MapResistanceToPuckColors,
-        Step.GetCommandPanelPosition,
-        Step.MoveRobot,
-        Step.ReadLetters,
-        Step.MapLettersToPuckCorners,
-        Step.GetNextPuckPosition,
-        Step.MoveRobot,
-        Step.GripPuck,
-        Step.GetNextCornerPosition,
-        Step.MoveRobot,
-        Step.ReleasePuck,
-        Step.GetNextPuckPosition,
-        Step.MoveRobot,
-        Step.GripPuck,
-        Step.GetNextCornerPosition,
-        Step.MoveRobot,
-        Step.ReleasePuck,
-        Step.GetNextPuckPosition,
-        Step.MoveRobot,
-        Step.GripPuck,
-        Step.GetNextCornerPosition,
-        Step.MoveRobot,
-        Step.ReleasePuck,
-        Step.GetStartSquareCenterPosition,
-        Step.EndCycle
-    ]
-
     def __init__(self, command_builder):
         self.command_builder = command_builder
 
-    # TODO : Change to create(self, steps=cycle_steps) for testing purposes
-    def create(self):
-        commands = self.command_builder.with_steps(self.cycle_steps).build_many()
+    # TODO : Steps should always be cycle_steps, this is for testing until the final implementation
+    def create(self, steps=cycle_steps):
+        commands = self.command_builder.with_steps(steps).build_many()
 
         next_command = commands.pop()
 
