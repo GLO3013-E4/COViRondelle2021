@@ -11,6 +11,7 @@ from controller.src.handlers.move_robot.calculate_trajectory_handler import Calc
 from controller.src.handlers.move_robot.send_planned_trajectory_handler import SendPlannedTrajectoryHandler
 from controller.src.handlers.move_robot.send_real_trajectory_coordinate_handler import SendRealTrajectoryCoordinateHandler
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
+from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 
 
 class CommandBuilder:
@@ -27,13 +28,13 @@ class CommandBuilder:
     def _with_step(self, step):
         if step == Step.WaitForReadyState:
             self._commands.append(Command([WaitForReadyStateHandler()]))
-        if step == Step.SendReadyState:
+        elif step == Step.SendReadyState:
             self._commands.append(Command([SendReadyStateHandler()]))
-        if step == Step.SendTableImage:
+        elif step == Step.SendTableImage:
             self._commands.append(Command([CaptureTableImageHandler(), SendTableImageHandler()]))
-        if step == Step.GetResistanceStationPosition:
+        elif step == Step.GetResistanceStationPosition:
             self._commands.append(Command([GetResistanceStationPositionHandler()]))
-        if step == Step.MoveRobot:
+        elif step == Step.MoveRobot:
             self._commands.append(Command([
                 GetRobotPositionHandler(),
                 CalculateTrajectoryHandler(),
@@ -41,6 +42,8 @@ class CommandBuilder:
                 SendRealTrajectoryCoordinateHandler(),
                 WaitForRobotArrivalHandler()
             ]))
+        elif step == Step.ReadResistance:
+            self._commands.append(Command([ReadResistanceHandler()]))
         # TODO : Implement rest of steps
 
     def build_many(self):

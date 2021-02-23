@@ -7,3 +7,4 @@ class Step(Enum):
     SendTableImage = 'SendTableImage'
     GetResistanceStationPosition = 'GetResistanceStationPosition'
     MoveRobot = 'MoveRobot'
+    ReadResistance = 'ReadResistance'

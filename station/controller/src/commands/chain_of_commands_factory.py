@@ -7,7 +7,8 @@ class ChainOfCommandsFactory:
         Step.SendReadyState,
         Step.SendTableImage,
         Step.GetResistanceStationPosition,
-        Step.MoveRobot
+        Step.MoveRobot,
+        Step.ReadResistance
         # TODO : Add rest of steps
     ]
 

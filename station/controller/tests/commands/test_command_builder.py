@@ -11,6 +11,7 @@ from controller.src.handlers.move_robot.calculate_trajectory_handler import Calc
 from controller.src.handlers.move_robot.send_planned_trajectory_handler import SendPlannedTrajectoryHandler
 from controller.src.handlers.move_robot.send_real_trajectory_coordinate_handler import SendRealTrajectoryCoordinateHandler
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
+from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 
 command_builder = CommandBuilder()
 
@@ -84,3 +85,13 @@ def test_given_move_robot_step_when_building_then_return_move_robot_command():
     assert isinstance(commands[0].handlers[2], SendPlannedTrajectoryHandler)
     assert isinstance(commands[0].handlers[3], SendRealTrajectoryCoordinateHandler)
     assert isinstance(commands[0].handlers[4], WaitForRobotArrivalHandler)
+
+
+def test_given_read_resistance_step_when_building_then_return_read_resistance_command():
+    steps = [Step.ReadResistance]
+
+    commands = command_builder.with_steps(steps).build_many()
+
+    assert len(commands) == 1
+    assert len(commands[0].handlers) == 1
+    assert isinstance(commands[0].handlers[0], ReadResistanceHandler)
