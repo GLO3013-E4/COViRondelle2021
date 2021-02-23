@@ -11,3 +11,4 @@ class Step(Enum):
     MapResistanceToPuckColors = 'MapResistanceToPuckColors'
     GetCommandPanelPosition = 'GetCommandPanelPosition'
     ReadLetters = 'ReadLetters'
+    MapLettersToPuckCorners = 'MapLettersToPuckCorners'
