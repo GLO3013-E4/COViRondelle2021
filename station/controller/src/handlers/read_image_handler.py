@@ -1,7 +1,7 @@
-from main.src.handlers.handler import Handler
+from controller.src.handlers.handler import Handler
 
 
-# TODO : This is a sample handler, it should be removed when real handlers will be implemented
+# TODO : Remove ReadImageHandler
 class ReadImageHandler(Handler):
     def __init__(self, image_reader, image_path):
         self.image_reader = image_reader

@@ -1,10 +1,11 @@
 class Command:
-    def __init__(self, handler, next_command=None):
-        self.handler = handler
+    def __init__(self, handlers, next_command=None):
+        self.handlers = handlers
         self.next_command = next_command
 
     def execute(self, handled_data=None):
-        handled_data = self.handler.handle(handled_data)
+        for handler in self.handlers:
+            handled_data = handler.handle(handled_data)
 
         if self.next_command:
             self.next_command.execute(handled_data)

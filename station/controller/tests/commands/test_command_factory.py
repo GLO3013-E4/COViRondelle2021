@@ -1,7 +1,7 @@
 import pytest
 
-from main.src.commands.command_factory import CommandFactory
-from main.src.handlers.handler import Handler
+from controller.src.commands.command_factory import CommandFactory
+from controller.src.handlers.handler import Handler
 
 command_factory = CommandFactory()
 
