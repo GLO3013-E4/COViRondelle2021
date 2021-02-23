@@ -20,6 +20,7 @@ from controller.src.handlers.map_letters_to_puck_corners.map_letters_to_puck_cor
 from controller.src.handlers.map_letters_to_puck_corners.send_first_puck_corner_handler import SendFirstPuckCornerHandler
 from controller.src.handlers.get_next_puck_position_handler import GetNextPuckPositionHandler
 from controller.src.handlers.get_next_corner_position_handler import GetNextCornerPositionHandler
+from controller.src.handlers.get_start_square_center_position_handler import GetStartSquareCenterPositionHandler
 
 command_builder = CommandBuilder()
 
@@ -126,6 +127,13 @@ def test_given_get_next_puck_position_step_when_building_then_return_get_next_pu
 def test_given_get_next_corner_position_step_when_building_then_return_get_next_corner_position_command():
     step = Step.GetNextCornerPosition
     handler_classes = [GetNextCornerPositionHandler]
+
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
+
+
+def test_given_get_start_square_center_position_step_when_building_then_return_get_start_square_center_position_command():
+    step = Step.GetStartSquareCenterPosition
+    handler_classes = [GetStartSquareCenterPositionHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 

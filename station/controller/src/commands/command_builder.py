@@ -20,6 +20,7 @@ from controller.src.handlers.map_letters_to_puck_corners.map_letters_to_puck_cor
 from controller.src.handlers.map_letters_to_puck_corners.send_first_puck_corner_handler import SendFirstPuckCornerHandler
 from controller.src.handlers.get_next_puck_position_handler import GetNextPuckPositionHandler
 from controller.src.handlers.get_next_corner_position_handler import GetNextCornerPositionHandler
+from controller.src.handlers.get_start_square_center_position_handler import GetStartSquareCenterPositionHandler
 
 
 class CommandBuilder:
@@ -65,6 +66,8 @@ class CommandBuilder:
             self._commands.append(Command([GetNextPuckPositionHandler()]))
         elif step == Step.GetNextCornerPosition:
             self._commands.append(Command([GetNextCornerPositionHandler()]))
+        elif step == Step.GetStartSquareCenterPosition:
+            self._commands.append(Command([GetStartSquareCenterPositionHandler()]))
         # TODO : Implement rest of steps
 
     def build_many(self):
