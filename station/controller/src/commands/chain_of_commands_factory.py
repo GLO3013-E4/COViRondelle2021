@@ -2,6 +2,7 @@ from controller.src.commands.step import Step
 
 
 class ChainOfCommandsFactory:
+    # TODO : Move cycle_steps definition
     cycle_steps = [
         Step.WaitForReadyState,
         Step.SendReadyState,
@@ -13,15 +14,15 @@ class ChainOfCommandsFactory:
         Step.GetCommandPanelPosition,
         Step.MoveRobot,
         Step.ReadLetters,
-        Step.MapLettersToPuckCorners
+        Step.MapLettersToPuckCorners,
+        Step.GetNextPuckPosition
         # TODO : Add rest of steps
     ]
 
     def __init__(self, command_builder):
         self.command_builder = command_builder
 
-    # TODO : Add create_with_steps(self, steps) for testing purposes
-
+    # TODO : Change to create(self, steps=cycle_steps) for testing purposes
     def create(self):
         commands = self.command_builder.with_steps(self.cycle_steps).build_many()
 

@@ -12,3 +12,4 @@ class Step(Enum):
     GetCommandPanelPosition = 'GetCommandPanelPosition'
     ReadLetters = 'ReadLetters'
     MapLettersToPuckCorners = 'MapLettersToPuckCorners'
+    GetNextPuckPosition = 'GetNextPuckPosition'
