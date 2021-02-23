@@ -1,6 +1,9 @@
 from controller.src.commands.command import Command
 from controller.src.commands.step import Step
 
+from controller.src.handlers.wait_for_ready_state_handler import WaitForReadyStateHandler
+from controller.src.handlers.send_ready_state_handler import SendReadyStateHandler
+
 
 class CommandBuilder:
     _commands = []
@@ -15,9 +18,9 @@ class CommandBuilder:
 
     def _with_step(self, step):
         if step == Step.WaitForReadyState:
-            self._commands.append(Command([]))  # TODO : Add WaitForReadyStateHandler
+            self._commands.append(Command([WaitForReadyStateHandler()]))
         if step == Step.SendReadyState:
-            self._commands.append(Command([]))  # TODO : Add SendReadyStateHandler
+            self._commands.append(Command([SendReadyStateHandler()]))
         # TODO : Implement rest of steps
 
     def build_many(self):

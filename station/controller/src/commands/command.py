@@ -4,7 +4,6 @@ class Command:
     def __init__(self, handlers):
         self.handlers = handlers
 
-    # TODO : Why handled_data=None ?
     def execute(self, handled_data=None):
         for handler in self.handlers:
             handled_data = handler.handle(handled_data)
