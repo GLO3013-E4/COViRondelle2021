@@ -10,3 +10,4 @@ class Step(Enum):
     ReadResistance = 'ReadResistance'
     MapResistanceToPuckColors = 'MapResistanceToPuckColors'
     GetCommandPanelPosition = 'GetCommandPanelPosition'
+    ReadLetters = 'ReadLetters'

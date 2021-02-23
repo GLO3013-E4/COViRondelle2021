@@ -9,15 +9,13 @@ from controller.src.handlers.get_resistance_station_position_handler import GetR
 from controller.src.handlers.move_robot.get_robot_position_handler import GetRobotPositionHandler
 from controller.src.handlers.move_robot.calculate_trajectory_handler import CalculateTrajectoryHandler
 from controller.src.handlers.move_robot.send_planned_trajectory_handler import SendPlannedTrajectoryHandler
-from controller.src.handlers.move_robot.send_real_trajectory_coordinate_handler import \
-    SendRealTrajectoryCoordinateHandler
+from controller.src.handlers.move_robot.send_real_trajectory_coordinate_handler import SendRealTrajectoryCoordinateHandler
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
-from controller.src.handlers.map_resistance_to_puck_colors.map_resistance_to_puck_colors_handler import \
-    MapResistanceToPuckColorsHandler
-from controller.src.handlers.map_resistance_to_puck_colors.send_resistance_and_puck_colors_handler import \
-    SendResistanceAndPuckColorsHandler
+from controller.src.handlers.map_resistance_to_puck_colors.map_resistance_to_puck_colors_handler import MapResistanceToPuckColorsHandler
+from controller.src.handlers.map_resistance_to_puck_colors.send_resistance_and_puck_colors_handler import SendResistanceAndPuckColorsHandler
 from controller.src.handlers.get_command_panel_position_handler import GetCommandPanelPositionHandler
+from controller.src.handlers.read_letters_handler import ReadLettersHandler
 
 command_builder = CommandBuilder()
 
@@ -96,6 +94,13 @@ def test_given_map_resistance_to_puck_colors_step_when_building_then_return_map_
 def test_given_get_command_panel_station_position_step_when_building_then_return_get_command_panel_position_command():
     step = Step.GetCommandPanelPosition
     handler_classes = [GetCommandPanelPositionHandler]
+
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
+
+
+def test_given_read_letters_step_when_building_then_return_read_letters_command():
+    step = Step.ReadLetters
+    handler_classes = [ReadLettersHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 

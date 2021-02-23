@@ -11,7 +11,8 @@ class ChainOfCommandsFactory:
         Step.ReadResistance,
         Step.MapResistanceToPuckColors,
         Step.GetCommandPanelPosition,
-        Step.MoveRobot
+        Step.MoveRobot,
+        Step.ReadLetters
         # TODO : Add rest of steps
     ]
 
