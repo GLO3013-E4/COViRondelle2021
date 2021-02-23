@@ -40,7 +40,7 @@ def test_given_no_step_when_building_then_return_empty_list():
 
 
 def test_given_multiple_steps_when_building_then_list_of_length_of_steps():
-    steps = [Step.WaitForReadyState, Step.SendReadyState]
+    steps = [Step.WAIT_FOR_READY_STATE, Step.SEND_READY_STATE]
 
     commands = command_builder.with_steps(steps).build_many()
 
@@ -48,35 +48,35 @@ def test_given_multiple_steps_when_building_then_list_of_length_of_steps():
 
 
 def test_given_wait_for_ready_state_step_when_building_then_return_wait_for_ready_command():
-    step = Step.WaitForReadyState
+    step = Step.WAIT_FOR_READY_STATE
     handler_classes = [WaitForReadyStateHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_send_ready_state_step_when_building_then_return_send_ready_command():
-    step = Step.SendReadyState
+    step = Step.SEND_READY_STATE
     handler_classes = [SendReadyStateHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_send_table_image_step_when_building_then_return_send_table_image_command():
-    step = Step.SendTableImage
+    step = Step.SEND_TABLE_IMAGE
     handler_classes = [CaptureTableImageHandler, SendTableImageHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_get_resistance_station_position_step_when_building_then_return_get_resistance_station_position_command():
-    step = Step.GetResistanceStationPosition
+    step = Step.GET_RESISTANCE_STATION_POSITION
     handler_classes = [GetResistanceStationPositionHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_move_robot_step_when_building_then_return_move_robot_command():
-    step = Step.MoveRobot
+    step = Step.MOVE_ROBOT
     handler_classes = [
         GetRobotPositionHandler,
         CalculateTrajectoryHandler,
@@ -89,77 +89,77 @@ def test_given_move_robot_step_when_building_then_return_move_robot_command():
 
 
 def test_given_read_resistance_step_when_building_then_return_read_resistance_command():
-    step = Step.ReadResistance
+    step = Step.READ_RESISTANCE
     handler_classes = [ReadResistanceHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_map_resistance_to_puck_colors_step_when_building_then_return_map_resistance_to_puck_colors_command():
-    step = Step.MapResistanceToPuckColors
+    step = Step.MAP_RESISTANCE_TO_PUCK_COLORS
     handler_classes = [MapResistanceToPuckColorsHandler, SendResistanceAndPuckColorsHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_get_command_panel_station_position_step_when_building_then_return_get_command_panel_position_command():
-    step = Step.GetCommandPanelPosition
+    step = Step.GET_COMMAND_PANEL_POSITION
     handler_classes = [GetCommandPanelPositionHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_read_letters_step_when_building_then_return_read_letters_command():
-    step = Step.ReadLetters
+    step = Step.READ_LETTERS
     handler_classes = [ReadLettersHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_map_letters_to_puck_corners_step_when_building_then_return_map_letters_to_puck_corners_command():
-    step = Step.MapLettersToPuckCorners
+    step = Step.MAP_LETTERS_TO_PUCK_CORNERS
     handler_classes = [MapLettersToPuckCornersHandler, SendFirstPuckCornerHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_get_next_puck_position_step_when_building_then_return_get_next_puck_position_command():
-    step = Step.GetNextPuckPosition
+    step = Step.GET_NEXT_PUCK_POSITION
     handler_classes = [GetNextPuckPositionHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_grip_puck_step_when_building_then_return_grip_puck_command():
-    step = Step.GripPuck
+    step = Step.GRIP_PUCK
     handler_classes = [GripPuckHandler, SendPuckGrippedStateHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_get_next_corner_position_step_when_building_then_return_get_next_corner_position_command():
-    step = Step.GetNextCornerPosition
+    step = Step.GET_NEXT_CORNER_POSITION
     handler_classes = [GetNextCornerPositionHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_release_puck_step_when_building_then_return_release_puck_command():
-    step = Step.ReleasePuck
+    step = Step.RELEASE_PUCK
     handler_classes = [ReleasePuckHandler, SendPuckReleasedStateHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_get_start_square_center_position_step_when_building_then_return_get_start_square_center_position_command():
-    step = Step.GetStartSquareCenterPosition
+    step = Step.GET_START_SQUARE_CENTER_POSITION
     handler_classes = [GetStartSquareCenterPositionHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
 def test_given_end_cycle_step_when_building_then_return_end_cycle_command():
-    step = Step.EndCycle
+    step = Step.END_CYCLE
     handler_classes = [TurnOnRedLightHandler, SendCycleEndedStepHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)

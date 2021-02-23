@@ -42,15 +42,15 @@ class CommandBuilder:
 
     # TODO : Implement sending cycle steps handlers
     def _with_step(self, step):
-        if step == Step.WaitForReadyState:
+        if step == Step.WAIT_FOR_READY_STATE:
             self._commands.append(Command([WaitForReadyStateHandler()]))
-        elif step == Step.SendReadyState:
+        elif step == Step.SEND_READY_STATE:
             self._commands.append(Command([SendReadyStateHandler()]))
-        elif step == Step.SendTableImage:
+        elif step == Step.SEND_TABLE_IMAGE:
             self._commands.append(Command([CaptureTableImageHandler(), SendTableImageHandler()]))
-        elif step == Step.GetResistanceStationPosition:
+        elif step == Step.GET_RESISTANCE_STATION_POSITION:
             self._commands.append(Command([GetResistanceStationPositionHandler()]))
-        elif step == Step.MoveRobot:
+        elif step == Step.MOVE_ROBOT:
             self._commands.append(Command([
                 GetRobotPositionHandler(),
                 CalculateTrajectoryHandler(),
@@ -58,27 +58,27 @@ class CommandBuilder:
                 SendRealTrajectoryCoordinateHandler(),
                 WaitForRobotArrivalHandler()
             ]))
-        elif step == Step.ReadResistance:
+        elif step == Step.READ_RESISTANCE:
             self._commands.append(Command([ReadResistanceHandler()]))
-        elif step == Step.MapResistanceToPuckColors:
+        elif step == Step.MAP_RESISTANCE_TO_PUCK_COLORS:
             self._commands.append(Command([MapResistanceToPuckColorsHandler(), SendResistanceAndPuckColorsHandler()]))
-        elif step == Step.GetCommandPanelPosition:
+        elif step == Step.GET_COMMAND_PANEL_POSITION:
             self._commands.append(Command([GetCommandPanelPositionHandler()]))
-        elif step == Step.ReadLetters:
+        elif step == Step.READ_LETTERS:
             self._commands.append(Command([ReadLettersHandler()]))
-        elif step == Step.MapLettersToPuckCorners:
+        elif step == Step.MAP_LETTERS_TO_PUCK_CORNERS:
             self._commands.append(Command([MapLettersToPuckCornersHandler(), SendFirstPuckCornerHandler()]))
-        elif step == Step.GetNextPuckPosition:
+        elif step == Step.GET_NEXT_PUCK_POSITION:
             self._commands.append(Command([GetNextPuckPositionHandler()]))
-        elif step == Step.GripPuck:
+        elif step == Step.GRIP_PUCK:
             self._commands.append(Command([GripPuckHandler(), SendPuckGrippedStateHandler()]))
-        elif step == Step.GetNextCornerPosition:
+        elif step == Step.GET_NEXT_CORNER_POSITION:
             self._commands.append(Command([GetNextCornerPositionHandler()]))
-        elif step == Step.ReleasePuck:
+        elif step == Step.RELEASE_PUCK:
             self._commands.append(Command([ReleasePuckHandler(), SendPuckReleasedStateHandler()]))
-        elif step == Step.GetStartSquareCenterPosition:
+        elif step == Step.GET_START_SQUARE_CENTER_POSITION:
             self._commands.append(Command([GetStartSquareCenterPositionHandler()]))
-        elif step == Step.EndCycle:
+        elif step == Step.END_CYCLE:
             self._commands.append(Command([TurnOnRedLightHandler(), SendCycleEndedStepHandler()]))
 
     def build_many(self):

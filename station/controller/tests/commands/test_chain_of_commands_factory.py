@@ -4,7 +4,7 @@ from controller.src.commands.command import Command
 from controller.src.commands.command_builder import CommandBuilder
 from controller.src.commands.chain_of_commands_factory import ChainOfCommandsFactory
 
-sent_steps = [Step.GripPuck]
+sent_steps = [Step.GRIP_PUCK]
 command_for_sent_steps = Command([])
 first_command = Command([])
 second_command = Command([])
