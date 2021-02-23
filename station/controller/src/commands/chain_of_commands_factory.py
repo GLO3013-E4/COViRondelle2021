@@ -1,15 +1,21 @@
-from controller.src.commands.command import Command
+from controller.src.commands.step import Step
 
 
 class ChainOfCommandsFactory:
-    @staticmethod
-    def create(handlers):
-        if len(handlers) == 0:
-            raise Exception('No handler provided')
+    steps = [
+        Step.WaitForReadyState,
+        Step.SendReadyState,
+        # TODO : Add rest of steps
+    ]
 
-        command = Command(handlers.pop())
+    def __init__(self, command_builder):
+        self.command_builder = command_builder
 
-        for handler in handlers[::-1]:
-            command = Command(handler, command)
+    def create(self):
+        commands = self.command_builder.with_steps(self.steps).build_many()
 
-        return command
+        next_command = commands.pop()
+
+        # TODO : Create chain of commands
+
+        return next_command

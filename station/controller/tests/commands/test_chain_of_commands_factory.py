@@ -1,32 +1,36 @@
-import pytest
-
+from controller.src.commands.command import Command
+from controller.src.commands.command_builder import CommandBuilder
 from controller.src.commands.chain_of_commands_factory import ChainOfCommandsFactory
-from controller.src.handlers.handler import Handler
 
-chain_of_commands_factory = ChainOfCommandsFactory()
-
-
-def test_given_no_handler_when_creating_then_raise_exception():
-    with pytest.raises(Exception):
-        chain_of_commands_factory.create([])
+first_command = Command([])
+second_command = Command([])
+third_command = Command([])
 
 
-def test_given_one_handler_when_creating_then_add_handler_to_command():
-    handler = Handler()
+class MockCommandBuilder(CommandBuilder):
+    def with_steps(self, steps):
+        if steps is ChainOfCommandsFactory.steps:
+            return self
 
-    command = chain_of_commands_factory.create([handler])
+        return None
 
-    assert command.handler is handler
-    assert command.next_command is None
+    @staticmethod
+    def build_many():
+        return [first_command, second_command, third_command]
 
 
-def test_given_multiple_handlers_when_creating_then_add_handlers_to_commands():
-    first_handler = Handler()
-    second_handler = Handler()
+chain_of_commands_factory = ChainOfCommandsFactory(MockCommandBuilder())
 
-    command = chain_of_commands_factory.create([first_handler, second_handler])
 
-    assert command.handler is first_handler
-    assert command.next_command is not None
-    assert command.next_command.handler is second_handler
-    assert command.next_command.next_command is None
+def test_when_creating_then_return_first_command():
+    command = chain_of_commands_factory.create()
+
+    assert command is first_command
+
+
+def test_when_creating_then_return_correct_next_commands():
+    command = chain_of_commands_factory.create()
+
+    assert command.next_command is second_command
+    assert command.next_command.next_command is third_command
+    assert command.next_command.next_command.next_command is None
