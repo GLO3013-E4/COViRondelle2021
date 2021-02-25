@@ -5,7 +5,7 @@ from controller.src.handlers.wait_for_robot_ready_state_handler import WaitForRo
 from controller.src.handlers.send_to_frontend_ready_state_handler import SendToFrontendReadyStateHandler
 from controller.src.handlers.wait_for_frontend_cycle_start_handler import WaitForFrontendCycleStartHandler
 from controller.src.handlers.send_table_image.capture_table_image_handler import CaptureTableImageHandler
-from controller.src.handlers.send_table_image.send_table_image_handler import SendTableImageHandler
+from controller.src.handlers.send_table_image.send_to_frontend_table_image_handler import SendToFrontendTableImageHandler
 from controller.src.handlers.get_resistance_station_position_handler import GetResistanceStationPositionHandler
 from controller.src.handlers.move_robot.get_robot_position_handler import GetRobotPositionHandler
 from controller.src.handlers.move_robot.calculate_trajectory_handler import CalculateTrajectoryHandler
@@ -71,7 +71,7 @@ def test_given_wait_for_frontend_cycle_start_step_when_building_then_return_wait
 
 def test_given_send_table_image_step_when_building_then_return_send_table_image_command():
     step = Step.SEND_TABLE_IMAGE
-    handler_classes = [CaptureTableImageHandler, SendTableImageHandler]
+    handler_classes = [CaptureTableImageHandler, SendToFrontendTableImageHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 

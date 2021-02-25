@@ -1,7 +1,7 @@
 from controller.src.handlers.handler import Handler
 
 
-class SendTableImageHandler(Handler):
+class SendToFrontendTableImageHandler(Handler):
     def handle(self, handled_data=None):
-        # TODO : Implement SendTableImageHandler
+        # TODO : Implement SendToFrontendTableImageHandler
         return handled_data
