@@ -31,4 +31,7 @@ jobs:
       - name: Build docker image
         run: docker build -t scripts .
       - name: Run tests with coverage
-        run: docker run -t scripts /bin/bash -c "$CI_ENV && pytest --cov=./ --cov-report=xml && $CI_POST_COV"
+        run: |
+          docker run scripts $CI_ENV
+          docker run scripts pytest --cov=./ --cov-report=xml
+          docker run scripts $CI_POST_COV
