@@ -15,7 +15,7 @@ from controller.src.handlers.move_robot.send_to_frontend_real_trajectory_coordin
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 from controller.src.handlers.map_resistance_to_puck_colors.map_resistance_to_puck_colors_handler import MapResistanceToPuckColorsHandler
-from controller.src.handlers.map_resistance_to_puck_colors.send_resistance_and_puck_colors_handler import SendResistanceAndPuckColorsHandler
+from controller.src.handlers.map_resistance_to_puck_colors.send_to_frontend_resistance_and_puck_colors_handler import SendToFrontendResistanceAndPuckColorsHandler
 from controller.src.handlers.get_command_panel_position_handler import GetCommandPanelPositionHandler
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
 from controller.src.handlers.map_letters_to_puck_corners.map_letters_to_puck_corners_handler import MapLettersToPuckCornersHandler
@@ -65,7 +65,10 @@ class CommandBuilder:
         elif step == Step.READ_RESISTANCE:
             self._commands.append(Command([ReadResistanceHandler()]))
         elif step == Step.MAP_RESISTANCE_TO_PUCK_COLORS:
-            self._commands.append(Command([MapResistanceToPuckColorsHandler(), SendResistanceAndPuckColorsHandler()]))
+            self._commands.append(Command([
+                MapResistanceToPuckColorsHandler(),
+                SendToFrontendResistanceAndPuckColorsHandler()
+            ]))
         elif step == Step.GET_COMMAND_PANEL_POSITION:
             self._commands.append(Command([GetCommandPanelPositionHandler()]))
         elif step == Step.READ_LETTERS:
