@@ -25,10 +25,10 @@ jobs:
         run: docker build -t scripts .
       - name: Run tests with coverage
         run: docker run scripts pytest --cov=./ --cov-report=xml
-      - name: Upload coverage to codecov
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: |
-          CI_ENV=`bash <(curl -s https://codecov.io/env)`
-          docker run scripts $CI_ENV -e CI=true
-          bash <(curl -s https://codecov.io/bash)
+      - name: Move coverage to host
+        run: docker cp scripts:$PWD/coverage.xml .
+       - name: Upload coverage to codecov
+         uses: codecov/codecov-action@v1
+         with:
+           token: ${{ secrets.CODECOV_TOKEN }}
+           flags: scripts
