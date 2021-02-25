@@ -1,7 +1,7 @@
 from controller.src.handlers.handler import Handler
 
 
-class SendPlannedTrajectoryHandler(Handler):
+class SendToRobotPlannedTrajectoryHandler(Handler):
     def handle(self, handled_data=None):
-        # TODO : Implement SendPlannedTrajectoryHandler
+        # TODO : Implement SendToRobotPlannedTrajectoryHandler
         return handled_data
