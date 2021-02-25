@@ -27,8 +27,8 @@ jobs:
         run: docker run scripts pytest --cov=./ --cov-report=xml
       - name: Move coverage to host
         run: docker cp scripts:$PWD/coverage.xml .
-       - name: Upload coverage to codecov
-         uses: codecov/codecov-action@v1
-         with:
-           token: ${{ secrets.CODECOV_TOKEN }}
-           flags: scripts
+      - name: Upload coverage to codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: scripts
