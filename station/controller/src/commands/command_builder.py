@@ -19,7 +19,7 @@ from controller.src.handlers.map_resistance_to_puck_colors.send_to_frontend_resi
 from controller.src.handlers.get_command_panel_position_handler import GetCommandPanelPositionHandler
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
 from controller.src.handlers.map_letters_to_puck_corners.map_letters_to_puck_corners_handler import MapLettersToPuckCornersHandler
-from controller.src.handlers.map_letters_to_puck_corners.send_first_puck_corner_handler import SendFirstPuckCornerHandler
+from controller.src.handlers.map_letters_to_puck_corners.send_to_frontend_first_puck_corner_handler import SendToFrontendFirstPuckCornerHandler
 from controller.src.handlers.get_next_puck_position_handler import GetNextPuckPositionHandler
 from controller.src.handlers.grip_puck.grip_puck_handler import GripPuckHandler
 from controller.src.handlers.grip_puck.send_puck_gripped_state_handler import SendPuckGrippedStateHandler
@@ -74,7 +74,7 @@ class CommandBuilder:
         elif step == Step.READ_LETTERS:
             self._commands.append(Command([ReadLettersHandler()]))
         elif step == Step.MAP_LETTERS_TO_PUCK_CORNERS:
-            self._commands.append(Command([MapLettersToPuckCornersHandler(), SendFirstPuckCornerHandler()]))
+            self._commands.append(Command([MapLettersToPuckCornersHandler(), SendToFrontendFirstPuckCornerHandler()]))
         elif step == Step.GET_NEXT_PUCK_POSITION:
             self._commands.append(Command([GetNextPuckPositionHandler()]))
         elif step == Step.GRIP_PUCK:

@@ -1,7 +1,7 @@
 from controller.src.handlers.handler import Handler
 
 
-class SendFirstPuckCornerHandler(Handler):
+class SendToFrontendFirstPuckCornerHandler(Handler):
     def handle(self, handled_data=None):
-        # TODO : Implement SendFirstPuckCornerHandler
+        # TODO : Implement SendToFrontendFirstPuckCornerHandler
         return handled_data
