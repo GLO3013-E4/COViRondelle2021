@@ -14,6 +14,9 @@ third_command = Command([])
 class MockCommandBuilder(CommandBuilder):
     has_sent_steps = False
 
+    def some_commands(self):
+        return self
+
     def with_steps(self, steps):
         if steps is sent_steps:
             self.has_sent_steps = True

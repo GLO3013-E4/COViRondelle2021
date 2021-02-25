@@ -176,7 +176,7 @@ def test_given_end_cycle_step_when_building_then_return_end_cycle_command():
 
 
 def given_single_step_when_building_then_return_correct_command(step, handler_classes):
-    commands = command_builder.with_steps([step]).build_many()
+    commands = command_builder.some_commands().with_steps([step]).build_many()
 
     assert len(commands) == 1
     assert len(commands[0].handlers) == len(handler_classes)

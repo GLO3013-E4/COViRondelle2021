@@ -8,7 +8,7 @@ class ChainOfCommandsFactory:
 
     # TODO : Steps should always be cycle_steps, this is for testing until the final implementation
     def create(self, steps: [Step] = cycle_steps):
-        commands = self.command_builder.with_steps(steps).build_many()
+        commands = self.command_builder.some_commands().with_steps(steps).build_many()
 
         next_command = commands.pop()
 

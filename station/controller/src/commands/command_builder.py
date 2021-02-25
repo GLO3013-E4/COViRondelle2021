@@ -34,9 +34,11 @@ from controller.src.handlers.end_cycle.send_to_frontend_cycle_ended_handler impo
 class CommandBuilder:
     _commands = []
 
-    def with_steps(self, steps):
+    def some_commands(self):
         self._commands = []
+        return self
 
+    def with_steps(self, steps):
         for step in steps:
             self._with_step(step)
 
