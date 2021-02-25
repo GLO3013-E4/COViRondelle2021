@@ -1,0 +1,23 @@
+comment:
+  layout: "reach, diff, flags, files"
+  behavior: default
+  branches:
+    - "develop"
+    - "main"
+flags:
+  scripts:
+    paths:
+      - scripts
+    carryforward: true
+  robot:
+    paths:
+      - robot
+    carryforward: true
+  station:
+    paths:
+      - station
+    carryforward: true
+  frontend:
+    paths:
+      - frontend
+    carryforward: true
