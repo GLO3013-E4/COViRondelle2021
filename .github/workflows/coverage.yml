@@ -24,7 +24,7 @@ jobs:
       - name: Build docker image
         run: docker build -t scripts .
       - name: Run tests with coverage
-        run: docker run scripts pytest --cov=./
+        run: docker run scripts pytest --cov=./ --cov-report=xml
       - name: Upload coverage to codecov
         env:
           CI: "true"
