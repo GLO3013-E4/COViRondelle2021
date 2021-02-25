@@ -3,6 +3,7 @@ from controller.src.commands.command_builder import CommandBuilder
 
 from controller.src.handlers.wait_for_robot_ready_state_handler import WaitForRobotReadyStateHandler
 from controller.src.handlers.send_to_frontend_ready_state_handler import SendToFrontendReadyStateHandler
+from controller.src.handlers.wait_for_frontend_cycle_start_handler import WaitForFrontendCycleStartHandler
 from controller.src.handlers.send_table_image.capture_table_image_handler import CaptureTableImageHandler
 from controller.src.handlers.send_table_image.send_table_image_handler import SendTableImageHandler
 from controller.src.handlers.get_resistance_station_position_handler import GetResistanceStationPositionHandler
@@ -57,6 +58,13 @@ def test_given_wait_for_robot_ready_state_step_when_building_then_return_wait_fo
 def test_given_send_to_frontend_ready_state_step_when_building_then_return_send_to_frontend_ready_command():
     step = Step.SEND_TO_FRONTEND_READY_STATE
     handler_classes = [SendToFrontendReadyStateHandler]
+
+    given_single_step_when_building_then_return_correct_command(step, handler_classes)
+
+
+def test_given_wait_for_frontend_cycle_start_step_when_building_then_return_wait_for_frontend_cycle_start_command():
+    step = Step.WAIT_FOR_FRONTEND_CYCLE_START
+    handler_classes = [WaitForFrontendCycleStartHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
