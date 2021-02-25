@@ -21,12 +21,14 @@ jobs:
         node-version: [ 15.x ]
     steps:
       - uses: actions/checkout@v2
-      - name: Build docker image
-        run: docker build -t scripts .
-      - name: Run tests with coverage
-        run: docker run scripts pytest --cov=./ --cov-report=xml:/home/app/scripts/coverage.xml
-      - name: Upload coverage to codecov
+      - name: Setup upload to codecov
         env:
           CI: "true"
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: docker run scripts bash <(curl -s https://codecov.io/bash -- -t $CODECOV_TOKEN)
+        run: |
+          CI_ENV="bash <(curl -s https://codecov.io/env)"
+          CI_POST_COV="bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN"
+      - name: Build docker image
+        run: docker build -t scripts .
+      - name: Run tests with coverage
+        run: docker run scripts /bin/bash -c "$CI_ENV && pytest --cov=./ --cov-report=xml && $CI_POST_COV"
