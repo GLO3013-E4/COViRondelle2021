@@ -28,7 +28,7 @@ jobs:
           CI: "true"
         run: docker run scripts /bin/bash -c "bash <(curl -s https://codecov.io/env)"
       - name: Run tests with coverage
-        run: docker run scripts pytest --cov=./ --cov-report=xml:./coverage.xml
+        run: docker run scripts pytest --cov=./ --cov-report=xml:coverage.xml
       - name: Upload code coverage to codecov
         env:
           CI: "true"
