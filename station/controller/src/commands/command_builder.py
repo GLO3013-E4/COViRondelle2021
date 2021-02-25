@@ -22,7 +22,7 @@ from controller.src.handlers.map_letters_to_puck_corners.map_letters_to_puck_cor
 from controller.src.handlers.map_letters_to_puck_corners.send_to_frontend_first_puck_corner_handler import SendToFrontendFirstPuckCornerHandler
 from controller.src.handlers.get_next_puck_position_handler import GetNextPuckPositionHandler
 from controller.src.handlers.grip_puck.grip_puck_handler import GripPuckHandler
-from controller.src.handlers.grip_puck.send_puck_gripped_state_handler import SendPuckGrippedStateHandler
+from controller.src.handlers.grip_puck.send_to_frontend_puck_gripped_state_handler import SendToFrontendPuckGrippedStateHandler
 from controller.src.handlers.get_next_corner_position_handler import GetNextCornerPositionHandler
 from controller.src.handlers.release_puck.release_puck_handler import ReleasePuckHandler
 from controller.src.handlers.release_puck.send_puck_released_state_handler import SendPuckReleasedStateHandler
@@ -78,7 +78,7 @@ class CommandBuilder:
         elif step == Step.GET_NEXT_PUCK_POSITION:
             self._commands.append(Command([GetNextPuckPositionHandler()]))
         elif step == Step.GRIP_PUCK:
-            self._commands.append(Command([GripPuckHandler(), SendPuckGrippedStateHandler()]))
+            self._commands.append(Command([GripPuckHandler(), SendToFrontendPuckGrippedStateHandler()]))
         elif step == Step.GET_NEXT_CORNER_POSITION:
             self._commands.append(Command([GetNextCornerPositionHandler()]))
         elif step == Step.RELEASE_PUCK:

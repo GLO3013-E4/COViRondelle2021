@@ -22,7 +22,7 @@ from controller.src.handlers.map_letters_to_puck_corners.map_letters_to_puck_cor
 from controller.src.handlers.map_letters_to_puck_corners.send_to_frontend_first_puck_corner_handler import SendToFrontendFirstPuckCornerHandler
 from controller.src.handlers.get_next_puck_position_handler import GetNextPuckPositionHandler
 from controller.src.handlers.grip_puck.grip_puck_handler import GripPuckHandler
-from controller.src.handlers.grip_puck.send_puck_gripped_state_handler import SendPuckGrippedStateHandler
+from controller.src.handlers.grip_puck.send_to_frontend_puck_gripped_state_handler import SendToFrontendPuckGrippedStateHandler
 from controller.src.handlers.get_next_corner_position_handler import GetNextCornerPositionHandler
 from controller.src.handlers.release_puck.release_puck_handler import ReleasePuckHandler
 from controller.src.handlers.release_puck.send_puck_released_state_handler import SendPuckReleasedStateHandler
@@ -142,7 +142,7 @@ def test_given_get_next_puck_position_step_when_building_then_return_get_next_pu
 
 def test_given_grip_puck_step_when_building_then_return_grip_puck_command():
     step = Step.GRIP_PUCK
-    handler_classes = [GripPuckHandler, SendPuckGrippedStateHandler]
+    handler_classes = [GripPuckHandler, SendToFrontendPuckGrippedStateHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
