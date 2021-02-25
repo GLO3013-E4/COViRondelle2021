@@ -11,7 +11,7 @@ from controller.src.handlers.move_robot.get_robot_position_handler import GetRob
 from controller.src.handlers.move_robot.calculate_trajectory_handler import CalculateTrajectoryHandler
 from controller.src.handlers.move_robot.send_to_robot_planned_trajectory_handler import SendToRobotPlannedTrajectoryHandler
 from controller.src.handlers.move_robot.send_to_frontend_planned_trajectory_handler import SendToFrontendPlannedTrajectoryHandler
-from controller.src.handlers.move_robot.send_real_trajectory_coordinate_handler import SendRealTrajectoryCoordinateHandler
+from controller.src.handlers.move_robot.send_to_frontend_real_trajectory_coordinate_handler import SendToFrontendRealTrajectoryCoordinateHandler
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 from controller.src.handlers.map_resistance_to_puck_colors.map_resistance_to_puck_colors_handler import MapResistanceToPuckColorsHandler
@@ -91,7 +91,7 @@ def test_given_move_robot_step_when_building_then_return_move_robot_command():
         CalculateTrajectoryHandler,
         SendToRobotPlannedTrajectoryHandler,
         SendToFrontendPlannedTrajectoryHandler,
-        SendRealTrajectoryCoordinateHandler,
+        SendToFrontendRealTrajectoryCoordinateHandler,
         WaitForRobotArrivalHandler
     ]
 
