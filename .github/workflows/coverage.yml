@@ -25,7 +25,9 @@ jobs:
         run: docker build -t scripts .
       - name: Run tests with coverage
         run: docker run scripts pytest --cov=./
+      - name: Setup codecov env
+        run: CODECOV_ENV=`bash <(curl -s https://codecov.io/env)`
       - name: Upload code coverage to codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: docker run scripts codecov -t $CODECOV_TOKEN -F scripts
+        run: docker run scripts codecov -t $CODECOV_TOKEN -e $CODECOV_ENV -F scripts
