@@ -2,7 +2,7 @@ from controller.src.commands.step import Step
 
 cycle_steps = [
     Step.WAIT_FOR_ROBOT_READY_STATE,
-    Step.SEND_READY_STATE,
+    Step.SEND_TO_FRONTEND_READY_STATE,
     Step.SEND_TABLE_IMAGE,
     Step.GET_RESISTANCE_STATION_POSITION,
     Step.MOVE_ROBOT,

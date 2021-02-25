@@ -2,7 +2,7 @@ from controller.src.commands.command import Command
 from controller.src.commands.step import Step
 
 from controller.src.handlers.wait_for_robot_ready_state_handler import WaitForRobotReadyStateHandler
-from controller.src.handlers.send_ready_state_handler import SendReadyStateHandler
+from controller.src.handlers.send_to_frontend_ready_state_handler import SendToFrontendReadyStateHandler
 from controller.src.handlers.send_table_image.capture_table_image_handler import CaptureTableImageHandler
 from controller.src.handlers.send_table_image.send_table_image_handler import SendTableImageHandler
 from controller.src.handlers.get_resistance_station_position_handler import GetResistanceStationPositionHandler
@@ -44,8 +44,8 @@ class CommandBuilder:
     def _with_step(self, step):
         if step == Step.WAIT_FOR_ROBOT_READY_STATE:
             self._commands.append(Command([WaitForRobotReadyStateHandler()]))
-        elif step == Step.SEND_READY_STATE:
-            self._commands.append(Command([SendReadyStateHandler()]))
+        elif step == Step.SEND_TO_FRONTEND_READY_STATE:
+            self._commands.append(Command([SendToFrontendReadyStateHandler()]))
         elif step == Step.SEND_TABLE_IMAGE:
             self._commands.append(Command([CaptureTableImageHandler(), SendTableImageHandler()]))
         elif step == Step.GET_RESISTANCE_STATION_POSITION:

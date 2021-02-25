@@ -2,7 +2,7 @@ from controller.src.commands.step import Step
 from controller.src.commands.command_builder import CommandBuilder
 
 from controller.src.handlers.wait_for_robot_ready_state_handler import WaitForRobotReadyStateHandler
-from controller.src.handlers.send_ready_state_handler import SendReadyStateHandler
+from controller.src.handlers.send_to_frontend_ready_state_handler import SendToFrontendReadyStateHandler
 from controller.src.handlers.send_table_image.capture_table_image_handler import CaptureTableImageHandler
 from controller.src.handlers.send_table_image.send_table_image_handler import SendTableImageHandler
 from controller.src.handlers.get_resistance_station_position_handler import GetResistanceStationPositionHandler
@@ -40,7 +40,7 @@ def test_given_no_step_when_building_then_return_empty_list():
 
 
 def test_given_multiple_steps_when_building_then_list_of_length_of_steps():
-    steps = [Step.WAIT_FOR_ROBOT_READY_STATE, Step.SEND_READY_STATE]
+    steps = [Step.WAIT_FOR_ROBOT_READY_STATE, Step.SEND_TO_FRONTEND_READY_STATE]
 
     commands = command_builder.with_steps(steps).build_many()
 
@@ -54,9 +54,9 @@ def test_given_wait_for_robot_ready_state_step_when_building_then_return_wait_fo
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
-def test_given_send_ready_state_step_when_building_then_return_send_ready_command():
-    step = Step.SEND_READY_STATE
-    handler_classes = [SendReadyStateHandler]
+def test_given_send_to_frontend_ready_state_step_when_building_then_return_send_to_frontend_ready_command():
+    step = Step.SEND_TO_FRONTEND_READY_STATE
+    handler_classes = [SendToFrontendReadyStateHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
