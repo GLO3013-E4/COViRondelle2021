@@ -28,7 +28,7 @@ jobs:
       - name: Move coverage to host
         run: |
           SCRIPTS_ID=`docker inspect --format="{{.Id}}" scripts`
-          docker cp %SCRIPTS_ID:$PWD/coverage.xml .
+          docker cp $SCRIPTS_ID:$PWD/coverage.xml .
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v1
         with:
