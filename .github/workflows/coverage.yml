@@ -27,8 +27,8 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
           CI_ENV="bash <(curl -s https://codecov.io/env)"
-          CI_POST_COV="bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN"
+          CI_POST_COV="bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -F scripts"
       - name: Build docker image
         run: docker build -t scripts .
       - name: Run tests with coverage
-        run: docker run scripts /bin/bash -c "$CI_ENV && pytest --cov=./ --cov-report=xml && $CI_POST_COV"
+        run: docker run -t scripts /bin/bash -c "$CI_ENV && pytest --cov=./ --cov-report=xml && $CI_POST_COV"
