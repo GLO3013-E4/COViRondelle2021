@@ -26,4 +26,4 @@ jobs:
       - name: Lint application
         run: docker run scripts pylint *
       - name: Test application
-        run: docker run scripts pytest tests
+        run: docker run scripts pytest
