@@ -23,7 +23,7 @@ jobs:
       - name: Build docker image
         run: docker build -t scripts .
       - name: Run tests with coverage
-        run: docker run -i -v $PWD:/output scripts python -m pytest --cov=./ --cov-report xml:/output/coverage.xml
+        run: docker run -i -v $PWD:/output scripts pytest --cov=./ --cov-report xml:/output/coverage.xml
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v1
         with:
@@ -42,9 +42,32 @@ jobs:
       - name: Build docker image
         run: docker build -t station .
       - name: Run tests with coverage
-        run: docker run -i -v $PWD:/output station python -m pytest --cov=./ --cov-report xml:/output/coverage.xml
+        run: docker run -i -v $PWD:/output station pytest --cov=./ --cov-report xml:/output/coverage.xml
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: station
+  cover-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    strategy:
+      matrix:
+        node-version: [ 15.x ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: yarn install
+      - name: Run tests with coverage
+        run: yarn test --coverage
+      - name: Upload coverage to codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: frontend
