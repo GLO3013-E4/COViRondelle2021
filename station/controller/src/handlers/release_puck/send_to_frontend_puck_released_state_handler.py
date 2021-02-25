@@ -1,7 +1,7 @@
 from controller.src.handlers.handler import Handler
 
 
-class SendPuckReleasedStateHandler(Handler):
+class SendToFrontendPuckReleasedStateHandler(Handler):
     def handle(self, handled_data=None):
-        # TODO : Implement SendPuckReleasedStateHandler
+        # TODO : Implement SendToFrontendPuckReleasedStateHandler
         return handled_data

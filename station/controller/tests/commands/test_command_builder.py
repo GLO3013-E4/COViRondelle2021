@@ -25,7 +25,7 @@ from controller.src.handlers.grip_puck.grip_puck_handler import GripPuckHandler
 from controller.src.handlers.grip_puck.send_to_frontend_puck_gripped_state_handler import SendToFrontendPuckGrippedStateHandler
 from controller.src.handlers.get_next_corner_position_handler import GetNextCornerPositionHandler
 from controller.src.handlers.release_puck.release_puck_handler import ReleasePuckHandler
-from controller.src.handlers.release_puck.send_puck_released_state_handler import SendPuckReleasedStateHandler
+from controller.src.handlers.release_puck.send_to_frontend_puck_released_state_handler import SendToFrontendPuckReleasedStateHandler
 from controller.src.handlers.get_start_square_center_position_handler import GetStartSquareCenterPositionHandler
 from controller.src.handlers.end_cycle.turn_on_red_light_handler import TurnOnRedLightHandler
 from controller.src.handlers.end_cycle.send_cycle_ended_step_handler import SendCycleEndedStepHandler
@@ -156,7 +156,7 @@ def test_given_get_next_corner_position_step_when_building_then_return_get_next_
 
 def test_given_release_puck_step_when_building_then_return_release_puck_command():
     step = Step.RELEASE_PUCK
-    handler_classes = [ReleasePuckHandler, SendPuckReleasedStateHandler]
+    handler_classes = [ReleasePuckHandler, SendToFrontendPuckReleasedStateHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
