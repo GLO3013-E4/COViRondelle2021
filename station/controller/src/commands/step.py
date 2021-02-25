@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class Step(Enum):
-    WAIT_FOR_READY_STATE = 'WaitForReadyState'
+    WAIT_FOR_ROBOT_READY_STATE = 'WaitForRobotReadyState'
     SEND_READY_STATE = 'SendReadyState'
     SEND_TABLE_IMAGE = 'SendTableImage'
     GET_RESISTANCE_STATION_POSITION = 'GetResistanceStationPosition'

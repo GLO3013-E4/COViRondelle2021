@@ -1,7 +1,7 @@
 from controller.src.commands.step import Step
 from controller.src.commands.command_builder import CommandBuilder
 
-from controller.src.handlers.wait_for_ready_state_handler import WaitForReadyStateHandler
+from controller.src.handlers.wait_for_robot_ready_state_handler import WaitForRobotReadyStateHandler
 from controller.src.handlers.send_ready_state_handler import SendReadyStateHandler
 from controller.src.handlers.send_table_image.capture_table_image_handler import CaptureTableImageHandler
 from controller.src.handlers.send_table_image.send_table_image_handler import SendTableImageHandler
@@ -40,16 +40,16 @@ def test_given_no_step_when_building_then_return_empty_list():
 
 
 def test_given_multiple_steps_when_building_then_list_of_length_of_steps():
-    steps = [Step.WAIT_FOR_READY_STATE, Step.SEND_READY_STATE]
+    steps = [Step.WAIT_FOR_ROBOT_READY_STATE, Step.SEND_READY_STATE]
 
     commands = command_builder.with_steps(steps).build_many()
 
     assert len(commands) == len(steps)
 
 
-def test_given_wait_for_ready_state_step_when_building_then_return_wait_for_ready_command():
-    step = Step.WAIT_FOR_READY_STATE
-    handler_classes = [WaitForReadyStateHandler]
+def test_given_wait_for_robot_ready_state_step_when_building_then_return_wait_for_robot_ready_command():
+    step = Step.WAIT_FOR_ROBOT_READY_STATE
+    handler_classes = [WaitForRobotReadyStateHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
