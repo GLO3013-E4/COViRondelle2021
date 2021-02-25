@@ -24,7 +24,7 @@ jobs:
       - name: Build docker image
         run: docker build -t scripts .
       - name: Run tests with coverage
-        run: docker run -it -v $PWD/output:/output scripts python -m pytest --cov=./ --cov-report xml:/output/coverage.xml
+        run: docker run -i -v $PWD/output:/output scripts python -m pytest --cov=./ --cov-report xml:/output/coverage.xml
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v1
         with:
