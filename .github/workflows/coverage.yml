@@ -23,14 +23,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build docker image
         run: docker build -t scripts .
-      - name: Setup CI env
-        env:
-          CI: "true"
-        run: docker run scripts /bin/bash -c "bash <(curl -s https://codecov.io/env)"
       - name: Run tests with coverage
         run: docker run scripts pytest --cov=./
       - name: Upload code coverage to codecov
         env:
-          CI: "true"
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: docker run scripts /bin/bash -c "bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN -F scripts"
+        run: docker run scripts codecov -t $CODECOV_TOKEN -F scripts
