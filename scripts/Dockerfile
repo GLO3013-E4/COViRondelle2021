@@ -22,8 +22,6 @@ WORKDIR /home/app/scripts
 
 COPY . .
 
-VOLUME coverage
-
 RUN pip install -r requirements.txt
 
 CMD ["bash"]
