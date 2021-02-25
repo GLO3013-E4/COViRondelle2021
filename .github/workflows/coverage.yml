@@ -29,5 +29,5 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: $PWD/output/coverage.xml
+          files: ./output/coverage.xml
           flags: scripts
