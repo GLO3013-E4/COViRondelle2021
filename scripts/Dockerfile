@@ -22,7 +22,7 @@ WORKDIR /home/app/scripts
 
 COPY . .
 
-VOLUME ./coverage
+VOLUME coverage
 
 RUN pip install -r requirements.txt
 
