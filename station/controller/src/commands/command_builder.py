@@ -28,7 +28,7 @@ from controller.src.handlers.release_puck.release_puck_handler import ReleasePuc
 from controller.src.handlers.release_puck.send_to_frontend_puck_released_state_handler import SendToFrontendPuckReleasedStateHandler
 from controller.src.handlers.get_start_square_center_position_handler import GetStartSquareCenterPositionHandler
 from controller.src.handlers.end_cycle.turn_on_red_light_handler import TurnOnRedLightHandler
-from controller.src.handlers.end_cycle.send_cycle_ended_step_handler import SendCycleEndedStepHandler
+from controller.src.handlers.end_cycle.send_to_frontend_cycle_ended_handler import SendToFrontendCycleEndedHandler
 
 
 class CommandBuilder:
@@ -86,7 +86,7 @@ class CommandBuilder:
         elif step == Step.GET_START_SQUARE_CENTER_POSITION:
             self._commands.append(Command([GetStartSquareCenterPositionHandler()]))
         elif step == Step.END_CYCLE:
-            self._commands.append(Command([TurnOnRedLightHandler(), SendCycleEndedStepHandler()]))
+            self._commands.append(Command([TurnOnRedLightHandler(), SendToFrontendCycleEndedHandler()]))
 
     def build_many(self):
         return self._commands

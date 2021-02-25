@@ -1,7 +1,7 @@
 from controller.src.handlers.handler import Handler
 
 
-class SendCycleEndedStepHandler(Handler):
+class SendToFrontendCycleEndedHandler(Handler):
     def handle(self, handled_data=None):
-        # TODO : Implement SendCycleEndedStepHandler
+        # TODO : Implement SendToFrontendCycleEndedHandler
         return handled_data
