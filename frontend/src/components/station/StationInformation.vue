@@ -15,9 +15,11 @@
         <v-col sm="6">
           <ControlPanel />
         </v-col>
-
         <v-col sm="6">
           <PuckInGrip />
+        </v-col>
+        <v-col sm="6">
+          <PuckDeposited />
         </v-col>
       </v-row>
     </v-container>
@@ -29,12 +31,14 @@ import { Component, Vue } from 'vue-property-decorator';
 import Resistance from '../station/Resistance.vue';
 import ControlPanel from '../station/ControlPanel.vue';
 import PuckInGrip from '../station/PuckInGrip.vue';
+import PuckDeposited from '../station/PuckDeposited.vue';
 
 @Component({
   components: {
     Resistance: Resistance,
     ControlPanel: ControlPanel,
     PuckInGrip: PuckInGrip,
+    PuckDeposited: PuckDeposited,
   },
 })
 export default class StationInformation extends Vue {}
