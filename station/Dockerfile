@@ -8,6 +8,8 @@ RUN apt-get update \
         python3-setuptools \
         build-essential \
 	    ros-melodic-usb-cam \
+        ros-melodic-geometry-msgs \
+        ros-melodic-cv-bridge \
         iputils-ping \
     && apt-get clean
 

@@ -11,6 +11,7 @@ RUN apt-get update \
         tesseract-ocr \
         libtesseract-dev \
         libleptonica-dev \
+        ros-melodic-geometry-msgs \
         iputils-ping \
     && ldconfig \
     && apt-get install -y --no-install-recommends \

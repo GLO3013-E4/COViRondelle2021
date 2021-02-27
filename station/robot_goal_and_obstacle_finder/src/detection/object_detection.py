@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
 
-from scripts.src.detection.lower_boundary import LowerBoundary
-from scripts.src.detection.upper_boundary import UpperBoundary
+from detection.lower_boundary import LowerBoundary
+from detection.upper_boundary import UpperBoundary
 
 
 class ObjectDetection:
@@ -19,7 +19,7 @@ class ObjectDetection:
         try:
             image = self.image.copy()
         except AttributeError as invalid_image:
-            raise AttributeError("L'image est invalide") from invalid_image
+            raise AttributeError("L'image est invalide")
         return image
 
     def generate_puck_position(self, x_position, y_position, width, height):
