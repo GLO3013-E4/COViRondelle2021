@@ -1,9 +1,12 @@
 <template>
-  <v-card class="grey lighten-3">
+  <v-card class="grey lighten-3" height="100%">
     <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
       <h5 class="white--text">Puck deposited</h5>
     </v-card-title>
-    <div class="d-flex justify-center font-weight-bold">
+     <v-container height="100%">
+      <v-row align="center">
+        <v-col sm="12">
+          <div ref="corner" class="d-flex justify-center font-weight-bold">
       <v-avatar
         ref="puckDeposited"
         size="30"
@@ -15,6 +18,9 @@
         {{ i + 1 }}
       </v-avatar>
     </div>
+        </v-col>
+      </v-row>
+     </v-container>
   </v-card>
 </template>
 
