@@ -35,68 +35,54 @@ export default class PuckDeposited extends Vue {
   public currentStep!: Step;
   public deposited: Array<Color> = [];
 
+  get NoPuckYet(): boolean {
+    return (
+      this.currentStep < Step.ToFirstCornerAndReleaseFirstPuck ||
+      (this.currentStep == Step.ToFirstCornerAndReleaseFirstPuck &&
+        this.puckInGrip)
+    );
+  }
+
+  get FirstPuckDeposited(): boolean {
+    return (
+      (this.currentStep == Step.ToFirstCornerAndReleaseFirstPuck &&
+        !this.puckInGrip) ||
+      (this.currentStep > Step.ToFirstCornerAndReleaseFirstPuck &&
+        this.currentStep < Step.ToSecondCornerAndReleaseSecondPuck) ||
+      (this.currentStep == Step.ToSecondCornerAndReleaseSecondPuck &&
+        this.puckInGrip)
+    );
+  }
+
+  get SecondPuckDeposited(): boolean {
+    return (
+      (this.currentStep == Step.ToSecondCornerAndReleaseSecondPuck &&
+        !this.puckInGrip) ||
+      (this.currentStep > Step.ToSecondCornerAndReleaseSecondPuck &&
+        this.currentStep < Step.ToThirdCornerAndReleaseThirdPuck) ||
+      (this.currentStep == Step.ToThirdCornerAndReleaseThirdPuck &&
+        this.puckInGrip)
+    );
+  }
+
+  get ThirdPuckDeposited(): boolean {
+    return (
+      (this.currentStep == Step.ToThirdCornerAndReleaseThirdPuck &&
+        !this.puckInGrip) ||
+      this.currentStep > Step.ToThirdCornerAndReleaseThirdPuck
+    );
+  }
+
   get depositedPuck(): Array<Color> {
-    while (this.currentStep < Step.ToFirstCornerAndReleaseFirstPuck) {
+    if (this.NoPuckYet) {
       return this.deposited;
-    }
-    while (
-      this.currentStep == Step.ToFirstCornerAndReleaseFirstPuck &&
-      this.puckInGrip
-    ) {
-      return this.deposited;
-    }
-    while (
-      this.currentStep == Step.ToFirstCornerAndReleaseFirstPuck &&
-      !this.puckInGrip
-    ) {
+    } else if (this.FirstPuckDeposited) {
       this.deposited.push(this.puckColors[0]);
       return this.deposited;
-    }
-    //After first release
-    while (
-      this.currentStep > Step.ToFirstCornerAndReleaseFirstPuck &&
-      this.currentStep < Step.ToSecondCornerAndReleaseSecondPuck
-    ) {
-      this.deposited.push(this.puckColors[0]);
-      return this.deposited;
-    }
-    while (
-      this.currentStep == Step.ToSecondCornerAndReleaseSecondPuck &&
-      this.puckInGrip
-    ) {
-      this.deposited.push(this.puckColors[0]);
-      return this.deposited;
-    }
-    while (
-      this.currentStep == Step.ToSecondCornerAndReleaseSecondPuck &&
-      !this.puckInGrip
-    ) {
+    } else if (this.SecondPuckDeposited) {
       this.deposited.push(this.puckColors[0], this.puckColors[1]);
       return this.deposited;
-    }
-    //After second release
-    while (
-      this.currentStep > Step.ToSecondCornerAndReleaseSecondPuck &&
-      this.currentStep < Step.ToThirdCornerAndReleaseThirdPuck
-    ) {
-      this.deposited.push(this.puckColors[0], this.puckColors[1]);
-      return this.deposited;
-    }
-    while (
-      this.currentStep == Step.ToThirdCornerAndReleaseThirdPuck &&
-      this.puckInGrip
-    ) {
-      this.deposited.push(this.puckColors[0], this.puckColors[1]);
-      return this.deposited;
-    }
-    while (
-      this.currentStep == Step.ToThirdCornerAndReleaseThirdPuck &&
-      !this.puckInGrip
-    ) {
-      return this.puckColors;
-    }
-    //After last release
-    while (this.currentStep > Step.ToThirdCornerAndReleaseThirdPuck) {
+    } else if (this.ThirdPuckDeposited) {
       return this.puckColors;
     }
     return this.puckColors;
