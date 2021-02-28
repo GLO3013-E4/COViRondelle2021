@@ -28,7 +28,7 @@ export default class StepList extends Vue {
   public currentStep!: Step;
 
   get currentStepNumber(): number {
-      return this.currentStep+1;
+    return this.currentStep + 1;
   }
 
   get steps(): Array<string> {
@@ -40,7 +40,7 @@ export default class StepList extends Vue {
         const formatedStep = notFormatedStep
           .replace(/([A-Z]+)/g, ',$1')
           .replace(/^,/, '');
-        result.push(formatedStep.split(",").join(' ').toString());
+        result.push(formatedStep.split(',').join(' ').toString());
       }
     }
     return result;
@@ -52,7 +52,7 @@ export default class StepList extends Vue {
 .v-stepper--vertical .v-stepper__step {
   padding: 1px 0px 0px;
 }
-.v-stepper--vertical{
-    padding: 0px;
+.v-stepper--vertical {
+  padding: 0px;
 }
 </style>

@@ -43,4 +43,3 @@ import PuckDeposit from '../station/PuckDeposit.vue';
 })
 export default class StationInformation extends Vue {}
 </script>
-

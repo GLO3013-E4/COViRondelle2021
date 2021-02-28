@@ -101,4 +101,3 @@ export default class PuckDeposit extends Vue {
   padding: 0px;
 }
 </style>
-

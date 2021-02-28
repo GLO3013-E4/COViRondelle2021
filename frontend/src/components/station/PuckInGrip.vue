@@ -34,4 +34,3 @@ export default class PuckInGrip extends Vue {
   padding: 0px;
 }
 </style>
-

@@ -13,7 +13,7 @@
           <StepList />
         </v-col>
         <v-col sm="4">
-          <StartButton/>
+          <StartButton />
         </v-col>
       </v-row>
     </v-container>

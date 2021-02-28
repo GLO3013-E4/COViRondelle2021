@@ -23,7 +23,6 @@ AtFirstStep.args = {
   currentStep: Step.CycleNotStarted,
 };
 
-
 export const AtFurtherStep = Template.bind({}) as any;
 AtFurtherStep.args = {
   currentStep: Step.ReadResistance,

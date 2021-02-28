@@ -18,7 +18,7 @@ export const defaultState = {
   plannedTrajectory: [] as Array<Coordinate>,
   realTrajectory: [] as Array<Coordinate>,
   puckInGrip: false,
-  currentStep: Step.ReadResistance,
+  currentStep: Step.CycleEndedAndRedLedOn,
 };
 
 export const state = {

@@ -58,4 +58,3 @@ export default class ControlPanel extends Vue {
   padding: 0px;
 }
 </style>
-
