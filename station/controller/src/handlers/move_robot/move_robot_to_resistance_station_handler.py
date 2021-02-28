@@ -1,7 +1,7 @@
 from controller.src.handlers.handler import Handler
 
 
-class GetResistanceStationPositionHandler(Handler):
+class MoveRobotToResistanceStationHandler(Handler):
     def handle(self, handled_data=None):
-        # TODO : Implement GetResistanceStationPositionHandler
+        # TODO : Implement MoveRobotToResistanceStationHandler
         return handled_data

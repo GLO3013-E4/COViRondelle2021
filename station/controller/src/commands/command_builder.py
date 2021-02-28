@@ -3,6 +3,7 @@ from controller.src.commands.step import Step
 
 from controller.src.handlers.wait_for_robot_ready_state_handler import WaitForRobotReadyStateHandler
 from controller.src.handlers.wait_for_frontend_cycle_start_handler import WaitForFrontendCycleStartHandler
+from controller.src.handlers.move_robot.move_robot_to_resistance_station_handler import MoveRobotToResistanceStationHandler
 from controller.src.handlers.move_robot.get_robot_position_handler import GetRobotPositionHandler
 from controller.src.handlers.move_robot.calculate_trajectory_handler import CalculateTrajectoryHandler
 from controller.src.handlers.move_robot.send_to_robot_planned_trajectory_handler import SendToRobotPlannedTrajectoryHandler
@@ -45,15 +46,11 @@ class CommandBuilder:
             self._commands.append(Command([WaitForRobotReadyStateHandler()]))
         elif step == Step.WAIT_FOR_FRONTEND_CYCLE_START:
             self._commands.append(Command([WaitForFrontendCycleStartHandler()]))
-        elif step == Step.MOVE_ROBOT:
-            self._commands.append(Command([
-                GetRobotPositionHandler(),
-                CalculateTrajectoryHandler(),
-                SendToRobotPlannedTrajectoryHandler(),
-                SendToFrontendPlannedTrajectoryHandler(),
-                SendToFrontendRealTrajectoryCoordinateHandler(),
-                WaitForRobotArrivalHandler()
-            ]))
+        elif step == Step.MOVE_ROBOT_TO_RESISTANCE_STATION:
+            self._commands.append(Command([MoveRobotToResistanceStationHandler()]))
+        elif step == Step.WAIT_FOR_ROBOT_ARRIVAL:
+            self._commands.append(Command([WaitForRobotArrivalHandler()]))
+        # TODO : Rework command building
         elif step == Step.READ_RESISTANCE:
             self._commands.append(Command([ReadResistanceHandler()]))
         elif step == Step.MAP_RESISTANCE_TO_PUCK_COLORS:
@@ -79,6 +76,16 @@ class CommandBuilder:
             self._commands.append(Command([GetStartSquareCenterPositionHandler()]))
         elif step == Step.END_CYCLE:
             self._commands.append(Command([TurnOnRedLightHandler(), SendToFrontendCycleEndedHandler()]))
+        # TODO : Remove MOVE_ROBOT step and builder
+        elif step == Step.MOVE_ROBOT:
+            self._commands.append(Command([
+                GetRobotPositionHandler(),
+                CalculateTrajectoryHandler(),
+                SendToRobotPlannedTrajectoryHandler(),
+                SendToFrontendPlannedTrajectoryHandler(),
+                SendToFrontendRealTrajectoryCoordinateHandler(),
+                WaitForRobotArrivalHandler()
+            ]))
 
     def build_many(self):
         return self._commands
