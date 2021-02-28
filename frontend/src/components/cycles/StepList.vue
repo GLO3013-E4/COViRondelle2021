@@ -28,12 +28,16 @@ export default class StepList extends Vue {
   public currentStep!: Step;
   public e6 = 1; //TODO: to change
 
-  get steps(): Array<any> {
+  get steps(): Array<string> {
     const result = [];
     for (const step in Step) {
       const isValueProperty = parseInt(step, 10) >= 0;
       if (isValueProperty) {
-        result.push(Step[step]);
+        const notFormatedStep = Step[step];
+        const formatedStep = notFormatedStep
+          .replace(/([A-Z]+)/g, ',$1')
+          .replace(/^,/, '');
+        result.push(formatedStep.split(",").join(' ').toString());
       }
     }
     return result;

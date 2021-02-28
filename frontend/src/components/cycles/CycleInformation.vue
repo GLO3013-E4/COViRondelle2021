@@ -9,8 +9,11 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-col sm="6">
+        <v-col sm="8">
           <StepList />
+        </v-col>
+        <v-col sm="4">
+          <StartButton/>
         </v-col>
       </v-row>
     </v-container>
@@ -20,10 +23,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import StepList from '../cycles/StepList.vue';
+import StartButton from '../cycles/StartButton.vue';
 
 @Component({
   components: {
     StepList: StepList,
+    StartButton: StartButton,
   },
 })
 export default class CycleInformation extends Vue {}
