@@ -2,11 +2,7 @@ from controller.src.commands.command import Command
 from controller.src.commands.step import Step
 
 from controller.src.handlers.wait_for_robot_ready_state_handler import WaitForRobotReadyStateHandler
-from controller.src.handlers.send_to_frontend_ready_state_handler import SendToFrontendReadyStateHandler
 from controller.src.handlers.wait_for_frontend_cycle_start_handler import WaitForFrontendCycleStartHandler
-from controller.src.handlers.send_table_image.capture_table_image_handler import CaptureTableImageHandler
-from controller.src.handlers.send_table_image.send_to_frontend_table_image_handler import SendToFrontendTableImageHandler
-from controller.src.handlers.get_resistance_station_position_handler import GetResistanceStationPositionHandler
 from controller.src.handlers.move_robot.get_robot_position_handler import GetRobotPositionHandler
 from controller.src.handlers.move_robot.calculate_trajectory_handler import CalculateTrajectoryHandler
 from controller.src.handlers.move_robot.send_to_robot_planned_trajectory_handler import SendToRobotPlannedTrajectoryHandler
@@ -47,14 +43,8 @@ class CommandBuilder:
     def _with_step(self, step):
         if step == Step.WAIT_FOR_ROBOT_READY_STATE:
             self._commands.append(Command([WaitForRobotReadyStateHandler()]))
-        elif step == Step.SEND_TO_FRONTEND_READY_STATE:
-            self._commands.append(Command([SendToFrontendReadyStateHandler()]))
         elif step == Step.WAIT_FOR_FRONTEND_CYCLE_START:
             self._commands.append(Command([WaitForFrontendCycleStartHandler()]))
-        elif step == Step.SEND_TABLE_IMAGE:
-            self._commands.append(Command([CaptureTableImageHandler(), SendToFrontendTableImageHandler()]))
-        elif step == Step.GET_RESISTANCE_STATION_POSITION:
-            self._commands.append(Command([GetResistanceStationPositionHandler()]))
         elif step == Step.MOVE_ROBOT:
             self._commands.append(Command([
                 GetRobotPositionHandler(),

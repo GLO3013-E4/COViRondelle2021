@@ -2,11 +2,7 @@ from controller.src.commands.step import Step
 from controller.src.commands.command_builder import CommandBuilder
 
 from controller.src.handlers.wait_for_robot_ready_state_handler import WaitForRobotReadyStateHandler
-from controller.src.handlers.send_to_frontend_ready_state_handler import SendToFrontendReadyStateHandler
 from controller.src.handlers.wait_for_frontend_cycle_start_handler import WaitForFrontendCycleStartHandler
-from controller.src.handlers.send_table_image.capture_table_image_handler import CaptureTableImageHandler
-from controller.src.handlers.send_table_image.send_to_frontend_table_image_handler import SendToFrontendTableImageHandler
-from controller.src.handlers.get_resistance_station_position_handler import GetResistanceStationPositionHandler
 from controller.src.handlers.move_robot.get_robot_position_handler import GetRobotPositionHandler
 from controller.src.handlers.move_robot.calculate_trajectory_handler import CalculateTrajectoryHandler
 from controller.src.handlers.move_robot.send_to_robot_planned_trajectory_handler import SendToRobotPlannedTrajectoryHandler
@@ -42,7 +38,7 @@ def test_given_no_step_when_building_then_return_empty_list():
 
 
 def test_given_multiple_steps_when_building_then_list_of_length_of_steps():
-    steps = [Step.WAIT_FOR_ROBOT_READY_STATE, Step.SEND_TO_FRONTEND_READY_STATE]
+    steps = [Step.WAIT_FOR_ROBOT_READY_STATE, Step.WAIT_FOR_FRONTEND_CYCLE_START]
 
     commands = command_builder.with_steps(steps).build_many()
 
@@ -56,30 +52,9 @@ def test_given_wait_for_robot_ready_state_step_when_building_then_return_wait_fo
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 
 
-def test_given_send_to_frontend_ready_state_step_when_building_then_return_send_to_frontend_ready_command():
-    step = Step.SEND_TO_FRONTEND_READY_STATE
-    handler_classes = [SendToFrontendReadyStateHandler]
-
-    given_single_step_when_building_then_return_correct_command(step, handler_classes)
-
-
 def test_given_wait_for_frontend_cycle_start_step_when_building_then_return_wait_for_frontend_cycle_start_command():
     step = Step.WAIT_FOR_FRONTEND_CYCLE_START
     handler_classes = [WaitForFrontendCycleStartHandler]
-
-    given_single_step_when_building_then_return_correct_command(step, handler_classes)
-
-
-def test_given_send_table_image_step_when_building_then_return_send_table_image_command():
-    step = Step.SEND_TABLE_IMAGE
-    handler_classes = [CaptureTableImageHandler, SendToFrontendTableImageHandler]
-
-    given_single_step_when_building_then_return_correct_command(step, handler_classes)
-
-
-def test_given_get_resistance_station_position_step_when_building_then_return_get_resistance_station_position_command():
-    step = Step.GET_RESISTANCE_STATION_POSITION
-    handler_classes = [GetResistanceStationPositionHandler]
 
     given_single_step_when_building_then_return_correct_command(step, handler_classes)
 

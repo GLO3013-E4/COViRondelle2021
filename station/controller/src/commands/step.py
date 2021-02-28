@@ -3,10 +3,8 @@ from enum import Enum
 
 class Step(Enum):
     WAIT_FOR_ROBOT_READY_STATE = 'WaitForRobotReadyState'
-    SEND_TO_FRONTEND_READY_STATE = 'SendToFrontendReadyState'
     WAIT_FOR_FRONTEND_CYCLE_START = 'WaitForFrontendCycleStart'
-    SEND_TABLE_IMAGE = 'SendTableImage'
-    GET_RESISTANCE_STATION_POSITION = 'GetResistanceStationPosition'
+    # TODO : Rework steps
     MOVE_ROBOT = 'MoveRobot'
     READ_RESISTANCE = 'ReadResistance'
     MAP_RESISTANCE_TO_PUCK_COLORS = 'MapResistanceToPuckColors'
