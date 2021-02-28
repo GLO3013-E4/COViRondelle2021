@@ -16,8 +16,7 @@ from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import Wa
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
 from controller.src.handlers.grip_puck_handler import GripPuckHandler
-from controller.src.handlers.release_puck.release_puck_handler import ReleasePuckHandler
-from controller.src.handlers.release_puck.send_to_frontend_puck_released_state_handler import SendToFrontendPuckReleasedStateHandler
+from controller.src.handlers.release_puck_handler import ReleasePuckHandler
 from controller.src.handlers.get_start_square_center_position_handler import GetStartSquareCenterPositionHandler
 from controller.src.handlers.end_cycle.turn_on_red_light_handler import TurnOnRedLightHandler
 from controller.src.handlers.end_cycle.send_to_frontend_cycle_ended_handler import SendToFrontendCycleEndedHandler
@@ -58,9 +57,9 @@ class CommandBuilder:
             self._commands.append(Command([GripPuckHandler()]))
         elif step == Step.MOVE_ROBOT_TO_NEXT_CORNER:
             self._commands.append(Command([MoveRobotToNextCornerHandler()]))
-        # TODO : Rework command building
         elif step == Step.RELEASE_PUCK:
-            self._commands.append(Command([ReleasePuckHandler(), SendToFrontendPuckReleasedStateHandler()]))
+            self._commands.append(Command([ReleasePuckHandler()]))
+        # TODO : Rework command building
         elif step == Step.GET_START_SQUARE_CENTER_POSITION:
             self._commands.append(Command([GetStartSquareCenterPositionHandler()]))
         elif step == Step.END_CYCLE:

@@ -12,8 +12,8 @@ class Step(Enum):
     MOVE_ROBOT_TO_NEXT_PUCK = 'MoveRobotToNextPuck'
     GRIP_PUCK = 'GripPuck'
     MOVE_ROBOT_TO_NEXT_CORNER = 'MoveRobotToNextCorner'
-    # TODO : Rework steps
     RELEASE_PUCK = 'ReleasePuck'
+    # TODO : Rework steps
     GET_START_SQUARE_CENTER_POSITION = 'GetStartSquareCenterPosition'
     END_CYCLE = 'EndCycle'
     # TODO : Remove MOVE_ROBOT
