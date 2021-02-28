@@ -1,10 +1,10 @@
 <template>
   <div>
-    <v-stepper v-model="e6" vertical>
+    <v-stepper v-model="currentStepNumber" vertical>
       <v-stepper-step
         v-for="(step, i) in steps"
         :key="i"
-        :complete="e6 > 3"
+        :complete="currentStepNumber > i + 1"
         :step="i + 1"
       >
         {{ step }}
@@ -26,7 +26,10 @@ import { Step } from '@/types/step';
 })
 export default class StepList extends Vue {
   public currentStep!: Step;
-  public e6 = 1; //TODO: to change
+
+  get currentStepNumber(): number {
+      return this.currentStep+1;
+  }
 
   get steps(): Array<string> {
     const result = [];
