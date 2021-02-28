@@ -9,7 +9,7 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-col sm="6">
+        <v-col sm="8">
           <StepList />
         </v-col>
         <v-col sm="4">
