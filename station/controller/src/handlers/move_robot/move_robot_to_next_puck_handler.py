@@ -1,7 +1,7 @@
 from controller.src.handlers.handler import Handler
 
 
-class GetNextPuckPositionHandler(Handler):
+class MoveRobotToNextPuckHandler(Handler):
     def handle(self, handled_data=None):
-        # TODO : Implement GetNextPuckPositionHandler
+        # TODO : Implement MoveRobotToNextPuckHandler
         return handled_data

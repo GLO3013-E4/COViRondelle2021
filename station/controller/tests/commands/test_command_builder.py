@@ -5,6 +5,7 @@ from controller.src.handlers.wait_for_robot_ready_state_handler import WaitForRo
 from controller.src.handlers.wait_for_frontend_cycle_start_handler import WaitForFrontendCycleStartHandler
 from controller.src.handlers.move_robot.move_robot_to_resistance_station_handler import MoveRobotToResistanceStationHandler
 from controller.src.handlers.move_robot.move_robot_to_command_panel_handler import MoveRobotToCommandPanelHandler
+from controller.src.handlers.move_robot.move_robot_to_next_puck_handler import MoveRobotToNextPuckHandler
 from controller.src.handlers.move_robot.get_robot_position_handler import GetRobotPositionHandler
 from controller.src.handlers.move_robot.calculate_trajectory_handler import CalculateTrajectoryHandler
 from controller.src.handlers.move_robot.send_to_robot_planned_trajectory_handler import SendToRobotPlannedTrajectoryHandler
@@ -13,7 +14,6 @@ from controller.src.handlers.move_robot.send_to_frontend_real_trajectory_coordin
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
-from controller.src.handlers.get_next_puck_position_handler import GetNextPuckPositionHandler
 from controller.src.handlers.grip_puck.grip_puck_handler import GripPuckHandler
 from controller.src.handlers.grip_puck.send_to_frontend_puck_gripped_state_handler import SendToFrontendPuckGrippedStateHandler
 from controller.src.handlers.get_next_corner_position_handler import GetNextCornerPositionHandler
@@ -91,9 +91,9 @@ def test_given_read_letters_step_when_building_then_return_associated_command():
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 
 
-def test_given_get_next_puck_position_step_when_building_then_return_associated_command():
-    step = Step.GET_NEXT_PUCK_POSITION
-    handler_classes = [GetNextPuckPositionHandler]
+def test_given_move_robot_to_command_panel_step_when_building_then_return_associated_command():
+    step = Step.MOVE_ROBOT_TO_NEXT_PUCK
+    handler_classes = [MoveRobotToNextPuckHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 

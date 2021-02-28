@@ -9,8 +9,8 @@ class Step(Enum):
     READ_RESISTANCE = 'ReadResistance'
     MOVE_ROBOT_TO_COMMAND_PANEL = 'MoveRobotToCommandPanel'
     READ_LETTERS = 'ReadLetters'
+    MOVE_ROBOT_TO_NEXT_PUCK = 'MoveRobotToNextPuck'
     # TODO : Rework steps
-    GET_NEXT_PUCK_POSITION = 'GetNextPuckPosition'
     GRIP_PUCK = 'GripPuck'
     GET_NEXT_CORNER_POSITION = 'GetNextCornerPosition'
     RELEASE_PUCK = 'ReleasePuck'

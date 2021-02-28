@@ -5,6 +5,7 @@ from controller.src.handlers.wait_for_robot_ready_state_handler import WaitForRo
 from controller.src.handlers.wait_for_frontend_cycle_start_handler import WaitForFrontendCycleStartHandler
 from controller.src.handlers.move_robot.move_robot_to_resistance_station_handler import MoveRobotToResistanceStationHandler
 from controller.src.handlers.move_robot.move_robot_to_command_panel_handler import MoveRobotToCommandPanelHandler
+from controller.src.handlers.move_robot.move_robot_to_next_puck_handler import MoveRobotToNextPuckHandler
 from controller.src.handlers.move_robot.get_robot_position_handler import GetRobotPositionHandler
 from controller.src.handlers.move_robot.calculate_trajectory_handler import CalculateTrajectoryHandler
 from controller.src.handlers.move_robot.send_to_robot_planned_trajectory_handler import SendToRobotPlannedTrajectoryHandler
@@ -13,7 +14,6 @@ from controller.src.handlers.move_robot.send_to_frontend_real_trajectory_coordin
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
-from controller.src.handlers.get_next_puck_position_handler import GetNextPuckPositionHandler
 from controller.src.handlers.grip_puck.grip_puck_handler import GripPuckHandler
 from controller.src.handlers.grip_puck.send_to_frontend_puck_gripped_state_handler import SendToFrontendPuckGrippedStateHandler
 from controller.src.handlers.get_next_corner_position_handler import GetNextCornerPositionHandler
@@ -24,6 +24,7 @@ from controller.src.handlers.end_cycle.turn_on_red_light_handler import TurnOnRe
 from controller.src.handlers.end_cycle.send_to_frontend_cycle_ended_handler import SendToFrontendCycleEndedHandler
 
 
+# TODO : Can WaitForRobotArrival simply be an handler?
 class CommandBuilder:
     _commands = []
 
@@ -52,9 +53,9 @@ class CommandBuilder:
             self._commands.append(Command([MoveRobotToCommandPanelHandler()]))
         elif step == Step.READ_LETTERS:
             self._commands.append(Command([ReadLettersHandler()]))
+        elif step == Step.MOVE_ROBOT_TO_NEXT_PUCK:
+            self._commands.append(Command([MoveRobotToNextPuckHandler()]))
         # TODO : Rework command building
-        elif step == Step.GET_NEXT_PUCK_POSITION:
-            self._commands.append(Command([GetNextPuckPositionHandler()]))
         elif step == Step.GRIP_PUCK:
             self._commands.append(Command([GripPuckHandler(), SendToFrontendPuckGrippedStateHandler()]))
         elif step == Step.GET_NEXT_CORNER_POSITION:
