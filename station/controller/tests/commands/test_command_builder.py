@@ -11,8 +11,6 @@ from controller.src.handlers.move_robot.send_to_frontend_planned_trajectory_hand
 from controller.src.handlers.move_robot.send_to_frontend_real_trajectory_coordinate_handler import SendToFrontendRealTrajectoryCoordinateHandler
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
-from controller.src.handlers.map_resistance_to_puck_colors.map_resistance_to_puck_colors_handler import MapResistanceToPuckColorsHandler
-from controller.src.handlers.map_resistance_to_puck_colors.send_to_frontend_resistance_and_puck_colors_handler import SendToFrontendResistanceAndPuckColorsHandler
 from controller.src.handlers.get_command_panel_position_handler import GetCommandPanelPositionHandler
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
 from controller.src.handlers.map_letters_to_puck_corners.map_letters_to_puck_corners_handler import MapLettersToPuckCornersHandler
@@ -77,13 +75,6 @@ def test_given_wait_for_robot_arrival_step_when_building_then_return_associated_
 def test_given_read_resistance_step_when_building_then_return_associated_command():
     step = Step.READ_RESISTANCE
     handler_classes = [ReadResistanceHandler]
-
-    given_single_step_when_building_then_return_associated_command(step, handler_classes)
-
-
-def test_given_map_resistance_to_puck_colors_step_when_building_then_return_associated_command():
-    step = Step.MAP_RESISTANCE_TO_PUCK_COLORS
-    handler_classes = [MapResistanceToPuckColorsHandler, SendToFrontendResistanceAndPuckColorsHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 

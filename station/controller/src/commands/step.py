@@ -6,9 +6,8 @@ class Step(Enum):
     WAIT_FOR_FRONTEND_CYCLE_START = 'WaitForFrontendCycleStart'
     MOVE_ROBOT_TO_RESISTANCE_STATION = 'MoveRobotToResistanceStation'
     WAIT_FOR_ROBOT_ARRIVAL = 'WaitForRobotArrival'
-    # TODO : Rework steps
     READ_RESISTANCE = 'ReadResistance'
-    MAP_RESISTANCE_TO_PUCK_COLORS = 'MapResistanceToPuckColors'
+    # TODO : Rework steps
     GET_COMMAND_PANEL_POSITION = 'GetCommandPanelPosition'
     MOVE_ROBOT = 'MoveRobot'
     READ_LETTERS = 'ReadLetters'

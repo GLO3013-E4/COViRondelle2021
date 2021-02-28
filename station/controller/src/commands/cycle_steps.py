@@ -2,11 +2,11 @@ from controller.src.commands.step import Step
 
 cycle_steps = [
     Step.WAIT_FOR_ROBOT_READY_STATE,
+    Step.WAIT_FOR_FRONTEND_CYCLE_START,
     Step.MOVE_ROBOT_TO_RESISTANCE_STATION,
     Step.WAIT_FOR_ROBOT_ARRIVAL,
-    # TODO : Rework cycle steps
     Step.READ_RESISTANCE,
-    Step.MAP_RESISTANCE_TO_PUCK_COLORS,
+    # TODO : Rework cycle steps
     Step.GET_COMMAND_PANEL_POSITION,
     Step.MOVE_ROBOT,
     Step.READ_LETTERS,
