@@ -48,6 +48,6 @@ export default class Resistance extends Vue {
 
 <style scoped>
 .v-card__title {
-  padding: 0px;
+  padding: 0em;
 }
 </style>

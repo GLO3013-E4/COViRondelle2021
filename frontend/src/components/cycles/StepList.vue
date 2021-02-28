@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="padding-list">
     <v-stepper v-model="currentStepNumber" vertical>
       <v-stepper-step
         ref="step"
@@ -7,6 +7,7 @@
         :key="i"
         :complete="currentStepNumber > i + 1"
         :step="i + 1"
+        :color="currentStepNumber == i + 1 ? 'blue' : 'green'"
       >
         {{ step }}
       </v-stepper-step>
@@ -51,9 +52,10 @@ export default class StepList extends Vue {
 
 <style scoped>
 .v-stepper--vertical .v-stepper__step {
-  padding: 1px 0px 0px;
+  padding: 0.12em 0.5em 0.15em;
 }
 .v-stepper--vertical {
-  padding: 0px;
+  padding: 0.25em;
 }
+
 </style>
