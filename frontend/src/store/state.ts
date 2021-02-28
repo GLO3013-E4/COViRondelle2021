@@ -19,7 +19,6 @@ export const defaultState = {
   realTrajectory: [] as Array<Coordinate>,
   puckInGrip: false,
   currentStep: Step.CycleNotStarted,
-  depositedPuck: [],
 };
 
 export const state = {
@@ -34,7 +33,6 @@ export const state = {
   realTrajectory: defaultState.realTrajectory,
   puckInGrip: defaultState.puckInGrip,
   currentStep: defaultState.currentStep,
-  depositedPuck: defaultState.depositedPuck,
 };
 
 export type State = typeof state;

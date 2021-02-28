@@ -10,7 +10,7 @@
       <v-avatar
         ref="puckDeposited"
         size="30"
-        v-for="(puck, i) in depositedPuck"
+        v-for="(puck, i) in depositedPucks"
         :key="i"
         :color="puck.toString()"
         class="grey--text text--lighten-2 font-weight-bold"
@@ -79,7 +79,7 @@ export default class PuckDeposited extends Vue {
     );
   }
 
-  get depositedPuck(): Array<Color> {
+  get depositedPucks(): Array<Color> {
     if (this.NoPuckYet) {
       return this.deposited;
     } else if (this.FirstPuckDeposited) {
