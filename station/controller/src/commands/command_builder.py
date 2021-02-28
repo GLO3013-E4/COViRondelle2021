@@ -13,8 +13,6 @@ from controller.src.handlers.move_robot.send_to_frontend_real_trajectory_coordin
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
-from controller.src.handlers.map_letters_to_puck_corners.map_letters_to_puck_corners_handler import MapLettersToPuckCornersHandler
-from controller.src.handlers.map_letters_to_puck_corners.send_to_frontend_first_puck_corner_handler import SendToFrontendFirstPuckCornerHandler
 from controller.src.handlers.get_next_puck_position_handler import GetNextPuckPositionHandler
 from controller.src.handlers.grip_puck.grip_puck_handler import GripPuckHandler
 from controller.src.handlers.grip_puck.send_to_frontend_puck_gripped_state_handler import SendToFrontendPuckGrippedStateHandler
@@ -52,11 +50,9 @@ class CommandBuilder:
             self._commands.append(Command([ReadResistanceHandler()]))
         elif step == Step.MOVE_ROBOT_TO_COMMAND_PANEL:
             self._commands.append(Command([MoveRobotToCommandPanelHandler()]))
-        # TODO : Rework command building
         elif step == Step.READ_LETTERS:
             self._commands.append(Command([ReadLettersHandler()]))
-        elif step == Step.MAP_LETTERS_TO_PUCK_CORNERS:
-            self._commands.append(Command([MapLettersToPuckCornersHandler(), SendToFrontendFirstPuckCornerHandler()]))
+        # TODO : Rework command building
         elif step == Step.GET_NEXT_PUCK_POSITION:
             self._commands.append(Command([GetNextPuckPositionHandler()]))
         elif step == Step.GRIP_PUCK:

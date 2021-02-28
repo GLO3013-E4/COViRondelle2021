@@ -8,9 +8,8 @@ class Step(Enum):
     WAIT_FOR_ROBOT_ARRIVAL = 'WaitForRobotArrival'
     READ_RESISTANCE = 'ReadResistance'
     MOVE_ROBOT_TO_COMMAND_PANEL = 'MoveRobotToCommandPanel'
-    # TODO : Rework steps
     READ_LETTERS = 'ReadLetters'
-    MAP_LETTERS_TO_PUCK_CORNERS = 'MapLettersToPuckCorners'
+    # TODO : Rework steps
     GET_NEXT_PUCK_POSITION = 'GetNextPuckPosition'
     GRIP_PUCK = 'GripPuck'
     GET_NEXT_CORNER_POSITION = 'GetNextCornerPosition'

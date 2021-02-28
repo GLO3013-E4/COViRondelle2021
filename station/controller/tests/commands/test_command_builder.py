@@ -13,8 +13,6 @@ from controller.src.handlers.move_robot.send_to_frontend_real_trajectory_coordin
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
-from controller.src.handlers.map_letters_to_puck_corners.map_letters_to_puck_corners_handler import MapLettersToPuckCornersHandler
-from controller.src.handlers.map_letters_to_puck_corners.send_to_frontend_first_puck_corner_handler import SendToFrontendFirstPuckCornerHandler
 from controller.src.handlers.get_next_puck_position_handler import GetNextPuckPositionHandler
 from controller.src.handlers.grip_puck.grip_puck_handler import GripPuckHandler
 from controller.src.handlers.grip_puck.send_to_frontend_puck_gripped_state_handler import SendToFrontendPuckGrippedStateHandler
@@ -89,13 +87,6 @@ def test_given_move_robot_to_command_panel_step_when_building_then_return_associ
 def test_given_read_letters_step_when_building_then_return_associated_command():
     step = Step.READ_LETTERS
     handler_classes = [ReadLettersHandler]
-
-    given_single_step_when_building_then_return_associated_command(step, handler_classes)
-
-
-def test_given_map_letters_to_puck_corners_step_when_building_then_return_associated_command():
-    step = Step.MAP_LETTERS_TO_PUCK_CORNERS
-    handler_classes = [MapLettersToPuckCornersHandler, SendToFrontendFirstPuckCornerHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 

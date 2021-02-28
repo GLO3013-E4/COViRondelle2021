@@ -8,9 +8,8 @@ cycle_steps = [
     Step.READ_RESISTANCE,
     Step.MOVE_ROBOT_TO_COMMAND_PANEL,
     Step.WAIT_FOR_ROBOT_ARRIVAL,
-    # TODO : Rework cycle steps
     Step.READ_LETTERS,
-    Step.MAP_LETTERS_TO_PUCK_CORNERS,
+    # TODO : Rework cycle steps
     Step.GET_NEXT_PUCK_POSITION,
     Step.MOVE_ROBOT,
     Step.GRIP_PUCK,
