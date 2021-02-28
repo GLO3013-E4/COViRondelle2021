@@ -1,13 +1,30 @@
 <template>
-  <v-card class="d-flex justify-center" color="#ededed" height="300">
-    <h3>Cycles informations</h3>
+  <v-card color="#ededed" height="440">
+    <v-container>
+      <v-row>
+        <v-col sm="12">
+          <v-card class="d-flex justify-center">
+            <h3>Cycle Informations</h3>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row no-gutters>
+        <v-col sm="6">
+          <StepList />
+        </v-col>
+      </v-row>
+    </v-container>
   </v-card>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import StepList from '../cycles/StepList.vue';
+
 @Component({
-  components: {},
+  components: {
+    StepList: StepList,
+  },
 })
 export default class CycleInformation extends Vue {}
 </script>

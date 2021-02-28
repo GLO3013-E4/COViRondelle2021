@@ -45,3 +45,9 @@ export default class Resistance extends Vue {
   public puckColors!: Array<Color>;
 }
 </script>
+
+<style scoped>
+.v-card__title {
+  padding: 0px;
+}
+</style>

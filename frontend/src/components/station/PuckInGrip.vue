@@ -28,3 +28,10 @@ export default class PuckInGrip extends Vue {
   public puckInGrip!: boolean;
 }
 </script>
+
+<style scoped>
+.v-card__title {
+  padding: 0px;
+}
+</style>
+
