@@ -1,5 +1,5 @@
 <template>
-  <v-card color="#ededed" height="480">
+  <v-card color="#ededed" height="510">
     <v-container>
       <v-row>
         <v-col sm="12">
