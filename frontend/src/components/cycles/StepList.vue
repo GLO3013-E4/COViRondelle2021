@@ -2,6 +2,7 @@
   <div>
     <v-stepper v-model="currentStepNumber" vertical>
       <v-stepper-step
+        ref="step"
         v-for="(step, i) in steps"
         :key="i"
         :complete="currentStepNumber > i + 1"

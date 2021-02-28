@@ -27,3 +27,8 @@ export const AtFurtherStep = Template.bind({}) as any;
 AtFurtherStep.args = {
   currentStep: Step.ReadResistance,
 };
+
+export const AtLastStep = Template.bind({}) as any;
+AtLastStep.args = {
+  currentStep: Step.CycleEndedAndRedLedOn,
+};
