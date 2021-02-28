@@ -1,6 +1,5 @@
-import PuckDeposited from '@/components/station/PuckDeposited.vue';
+import PuckDeposit from '@/components/station/PuckDeposit.vue';
 import { ColorFactory } from '@/factories/ColorFactory';
-import { Color } from '@/types/color';
 import { Step } from '@/types/step';
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -8,16 +7,16 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export default {
-  title: 'components/station/PuckDeposited',
-  component: PuckDeposited,
+  title: 'components/station/PuckDeposit',
+  component: PuckDeposit,
 };
 
 const Template = (args: any) => ({
-  components: { PuckDeposited },
+  components: { PuckDeposit },
   store: new Vuex.Store({
     state: args,
   }),
-  template: '<PuckDeposited v-bind="$props"/>',
+  template: '<PuckDeposit v-bind="$props"/>',
 });
 
 export const Default = Template.bind({}) as any;

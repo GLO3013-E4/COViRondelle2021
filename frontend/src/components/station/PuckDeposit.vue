@@ -1,7 +1,7 @@
 <template>
   <v-card class="grey lighten-3" height="100%">
     <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
-      <h5 class="white--text">Puck deposited</h5>
+      <h5 class="white--text">Puck Deposit</h5>
     </v-card-title>
      <v-container height="100%">
       <v-row align="center">
@@ -35,13 +35,13 @@ import { Step } from '@/types/step';
     ...mapState(['puckColors', 'puckInGrip', 'currentStep', 'depositedPuck']),
   },
 })
-export default class PuckDeposited extends Vue {
+export default class PuckDeposit extends Vue {
   public puckColors!: Array<Color>;
   public puckInGrip!: boolean;
   public currentStep!: Step;
   public deposited: Array<Color> = [];
 
-  get NoPuckYet(): boolean {
+  get noPuckYet(): boolean {
     return (
       this.currentStep < Step.ToFirstCornerAndReleaseFirstPuck ||
       (this.currentStep == Step.ToFirstCornerAndReleaseFirstPuck &&
@@ -49,7 +49,7 @@ export default class PuckDeposited extends Vue {
     );
   }
 
-  get FirstPuckDeposited(): boolean {
+  get firstPuckDeposited(): boolean {
     return (
       (this.currentStep == Step.ToFirstCornerAndReleaseFirstPuck &&
         !this.puckInGrip) ||
@@ -60,7 +60,7 @@ export default class PuckDeposited extends Vue {
     );
   }
 
-  get SecondPuckDeposited(): boolean {
+  get secondPuckDeposited(): boolean {
     return (
       (this.currentStep == Step.ToSecondCornerAndReleaseSecondPuck &&
         !this.puckInGrip) ||
@@ -71,7 +71,7 @@ export default class PuckDeposited extends Vue {
     );
   }
 
-  get ThirdPuckDeposited(): boolean {
+  get thirdPuckDeposited(): boolean {
     return (
       (this.currentStep == Step.ToThirdCornerAndReleaseThirdPuck &&
         !this.puckInGrip) ||
@@ -80,15 +80,15 @@ export default class PuckDeposited extends Vue {
   }
 
   get depositedPucks(): Array<Color> {
-    if (this.NoPuckYet) {
+    if (this.noPuckYet) {
       return this.deposited;
-    } else if (this.FirstPuckDeposited) {
+    } else if (this.firstPuckDeposited) {
       this.deposited.push(this.puckColors[0]);
       return this.deposited;
-    } else if (this.SecondPuckDeposited) {
+    } else if (this.secondPuckDeposited) {
       this.deposited.push(this.puckColors[0], this.puckColors[1]);
       return this.deposited;
-    } else if (this.ThirdPuckDeposited) {
+    } else if (this.thirdPuckDeposited) {
       return this.puckColors;
     }
     return this.puckColors;
