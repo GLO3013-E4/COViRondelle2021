@@ -6,6 +6,7 @@ from controller.src.handlers.wait_for_frontend_cycle_start_handler import WaitFo
 from controller.src.handlers.move_robot.move_robot_to_resistance_station_handler import MoveRobotToResistanceStationHandler
 from controller.src.handlers.move_robot.move_robot_to_command_panel_handler import MoveRobotToCommandPanelHandler
 from controller.src.handlers.move_robot.move_robot_to_next_puck_handler import MoveRobotToNextPuckHandler
+from controller.src.handlers.move_robot.move_robot_to_next_corner_handler import MoveRobotToNextCornerHandler
 from controller.src.handlers.move_robot.get_robot_position_handler import GetRobotPositionHandler
 from controller.src.handlers.move_robot.calculate_trajectory_handler import CalculateTrajectoryHandler
 from controller.src.handlers.move_robot.send_to_robot_planned_trajectory_handler import SendToRobotPlannedTrajectoryHandler
@@ -15,7 +16,6 @@ from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import Wa
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
 from controller.src.handlers.grip_puck_handler import GripPuckHandler
-from controller.src.handlers.get_next_corner_position_handler import GetNextCornerPositionHandler
 from controller.src.handlers.release_puck.release_puck_handler import ReleasePuckHandler
 from controller.src.handlers.release_puck.send_to_frontend_puck_released_state_handler import SendToFrontendPuckReleasedStateHandler
 from controller.src.handlers.get_start_square_center_position_handler import GetStartSquareCenterPositionHandler
@@ -90,7 +90,7 @@ def test_given_read_letters_step_when_building_then_return_associated_command():
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 
 
-def test_given_move_robot_to_command_panel_step_when_building_then_return_associated_command():
+def test_given_move_robot_to_next_puck_step_when_building_then_return_associated_command():
     step = Step.MOVE_ROBOT_TO_NEXT_PUCK
     handler_classes = [MoveRobotToNextPuckHandler]
 
@@ -104,9 +104,9 @@ def test_given_grip_puck_step_when_building_then_return_associated_command():
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 
 
-def test_given_get_next_corner_position_step_when_building_then_return_associated_command():
-    step = Step.GET_NEXT_CORNER_POSITION
-    handler_classes = [GetNextCornerPositionHandler]
+def test_given_move_robot_to_next_corner_step_when_building_then_return_associated_command():
+    step = Step.MOVE_ROBOT_TO_NEXT_CORNER
+    handler_classes = [MoveRobotToNextCornerHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 

@@ -6,6 +6,7 @@ from controller.src.handlers.wait_for_frontend_cycle_start_handler import WaitFo
 from controller.src.handlers.move_robot.move_robot_to_resistance_station_handler import MoveRobotToResistanceStationHandler
 from controller.src.handlers.move_robot.move_robot_to_command_panel_handler import MoveRobotToCommandPanelHandler
 from controller.src.handlers.move_robot.move_robot_to_next_puck_handler import MoveRobotToNextPuckHandler
+from controller.src.handlers.move_robot.move_robot_to_next_corner_handler import MoveRobotToNextCornerHandler
 from controller.src.handlers.move_robot.get_robot_position_handler import GetRobotPositionHandler
 from controller.src.handlers.move_robot.calculate_trajectory_handler import CalculateTrajectoryHandler
 from controller.src.handlers.move_robot.send_to_robot_planned_trajectory_handler import SendToRobotPlannedTrajectoryHandler
@@ -15,7 +16,6 @@ from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import Wa
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
 from controller.src.handlers.grip_puck_handler import GripPuckHandler
-from controller.src.handlers.get_next_corner_position_handler import GetNextCornerPositionHandler
 from controller.src.handlers.release_puck.release_puck_handler import ReleasePuckHandler
 from controller.src.handlers.release_puck.send_to_frontend_puck_released_state_handler import SendToFrontendPuckReleasedStateHandler
 from controller.src.handlers.get_start_square_center_position_handler import GetStartSquareCenterPositionHandler
@@ -56,9 +56,9 @@ class CommandBuilder:
             self._commands.append(Command([MoveRobotToNextPuckHandler()]))
         elif step == Step.GRIP_PUCK:
             self._commands.append(Command([GripPuckHandler()]))
+        elif step == Step.MOVE_ROBOT_TO_NEXT_CORNER:
+            self._commands.append(Command([MoveRobotToNextCornerHandler()]))
         # TODO : Rework command building
-        elif step == Step.GET_NEXT_CORNER_POSITION:
-            self._commands.append(Command([GetNextCornerPositionHandler()]))
         elif step == Step.RELEASE_PUCK:
             self._commands.append(Command([ReleasePuckHandler(), SendToFrontendPuckReleasedStateHandler()]))
         elif step == Step.GET_START_SQUARE_CENTER_POSITION:

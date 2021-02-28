@@ -11,8 +11,8 @@ class Step(Enum):
     READ_LETTERS = 'ReadLetters'
     MOVE_ROBOT_TO_NEXT_PUCK = 'MoveRobotToNextPuck'
     GRIP_PUCK = 'GripPuck'
+    MOVE_ROBOT_TO_NEXT_CORNER = 'MoveRobotToNextCorner'
     # TODO : Rework steps
-    GET_NEXT_CORNER_POSITION = 'GetNextCornerPosition'
     RELEASE_PUCK = 'ReleasePuck'
     GET_START_SQUARE_CENTER_POSITION = 'GetStartSquareCenterPosition'
     END_CYCLE = 'EndCycle'
