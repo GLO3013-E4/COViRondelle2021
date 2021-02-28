@@ -13,8 +13,7 @@ from controller.src.handlers.read_resistance_handler import ReadResistanceHandle
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
 from controller.src.handlers.grip_puck_handler import GripPuckHandler
 from controller.src.handlers.release_puck_handler import ReleasePuckHandler
-from controller.src.handlers.end_cycle.turn_on_red_light_handler import TurnOnRedLightHandler
-from controller.src.handlers.end_cycle.send_to_frontend_cycle_ended_handler import SendToFrontendCycleEndedHandler
+from controller.src.handlers.end_cycle_handler import EndCycleHandler
 
 command_builder = CommandBuilder()
 
@@ -121,7 +120,7 @@ def test_given_move_robot_to_square_center_step_when_building_then_return_associ
 
 def test_given_end_cycle_step_when_building_then_return_associated_command():
     step = Step.END_CYCLE
-    handler_classes = [TurnOnRedLightHandler, SendToFrontendCycleEndedHandler]
+    handler_classes = [EndCycleHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 

@@ -13,8 +13,7 @@ from controller.src.handlers.read_resistance_handler import ReadResistanceHandle
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
 from controller.src.handlers.grip_puck_handler import GripPuckHandler
 from controller.src.handlers.release_puck_handler import ReleasePuckHandler
-from controller.src.handlers.end_cycle.turn_on_red_light_handler import TurnOnRedLightHandler
-from controller.src.handlers.end_cycle.send_to_frontend_cycle_ended_handler import SendToFrontendCycleEndedHandler
+from controller.src.handlers.end_cycle_handler import EndCycleHandler
 
 
 # TODO : Can WaitForRobotArrival simply be an handler?
@@ -56,9 +55,8 @@ class CommandBuilder:
             self._commands.append(Command([ReleasePuckHandler()]))
         elif step == Step.MOVE_ROBOT_TO_SQUARE_CENTER:
             self._commands.append(Command([MoveRobotToSquareCenterHandler()]))
-        # TODO : Rework command building
         elif step == Step.END_CYCLE:
-            self._commands.append(Command([TurnOnRedLightHandler(), SendToFrontendCycleEndedHandler()]))
+            self._commands.append(Command([EndCycleHandler()]))
 
     def build_many(self):
         return self._commands

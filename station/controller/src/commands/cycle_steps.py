@@ -28,6 +28,5 @@ cycle_steps = [
     Step.WAIT_FOR_ROBOT_ARRIVAL,
     Step.RELEASE_PUCK,
     Step.MOVE_ROBOT_TO_SQUARE_CENTER,
-    # TODO : Rework cycle steps
     Step.END_CYCLE
 ]
