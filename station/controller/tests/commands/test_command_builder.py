@@ -14,8 +14,7 @@ from controller.src.handlers.move_robot.send_to_frontend_real_trajectory_coordin
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
-from controller.src.handlers.grip_puck.grip_puck_handler import GripPuckHandler
-from controller.src.handlers.grip_puck.send_to_frontend_puck_gripped_state_handler import SendToFrontendPuckGrippedStateHandler
+from controller.src.handlers.grip_puck_handler import GripPuckHandler
 from controller.src.handlers.get_next_corner_position_handler import GetNextCornerPositionHandler
 from controller.src.handlers.release_puck.release_puck_handler import ReleasePuckHandler
 from controller.src.handlers.release_puck.send_to_frontend_puck_released_state_handler import SendToFrontendPuckReleasedStateHandler
@@ -100,7 +99,7 @@ def test_given_move_robot_to_command_panel_step_when_building_then_return_associ
 
 def test_given_grip_puck_step_when_building_then_return_associated_command():
     step = Step.GRIP_PUCK
-    handler_classes = [GripPuckHandler, SendToFrontendPuckGrippedStateHandler]
+    handler_classes = [GripPuckHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 
