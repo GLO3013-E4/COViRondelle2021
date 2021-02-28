@@ -50,14 +50,7 @@ def test_given_wait_for_frontend_cycle_start_step_when_building_then_return_asso
 
 def test_given_move_robot_to_resistance_station_step_when_building_then_return_associated_command():
     step = Step.MOVE_ROBOT_TO_RESISTANCE_STATION
-    handler_classes = [MoveRobotToResistanceStationHandler]
-
-    given_single_step_when_building_then_return_associated_command(step, handler_classes)
-
-
-def test_given_wait_for_robot_arrival_step_when_building_then_return_associated_command():
-    step = Step.WAIT_FOR_ROBOT_ARRIVAL
-    handler_classes = [WaitForRobotArrivalHandler]
+    handler_classes = [MoveRobotToResistanceStationHandler, WaitForRobotArrivalHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 
@@ -71,7 +64,7 @@ def test_given_read_resistance_step_when_building_then_return_associated_command
 
 def test_given_move_robot_to_command_panel_step_when_building_then_return_associated_command():
     step = Step.MOVE_ROBOT_TO_COMMAND_PANEL
-    handler_classes = [MoveRobotToCommandPanelHandler]
+    handler_classes = [MoveRobotToCommandPanelHandler, WaitForRobotArrivalHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 
@@ -85,7 +78,7 @@ def test_given_read_letters_step_when_building_then_return_associated_command():
 
 def test_given_move_robot_to_next_puck_step_when_building_then_return_associated_command():
     step = Step.MOVE_ROBOT_TO_NEXT_PUCK
-    handler_classes = [MoveRobotToNextPuckHandler]
+    handler_classes = [MoveRobotToNextPuckHandler, WaitForRobotArrivalHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 
@@ -99,7 +92,7 @@ def test_given_grip_puck_step_when_building_then_return_associated_command():
 
 def test_given_move_robot_to_next_corner_step_when_building_then_return_associated_command():
     step = Step.MOVE_ROBOT_TO_NEXT_CORNER
-    handler_classes = [MoveRobotToNextCornerHandler]
+    handler_classes = [MoveRobotToNextCornerHandler, WaitForRobotArrivalHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 
@@ -113,7 +106,7 @@ def test_given_release_puck_step_when_building_then_return_associated_command():
 
 def test_given_move_robot_to_square_center_step_when_building_then_return_associated_command():
     step = Step.MOVE_ROBOT_TO_SQUARE_CENTER
-    handler_classes = [MoveRobotToSquareCenterHandler]
+    handler_classes = [MoveRobotToSquareCenterHandler, WaitForRobotArrivalHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
 

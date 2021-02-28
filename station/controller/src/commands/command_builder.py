@@ -16,7 +16,6 @@ from controller.src.handlers.release_puck_handler import ReleasePuckHandler
 from controller.src.handlers.end_cycle_handler import EndCycleHandler
 
 
-# TODO : Can WaitForRobotArrival simply be an handler?
 class CommandBuilder:
     _commands = []
 
@@ -36,25 +35,23 @@ class CommandBuilder:
         elif step == Step.WAIT_FOR_FRONTEND_CYCLE_START:
             self._commands.append(Command([WaitForFrontendCycleStartHandler()]))
         elif step == Step.MOVE_ROBOT_TO_RESISTANCE_STATION:
-            self._commands.append(Command([MoveRobotToResistanceStationHandler()]))
-        elif step == Step.WAIT_FOR_ROBOT_ARRIVAL:
-            self._commands.append(Command([WaitForRobotArrivalHandler()]))
+            self._commands.append(Command([MoveRobotToResistanceStationHandler(), WaitForRobotArrivalHandler()]))
         elif step == Step.READ_RESISTANCE:
             self._commands.append(Command([ReadResistanceHandler()]))
         elif step == Step.MOVE_ROBOT_TO_COMMAND_PANEL:
-            self._commands.append(Command([MoveRobotToCommandPanelHandler()]))
+            self._commands.append(Command([MoveRobotToCommandPanelHandler(), WaitForRobotArrivalHandler()]))
         elif step == Step.READ_LETTERS:
             self._commands.append(Command([ReadLettersHandler()]))
         elif step == Step.MOVE_ROBOT_TO_NEXT_PUCK:
-            self._commands.append(Command([MoveRobotToNextPuckHandler()]))
+            self._commands.append(Command([MoveRobotToNextPuckHandler(), WaitForRobotArrivalHandler()]))
         elif step == Step.GRIP_PUCK:
             self._commands.append(Command([GripPuckHandler()]))
         elif step == Step.MOVE_ROBOT_TO_NEXT_CORNER:
-            self._commands.append(Command([MoveRobotToNextCornerHandler()]))
+            self._commands.append(Command([MoveRobotToNextCornerHandler(), WaitForRobotArrivalHandler()]))
         elif step == Step.RELEASE_PUCK:
             self._commands.append(Command([ReleasePuckHandler()]))
         elif step == Step.MOVE_ROBOT_TO_SQUARE_CENTER:
-            self._commands.append(Command([MoveRobotToSquareCenterHandler()]))
+            self._commands.append(Command([MoveRobotToSquareCenterHandler(), WaitForRobotArrivalHandler()]))
         elif step == Step.END_CYCLE:
             self._commands.append(Command([EndCycleHandler()]))
 
