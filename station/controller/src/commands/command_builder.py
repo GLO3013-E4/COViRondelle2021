@@ -4,6 +4,7 @@ from controller.src.commands.step import Step
 from controller.src.handlers.wait_for_robot_ready_state_handler import WaitForRobotReadyStateHandler
 from controller.src.handlers.wait_for_frontend_cycle_start_handler import WaitForFrontendCycleStartHandler
 from controller.src.handlers.move_robot.move_robot_to_resistance_station_handler import MoveRobotToResistanceStationHandler
+from controller.src.handlers.move_robot.move_robot_to_command_panel_handler import MoveRobotToCommandPanelHandler
 from controller.src.handlers.move_robot.get_robot_position_handler import GetRobotPositionHandler
 from controller.src.handlers.move_robot.calculate_trajectory_handler import CalculateTrajectoryHandler
 from controller.src.handlers.move_robot.send_to_robot_planned_trajectory_handler import SendToRobotPlannedTrajectoryHandler
@@ -11,7 +12,6 @@ from controller.src.handlers.move_robot.send_to_frontend_planned_trajectory_hand
 from controller.src.handlers.move_robot.send_to_frontend_real_trajectory_coordinate_handler import SendToFrontendRealTrajectoryCoordinateHandler
 from controller.src.handlers.move_robot.wait_for_robot_arrival_handler import WaitForRobotArrivalHandler
 from controller.src.handlers.read_resistance_handler import ReadResistanceHandler
-from controller.src.handlers.get_command_panel_position_handler import GetCommandPanelPositionHandler
 from controller.src.handlers.read_letters_handler import ReadLettersHandler
 from controller.src.handlers.map_letters_to_puck_corners.map_letters_to_puck_corners_handler import MapLettersToPuckCornersHandler
 from controller.src.handlers.map_letters_to_puck_corners.send_to_frontend_first_puck_corner_handler import SendToFrontendFirstPuckCornerHandler
@@ -50,9 +50,9 @@ class CommandBuilder:
             self._commands.append(Command([WaitForRobotArrivalHandler()]))
         elif step == Step.READ_RESISTANCE:
             self._commands.append(Command([ReadResistanceHandler()]))
+        elif step == Step.MOVE_ROBOT_TO_COMMAND_PANEL:
+            self._commands.append(Command([MoveRobotToCommandPanelHandler()]))
         # TODO : Rework command building
-        elif step == Step.GET_COMMAND_PANEL_POSITION:
-            self._commands.append(Command([GetCommandPanelPositionHandler()]))
         elif step == Step.READ_LETTERS:
             self._commands.append(Command([ReadLettersHandler()]))
         elif step == Step.MAP_LETTERS_TO_PUCK_CORNERS:
