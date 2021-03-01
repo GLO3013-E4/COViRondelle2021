@@ -38,11 +38,8 @@ export default class StepList extends Vue {
     for (const step in Step) {
       const isValueProperty = parseInt(step, 10) >= 0;
       if (isValueProperty) {
-        const notFormatedStep = Step[step];
-        const formatedStep = notFormatedStep
-          .replace(/([A-Z]+)/g, ',$1')
-          .replace(/^,/, '');
-        result.push(formatedStep.split(',').join(' ').toString());
+        const notFormatedStep: string = Step[step];
+        result.push(notFormatedStep.replace(/([A-Z]+)/g, ' $1'));
       }
     }
     return result;

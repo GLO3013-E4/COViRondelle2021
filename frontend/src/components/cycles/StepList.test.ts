@@ -18,7 +18,7 @@ describe('Given state', () => {
 
   const store = new Vuex.Store({
     state: {
-      currentStep: Step.CycleNotStarted
+      currentStep: Step.CycleNotStarted,
     },
   });
 
@@ -26,10 +26,10 @@ describe('Given state', () => {
     const wrapper = shallowMount(StepList, { store, localVue });
 
     it('Should contains the right amount of steps', () => {
-        const steps = wrapper.findAllComponents({ ref: 'step' });
-        
-        expect(steps.exists()).toBe(true);
-        expect(steps).toHaveLength(15);
+      const steps = wrapper.findAllComponents({ ref: 'step' });
+
+      expect(steps.exists()).toBe(true);
+      expect(steps).toHaveLength(15);
     });
   });
 });

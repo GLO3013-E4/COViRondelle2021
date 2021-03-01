@@ -1,5 +1,5 @@
 <template>
-  <v-card width="100%" height="700">
+  <v-card width="100%" height="100%">
     <v-row>
       <v-col>
         <!-- TODO : Layout should have components injected. The main view should add these components -->
