@@ -14,10 +14,11 @@ import { Component, Vue } from 'vue-property-decorator';
   components: {},
 })
 export default class Chronometer extends Vue {
-  public elapsedTime: any = 0;
-  public stopwatchInterval: any = 0;
-  public prevTime: any = 0;
+  public elapsedTime: any = 0; //TODO CHANGE TYPE
+  public stopwatchInterval: any = 0;//TODO CHANGE TYPE
+  public prevTime: any = 0;//TODO CHANGE TYPE
 
+//TODO: LOGIC WITH STEP AND BOOLEANS
   public start() {
     if (!this.stopwatchInterval) {
       this.stopwatchInterval = setInterval(() => {
