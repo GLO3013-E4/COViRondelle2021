@@ -1,4 +1,9 @@
 import CycleInformation from '@/components/cycles/CycleInformation.vue';
+import Vue from 'vue';
+import Vuex from 'vuex';
+import { StateFactory } from '@/factories/StateFactory';
+
+Vue.use(Vuex);
 
 export default {
   title: 'components/cycles/CycleInformation',
@@ -7,5 +12,8 @@ export default {
 
 export const Default = () => ({
   components: { CycleInformation },
-  template: `<cycle-information/>`,
+  store: new Vuex.Store({
+    state: StateFactory.make(),
+  }),
+  template: `<CycleInformation/>`,
 });
