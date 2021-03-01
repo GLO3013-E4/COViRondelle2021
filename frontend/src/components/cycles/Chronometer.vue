@@ -25,7 +25,7 @@ export default class Chronometer extends Vue {
     public stopwatchInterval:any= 0;
     public prevTime:any = 0;
 
-    start(){
+    public start(){
         if (!this.stopwatchInterval) {
     this.stopwatchInterval = setInterval( () => {
       if (!this.prevTime) {
@@ -40,7 +40,7 @@ export default class Chronometer extends Vue {
   }
     }
 
-    stop(){
+    public stop(){
      if (this.stopwatchInterval) {
     clearInterval(this.stopwatchInterval);
     this.stopwatchInterval = null;
@@ -48,7 +48,7 @@ export default class Chronometer extends Vue {
   this.prevTime = null;
     }
 
-    reset(){
+    public reset(){
       this.elapsedTime = 0;
     this.updatedTime;
    }
