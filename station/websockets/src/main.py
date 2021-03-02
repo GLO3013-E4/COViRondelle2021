@@ -56,6 +56,12 @@ def handle_puck_colors(puck_colors):
     socket.emit("puck_colors", json_data)
 
 
+def handle_puck_corners(puck_corners):
+    # TODO : Make sure this works once puck_corners is implemented
+    json_data = to_json({"firstPuckCorner": puck_corners[0]})
+    socket.emit("first_puck_corner", json_data)
+
+
 def websockets():
     # pub = rospy.Publisher("chatter", String, queue_size=10)
     rospy.init_node("websockets", anonymous=True)
@@ -67,6 +73,7 @@ def websockets():
     rospy.Subscriber("path", Path, handle_path)
     rospy.Subscriber("resistance", Float, handle_resistance)
     rospy.Subscriber("puck_colors", StringArray, handle_puck_colors)
+    rospy.Subscriber("puck_corners", StringArray, handle_puck_corners)
 
     socket.run(app)
 
