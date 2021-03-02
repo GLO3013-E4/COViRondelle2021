@@ -1,8 +1,7 @@
 <template>
   <div>
     <span>{{ this.updatedTime }}</span>
-    <StartButton @start="start"/>
-
+    <StartButton @start="start" />
   </div>
 </template>
 
@@ -21,15 +20,15 @@ import StartButton from './StartButton.vue';
   },
 })
 export default class Chronometer extends Vue {
-    public cycleReady!:boolean;
-    public cycleStarted!:boolean;
-    public currentStep!:Step;
+  public cycleReady!: boolean;
+  public cycleStarted!: boolean;
+  public currentStep!: Step;
 
-    public elapsedTime: any = 0; //TODO CHANGE TYPE
-    public stopwatchInterval: any = 0;//TODO CHANGE TYPE
-    public prevTime: any = 0;//TODO CHANGE TYPE
+  public elapsedTime: any = 0; //TODO CHANGE TYPE
+  public stopwatchInterval: any = 0; //TODO CHANGE TYPE
+  public prevTime: any = 0; //TODO CHANGE TYPE
 
-//TODO: LOGIC WITH STEP AND BOOLEANS
+  //TODO: LOGIC WITH STEP AND BOOLEANS
   public start() {
     this.emitSocketStartCycle();
 

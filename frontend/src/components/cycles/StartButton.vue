@@ -8,10 +8,9 @@
 //TODO: COMPLETE COMPONENT
 import { Component, Vue } from 'vue-property-decorator';
 
-@Component({
-})
+@Component({})
 export default class StartButton extends Vue {
-  public start(){
+  public start() {
     this.$emit('start');
   }
 }
