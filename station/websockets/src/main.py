@@ -6,6 +6,7 @@ from flask_socketio import SocketIO
 from std_msgs.msg import Bool
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Pose
+from nav_msgs.msg import Path
 
 app = Flask(__name__)
 socket = SocketIO(app, cors_allowed_origins="*")
@@ -25,10 +26,21 @@ def handle_world_camera_image_raw(image):
     socket.emit('table_image', json_data)
 
 
-def handle_robot(position):
-    # TODO : Position will most likely not be sent this way
-    json_data = to_json({"realTrajectoryCoordinate": {"x": position.x, "y": position.y}})
+def handle_robot(coordinate):
+    # TODO : Robot coordinate will most likely not be sent this way
+    json_data = to_json({"realTrajectoryCoordinate": {"x": coordinate.x, "y": coordinate.y}})
     socket.emit('real_trajectory_coordinate', json_data)
+
+
+def handle_path(path):
+    # TODO : Path will most likely not be sent this way
+    coordinates = []
+
+    for coordinate in path.coordinates:
+        coordinates.append({"x": coordinate.x, "y": coordinate.y})
+
+    json_data = to_json({"plannedTrajectoryCoordinates": coordinates})
+    socket.emit('planned_trajectory_coordinates', json_data)
 
 
 def websockets():
@@ -39,6 +51,7 @@ def websockets():
     rospy.Subscriber("ready", Bool, handle_ready)
     rospy.Subscriber("world_camera/image_raw", Image, handle_world_camera_image_raw)
     rospy.Subscriber("robot", Pose, handle_robot)
+    rospy.Subscriber("path", Path, handle_path)
 
     socket.run(app)
 
