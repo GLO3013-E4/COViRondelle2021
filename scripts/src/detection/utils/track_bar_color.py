@@ -18,7 +18,7 @@ class TrackBarDetection:
         cv2.createTrackbar("Val Min", "TrackBars", 0, 255, self.on_track_bar_change)
         cv2.createTrackbar("Val Max", "TrackBars", 255, 255, self.on_track_bar_change)
 
-        image_camera_monde = cv2.imread("monde6.jpg")
+        image_camera_monde = cv2.imread("../../../data/monde2.jpg")
 
         while True:
             hsv_image = cv2.cvtColor(image_camera_monde, cv2.COLOR_BGR2HSV)
