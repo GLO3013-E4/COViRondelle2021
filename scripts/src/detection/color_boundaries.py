@@ -1,6 +1,3 @@
-import numpy as np
-
-
 class ColorBoundaries:
     """Upper boundaries of colors of pucks"""
     def __init__(self):
