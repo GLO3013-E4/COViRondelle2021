@@ -18,6 +18,3 @@ class LowerBoundary:
         if color_to_detect in self.lower_boundaries:
             return np.array(self.lower_boundaries[color_to_detect])
         return np.zeros(3)
-
-    def get_lower_boundaries_dict(self):
-        return self.lower_boundaries

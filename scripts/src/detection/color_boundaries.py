@@ -1,5 +1,5 @@
 class ColorBoundaries:
-    """Upper boundaries of colors of pucks"""
+    """Color boundaries of pucks"""
     def __init__(self):
         self.color_boundaries = {"purple": {"lower": [117, 20, 94], "upper":[143, 255, 233]},
                                  "white": {"lower": [20, 0, 155], "upper":[124, 62, 186]} ,

@@ -46,5 +46,3 @@ def test_given_invalid_hsv_should_return_none():
     expected_result = puck_detection.find_hsv_color(INVALID_HSV)
 
     assert expected_result == 'None'
-
-

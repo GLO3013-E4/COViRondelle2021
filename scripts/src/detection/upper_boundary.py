@@ -18,6 +18,3 @@ class UpperBoundary:
         if color_to_detect in self.upper_boundaries:
             return np.array(self.upper_boundaries[color_to_detect])
         return np.zeros(3)
-
-    def get_lupper_boundaries_dict(self):
-        return self.upper_boundaries

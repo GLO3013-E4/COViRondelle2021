@@ -1,9 +1,7 @@
 import cv2
 import numpy as np
 from collections import Counter
-
 from sklearn.cluster import KMeans
-
 from scripts.src.detection.color_boundaries import ColorBoundaries
 
 
@@ -80,4 +78,3 @@ class PuckDetection:
                     boundaries["upper"][1] and boundaries["lower"][2] <= hsv[2] <= boundaries["upper"][2]:
                 return color
         return "None"
-
