@@ -1,7 +1,7 @@
 from controller.src.handlers.handler import Handler
 
 
-class WaitForFrontendCycleStartHandler(Handler):
+class MoveRobotToNextCornerHandler(Handler):
     def handle(self, handled_data=None):
-        # TODO : Implement WaitForFrontendCycleStartHandler
+        # TODO : Implement MoveRobotToNextCornerHandler
         return handled_data, True

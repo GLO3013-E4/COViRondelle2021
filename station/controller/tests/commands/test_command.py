@@ -14,9 +14,9 @@ class StubHandler(Handler):
         self.on_handle(handled_data)
 
         if handled_data is None:
-            return ONCE_HANDLED_DATA
+            return ONCE_HANDLED_DATA, True
 
-        return None
+        return None, True
 
 
 def test_when_executing_then_handle(mocker):

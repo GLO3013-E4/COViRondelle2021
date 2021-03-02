@@ -1,7 +1,7 @@
 from controller.src.handlers.handler import Handler
 
 
-class WaitForFrontendCycleStartHandler(Handler):
+class MoveRobotToResistanceStationHandler(Handler):
     def handle(self, handled_data=None):
-        # TODO : Implement WaitForFrontendCycleStartHandler
+        # TODO : Implement MoveRobotToResistanceStationHandler
         return handled_data, True
