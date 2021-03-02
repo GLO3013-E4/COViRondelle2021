@@ -29,7 +29,7 @@ describe('Given no puck released yet', () => {
   describe('When mounting PuckDeposit', () => {
     const wrapper = shallowMount(Chronometer, { store, localVue });
 
-    it('Should not have button and time', () => {
+    it('Should have button and time', () => {
       const button = wrapper.findAllComponents({ ref: 'button' });
       const time = wrapper.findComponent({ ref: 'time' });
 

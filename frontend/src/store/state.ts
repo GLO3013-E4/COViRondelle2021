@@ -5,7 +5,7 @@ import { Coordinate } from '@/types/coordinate';
 import { Step } from '@/types/step';
 
 export const defaultState = {
-  cycleReady: false,
+  cycleReady: true,
   cycleStarted: false,
   tableImage: '', // TODO : Table image most likely won't be a string, this is temporary
   resistance: 0,
@@ -18,7 +18,7 @@ export const defaultState = {
   plannedTrajectory: [] as Array<Coordinate>,
   realTrajectory: [] as Array<Coordinate>,
   puckInGrip: false,
-  currentStep: Step.CycleNotStarted,
+  currentStep: Step.CycleEndedAndRedLedOn,
 };
 
 export const state = {
