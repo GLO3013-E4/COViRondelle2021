@@ -18,7 +18,7 @@ class TrackBarDetection:
         cv2.createTrackbar("Val Min", "TrackBars", 0, 255, self.on_track_bar_change)
         cv2.createTrackbar("Val Max", "TrackBars", 255, 255, self.on_track_bar_change)
 
-        image_camera_monde = cv2.imread("monde2.jpg")
+        image_camera_monde = cv2.imread("monde6.jpg")
 
         while True:
             hsv_image = cv2.cvtColor(image_camera_monde, cv2.COLOR_BGR2HSV)
@@ -30,7 +30,7 @@ class TrackBarDetection:
             v_min = cv2.getTrackbarPos("Val Min", "TrackBars")
             v_max = cv2.getTrackbarPos("Val Max", "TrackBars")
 
-            print(h_min, h_max, s_min, s_max, v_min, v_max)
+            print(h_min, s_min, v_min, h_max, s_max, v_max)
 
             lower = np.array([h_min, s_min, v_min])
             upper = np.array([h_max, s_max, v_max])
