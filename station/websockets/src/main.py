@@ -3,7 +3,7 @@ import rospy
 import json
 from flask import Flask
 from flask_socketio import SocketIO
-from std_msgs.msg import Bool, Float
+from std_msgs.msg import Bool, Float, StringArray
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Pose
 from nav_msgs.msg import Path
@@ -50,6 +50,12 @@ def handle_resistance(resistance):
     socket.emit("resistance", json_data)
 
 
+def handle_puck_colors(puck_colors):
+    # TODO : Make sure this works once puck_colors is implemented
+    json_data = to_json({"puckColors": puck_colors})
+    socket.emit("puck_colors", json_data)
+
+
 def websockets():
     # pub = rospy.Publisher("chatter", String, queue_size=10)
     rospy.init_node("websockets", anonymous=True)
@@ -60,6 +66,7 @@ def websockets():
     rospy.Subscriber("robot", Pose, handle_robot)
     rospy.Subscriber("path", Path, handle_path)
     rospy.Subscriber("resistance", Float, handle_resistance)
+    rospy.Subscriber("puck_colors", StringArray, handle_puck_colors)
 
     socket.run(app)
 
