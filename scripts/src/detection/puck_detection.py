@@ -70,5 +70,5 @@ class PuckDetection:
                 return color
 
 
-puck_detection = PuckDetection("monde2.jpg")
-puck_detection.detect_puck("yellow")
+puck_detection = PuckDetection("monde6.jpg")
+puck_detection.detect_puck("blue")
