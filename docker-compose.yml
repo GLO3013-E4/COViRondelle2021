@@ -42,6 +42,8 @@ services:
       robot: 172.18.1.4
   frontend:
     restart: unless-stopped
+    env_file:
+      - ./frontend/.env
     build: ./frontend
     ports:
       - 5000:5000
