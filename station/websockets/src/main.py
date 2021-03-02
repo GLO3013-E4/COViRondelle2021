@@ -18,7 +18,7 @@ def to_json(data):
 
 def handle_ready(_):
     # TODO : Make sure this works once cycle_ready is implemented
-    socket.emit("cycle_ready")
+    socket.send("cycle_ready")
 
 
 def handle_world_camera_image_raw(image):
