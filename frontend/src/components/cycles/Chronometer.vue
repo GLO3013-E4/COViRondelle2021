@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="d-flex justify-center" ref="time" >{{ this.updatedTime }}</v-card>
+    <v-card class="d-flex justify-center" ref="time" ><h2>{{ this.updatedTime }}</h2></v-card>
     <StartButton ref="button" @start="start" />
   </div>
 </template>
@@ -78,10 +78,8 @@ export default class Chronometer extends Vue {
     const seconds = tempTime % 60;
     tempTime = Math.floor(tempTime / 60);
     const minutes = tempTime % 60;
-    tempTime = Math.floor(tempTime / 60);
-    const hours = tempTime % 60;
 
-    return `${hours} : ${minutes} : ${seconds}.${milliseconds}`;
+    return `${minutes} : ${seconds}.${milliseconds}`;
   }
 }
 </script>

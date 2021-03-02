@@ -35,7 +35,7 @@ describe('Given no puck released yet', () => {
 
       expect(button.exists()).toBe(true);
       expect(time.exists()).toBe(true);
-      expect(time.text()).toMatch('0 : 0 : 0.0');
+      expect(time.text()).toMatch('0 : 0.0');
     });
     });
 });
