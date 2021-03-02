@@ -69,7 +69,7 @@ def handle_end(_):
 
 
 def websockets():
-    # pub = rospy.Publisher("chatter", String, queue_size=10)
+    start_cycle_publisher = rospy.Publisher("start_cycle", Bool, queue_size=10)
     rospy.init_node("websockets", anonymous=True)
     rate = rospy.Rate(10)
 
@@ -83,13 +83,16 @@ def websockets():
     rospy.Subscriber("end", Bool, handle_end)
 
     socket.run(app)
+    start_cycle = False
+
+    @socket.on('start_cycle')
+    def handle_start_cycle(_):
+        start_cycle_publisher.publish(True)
 
     while not rospy.is_shutdown():
-        # TODO : Handle start_cycle
-
-        # hello_str = "hello world %s" % rospy.get_time()
-        # rospy.loginfo(hello_str)
-        # pub.publish(hello_str)
+        if start_cycle:
+            start_cycle_publisher.publish(True)
+            start_cycle = False
 
         rate.sleep()
 
