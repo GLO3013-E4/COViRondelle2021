@@ -1,9 +1,10 @@
 #!/usr/bin/env python
-import rospy
 import json
+import rospy
 from flask import Flask
 from flask_socketio import SocketIO
-from std_msgs.msg import Bool, Float, StringArray
+from std_msgs.msg import Bool, Float32
+from rocon_std_msgs.msg import StringArray
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Pose
 from nav_msgs.msg import Path
@@ -77,7 +78,7 @@ def websockets():
     rospy.Subscriber("world_camera/image_raw", Image, handle_world_camera_image_raw)
     rospy.Subscriber("robot", Pose, handle_robot)
     rospy.Subscriber("path", Path, handle_path)
-    rospy.Subscriber("resistance", Float, handle_resistance)
+    rospy.Subscriber("resistance", Float32, handle_resistance)
     rospy.Subscriber("puck_colors", StringArray, handle_puck_colors)
     rospy.Subscriber("puck_corners", StringArray, handle_puck_corners)
     rospy.Subscriber("end", Bool, handle_end)
