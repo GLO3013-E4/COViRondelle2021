@@ -1,7 +1,13 @@
 import cv2
 import os
 
+from obstacle_position import ObstaclePosition
+
+
 class ObstacleDetection:
+
+    def __init__(self):
+        self.obstacle_position = ObstaclePosition()
 
     def capture_image_from_path(self, path):
         absolute_path = os.path.join(os.getcwd(), path)
@@ -19,10 +25,11 @@ class ObstacleDetection:
         (corners, ids, rejected) = cv2.aruco.detectMarkers(image, aruco_dict,
                                        parameters=aruco_params)
 
+        obstacles_position = []
+
         if len(corners) > 0:
             ids = ids.flatten()
             for (markerCorner, markerID) in zip(corners, ids):
-                print(markerCorner)
                 corners = markerCorner.reshape((4, 2))
                 (top_left_position, top_right_position, bottom_right_position, bottom_left_position) = corners
 
@@ -33,15 +40,24 @@ class ObstacleDetection:
                 self.draw_line_on_markers(bottom_left_position, bottom_right_position, image, top_left_position,
                                           top_right_position)
 
-                center_x, center_y = self.get_centers_position(bottom_right_position, top_left_position)
+                obstacle_position = self.obstacle_position.generate_obstacle_dict(top_right=top_right_position,
+                                                                                  top_left=top_left_position,
+                                                                                  bottom_right=bottom_right_position,
+                                                                                  bottom_left=bottom_left_position,
+                                                                                  obstacle_id=str(markerID)
+                                                                                  )
+                obstacles_position.append(obstacle_position)
+                center_x, center_y = self.obstacle_position.generate_center_position(bottom_right_position, top_left_position)
 
                 self.draw_center_position(center_x, center_y, image)
-
                 cv2.putText(image, str(markerID),
                             (top_left_position[0], top_left_position[1] - 15), cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (0, 255, 0), 2)
                 print("[INFO] ArUco marker ID: {}".format(markerID))
+            print(obstacles_position)
             self.show_image(image)
+            return obstacles_position
+
 
     def show_image(self, image):
         cv2.imshow("Markers", image)
@@ -49,11 +65,6 @@ class ObstacleDetection:
 
     def draw_center_position(self, center_x, center_y, image):
         cv2.circle(image, (center_x, center_y), 4, (0, 0, 255), -1)
-
-    def get_centers_position(self, bottom_right_position, top_left_position):
-        center_x = int((top_left_position[0] + bottom_right_position[0]) / 2.0)
-        center_y = int((top_left_position[1] + bottom_right_position[1]) / 2.0)
-        return center_x, center_y
 
     def get_markers_corners_position(self, bottom_left_position, bottom_right_position, top_left_position,
                                      top_right_position):
@@ -79,7 +90,3 @@ class ObstacleDetection:
 
     def get_acuro_dictionnary(self):
         return cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
-
-an_image= "testing.jpg"
-obstacle_detection = ObstacleDetection()
-obstacle_detection.detect_obstacle(an_image)
