@@ -77,7 +77,7 @@ export default class Chronometer extends Vue {
     tempTime = Math.floor(tempTime / 60);
     const hours = tempTime % 60;
 
-    return hours + ' : ' + minutes + ' : ' + seconds + '.' + milliseconds;
+    return `${hours} : ${minutes} : ${seconds}.${milliseconds}`;
   }
 }
 </script>
