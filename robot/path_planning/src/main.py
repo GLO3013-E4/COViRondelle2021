@@ -14,6 +14,14 @@ class PathFinder:
         self.node_size = 25
         self.algorithm = "BreadthFirstSearch"
         self.image_path = "bleh" # TODO:
+        self.pathfinder = "bleh" # TODO:
+
+        self.pub = rospy.Publisher('path', String, queue_size=10)
+        rospy.Subscriber('goal', String, self.callback_goal)
+        rospy.Subscriber('pucks', String, self.callback_pucks)
+        rospy.Subscriber('obstacles', String, self.callback_obstacles)
+        rospy.Subscriber('position', String, self.callback_position)
+        rospy.Subscriber('get_path', String, self.get_path)
 
     def can_create_path(self):
         return self.goal and self.pucks and self.obstacles and self.position
@@ -21,27 +29,23 @@ class PathFinder:
     def get_path(self):
         return get_nodes(self.node_size, self.algorithm, self.obstacles, self.position, self.goal, self.pucks, self.image_path)
 
+    def callback_goal(self, goal):
+        self.pathfinder.goal = goal
 
-def callback_goal(path_finder, goal):
-    path_finder.goal = goal
+    def callback_pucks(self, pucks):
+        self.pathfinder.pucks = pucks
 
+    def callback_obstacles(self, obstacles):
+        self.pathfinder.obstacles = obstacles
 
-def callback_pucks(path_finder, pucks):
-    path_finder.pucks = pucks
-
-
-def callback_obstacles(path_finder, obstacles):
-    path_finder.obstacles = obstacles
-
-
-def callback_position(path_finder, position):
-    path_finder.position = position
+    def callback_position(self, position):
+        self.pathfinder.position = position
 
 
-def get_path(path_finder, pub, data):
-    if path_finder.can_create_path():
+def get_path(self, pub, data):
+    if self.pathfinder.can_create_path():
         # TODO: quoi faire si je pogne l'exception PathNotFound
-        path = path_finder.get_path()
+        path = self.pathfinder.get_path()
         pub.publish(path)
 
         rospy.loginfo("Wooh j'ai posté le path")  # TODO: enlever le log
@@ -54,13 +58,7 @@ def path_planner():
 
     pub = rospy.Publisher('path', String, queue_size=10)
 
-    path_finder = PathFinder()
-
-    rospy.Subscriber('goal', String, partial(callback_goal,path_finder=path_finder))
-    rospy.Subscriber('pucks', String, partial(callback_pucks, path_finder=path_finder))
-    rospy.Subscriber('obstacles', String, partial(callback_obstacles, path_finder=path_finder))
-    rospy.Subscriber('position', String, partial(callback_position, path_finder=path_finder))
-    rospy.Subscriber('get_path', String, partial(get_path, path_finder=path_finder, pub=pub))
+    pathfinder = PathFinder()
 
     rate = rospy.Rate(10)  # 10hz
 
