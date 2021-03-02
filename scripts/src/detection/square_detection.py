@@ -64,3 +64,13 @@ class SquareDetection(ObjectDetection):
 
     def is_in_area(self, area):
         return self.minimum_area < area < self.maximum_area
+
+
+def detect_square(image):
+    pass
+   
+detect_square("monde2.jpg")
+
+
+
+
