@@ -83,17 +83,12 @@ def websockets():
     rospy.Subscriber("end", Bool, handle_end)
 
     socket.run(app)
-    start_cycle = False
 
     @socket.on('start_cycle')
     def handle_start_cycle(_):
         start_cycle_publisher.publish(True)
 
     while not rospy.is_shutdown():
-        if start_cycle:
-            start_cycle_publisher.publish(True)
-            start_cycle = False
-
         rate.sleep()
 
 
