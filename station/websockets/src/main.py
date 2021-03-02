@@ -2,11 +2,15 @@
 import rospy
 # from std_msgs.msg import String
 
+# from websockets.src.server import start_server
+
 
 def websockets():
     # pub = rospy.Publisher('chatter', String, queue_size=10)
     rospy.init_node('websockets', anonymous=True)
     rate = rospy.Rate(10)
+
+    # start_server()
 
     while not rospy.is_shutdown():
         # hello_str = "hello world %s" % rospy.get_time()
