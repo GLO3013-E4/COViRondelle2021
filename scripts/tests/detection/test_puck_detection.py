@@ -1,83 +1,50 @@
 from scripts.src.detection.puck_detection import PuckDetection
-from scripts.src.mapping.color import Color
 
-A_COLOR = Color["BLUE"]
+puck_detection = PuckDetection()
 
-detection_puck = PuckDetection( "images/monde3.jpg", A_COLOR)
+puck_position = puck_detection.detect_puck("monde3.jpg", "blue", False)
+invalid_color_puck_position = puck_detection.detect_puck("monde3.jpg", "pink", False)
 
-
-def test_given_an_area_in_range_then_return_true():
-    area = 1700
-    is_in_area = detection_puck.is_in_area(area)
-    assert is_in_area
-
-
-def test_given_an_area_not_in_range_then_return_false():
-    area = 3000
-    is_in_area = detection_puck.is_in_area(area)
-    assert not is_in_area
+PURPLE_HSV = [130, 50, 100]
+BLUE_HSV = [105, 70, 200]
+GREEN_HSV = [60, 110, 40]
+INVALID_HSV = [0, 2, 0]
 
 
-def test_given_coordinates_width_and_height_return_right_position():
-    position_x = 20
-    position_y = 120
-    width = 47
-    height = 50
-    position_return = detection_puck.generate_puck_position(position_x, position_y, width, height)
-
-    assert position_return["x_position"] == position_x
-    assert position_return["y_position"] == position_y
-    assert position_return["width"] == width
-    assert position_return["height"] == height
+def test_given_puck_should_return_dict_with_tuple_position_and_int_radius():
+    assert isinstance(puck_position, dict) is True
+    assert isinstance(puck_position["center_position"], tuple) is True
 
 
-def test_given_an_object_with_five_corner_then_return_name_puck():
-    expected_name = f"{A_COLOR} puck"
-
-    actual_name = detection_puck.get_object_name(5)
-
-    assert expected_name == actual_name
+def test_given_puck_should_return_dict_of_len_2():
+    assert len(puck_position) == 2
 
 
-def test_given_an_object_with_three_corner_then_return_name():
-    expected_name = "None"
-
-    actual_name = detection_puck.get_object_name(3)
-
-    assert expected_name == actual_name
+def test_given_invalid_color_puck_should_return_empty_dict():
+    assert len(invalid_color_puck_position) == 0
 
 
-def test_given_an_object_within_puck_dimension_then_should_be_in_range():
-    width = 45
-    height = 55
+def test_given_hsv_color_of_purple_should_return_string_color_blue():
+    expected_result = puck_detection.find_hsv_color(PURPLE_HSV)
 
-    object_is_in_range = detection_puck.object_is_in_range(width, height)
-
-    assert object_is_in_range is True
+    assert expected_result == "purple"
 
 
-def test_given_an_object_within_invalid_width_then_should_not_be_in_range():
-    width = 33
-    height = 55
+def test_given_hsv_color_of_blue_should_return_string_color_blue():
+    expected_result = puck_detection.find_hsv_color(BLUE_HSV)
 
-    object_is_in_range = detection_puck.object_is_in_range(width, height)
-
-    assert object_is_in_range is False
+    assert expected_result == "blue"
 
 
-def test_given_an_object_within_invalid_height_then_should_not_be_in_range():
-    width = 38
-    height = 68
+def test_given_hsv_color_of_red_should_return_string_color_red():
+    expected_result = puck_detection.find_hsv_color(GREEN_HSV)
 
-    object_is_in_range = detection_puck.object_is_in_range(width, height)
-
-    assert object_is_in_range is False
+    assert expected_result == "green"
 
 
-def test_given_an_object_within_invalid_height_and_width_then_should_not_be_in_range():
-    width = 28
-    height = 68
+def test_given_invalid_hsv_should_return_none():
+    expected_result = puck_detection.find_hsv_color(INVALID_HSV)
 
-    object_is_in_range = detection_puck.object_is_in_range(width, height)
+    assert expected_result == 'None'
 
-    assert object_is_in_range is False
+
