@@ -3,7 +3,6 @@ from scripts.src.detection.puck_detection import PuckDetection
 puck_detection = PuckDetection()
 
 puck_position = puck_detection.detect_puck("monde3.jpg", "blue", False)
-invalid_color_puck_position = puck_detection.detect_puck("monde3.jpg", "pink", False)
 
 PURPLE_HSV = [130, 50, 100]
 BLUE_HSV = [105, 70, 200]
@@ -18,10 +17,6 @@ def test_given_puck_should_return_dict_with_tuple_position_and_int_radius():
 
 def test_given_puck_should_return_dict_of_len_2():
     assert len(puck_position) == 2
-
-
-def test_given_invalid_color_puck_should_return_empty_dict():
-    assert len(invalid_color_puck_position) == 0
 
 
 def test_given_hsv_color_of_purple_should_return_string_color_blue():
