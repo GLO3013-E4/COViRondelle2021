@@ -1,7 +1,7 @@
 <template>
   <v-card class="grey lighten-3">
     <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
-      <h5 class="white--text">Station de résistance</h5>
+      <h5 class="white--text">Resistance Station</h5>
     </v-card-title>
     <v-container>
       <v-row align="center">
@@ -45,3 +45,9 @@ export default class Resistance extends Vue {
   public puckColors!: Array<Color>;
 }
 </script>
+
+<style scoped>
+.v-card__title {
+  padding: 0em;
+}
+</style>

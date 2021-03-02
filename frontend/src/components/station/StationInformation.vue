@@ -1,5 +1,5 @@
 <template>
-  <v-card color="#ededed" height="300">
+  <v-card color="#ededed" height="250">
     <v-container>
       <v-row>
         <v-col sm="12">
@@ -9,11 +9,17 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-col sm="5">
+        <v-col sm="6">
           <Resistance />
         </v-col>
-        <v-col sm="3">
+        <v-col sm="6">
           <ControlPanel />
+        </v-col>
+        <v-col sm="6">
+          <PuckInGrip />
+        </v-col>
+        <v-col sm="6">
+          <PuckDeposit />
         </v-col>
       </v-row>
     </v-container>
@@ -24,11 +30,16 @@
 import { Component, Vue } from 'vue-property-decorator';
 import Resistance from '../station/Resistance.vue';
 import ControlPanel from '../station/ControlPanel.vue';
+import PuckInGrip from '../station/PuckInGrip.vue';
+import PuckDeposit from '../station/PuckDeposit.vue';
 
 @Component({
-  components: { Resistance: Resistance, ControlPanel: ControlPanel },
+  components: {
+    Resistance: Resistance,
+    ControlPanel: ControlPanel,
+    PuckInGrip: PuckInGrip,
+    PuckDeposit: PuckDeposit,
+  },
 })
 export default class StationInformation extends Vue {}
 </script>
-
-<style></style>

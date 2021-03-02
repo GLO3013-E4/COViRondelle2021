@@ -4,6 +4,7 @@
 [![Station CI](https://github.com/GLO3013-E4/COViRondelle2021/workflows/Station%20CI/badge.svg)](https://github.com/GLO3013-E4/COViRondelle2021/actions?query=workflow%3A%22Station+CI%22)
 [![Frontend CI](https://github.com/GLO3013-E4/COViRondelle2021/workflows/Frontend%20CI/badge.svg)](https://github.com/GLO3013-E4/COViRondelle2021/actions?query=workflow%3A%22Frontend+CI%22)
 [![Scripts CI](https://github.com/GLO3013-E4/COViRondelle2021/workflows/Scripts%20CI/badge.svg)](https://github.com/GLO3013-E4/COViRondelle2021/actions?query=workflow%3A%22Scripts+CI%22)
+[![Code coverage](https://codecov.io/gh/GLO3013-E4/COViRondelle2021/branch/develop/graph/badge.svg?token=9552B5FKYR)](https://codecov.io/gh/GLO3013-E4/COViRondelle2021)
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 
 Project of team 4 for course GLO-3013 at Laval University

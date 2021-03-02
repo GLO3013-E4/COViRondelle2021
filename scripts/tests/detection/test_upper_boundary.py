@@ -1,9 +1,8 @@
 from scripts.src.detection.upper_boundary import UpperBoundary
-from scripts.src.mapping.color import Color
 
-RED_COLOR = Color["RED"]
-BLUE_COLOR = Color["BLUE"]
-YELLOW_COLOR = Color["YELLOW"]
+RED_COLOR = "red"
+BLUE_COLOR = "blue"
+YELLOW_COLOR = "yellow"
 NOT_A_COLOR = "Hello world"
 
 upper_boundary = UpperBoundary()
