@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Step } from '@/types/step';
 import { Component, Vue } from 'vue-property-decorator';
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import StartButton from './StartButton.vue';
 
 @Component({
@@ -17,6 +17,7 @@ import StartButton from './StartButton.vue';
   },
   methods: {
     ...mapActions(['emitSocketStartCycle']),
+    //...mapMutations(['goToLastStep'])
   },
   computed: {
     ...mapState(['cycleReady', 'currentStep']),
@@ -24,12 +25,17 @@ import StartButton from './StartButton.vue';
 })
 export default class Chronometer extends Vue {
   public emitSocketStartCycle!: () => void;
+ // public goToLastStep!: () => void;
   public cycleReady!: boolean;
   public currentStep!: Step;
 
   public elapsedTime = 0;
   public interval: number | null = 0;
   public prevTime: number | null = 0;
+
+  /*public testGotoLastStep(){
+    this.goToLastStep();
+  }*/
 
   public start() {
     if (
