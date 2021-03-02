@@ -61,7 +61,8 @@ export default class Chronometer extends Vue {
     }
     this.prevTime = null;
   }
-
+  
+//DONT KNOW IF NEEDED
   public reset() {
     this.elapsedTime = 0;
     this.updatedTime;
