@@ -49,10 +49,9 @@ export default class StepList extends Vue {
 
 <style scoped>
 .v-stepper--vertical .v-stepper__step {
-  padding: 0.05em 0.30em 0.15em;
+  padding: 0.05em 0.3em 0.15em;
 }
 .v-stepper--vertical {
-  padding: 0.20em;
+  padding: 0.2em;
 }
-
 </style>

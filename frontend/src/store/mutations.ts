@@ -2,7 +2,8 @@ import { MutationTree } from 'vuex/types';
 import {
   SOCKET_ROBOT_CONSUMPTION,
   SOCKET_TABLE_IMAGE,
-  SOCKET_RESISTANCE_AND_PUCK_COLORS,
+  SOCKET_RESISTANCE,
+  SOCKET_PUCK_COLORS,
   SOCKET_PUCK_FIRST_CORNER,
   SOCKET_PLANNED_TRAJECTORY_COORDINATES,
   SOCKET_REAL_TRAJECTORY_COORDINATE,
@@ -17,7 +18,8 @@ export type Mutations<S = State> = {
   [SOCKET_CYCLE_READY](state: S): void;
   [SOCKET_ROBOT_CONSUMPTION](state: S, message: Message): void;
   [SOCKET_TABLE_IMAGE](state: S, message: Message): void;
-  [SOCKET_RESISTANCE_AND_PUCK_COLORS](state: S, message: Message): void;
+  [SOCKET_RESISTANCE](state: S, message: Message): void;
+  [SOCKET_PUCK_COLORS](state: S, message: Message): void;
   [SOCKET_PUCK_FIRST_CORNER](state: S, message: Message): void;
   [SOCKET_PLANNED_TRAJECTORY_COORDINATES](state: S, message: Message): void;
   [SOCKET_REAL_TRAJECTORY_COORDINATE](state: S, message: Message): void;
@@ -39,8 +41,10 @@ export const mutations: MutationTree<State> & Mutations = {
     // TODO : Implement get table image from state in associated component
     state.tableImage = message.tableImage || defaultState.tableImage;
   },
-  [SOCKET_RESISTANCE_AND_PUCK_COLORS](state: State, message: Message) {
+  [SOCKET_RESISTANCE](state: State, message: Message) {
     state.resistance = message.resistance || defaultState.resistance;
+  },
+  [SOCKET_PUCK_COLORS](state: State, message: Message) {
     state.puckColors = message.puckColors || defaultState.puckColors;
   },
   [SOCKET_PUCK_FIRST_CORNER](state: State, message: Message) {
