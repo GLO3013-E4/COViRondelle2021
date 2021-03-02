@@ -4,9 +4,9 @@ Algorithm that finds a path from a starting node to the first node met with a Ti
 
 from collections import deque
 
-from scripts.src.pathfinding.pathfinding_algorithm import PathfindingAlgorithm
-from scripts.src.pathfinding.path_not_found_exception import PathNotFoundException
-from scripts.src.pathfinding.tile_role import TileRole
+from pathfinding.pathfinding_algorithm import PathfindingAlgorithm
+from pathfinding.path_not_found_exception import PathNotFoundException
+from pathfinding.tile_role import TileRole
 
 
 class BreadthFirstSearch(PathfindingAlgorithm):

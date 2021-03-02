@@ -1,6 +1,6 @@
-from scripts.src.pathfinding.pathfinder import Pathfinder
-from scripts.src.pathfinding.pathfinding_algorithm_factory import PathfindingAlgorithmFactory
-from scripts.src.pathfinding.map import Map
+from pathfinding.pathfinder import Pathfinder
+from pathfinding.pathfinding_algorithm_factory import PathfindingAlgorithmFactory
+from pathfinding.map import Map
 
 
 def get_path(node_size, algorithm, obstacles, start, end, pucks, image_width, image_height):
@@ -13,4 +13,4 @@ def get_path(node_size, algorithm, obstacles, start, end, pucks, image_width, im
     pathfinder = Pathfinder(board_map, pathfinding_algorithm)
 
     pathfinder.find_square_matrix_path()
-    return [node.pixel_coordinates_center for node in pathfinder.path]
+    return pathfinder.path
