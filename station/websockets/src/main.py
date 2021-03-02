@@ -62,6 +62,12 @@ def handle_puck_corners(puck_corners):
     socket.emit("first_puck_corner", json_data)
 
 
+def handle_end(_):
+    # TODO : Make sure this works once end is implemented
+    json_data = to_json({"currentStep": "CycleEndedAndRedLedOn"})
+    socket.emit("current_step", json_data)
+
+
 def websockets():
     # pub = rospy.Publisher("chatter", String, queue_size=10)
     rospy.init_node("websockets", anonymous=True)
@@ -74,6 +80,7 @@ def websockets():
     rospy.Subscriber("resistance", Float, handle_resistance)
     rospy.Subscriber("puck_colors", StringArray, handle_puck_colors)
     rospy.Subscriber("puck_corners", StringArray, handle_puck_corners)
+    rospy.Subscriber("end", Bool, handle_end)
 
     socket.run(app)
 
