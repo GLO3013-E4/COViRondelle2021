@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
-from functools import partial
-from scripts.src.pathfinding.show_path import get_path as get_nodes
+from nav_msgs.msg import Path
+from geometry_msgs.msg import PoseStamped
+from pathfinding.show_path import get_path as get_nodes
 
 
 class PathFinder:
@@ -10,53 +11,54 @@ class PathFinder:
         self.goal = None
         self.pucks = None
         self.obstacles = None
-        self.position = None
+        self.robot = None
         self.node_size = 25
         self.algorithm = "BreadthFirstSearch"
-        self.image_path = "bleh" # TODO:
-        self.pathfinder = "bleh" # TODO:
+        self.image_width, self.image_height = (640, 480)
 
-        self.pub = rospy.Publisher('path', String, queue_size=10)
+        self.pub = rospy.Publisher('path', Path, queue_size=10)
         rospy.Subscriber('goal', String, self.callback_goal)
         rospy.Subscriber('pucks', String, self.callback_pucks)
         rospy.Subscriber('obstacles', String, self.callback_obstacles)
-        rospy.Subscriber('position', String, self.callback_position)
-        rospy.Subscriber('get_path', String, self.get_path)
+        rospy.Subscriber('robot', String, self.callback_robot)
 
     def can_create_path(self):
-        return self.goal and self.pucks and self.obstacles and self.position
+        return self.goal and self.pucks and self.obstacles and self.robot
 
     def get_path(self):
-        return get_nodes(self.node_size, self.algorithm, self.obstacles, self.position, self.goal, self.pucks, self.image_path)
+        if self.can_create_path():
+            nodes = get_nodes(self.node_size, self.algorithm, self.obstacles, self.robot, self.goal, self.pucks, self.image_width, self.image_height)
+
+            path = Path()
+            for node in nodes:
+                pose = PoseStamped()
+                pose.pose.position.x = node.pixel_coordinates_center
+                pose.pose.position.y = node.pixel_coordinates_center
+                pose.pose.position.z = 0
+                pose.header.frame_id = "/map"
+                path.poses.append(pose)
+                path.header.frame_id = "/map"
+
+            self.pub.publish(path)
+        else:
+            rospy.logerr("A parameter was still set to None (goal, pucks, obstacles, robot)")
 
     def callback_goal(self, goal):
-        self.pathfinder.goal = goal
+        self.goal = (goal.position.x, goal.position.y)
+        self.get_path()
 
     def callback_pucks(self, pucks):
-        self.pathfinder.pucks = pucks
+        self.pucks = [(puck.position.x, puck.position.y) for puck in pucks.poses]
 
     def callback_obstacles(self, obstacles):
-        self.pathfinder.obstacles = obstacles
+        self.obstacles = [(obstacle.position.x, obstacle.position.y) for obstacle in obstacles.poses]
 
-    def callback_position(self, position):
-        self.pathfinder.position = position
-
-
-def get_path(self, pub, data):
-    if self.pathfinder.can_create_path():
-        # TODO: quoi faire si je pogne l'exception PathNotFound
-        path = self.pathfinder.get_path()
-        pub.publish(path)
-
-        rospy.loginfo("Wooh j'ai posté le path")  # TODO: enlever le log
-    else:
-        rospy.loginfo("Manque des infos")  # TODO: changer le message
+    def callback_robot(self, robot):
+        self.robot = (robot.position.x, robot.position.y)
 
 
 def path_planner():
     rospy.init_node('path_planning', anonymous=True)
-
-    pub = rospy.Publisher('path', String, queue_size=10)
 
     pathfinder = PathFinder()
 
