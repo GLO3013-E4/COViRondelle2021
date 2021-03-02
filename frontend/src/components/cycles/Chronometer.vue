@@ -15,11 +15,15 @@ import StartButton from './StartButton.vue';
   components: {
     StartButton: StartButton,
   },
+  methods: {
+    ...mapActions(['emitSocketStartCycle']),
+  },
   computed: {
     ...mapState(['cycleReady', 'cycleStarted', 'currentStep']),
   },
 })
 export default class Chronometer extends Vue {
+  public emitSocketStartCycle!: () => void;
   public cycleReady!: boolean;
   public cycleStarted!: boolean;
   public currentStep!: Step;
@@ -44,12 +48,6 @@ export default class Chronometer extends Vue {
         this.updatedTime;
       }, 50);
     }
-  }
-  emitSocketStartCycle() {
-    this.$store.dispatch('emitSocketStartCycle', {
-      data1: 'banana',
-      data2: 'poteto',
-    });
   }
 
   public stop() {
