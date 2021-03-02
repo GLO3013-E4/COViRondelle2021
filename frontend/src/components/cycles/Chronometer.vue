@@ -38,14 +38,18 @@ export default class Chronometer extends Vue {
 
     if (!this.stopwatchInterval) {
       this.stopwatchInterval = setInterval(() => {
-        if (!this.prevTime) {
+        if (this.currentStep === Step.CycleEndedAndRedLedOn) {
+          this.stop();
+        } else {
+          if (!this.prevTime) {
+            this.prevTime = Date.now();
+          }
+
+          this.elapsedTime += Date.now() - this.prevTime;
           this.prevTime = Date.now();
+
+          this.updatedTime;
         }
-
-        this.elapsedTime += Date.now() - this.prevTime;
-        this.prevTime = Date.now();
-
-        this.updatedTime;
       }, 50);
     }
   }
