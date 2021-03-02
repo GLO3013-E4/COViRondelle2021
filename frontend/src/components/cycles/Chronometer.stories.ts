@@ -18,12 +18,22 @@ const Template = (args: any) => ({
   template: '<Chronometer />',
 });
 
-export const WhenCycleNotStarted = Template.bind({}) as any;
-WhenCycleNotStarted.args = {
+export const WhenCycleNotStartedAndCycleReady = Template.bind({}) as any;
+WhenCycleNotStartedAndCycleReady.args = {
   currentStep: Step.CycleNotStarted,
+  cycleReady: true,
 };
 
+export const WhenCycleNotStartedAndCycleNotReady = Template.bind({}) as any;
+WhenCycleNotStartedAndCycleNotReady.args = {
+  currentStep: Step.CycleNotStarted,
+  cycleReady: false,
+};
+
+//aint working because it probably does not consider the change in state
+//But tests were done manually and it works.
 export const WhenCycleEnds = Template.bind({}) as any;
 WhenCycleEnds.args = {
   currentStep: Step.CycleEndedAndRedLedOn,
+  cycleReady: true,
 };

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <span>{{ this.updatedTime }}</span>
-    <StartButton @start="start" />
+    <v-card class="d-flex justify-center" ref="time" >{{ this.updatedTime }}</v-card>
+    <StartButton ref="button" @start="start" />
   </div>
 </template>
 
@@ -19,53 +19,50 @@ import StartButton from './StartButton.vue';
     ...mapActions(['emitSocketStartCycle']),
   },
   computed: {
-    ...mapState(['cycleReady', 'cycleStarted', 'currentStep']),
+    ...mapState(['cycleReady', 'currentStep']),
   },
 })
 export default class Chronometer extends Vue {
   public emitSocketStartCycle!: () => void;
   public cycleReady!: boolean;
-  public cycleStarted!: boolean;
   public currentStep!: Step;
 
-  public elapsedTime: any = 0; //TODO CHANGE TYPE
-  public stopwatchInterval: any = 0; //TODO CHANGE TYPE
-  public prevTime: any = 0; //TODO CHANGE TYPE
+  public elapsedTime = 0;
+  public interval: number | null = 0;
+  public prevTime: number | null = 0;
 
-  //TODO: LOGIC WITH STEP AND BOOLEANS
   public start() {
-    this.emitSocketStartCycle();
+    if (
+      this.cycleReady == true ||
+      this.currentStep == Step.CycleEndedAndRedLedOn
+    ) {
+      this.emitSocketStartCycle();
 
-    if (!this.stopwatchInterval) {
-      this.stopwatchInterval = setInterval(() => {
-        if (this.currentStep === Step.CycleEndedAndRedLedOn) {
-          this.stop();
-        } else {
-          if (!this.prevTime) {
+      if (!this.interval) {
+        this.interval = setInterval(() => {
+          if (this.currentStep === Step.CycleEndedAndRedLedOn) {
+            this.stop();
+          } else {
+            if (!this.prevTime) {
+              this.prevTime = Date.now();
+            }
+
+            this.elapsedTime += Date.now() - this.prevTime;
             this.prevTime = Date.now();
+
+            this.updatedTime;
           }
-
-          this.elapsedTime += Date.now() - this.prevTime;
-          this.prevTime = Date.now();
-
-          this.updatedTime;
-        }
-      }, 50);
+        }, 50);
+      }
     }
   }
 
   public stop() {
-    if (this.stopwatchInterval) {
-      clearInterval(this.stopwatchInterval);
-      this.stopwatchInterval = null;
+    if (this.interval) {
+      clearInterval(this.interval);
+      this.interval = null;
     }
     this.prevTime = null;
-  }
-  
-//DONT KNOW IF NEEDED
-  public reset() {
-    this.elapsedTime = 0;
-    this.updatedTime;
   }
 
   get updatedTime() {
