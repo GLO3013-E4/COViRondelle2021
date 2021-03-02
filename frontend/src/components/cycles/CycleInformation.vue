@@ -13,7 +13,6 @@
           <StepList />
         </v-col>
         <v-col sm="4">
-          <StartButton />
           <Chronometer />
         </v-col>
       </v-row>

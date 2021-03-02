@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn> start </v-btn>
+    <v-btn @click="start"> start </v-btn>
   </div>
 </template>
 
@@ -8,6 +8,11 @@
 //TODO: COMPLETE COMPONENT
 import { Component, Vue } from 'vue-property-decorator';
 
-@Component({})
-export default class StartButton extends Vue {}
+@Component({
+})
+export default class StartButton extends Vue {
+  public start(){
+    this.$emit('start');
+  }
+}
 </script>

@@ -1,25 +1,38 @@
 <template>
   <div>
     <span>{{ this.updatedTime }}</span>
-    <v-btn @click="start"> start </v-btn>
-    <v-btn @click="stop"> stop </v-btn>
-    <v-btn @click="reset"> reset </v-btn>
+    <StartButton @start="start"/>
+
   </div>
 </template>
 
 <script lang="ts">
+import { Step } from '@/types/step';
 import { Component, Vue } from 'vue-property-decorator';
+import { mapState, mapActions } from 'vuex';
+import StartButton from './StartButton.vue';
 
 @Component({
-  components: {},
+  components: {
+    StartButton: StartButton,
+  },
+  computed: {
+    ...mapState(['cycleReady', 'cycleStarted', 'currentStep']),
+  },
 })
 export default class Chronometer extends Vue {
-  public elapsedTime: any = 0; //TODO CHANGE TYPE
-  public stopwatchInterval: any = 0;//TODO CHANGE TYPE
-  public prevTime: any = 0;//TODO CHANGE TYPE
+    public cycleReady!:boolean;
+    public cycleStarted!:boolean;
+    public currentStep!:Step;
+
+    public elapsedTime: any = 0; //TODO CHANGE TYPE
+    public stopwatchInterval: any = 0;//TODO CHANGE TYPE
+    public prevTime: any = 0;//TODO CHANGE TYPE
 
 //TODO: LOGIC WITH STEP AND BOOLEANS
   public start() {
+    this.emitSocketStartCycle();
+
     if (!this.stopwatchInterval) {
       this.stopwatchInterval = setInterval(() => {
         if (!this.prevTime) {
@@ -32,6 +45,12 @@ export default class Chronometer extends Vue {
         this.updatedTime;
       }, 50);
     }
+  }
+  emitSocketStartCycle() {
+    this.$store.dispatch('emitSocketStartCycle', {
+      data1: 'banana',
+      data2: 'poteto',
+    });
   }
 
   public stop() {
