@@ -11,6 +11,7 @@ disable=
     C0301, # line-too-long
     E0401, # import-error
     E1101, # no-member
+    R0201, # no-self-use
     R0801, # duplicate-code
     R0903, # too-few-public-methods
     R0902, # too-many-instance-attributes
@@ -18,13 +19,11 @@ disable=
     R0912, # too-many-branches
     R0913, # too-many-arguments
     R0903, # too-few-public-methods
+    R1705, # no-else-return
+    R1729, # use-a-generator
     W0511, # fixme
     W0201, # attribute-defined-outside-init
-    R0201, # no-self-use
-    E0401, # import-error
-    R1705, # no-else-return
     W0612, # unused-variable
-    R1729, # use-a-generator
 ignore=
     Dockerfile,
     README.md,
