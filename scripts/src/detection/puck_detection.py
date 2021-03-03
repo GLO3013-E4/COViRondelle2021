@@ -19,9 +19,7 @@ class PuckDetection:
         script_dir = os.path.dirname(__file__)
         rel_path = image
         abs_file_path = os.path.join(script_dir, rel_path)
-        print(abs_file_path)
         img = cv2.imread(abs_file_path)
-        output = self.copy_image(img)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = cv2.medianBlur(gray, 5)
 
@@ -31,11 +29,11 @@ class PuckDetection:
 
         puck_position = {}
 
-        for (x, y, r) in detected_circles[0].astype(np.int32):
-            roi = img[y - r: y + r, x - r: x + r]
+        for (x, y, radius) in detected_circles[0].astype(np.int32):
+            roi = img[y - radius: y + radius, x - radius: x + radius]
             width, height = roi.shape[:2]
             mask = np.zeros((width, height, 3), roi.dtype)
-            cv2.circle(mask, (int(width / 2), int(height / 2)), r,
+            cv2.circle(mask, (int(width / 2), int(height / 2)), radius,
                        (255, 255, 255), -1)
             dominant_color = self.get_dominant_color(roi, k=4)
 
@@ -45,16 +43,10 @@ class PuckDetection:
 
             if hsv_color == color:
                 puck_position["center_position"] = (x, y)
-                puck_position["radius"] = r
-                #remove comments if you want to see detected puck,
-                # doesn't work with Docker
+                puck_position["radius"] = radius
                 if Debug:
                     print("Debug mode is on")
-                 #   self.draw_on_image(hsv_color, output, r, x, y)
                 break
-       # if Debug:
-           # self.show_image(output)
-
         return puck_position
 
     def show_image(self, output):
@@ -95,6 +87,3 @@ class PuckDetection:
                     <= boundaries["upper"][2]:
                 return color
         return "None"
-
-#puck_detction = PuckDetection()
-#puck_position = puck_detction.detect_puck("../../data/images/monde3.jpg", "blue")

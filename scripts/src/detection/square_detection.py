@@ -109,6 +109,3 @@ def detect_square(image):
 
 
 detect_square( "monde10.jpg" )
-
-#square_detection = SquareDetection("monde10.jpg")
-#square_detect = square_detection.detect_square()
