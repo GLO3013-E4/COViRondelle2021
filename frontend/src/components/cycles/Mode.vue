@@ -1,6 +1,6 @@
 <template>
     <div>
-    <v-chip :color="this.color" class="white--text"><h3>{{this.actualMode}}</h3></v-chip>
+    <v-chip :color="this.color" class="white--text" ref="mode"><h3>{{this.actualMode}}</h3></v-chip>
     </div>
 </template>
 
