@@ -2,8 +2,8 @@
   <v-card
     class="d-flex justify-center mb-10"
     color="#ededed"
-    height="500"
-    width="885"
+    :height="this.rescaleHeight + 70"
+    :width="this.rescaleWidth"
   >
     <v-container>
       <v-row>
@@ -14,17 +14,16 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-col
-          class="path"
+        <v-col class="path"
           v-bind:style="{
-            backgroundImage: 'url(' + this.image + ')',
-            backgroundSize: rescaleWidth + 'px ' + rescaleHeight + 'px',
-          }"
-        >
-          <svg :height="this.height" :width="this.width" id="svg">
+            background: `url('${tableImage}')`,
+            backgroundSize: `${this.rescaleWidth}px ${this.rescaleHeight}px`,
+            backgroundRepeat: 'no-repeat',
+          }">
+          <svg :height="this.rescaleHeight" :width="this.rescaleWidth" id="svg">
             <polyline
               id="planned_path"
-              :points="this.coordinatesToString"
+              :points = 'this.trajectoryPoint'
               style="fill: none; stroke: blue; stroke-width: 7"
             />
           </svg>
@@ -40,66 +39,54 @@ import { Coordinate } from '@/types/coordinate';
 import { mapState } from 'vuex';
 @Component({
   computed: {
-    ...mapState(['image', 'coordinates']),
+    ...mapState(['tableImage', 'plannedTrajectory']),
   },
 })
 export default class PlannedTrajectory extends Vue {
-  private coordinates!: Array<Coordinate>;
-  private readonly image!: string;
-  private img;
+  private plannedTrajectory!: Array<Coordinate>;
+  private readonly tableImage!: string;
   private readonly width!: number;
   private readonly height!: number;
-  private ratioX = 0.1;
-  private ratioY = 0.1;
+  private ratioX = 0.3;
+  private ratioY = 0.3;
   private rescaleWidth!: number;
   private rescaleHeight!: number;
-
+  private trajectoryPoint !: string;
   public constructor() {
     super();
-    this.img = new Image();
-    this.image = '../../../public/test.jpg';
-    this.img.src = this.image;
-    this.width = this.img.width;
+
+    this.width = 1600;
     this.rescaleWidth = this.width * this.ratioX;
-    this.height = this.img.height;
+    this.height = 904;
     this.rescaleHeight = this.height * this.ratioY;
     // this.rescaleCoordinates();
+    // this.coordinatesToString();
   }
-  private static coordinateToString(coordinate: Coordinate): string {
+  private coordinateToString(coordinate: Coordinate): string {
     return coordinate.x + ',' + coordinate.y + ' ';
   }
-  private coordinatesToString(): string {
+  private coordinatesToString() {
     let res = '';
-    this.coordinates.forEach(
-      (value) => (res += PlannedTrajectory.coordinateToString(value))
+    this.plannedTrajectory.forEach(
+      (value) => (res += this.coordinateToString(value))
     );
-    return res;
+    this.trajectoryPoint = res;
+    // this.trajectoryPoint = ' 80,120 200,180 200,230 60,230';
   }
 
-  private modifyValue(coordinate: Coordinate): Coordinate {
+  private applyRatio(coordinate: Coordinate): Coordinate {
     coordinate.x = coordinate.x * this.ratioX;
     coordinate.y = coordinate.y * this.ratioY;
     return coordinate;
   }
 
   private rescaleCoordinates() {
-    this.coordinates = this.coordinates.map((value) => this.modifyValue(value));
-  }
-  // data() {
-  //   return {
-  //     Point: '20,20 40,25 60,40 80,120 120,140 200,180',
-  //   };
-  // }
-  mounted() {
-    new PlannedTrajectory();
+    this.plannedTrajectory = this.plannedTrajectory.map((value) => this.applyRatio(value));
   }
 }
 </script>
 
 <style>
-/*.path {*/
-/*  background: url('../../../public/test.jpg');*/
-/*}*/
 #planned_path {
   z-index: 1;
 }
