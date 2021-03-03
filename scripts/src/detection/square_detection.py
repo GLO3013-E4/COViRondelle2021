@@ -106,6 +106,3 @@ def detect_square(image):
     cv2.imshow( "canny", imgContour )
     cv2.waitKey( 0 )
     cv2.destroyAllWindows()
-
-
-detect_square( "monde10.jpg" )
