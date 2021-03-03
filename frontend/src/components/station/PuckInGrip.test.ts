@@ -11,7 +11,7 @@ describe('When mounting PuckInGrip component', () => {
   });
 });
 
-describe('Given true state', () => {
+describe('Given puck in grip', () => {
   const localVue = createLocalVue();
   localVue.use(Vuex);
 
@@ -33,7 +33,7 @@ describe('Given true state', () => {
   });
 });
 
-describe('Given false state', () => {
+describe('Given puck released', () => {
   const localVue = createLocalVue();
   localVue.use(Vuex);
 
