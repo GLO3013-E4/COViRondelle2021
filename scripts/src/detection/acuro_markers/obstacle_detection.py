@@ -1,13 +1,9 @@
 import cv2
 
-from obstacle_position import ObstaclePosition
 from AcuroMarkers import ArucoMarkers
 
 
 class ObstacleDetection(ArucoMarkers):
-
-    def __init__(self):
-        self.obstacle_position = ObstaclePosition()
 
     def detect_obstacle(self, image):
         image = self.capture_image_from_path(image)
@@ -31,14 +27,14 @@ class ObstacleDetection(ArucoMarkers):
                 self.draw_line_on_markers(bottom_left_position, bottom_right_position, image, top_left_position,
                                           top_right_position)
 
-                obstacle_position = self.obstacle_position.generate_obstacle_dict(top_right=top_right_position,
+                obstacle_position = self.generate_obstacle_dict(top_right=top_right_position,
                                                                                   top_left=top_left_position,
                                                                                   bottom_right=bottom_right_position,
                                                                                   bottom_left=bottom_left_position,
                                                                                   obstacle_id=str(markerID)
                                                                                   )
                 obstacles_position.append(obstacle_position)
-                center_x, center_y = self.obstacle_position.generate_center_position(bottom_right_position, top_left_position)
+                center_x, center_y = self.generate_center_position(bottom_right_position, top_left_position)
 
                 self.draw_center_position(center_x, center_y, image)
                 cv2.putText(image, str(markerID),
