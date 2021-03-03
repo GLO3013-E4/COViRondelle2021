@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts">
-//TODO: COMPLETE COMPONENT
 import { Step } from '@/types/step';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
@@ -21,15 +20,6 @@ export default class StartButton extends Vue {
 
   public start() {
     this.$emit('start');
-  }
-
-  get color(){
-    if(this.cycleReady || this.currentStep == Step.CycleEndedAndRedLedOn){
-      return 'green'
-    }
-    else{
-      return "white"
-    }
   }
 }
 </script>
