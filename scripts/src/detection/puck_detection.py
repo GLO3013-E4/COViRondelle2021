@@ -6,10 +6,17 @@ from scripts.src.detection.color_boundaries import ColorBoundaries
 
 
 class PuckDetection:
+    @staticmethod
+    def copy_image(image):
+        try:
+            image = image.copy()
+        except AttributeError as invalid_image:
+            raise AttributeError("L'image est invalide") from invalid_image
+        return image
 
     def detect_puck(self, image, color, Debug=True):
         img = cv2.imread(image)
-        output = img.copy()
+        output = self.copy_image(img)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = cv2.medianBlur(gray, 5)
 
