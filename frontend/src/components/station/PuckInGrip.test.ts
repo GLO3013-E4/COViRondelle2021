@@ -11,7 +11,7 @@ describe('When mounting PuckInGrip component', () => {
   });
 });
 
-describe('Given state', () => {
+describe('Given true state', () => {
   const localVue = createLocalVue();
   localVue.use(Vuex);
 
@@ -24,16 +24,33 @@ describe('Given state', () => {
     const wrapper = shallowMount(PuckInGrip, { store, localVue });
 
     it('Should contain the right value', () => {
-      const switchComponent = wrapper.findComponent({ ref: 'switch' });
+      const grip = wrapper.findComponent({ ref: 'gripState' });
 
-      expect(switchComponent.exists()).toBe(true);
+      expect(grip.exists()).toBe(true);
       expect(store.state.puckInGrip).toBe(true);
+      expect(grip.text()).toBe('puck in grip');
     });
+  });
+});
 
-    it('Should not change state when clicked on', () => {
-      const switchComponent = wrapper.findComponent({ ref: 'switch' });
-      switchComponent.trigger('checked');
-      expect(store.state.puckInGrip).toBe(true);
+describe('Given false state', () => {
+  const localVue = createLocalVue();
+  localVue.use(Vuex);
+
+  const store = new Vuex.Store({
+    state: {
+      puckInGrip: false,
+    },
+  });
+  describe('When mounting PuckInGrip', () => {
+    const wrapper = shallowMount(PuckInGrip, { store, localVue });
+
+    it('Should contain the right value', () => {
+      const grip = wrapper.findComponent({ ref: 'gripState' });
+
+      expect(grip.exists()).toBe(true);
+      expect(store.state.puckInGrip).toBe(false);
+      expect(grip.text()).toBe('no puck');
     });
   });
 });
