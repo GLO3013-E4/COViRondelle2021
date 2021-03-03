@@ -1,10 +1,8 @@
 import cv2
 import os
 
-class RobotDetection:
+class ArucoMarkers:
 
-    def __init__(self):
-        pass
     def capture_image_from_path(self, path):
         absolute_path = os.path.join(os.getcwd(), path)
         image = cv2.imread(absolute_path)
@@ -18,36 +16,6 @@ class RobotDetection:
         center_x = int((top_left_position[0] + bottom_right_position[0]) / 2.0)
         center_y = int((top_left_position[1] + bottom_right_position[1]) / 2.0)
         return center_x, center_y
-
-    def detect_obstacle(self, image):
-        image = self.capture_image_from_path(image)
-        aruco_dict = self.get_acuro_dictionnary()
-        aruco_params = self.get_acuro_params()
-        (corners, ids, rejected) = cv2.aruco.detectMarkers(image, aruco_dict,
-                                       parameters=aruco_params)
-
-        if len(corners) > 0:
-            ids = ids.flatten()
-            for (markerCorner, markerID) in zip(corners, ids):
-                corners = markerCorner.reshape((4, 2))
-                (top_left_position, top_right_position, bottom_right_position, bottom_left_position) = corners
-
-                bottom_left_position, bottom_right_position, top_left_position, top_right_position = \
-                    self.get_markers_corners_position(
-                    bottom_left_position, bottom_right_position, top_left_position, top_right_position)
-
-                self.draw_line_on_markers(bottom_left_position, bottom_right_position, image, top_left_position,
-                                          top_right_position)
-
-                center_x, center_y = self.generate_center_position(bottom_right_position=bottom_right_position,
-                                                                   top_left_position=top_left_position)
-                self.draw_center_position(center_x, center_y, image)
-                cv2.putText(image, str(markerID),
-                            (top_left_position[0], top_left_position[1] - 15), cv2.FONT_HERSHEY_SIMPLEX,
-                            0.5, (0, 255, 0), 2)
-                print("[INFO] ArUco marker ID: {}".format(markerID))
-            self.show_image(image)
-
 
     def show_image(self, image):
         cv2.imshow("Markers", image)
@@ -64,6 +32,7 @@ class RobotDetection:
         top_left_position = (int(top_left_position[0]), int(top_left_position[1]))
         return bottom_left_position, bottom_right_position, top_left_position, top_right_position
 
+
     def draw_line_on_markers(self, bottom_left_position, bottom_right_position, image, top_left_position,
                              top_right_position):
         cv2.line(image, top_left_position, top_right_position, (0, 255, 0), 2)
@@ -78,5 +47,13 @@ class RobotDetection:
         return cv2.aruco.detectMarkers(image_with_obstacle, aruco_dict,
                                        parameters=aruco_params)
 
-    def get_acuro_dictionnary(self):
-        return cv2.aruco.Dictionary_get(cv2.aruco.DICT_5X5_50)
+    def generate_obstacle_dict(self, top_right, top_left, bottom_right, bottom_left, obstacle_id):
+        obstacle_report = {
+            f"obstacle {obstacle_id}" : {
+            "top_right": top_right,
+            "top_left": top_left,
+            "bottom_right": bottom_right,
+            "bottom_left": bottom_left
+            }
+        }
+        return obstacle_report
