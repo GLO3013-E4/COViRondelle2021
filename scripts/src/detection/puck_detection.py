@@ -1,21 +1,28 @@
+import os
+
 import cv2
 import numpy as np
 from collections import Counter
 from sklearn.cluster import KMeans
-from scripts.src.detection.color_boundaries import ColorBoundaries
+
+from color_boundaries import ColorBoundaries
 
 
 class PuckDetection:
     @staticmethod
     def copy_image(image):
         try:
-            image = image.copy()
-        except AttributeError as invalid_image:
-            raise AttributeError("L'image est invalide") from invalid_image
-        return image
+            img = image.copy()
+        except AttributeError:
+            raise AttributeError("L'image est invalide")
+        return img
 
     def detect_puck(self, image, color, Debug=True):
-        img = cv2.imread(image)
+        script_dir = os.path.dirname(__file__)
+        rel_path = image
+        abs_file_path = os.path.join(script_dir, rel_path)
+        print(abs_file_path)
+        img = cv2.imread(abs_file_path)
         output = self.copy_image(img)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = cv2.medianBlur(gray, 5)
@@ -85,3 +92,7 @@ class PuckDetection:
                     boundaries["upper"][1] and boundaries["lower"][2] <= hsv[2] <= boundaries["upper"][2]:
                 return color
         return "None"
+
+
+puck_detction = PuckDetection()
+puck_position = puck_detction.detect_puck("../../data/images/monde3.jpg", "red")
