@@ -41,7 +41,8 @@ class SquareDetection( ObjectDetection ):
         return four_corners
 
     def _get_contours(self, image_mask, img):
-        contours, hierarchy = cv2.findContours( image_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE )
+        contours, hierarchy = cv2.findContours( image_mask, cv2.RETR_EXTERNAL,
+                                                cv2.CHAIN_APPROX_NONE )
         corner_position = self.generate_four_corners( 0, 0, 0, 0 )
 
         for contour in contours:
@@ -50,10 +51,11 @@ class SquareDetection( ObjectDetection ):
                 perimeter = cv2.arcLength( contour, True )
                 zone_approximation = cv2.approxPolyDP( contour, 0.05 * perimeter, True )
                 x_position, y_position, width, height = cv2.boundingRect( zone_approximation )
-                cv2.rectangle(img, (x_position, y_position), (x_position+width, y_position+height), (0, 255, 0), 2)
-                if self.object_is_in_range( width, height ):
-                    corner_position = self.generate_four_corners( x_position, y_position,
-                                                                  width, height )
+                cv2.rectangle(img, (x_position, y_position), (x_position+width, y_position+height),
+                              (0, 255, 0), 2)
+                if self.object_is_in_range(width, height):
+                    corner_position = self.generate_four_corners(x_position, y_position,
+                                                                  width, height)
 
         return corner_position
 

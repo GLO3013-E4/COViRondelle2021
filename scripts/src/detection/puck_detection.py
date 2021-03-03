@@ -1,10 +1,8 @@
 import os
-
+from collections import Counter
 import cv2
 import numpy as np
-from collections import Counter
 from sklearn.cluster import KMeans
-
 from scripts.src.detection.color_boundaries import ColorBoundaries
 
 
@@ -13,8 +11,8 @@ class PuckDetection:
     def copy_image(image):
         try:
             img = image.copy()
-        except AttributeError:
-            raise AttributeError("L'image est invalide")
+        except AttributeError as invalid_image:
+            raise AttributeError("L'image est invalide") from invalid_image
         return img
 
     def detect_puck(self, image, color, Debug=True):
@@ -27,8 +25,8 @@ class PuckDetection:
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = cv2.medianBlur(gray, 5)
 
-        circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 10, param1=50, param2=30, minRadius=25,
-                                    maxRadius=30)
+        circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 10, param1=50,
+                                   param2=30, minRadius=25,maxRadius=30)
         detected_circles = np.uint16(np.around(circles))
 
         puck_position = {}
@@ -37,7 +35,8 @@ class PuckDetection:
             roi = img[y - r: y + r, x - r: x + r]
             width, height = roi.shape[:2]
             mask = np.zeros((width, height, 3), roi.dtype)
-            cv2.circle(mask, (int(width / 2), int(height / 2)), r, (255, 255, 255), -1)
+            cv2.circle(mask, (int(width / 2), int(height / 2)), r,
+                       (255, 255, 255), -1)
             dominant_color = self.get_dominant_color(roi, k=4)
 
             dominant_color_np = np.uint8([[dominant_color]])
@@ -47,7 +46,10 @@ class PuckDetection:
             if hsv_color == color:
                 puck_position["center_position"] = (x, y)
                 puck_position["radius"] = r
-               # if Debug:
+                #remove comments if you want to see detected puck,
+                # doesn't work with Docker
+                if Debug:
+                    print("Debug mode is on")
                  #   self.draw_on_image(hsv_color, output, r, x, y)
                 break
        # if Debug:
@@ -87,11 +89,11 @@ class PuckDetection:
         color_boundaries = ColorBoundaries()
         colors = color_boundaries.get_boundaries_dict()
         for color, boundaries in colors.items():
-            if boundaries["lower"][0] <= hsv[0] <= boundaries["upper"][0] and boundaries["lower"][1] <= hsv[1] <= \
+            if boundaries["lower"][0] <= hsv[0] <= boundaries["upper"][0] and \
+                    boundaries["lower"][1] <= hsv[1] <= \
                     boundaries["upper"][1] and boundaries["lower"][2] <= hsv[2] <= boundaries["upper"][2]:
                 return color
         return "None"
 
-
-puck_detction = PuckDetection()
-puck_position = puck_detction.detect_puck("../../data/images/monde3.jpg", "blue")
+#puck_detction = PuckDetection()
+#puck_position = puck_detction.detect_puck("../../data/images/monde3.jpg", "blue")
