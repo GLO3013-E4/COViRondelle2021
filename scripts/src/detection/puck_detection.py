@@ -5,7 +5,7 @@ import numpy as np
 from collections import Counter
 from sklearn.cluster import KMeans
 
-from color_boundaries import ColorBoundaries
+from scripts.src.detection.color_boundaries import ColorBoundaries
 
 
 class PuckDetection:
@@ -47,12 +47,11 @@ class PuckDetection:
             if hsv_color == color:
                 puck_position["center_position"] = (x, y)
                 puck_position["radius"] = r
-                if Debug:
-                    self.draw_on_image(hsv_color, output, r, x, y)
+               # if Debug:
+                 #   self.draw_on_image(hsv_color, output, r, x, y)
                 break
-
-        if Debug:
-            self.show_image(output)
+       # if Debug:
+           # self.show_image(output)
 
         return puck_position
 
@@ -95,4 +94,4 @@ class PuckDetection:
 
 
 puck_detction = PuckDetection()
-puck_position = puck_detction.detect_puck("../../data/images/monde3.jpg", "red")
+puck_position = puck_detction.detect_puck("../../data/images/monde3.jpg", "blue")
