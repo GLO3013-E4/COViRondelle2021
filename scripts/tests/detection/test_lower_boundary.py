@@ -27,7 +27,7 @@ def test_given_brown_color_then_should_return_right_lower_boundary():
 
 
 def test_given_green_color_then_should_return_right_lower_boundary():
-    expected_boundaries = [47, 89, 0]
+    expected_boundaries = [46, 65, 5]
 
     actual_boundaries= lower_boundary.get_lower_boundaries(GREEN_COLOR)
 
