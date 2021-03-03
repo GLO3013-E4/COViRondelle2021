@@ -26,13 +26,9 @@ export type Mutations<S = State> = {
   [SOCKET_REAL_TRAJECTORY_COORDINATE](state: S, message: Message): void;
   [SOCKET_GRIP_STATE](state: S, message: Message): void;
   [SOCKET_CURRENT_STEP](state: S, message: Message): void;
-  //goToLastStep(state:S):void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
-  /*goToLastStep(state: State){
-    state.currentStep = Step.CycleEndedAndRedLedOn;
-  },*/
   [START_CYCLE](state: State) {
     state.currentStep = Step.CycleStarted;
   },
