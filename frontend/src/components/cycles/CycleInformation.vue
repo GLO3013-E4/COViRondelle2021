@@ -13,6 +13,7 @@
           <StepList />
         </v-col>
         <v-col sm="4">
+          <Mode />
           <StartButton />
         </v-col>
       </v-row>
@@ -24,11 +25,13 @@
 import { Component, Vue } from 'vue-property-decorator';
 import StepList from '../cycles/StepList.vue';
 import StartButton from '../cycles/StartButton.vue';
+import Mode from '../cycles/Mode.vue';
 
 @Component({
   components: {
     StepList: StepList,
     StartButton: StartButton,
+    Mode: Mode,
   },
 })
 export default class CycleInformation extends Vue {}
