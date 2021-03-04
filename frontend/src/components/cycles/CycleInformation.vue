@@ -13,6 +13,7 @@
           <StepList />
         </v-col>
         <v-col sm="4">
+          <Mode />
           <Chronometer />
         </v-col>
       </v-row>
@@ -23,11 +24,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import StepList from '../cycles/StepList.vue';
+import Mode from '../cycles/Mode.vue';
 import Chronometer from '../cycles/Chronometer.vue';
 
 @Component({
   components: {
     StepList: StepList,
+    Mode: Mode,
     Chronometer: Chronometer,
   },
 })
