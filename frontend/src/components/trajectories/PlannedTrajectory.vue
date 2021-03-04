@@ -1,9 +1,9 @@
 <template>
   <v-card
-      class="d-flex justify-center mb-10"
-      color="#ededed"
-      :height="this.rescaleHeight + 70"
-      :width="this.rescaleWidth"
+    class="d-flex justify-center mb-10"
+    color="#ededed"
+    :height="this.rescaleHeight + 70"
+    :width="this.rescaleWidth"
   >
     <v-container>
       <v-row>
@@ -15,8 +15,8 @@
       </v-row>
       <v-row no-gutters>
         <v-col
-            class="path"
-            v-bind:style="{
+          class="path"
+          v-bind:style="{
             background: `url('${tableImage}')`,
             backgroundSize: `${this.rescaleWidth}px ${this.rescaleHeight}px`,
             backgroundRepeat: 'no-repeat',
@@ -24,9 +24,9 @@
         >
           <svg :height="this.rescaleHeight" :width="this.rescaleWidth" id="svg">
             <polyline
-                id="planned_path"
-                :points="this.trajectoryPoint"
-                style="fill: none; stroke: blue; stroke-width: 7"
+              id="planned_path"
+              :points="this.trajectoryPoints"
+              style="fill: none; stroke: blue; stroke-width: 7"
             />
           </svg>
         </v-col>
@@ -36,14 +36,30 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
-import {Coordinate} from '@/types/coordinate';
-import {mapState} from 'vuex';
-import {State} from "@/store/state";
+import { Component, Vue } from 'vue-property-decorator';
+import { Coordinate } from '@/types/coordinate';
+import { mapState } from 'vuex';
+import { State } from '@/store/state';
 
 @Component({
   computed: {
-    ...mapState(['tableImage', 'plannedTrajectory']),
+    ...mapState({
+      tableImage: 'tableImage',
+      trajectoryPoints: (state: State): string => {
+        let points = '';
+
+        state.plannedTrajectory.forEach(
+          (coordinate) => (points += `${coordinate.x}, ${coordinate.y},`)
+        );
+
+        // TODO : Move this to a "removeLastComma" function, if possible
+        if (points !== '') {
+          points = points.substring(0, points.length - 1); // Remove last comma
+        }
+
+        return points;
+      },
+    }),
   },
 })
 export default class PlannedTrajectory extends Vue {
@@ -55,27 +71,16 @@ export default class PlannedTrajectory extends Vue {
   private ratioY = 0.3;
   private rescaleWidth!: number;
   private rescaleHeight!: number;
-  private trajectoryPoint !: string;
+  private trajectoryPoints!: string;
+
   public constructor() {
     super();
 
-    this.width = 1600;
+    this.width = 1600; // TODO : Get image width in computed
     this.rescaleWidth = this.width * this.ratioX;
-    this.height = 904;
+    this.height = 904; // TODO : Get image height in computed
     this.rescaleHeight = this.height * this.ratioY;
     // this.rescaleCoordinates();
-    this.coordinatesToString();
-  }
-  private coordinateToString(coordinate: Coordinate): string {
-    return coordinate.x + ',' + coordinate.y + ' ';
-  }
-  private coordinatesToString() {
-    // let res = '';
-    // this.plannedTrajectory.forEach(
-    //   (value) => (res += this.coordinateToString(value))
-    // );
-    // this.trajectoryPoint = res;
-    this.trajectoryPoint = ' 80,120 200,180 200,230 60,230';
   }
 
   private applyRatio(coordinate: Coordinate): Coordinate {
@@ -84,8 +89,11 @@ export default class PlannedTrajectory extends Vue {
     return coordinate;
   }
 
+  // TODO : Rescale coordinates in computed
   private rescaleCoordinates() {
-    this.plannedTrajectory = this.plannedTrajectory.map((value) => this.applyRatio(value));
+    this.plannedTrajectory = this.plannedTrajectory.map((value) =>
+      this.applyRatio(value)
+    );
   }
 }
 </script>
