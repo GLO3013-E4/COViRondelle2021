@@ -1,5 +1,17 @@
 export enum Step {
-  CycleNotStarted = 'cycleNotStarted',
-  // TODO : Add remaining cycle steps
-  CycleEnded = 'cycleEnded',
+  CycleNotStarted,
+  CycleReadyInWaitingMode,
+  CycleStarted,
+  ToResistanceStation,
+  ReadResistance,
+  ToControlPanel,
+  ReadControlPanel,
+  ToFirstPuckAndGrabFirstPuck,
+  ToFirstCornerAndReleaseFirstPuck,
+  ToSecondPuckAndGrabSecondPuck,
+  ToSecondCornerAndReleaseSecondPuck,
+  ToThirdPuckAndGrabThirdPuck,
+  ToThirdCornerAndReleaseThirdPuck,
+  ToSquareCenter,
+  CycleEndedAndRedLedOn,
 }
