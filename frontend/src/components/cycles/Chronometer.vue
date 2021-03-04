@@ -33,7 +33,7 @@ export default class Chronometer extends Vue {
 
   public start() {
     if (
-      this.cycleReady == true ||
+      this.cycleReady ||
       this.currentStep == Step.CycleEndedAndRedLedOn
     ) {
       this.emitSocketStartCycle();

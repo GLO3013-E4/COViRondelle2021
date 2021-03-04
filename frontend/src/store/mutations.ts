@@ -36,6 +36,7 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [SOCKET_CYCLE_READY](state: State) {
     // TODO : Implement get cycle ready from state in associated component
+    console.log('Frontend : Received cycle ready!'); // TODO : Remove console log
     state.cycleReady = true;
   },
   [SOCKET_ROBOT_CONSUMPTION](state: State, message: Message) {

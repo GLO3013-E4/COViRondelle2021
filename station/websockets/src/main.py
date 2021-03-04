@@ -86,7 +86,13 @@ def websockets():
 
     @socket.on('start_cycle')
     def handle_start_cycle(_):
+        # TODO : Remove print
+        print('Station: Received start cycle!')
         start_cycle_publisher.publish(True)
+
+    # TODO : Remove print and sending to socket
+    print('Station: Sending cycle ready!')
+    socket.send("cycle_ready")
 
     while not rospy.is_shutdown():
         rate.sleep()
