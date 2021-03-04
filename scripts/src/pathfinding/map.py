@@ -13,8 +13,8 @@ class Map:
     Class that represents where the robot can move and where the
     different obstacles and objects laying on the table are.
     """
-    def __init__(self, image_width, image_height, obstacles, pucks, start, end, node_size=25, safety_cushion=0,
-                 robot_width=100, obstacle_width=40, puck_width=25):
+    def __init__(self, image_width, image_height, obstacles, pucks, start, end, node_size=25,
+                 safety_cushion=0, robot_width=100, obstacle_width=40, puck_width=25):
         self.node_size = node_size
         self.safety_cushion = safety_cushion
         self.robot_width = robot_width
