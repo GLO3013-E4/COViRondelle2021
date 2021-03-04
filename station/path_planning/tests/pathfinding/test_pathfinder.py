@@ -1,9 +1,9 @@
 from unittest.mock import Mock
 import pytest
 
-from pathfinding.pathfinder import Pathfinder
-from pathfinding.node import Node
-from pathfinding.path_not_found_exception import PathNotFoundException
+from path_planning.src.pathfinding.pathfinder import Pathfinder
+from path_planning.src.pathfinding.node import Node
+from path_planning.src.pathfinding.path_not_found_exception import PathNotFoundException
 
 
 class TestPathfinder:
@@ -20,10 +20,9 @@ class TestPathfinder:
 
     def setup_method(self):
         self._map = Mock()
-        self.map_drawer = Mock()
         self.pathfinding_algorithm = Mock()
         self.image = Mock()
-        self.pathfinder = Pathfinder(self._map, self.map_drawer, self.pathfinding_algorithm)
+        self.pathfinder = Pathfinder(self._map, self.pathfinding_algorithm)
 
     def test_initial_path_is_empty(self):
         assert not self.pathfinder.path
@@ -49,20 +48,3 @@ class TestPathfinder:
 
         with pytest.raises(PathNotFoundException):
             self.pathfinder.find_square_matrix_path()
-
-    def test_when_show_then_draw_image(self):
-        self.pathfinder.show()
-
-        self.map_drawer.draw_map.assert_called_once_with(self._map, self.pathfinder.path)
-
-    def test_when_show_then_get_image(self):
-        self.pathfinder.show()
-
-        self.map_drawer.get_image.assert_called_once_with()
-
-    def test_when_show_then_show_image(self):
-        self.map_drawer.get_image.return_value = self.image
-
-        self.pathfinder.show()
-
-        self.image.show.assert_called_once()

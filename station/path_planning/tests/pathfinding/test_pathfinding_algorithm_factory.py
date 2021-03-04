@@ -1,7 +1,7 @@
 import pytest
 
-from pathfinding.pathfinding_algorithm_factory import PathfindingAlgorithmFactory
-from pathfinding.breadth_first_search import BreadthFirstSearch
+from path_planning.src.pathfinding.pathfinding_algorithm_factory import PathfindingAlgorithmFactory
+from path_planning.src.pathfinding.breadth_first_search import BreadthFirstSearch
 
 
 class TestPathfindingAlgorithmFactory:

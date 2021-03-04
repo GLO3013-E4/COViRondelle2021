@@ -3,7 +3,7 @@ import rospy
 from std_msgs.msg import String
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped, Pose, PoseArray
-from pathfinding.show_path import get_path as get_nodes
+from path_planning.src.pathfinding.show_path import get_path as get_nodes
 
 
 class PathFinder:
