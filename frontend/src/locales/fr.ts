@@ -7,5 +7,8 @@ export const fr = {
   station: {
     stationInformation: 'Information de la station',
     resistance: 'Résistance',
-  }
+    gripState: 'État du préhenseur',
+    puckInGrip: 'Rondelle présente',
+    noPuck: 'Pas de rondelle',
+  },
 };

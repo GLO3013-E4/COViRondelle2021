@@ -1,16 +1,16 @@
-import PuckInGrip from '@/components/station/PuckInGrip.vue';
+import GripState from '@/components/station/GripState.vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
 export default {
-  title: 'components/station/PuckInGrip',
-  component: PuckInGrip,
+  title: 'components/station/GripState',
+  component: GripState,
 };
 
 const Template = (args: any) => ({
-  components: { PuckInGrip },
+  components: { GripState },
   store: new Vuex.Store({
     state: args,
   }),

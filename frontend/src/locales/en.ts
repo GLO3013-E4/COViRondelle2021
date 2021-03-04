@@ -7,5 +7,8 @@ export const en = {
   station: {
     stationInformation: 'Station information',
     resistance: 'Resistance',
-  }
+    gripState: 'Grip state',
+    puckInGrip: 'Puck in grip',
+    noPuck: 'No puck',
+  },
 };

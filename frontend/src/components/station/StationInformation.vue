@@ -30,14 +30,14 @@
 import { Component, Vue } from 'vue-property-decorator';
 import Resistance from '../station/Resistance.vue';
 import ControlPanel from '../station/ControlPanel.vue';
-import PuckInGrip from '../station/PuckInGrip.vue';
+import GripState from './GripState.vue';
 import PuckDeposit from '../station/PuckDeposit.vue';
 
 @Component({
   components: {
     Resistance: Resistance,
     ControlPanel: ControlPanel,
-    PuckInGrip: PuckInGrip,
+    PuckInGrip: GripState,
     PuckDeposit: PuckDeposit,
   },
 })
