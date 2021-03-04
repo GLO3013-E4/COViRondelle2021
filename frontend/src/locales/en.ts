@@ -32,5 +32,11 @@ export const en = {
       CycleEndedAndRedLedOn: 'Cycle ended and red DEL on',
     },
     start: 'Start',
+    modes: {
+      booting: 'Booting',
+      started: 'Started',
+      waiting: 'Waiting',
+      noInformation: 'No information',
+    },
   },
 };

@@ -5,8 +5,9 @@
       class="white--text d-flex justify-center"
       ref="mode"
       id="mode-chip"
-      ><h3>{{ this.actualMode }}</h3></v-chip
     >
+      <h3>{{ $t(`cycles.modes.${this.actualMode}`) }}</h3>
+    </v-chip>
   </div>
 </template>
 

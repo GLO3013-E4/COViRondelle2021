@@ -33,5 +33,11 @@ export const fr = {
       CycleEndedAndRedLedOn: 'Fin du cycle et activation du LED rouge',
     },
     start: 'Commencer',
+    modes: {
+      booting: 'Démarrage',
+      started: 'Débuté',
+      waiting: 'Attente',
+      noInformation: "Pas d'information",
+    },
   },
 };
