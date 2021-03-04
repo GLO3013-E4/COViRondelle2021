@@ -1,8 +1,7 @@
 import StepList from '@/components/cycles/StepList.vue';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
-import Vuex from 'vuex';
 import { Step } from '@/types/step';
+import { State } from '@/store/state';
 
 describe('When mounting StepList component', () => {
   const wrapper = wrapWithVuetifyAndStore(StepList);
@@ -13,17 +12,12 @@ describe('When mounting StepList component', () => {
 });
 
 describe('Given state', () => {
-  const localVue = createLocalVue();
-  localVue.use(Vuex);
-
-  const store = new Vuex.Store({
-    state: {
-      currentStep: Step.CycleNotStarted,
-    },
-  });
+  const state = {
+    currentStep: Step.CycleNotStarted,
+  } as State;
 
   describe('When mounting StepList', () => {
-    const wrapper = shallowMount(StepList, { store, localVue });
+    const wrapper = wrapWithVuetifyAndStore(StepList, state);
 
     it('Should contains the right amount of steps', () => {
       const steps = wrapper.findAllComponents({ ref: 'step' });
