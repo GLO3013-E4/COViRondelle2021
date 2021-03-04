@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-center" >
-    <v-chip :color="this.color" class="white--text d-flex justify-center" ref="mode"><h3>{{this.actualMode}}</h3></v-chip>
+    <v-chip :color="this.color" class="white--text d-flex justify-center" ref="mode" id="mode-chip"><h3>{{this.actualMode}}</h3></v-chip>
     </div>
 </template>
 
@@ -45,8 +45,8 @@ export default class Mode extends Vue {
 }
 </script>
 
-<style>
-.v-chip{
+<style scoped>
+#mode-chip{
   width: 100%
 }
 </style>
