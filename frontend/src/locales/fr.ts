@@ -41,4 +41,7 @@ export const fr = {
       noInformation: "Pas d'information",
     },
   },
+  consumptions: {
+    consumptionInformation: 'Information de la consommation',
+  },
 };

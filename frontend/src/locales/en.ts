@@ -40,4 +40,7 @@ export const en = {
       noInformation: 'No information',
     },
   },
+  consumptions: {
+    consumptionInformation: 'Consumption information',
+  },
 };
