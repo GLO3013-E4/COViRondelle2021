@@ -60,18 +60,18 @@ export default class PlannedTrajectory extends Vue {
     this.height = 904;
     this.rescaleHeight = this.height * this.ratioY;
     // this.rescaleCoordinates();
-    // this.coordinatesToString();
+    this.coordinatesToString();
   }
   private coordinateToString(coordinate: Coordinate): string {
     return coordinate.x + ',' + coordinate.y + ' ';
   }
   private coordinatesToString() {
-    let res = '';
-    this.plannedTrajectory.forEach(
-      (value) => (res += this.coordinateToString(value))
-    );
-    this.trajectoryPoint = res;
-    // this.trajectoryPoint = ' 80,120 200,180 200,230 60,230';
+    // let res = '';
+    // this.plannedTrajectory.forEach(
+    //   (value) => (res += this.coordinateToString(value))
+    // );
+    // this.trajectoryPoint = res;
+    this.trajectoryPoint = ' 80,120 200,180 200,230 60,230';
   }
 
   private applyRatio(coordinate: Coordinate): Coordinate {
