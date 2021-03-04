@@ -11,5 +11,6 @@ export const fr = {
     puckInGrip: 'Rondelle présente',
     noPuck: 'Pas de rondelle',
     puckDeposit: 'Dépôt de rondelles',
+    firstCorner: 'Premier coin',
   },
 };

@@ -13,10 +13,10 @@
           <Resistance />
         </v-col>
         <v-col sm="6">
-          <ControlPanel />
+          <FirstCorner />
         </v-col>
         <v-col sm="6">
-          <PuckInGrip />
+          <GripState />
         </v-col>
         <v-col sm="6">
           <PuckDeposit />
@@ -29,15 +29,15 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Resistance from '../station/Resistance.vue';
-import ControlPanel from '../station/ControlPanel.vue';
+import FirstCorner from './FirstCorner.vue';
 import GripState from './GripState.vue';
 import PuckDeposit from '../station/PuckDeposit.vue';
 
 @Component({
   components: {
     Resistance: Resistance,
-    ControlPanel: ControlPanel,
-    PuckInGrip: GripState,
+    FirstCorner: FirstCorner,
+    GripState: GripState,
     PuckDeposit: PuckDeposit,
   },
 })

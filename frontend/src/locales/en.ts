@@ -11,5 +11,6 @@ export const en = {
     puckInGrip: 'Puck in grip',
     noPuck: 'No puck',
     puckDeposit: 'Puck deposit',
+    firstCorner: 'First corner',
   },
 };
