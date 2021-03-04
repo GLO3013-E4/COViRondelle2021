@@ -1,5 +1,3 @@
-from PIL import Image
-
 from path_planning.src.pathfinding.map import Map
 from path_planning.src.pathfinding.tile_role import TileRole
 

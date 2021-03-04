@@ -1,8 +1,8 @@
 """Example of how to find a path between the robot and a specific puck
 given the obstacles, a start position, an end position and where the other pucks are."""
-from scripts.src.pathfinding.show_path import get_path
-
 from PIL import Image
+
+from scripts.src.pathfinding.show_path import get_path
 
 
 if __name__ == '__main__':
