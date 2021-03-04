@@ -1,5 +1,6 @@
 import { MutationTree } from 'vuex/types';
 import {
+  START_CYCLE,
   SOCKET_ROBOT_CONSUMPTION,
   SOCKET_TABLE_IMAGE,
   SOCKET_RESISTANCE,
@@ -13,8 +14,10 @@ import {
 } from './mutation-types';
 import { defaultState, State } from './state';
 import { Message } from '@/types/message';
+import { Step } from '@/types/step';
 
 export type Mutations<S = State> = {
+  [START_CYCLE](state: S): void;
   [SOCKET_CYCLE_READY](state: S): void;
   [SOCKET_ROBOT_CONSUMPTION](state: S, message: Message): void;
   [SOCKET_TABLE_IMAGE](state: S, message: Message): void;
@@ -28,6 +31,9 @@ export type Mutations<S = State> = {
 };
 
 export const mutations: MutationTree<State> & Mutations = {
+  [START_CYCLE](state: State) {
+    state.currentStep = Step.CycleStarted;
+  },
   [SOCKET_CYCLE_READY](state: State) {
     // TODO : Implement get cycle ready from state in associated component
     state.cycleReady = true;
