@@ -23,7 +23,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build docker image
         run: docker build -t robot .
-      - name: Lint application
-        run: docker run robot pylint src
-      - name: Test application
-        run: docker run robot pytest src/main/tests
+      # TODO : Add lint CI check when code will be implemented
+      # - name: Lint application
+      #   run: docker run robot pylint src
+      # TODO : Add test CI check when tests will be implemented
+      # - name: Test application
+      #   run: docker run robot pytest src/controller/tests

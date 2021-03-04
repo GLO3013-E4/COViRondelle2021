@@ -6,6 +6,7 @@ RUN apt-get update \
         tesseract-ocr \
         libtesseract-dev \
         libleptonica-dev \
+        libzbar0 \
     && ldconfig \
     && apt-get install -y --no-install-recommends \
         libsm6 \
