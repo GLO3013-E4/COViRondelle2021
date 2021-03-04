@@ -12,7 +12,7 @@ class RobotDetection(ArucoMarkers):
 
         robot_position = {}
         if image is None:
-            return robot_position
+            return self.generate_empty_robot_position()
 
         (corners, ids, rejected) = cv2.aruco.detectMarkers(image, aruco_dict,
                                        parameters=aruco_params)

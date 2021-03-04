@@ -13,7 +13,7 @@ class ObstacleDetection(ArucoMarkers):
         obstacles_position = []
 
         if image is None:
-            return obstacles_position
+            return self.generate_empty_obstacle_position()
 
         (corners, ids, rejected) = cv2.aruco.detectMarkers(image, aruco_dict,
                                        parameters=aruco_params)
