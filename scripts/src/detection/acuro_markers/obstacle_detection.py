@@ -21,9 +21,11 @@ class ObstacleDetection(ArucoMarkers):
                 (top_left_position, top_right_position, bottom_right_position,
                  bottom_left_position) = corners
 
-                bottom_left_position, bottom_right_position, top_left_position, top_right_position = \
+                bottom_left_position, bottom_right_position, top_left_position, \
+                top_right_position = \
                     self.get_markers_corners_position(
-                    bottom_left_position, bottom_right_position, top_left_position, top_right_position)
+                    bottom_left_position, bottom_right_position, top_left_position,
+                        top_right_position)
 
                 self.draw_line_on_markers(bottom_left_position, bottom_right_position,
                                           image, top_left_position,
@@ -54,7 +56,7 @@ class ObstacleDetection(ArucoMarkers):
 
             if DEBUG:
                 self.show_image(image)
-            return obstacles_position
+        return obstacles_position
 
 
     def get_acuro_dictionnary(self):

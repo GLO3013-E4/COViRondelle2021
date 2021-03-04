@@ -91,4 +91,3 @@ class QrDetection:
         for index in range(0, 4):
             point_dictionary[f"point{index + 1}"] = point_with_position_of_zero
         return point_dictionary
-
