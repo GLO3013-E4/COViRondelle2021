@@ -9,11 +9,13 @@ class RobotDetection(ArucoMarkers):
         image = self.capture_image_from_path(image)
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
-        (corners, ids, rejected) = cv2.aruco.detectMarkers(image, aruco_dict,
-                                       parameters=aruco_params)
 
         robot_position = {}
+        if image is None:
+            return robot_position
 
+        (corners, ids, rejected) = cv2.aruco.detectMarkers(image, aruco_dict,
+                                       parameters=aruco_params)
         if len(corners) > 0:
             ids = ids.flatten()
             for (markerCorner, markerID) in zip(corners, ids):
