@@ -7,6 +7,10 @@ from scripts.src.detection.color_boundaries import ColorBoundaries
 
 
 class PuckDetection:
+
+    def __init__(self):
+        self.color_boundaries = ColorBoundaries()
+
     @staticmethod
     def copy_image(image):
         try:
@@ -76,10 +80,8 @@ class PuckDetection:
         dominant_color = clt.cluster_centers_[label_counts.most_common(1)[0][0]]
         return list(dominant_color)
 
-
     def find_hsv_color(self, hsv):
-        color_boundaries = ColorBoundaries()
-        colors = color_boundaries.get_boundaries_dict()
+        colors = self.color_boundaries.get_boundaries_dict()
         for color, boundaries in colors.items():
             if boundaries["lower"][0] <= hsv[0] <= boundaries["upper"][0] and \
                     boundaries["lower"][1] <= hsv[1] <= \
