@@ -39,27 +39,10 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Coordinate } from '@/types/coordinate';
 import { mapState } from 'vuex';
-import { State } from '@/store/state';
 
 @Component({
   computed: {
-    ...mapState({
-      tableImage: 'tableImage',
-      trajectoryPoints: (state: State): string => {
-        let points = '';
-
-        state.plannedTrajectory.forEach(
-          (coordinate) => (points += `${coordinate.x}, ${coordinate.y},`)
-        );
-
-        // TODO : Move this to a "removeLastComma" function, if possible
-        if (points !== '') {
-          points = points.substring(0, points.length - 1); // Remove last comma
-        }
-
-        return points;
-      },
-    }),
+    ...mapState(['tableImage', 'plannedTrajectory']),
   },
 })
 export default class PlannedTrajectory extends Vue {
@@ -71,7 +54,6 @@ export default class PlannedTrajectory extends Vue {
   private ratioY = 0.3;
   private rescaleWidth!: number;
   private rescaleHeight!: number;
-  private trajectoryPoints!: string;
 
   public constructor() {
     super();
@@ -81,6 +63,21 @@ export default class PlannedTrajectory extends Vue {
     this.height = 904; // TODO : Get image height in computed
     this.rescaleHeight = this.height * this.ratioY;
     // this.rescaleCoordinates();
+  }
+
+  private get trajectoryPoints() {
+    let points = '';
+
+    this.plannedTrajectory.forEach(
+      (coordinate) => (points += `${coordinate.x}, ${coordinate.y},`)
+    );
+
+    // TODO : Move this to a "removeLastComma" function, if possible
+    if (points !== '') {
+      points = points.substring(0, points.length - 1); // Remove last comma
+    }
+
+    return points;
   }
 
   private applyRatio(coordinate: Coordinate): Coordinate {
