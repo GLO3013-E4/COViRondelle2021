@@ -3,8 +3,7 @@ import json
 import rospy
 from flask import Flask
 from flask_socketio import SocketIO
-from std_msgs.msg import Bool, Float32
-from rocon_std_msgs.msg import StringArray
+from std_msgs.msg import Bool, Float32, String
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Pose
 from nav_msgs.msg import Path
@@ -53,13 +52,13 @@ def handle_resistance(resistance):
 
 def handle_puck_colors(puck_colors):
     # TODO : Make sure this works once puck_colors is implemented
-    json_data = to_json({"puckColors": puck_colors})
+    json_data = to_json({"puckColors": puck_colors.split(",")})
     socket.emit("puck_colors", json_data)
 
 
 def handle_puck_corners(puck_corners):
     # TODO : Make sure this works once puck_corners is implemented
-    json_data = to_json({"firstPuckCorner": puck_corners[0]})
+    json_data = to_json({"firstPuckCorner": puck_corners.split(",")[0]})
     socket.emit("first_puck_corner", json_data)
 
 
@@ -79,8 +78,8 @@ def websockets():
     rospy.Subscriber("robot", Pose, handle_robot)
     rospy.Subscriber("path", Path, handle_path)
     rospy.Subscriber("resistance", Float32, handle_resistance)
-    rospy.Subscriber("puck_colors", StringArray, handle_puck_colors)
-    rospy.Subscriber("puck_corners", StringArray, handle_puck_corners)
+    rospy.Subscriber("puck_colors", String, handle_puck_colors)
+    rospy.Subscriber("puck_corners", String, handle_puck_corners)
     rospy.Subscriber("end", Bool, handle_end)
 
     socket.run(app)
