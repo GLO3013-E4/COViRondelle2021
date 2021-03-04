@@ -3,9 +3,9 @@ Class that represents where the robot can move and where the
 different obstacles and objects laying on the table are.
 """
 
-from scripts.src.pathfinding.node import Node
-from scripts.src.pathfinding.tile_role import TileRole
-from scripts.src.pathfinding.direction import Direction
+from path_planning.src.pathfinding.node import Node
+from path_planning.src.pathfinding.tile_role import TileRole
+from path_planning.src.pathfinding.direction import Direction
 
 
 class Map:
@@ -13,8 +13,8 @@ class Map:
     Class that represents where the robot can move and where the
     different obstacles and objects laying on the table are.
     """
-    def __init__(self, image_width, image_height, obstacles, pucks, start, end, node_size=25,
-                 safety_cushion=0, robot_width=100, obstacle_width=40, puck_width=25):
+    def __init__(self, image_width, image_height, obstacles, pucks, start, end, node_size=25, safety_cushion=0,
+                 robot_width=100, obstacle_width=40, puck_width=25):
         self.node_size = node_size
         self.safety_cushion = safety_cushion
         self.robot_width = robot_width
@@ -152,10 +152,11 @@ class Map:
         end.role = TileRole.END
 
         distance = (self.obstacle_puck_width // self.node_size) + 1
-        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.DOWN)
-        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.LEFT)
-        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.UP)
-        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.RIGHT)
+        # TODO:
+        #self.add_cushion_in_direction(end, distance, TileRole.END, Direction.DOWN)
+        #self.add_cushion_in_direction(end, distance, TileRole.END, Direction.LEFT)
+        #self.add_cushion_in_direction(end, distance, TileRole.END, Direction.UP)
+        #self.add_cushion_in_direction(end, distance, TileRole.END, Direction.RIGHT)
 
     def get_start_node(self):
         """Gets the starting node"""
