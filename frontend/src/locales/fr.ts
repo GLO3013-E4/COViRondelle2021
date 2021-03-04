@@ -10,5 +10,6 @@ export const fr = {
     gripState: 'État du préhenseur',
     puckInGrip: 'Rondelle présente',
     noPuck: 'Pas de rondelle',
+    puckDeposit: 'Dépôt de rondelles',
   },
 };

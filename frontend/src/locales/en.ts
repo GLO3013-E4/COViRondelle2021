@@ -10,5 +10,6 @@ export const en = {
     gripState: 'Grip state',
     puckInGrip: 'Puck in grip',
     noPuck: 'No puck',
+    puckDeposit: 'Puck deposit',
   },
 };
