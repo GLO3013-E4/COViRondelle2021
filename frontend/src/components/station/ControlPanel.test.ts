@@ -37,9 +37,16 @@ describe('Given state', () => {
 });
 
 describe('Given no state', () => {
-  const wrapper = wrapWithVuetifyAndStore(ControlPanel);
+  const localVue = createLocalVue();
+  localVue.use(Vuex);
 
-  describe('When mounting ControlPanel component without props', () => {
+  const store = new Vuex.Store({
+    state: {},
+  });
+
+  describe('When mounting ControlPanel', () => {
+    const wrapper = shallowMount(ControlPanel, { localVue, store });
+
     it('Should not contains resistanceValue', () => {
       const letterCorner = wrapper.findComponent({ ref: 'corner' });
 

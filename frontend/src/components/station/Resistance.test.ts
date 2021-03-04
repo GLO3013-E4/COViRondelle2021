@@ -43,8 +43,15 @@ describe('Given state', () => {
 });
 
 describe('Given no state', () => {
+  const localVue = createLocalVue();
+  localVue.use(Vuex);
+
+  const store = new Vuex.Store({
+    state: {},
+  });
+
   describe('When mounting Resistance', () => {
-    const wrapper = wrapWithVuetifyAndStore(Resistance);
+    const wrapper = shallowMount(Resistance, { localVue, store });
 
     it('Should not contain resistanceValue', () => {
       const resistanceValue = wrapper.findComponent({ ref: 'resistanceValue' });

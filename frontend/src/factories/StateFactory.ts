@@ -2,7 +2,7 @@ import { factory } from 'node-factory';
 import { defaultState, State } from '@/store/state';
 import { ColorFactory } from '@/factories/ColorFactory';
 import { CornerFactory } from '@/factories/CornerFactory';
-import {CoordinateFactory} from "@/factories/CoordinateFactory";
+import { CoordinateFactory } from '@/factories/CoordinateFactory';
 
 export const StateFactory = factory<State>((fake) => ({
   // TODO : Fake what isn't faked when implementing
