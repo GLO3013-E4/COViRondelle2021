@@ -1,5 +1,5 @@
 <template>
-  <v-card color="#ededed" height="300">
+  <v-card color="#ededed" height="250">
     <v-container>
       <v-row>
         <v-col sm="12">
@@ -43,5 +43,3 @@ import PuckDeposit from '../station/PuckDeposit.vue';
 })
 export default class StationInformation extends Vue {}
 </script>
-
-<style></style>

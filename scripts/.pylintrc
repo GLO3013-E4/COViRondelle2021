@@ -19,6 +19,9 @@ disable=
     R1705, # no-else-return
     W0612, # unused-variable
     R1729, # use-a-generator
+    R0914, # too-many-locals
+    E1136, # unsubscriptable-object
+
 ignore=
     Dockerfile,
     README.md,

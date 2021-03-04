@@ -52,3 +52,9 @@ export default class ControlPanel extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.v-card__title {
+  padding: 0px;
+}
+</style>

@@ -3,24 +3,24 @@
     <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
       <h5 class="white--text">Puck Deposit</h5>
     </v-card-title>
-     <v-container height="100%">
+    <v-container height="100%">
       <v-row align="center">
         <v-col sm="12">
           <div ref="corner" class="d-flex justify-center font-weight-bold">
-      <v-avatar
-        ref="puckDeposited"
-        size="30"
-        v-for="(puck, i) in depositedPucks"
-        :key="i"
-        :color="puck.toString()"
-        class="grey--text text--lighten-2 font-weight-bold"
-      >
-        {{ i + 1 }}
-      </v-avatar>
-    </div>
+            <v-avatar
+              ref="puckDeposited"
+              size="30"
+              v-for="(puck, i) in depositedPucks"
+              :key="i"
+              :color="puck.toString()"
+              class="grey--text text--lighten-2 font-weight-bold"
+            >
+              {{ i + 1 }}
+            </v-avatar>
+          </div>
         </v-col>
       </v-row>
-     </v-container>
+    </v-container>
   </v-card>
 </template>
 
@@ -95,3 +95,9 @@ export default class PuckDeposit extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.v-card__title {
+  padding: 0px;
+}
+</style>

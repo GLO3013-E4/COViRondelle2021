@@ -6,7 +6,9 @@ class Command:
 
     def execute(self, handled_data=None):
         for handler in self.handlers:
-            handled_data = handler.handle(handled_data)
+            is_finished = False
+            while not is_finished:
+                handled_data, is_finished = handler.handle(handled_data)
 
         if self.next_command:
             self.next_command.execute(handled_data)
