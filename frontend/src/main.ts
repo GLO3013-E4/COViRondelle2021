@@ -36,7 +36,7 @@ const router = new VueRouter({
 
 new Vue({
   vuetify,
-  store, // TODO : Should store also be added here?
+  store,
   router,
   i18n,
   render: (h) => h(App),
