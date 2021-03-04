@@ -14,6 +14,7 @@ export const fr = {
     firstCorner: 'Premier coin',
   },
   cycles: {
+    cycleInformation: 'Information du cycle',
     steps: {
       CycleNotStarted: 'Cycle non débuté',
       CycleReadyInWaitingMode: 'Cycle prêt, en attente',

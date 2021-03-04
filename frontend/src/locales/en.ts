@@ -14,6 +14,7 @@ export const en = {
     firstCorner: 'First corner',
   },
   cycles: {
+    cycleInformation: 'Cycle information',
     steps: {
       CycleNotStarted: 'Cycle not started',
       CycleReadyInWaitingMode: 'Cycle ready in waiting mode',
