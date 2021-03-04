@@ -6,10 +6,6 @@ class ArucoMarkers:
     def capture_image_from_path(self, path):
         absolute_path = os.path.join(os.getcwd(), path)
         image = cv2.imread(absolute_path)
-
-        if image is None:
-            raise Exception(f'Image not found from path : {absolute_path}')
-
         return image
 
     def generate_center_position(self, bottom_right_position, top_left_position):

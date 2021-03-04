@@ -1,5 +1,3 @@
-import pytest
-
 from scripts.src.detection.acuro_markers.AcuroMarkers import ArucoMarkers
 
 
@@ -24,7 +22,3 @@ def test_given_two_position_then_should_return_the_right_center_y_position():
     expected_center_y = 3
 
     assert  actual_center_y == expected_center_y
-
-def test_given_an_invalid_image_then_should_raise_error():
-    with pytest.raises(Exception):
-        aruco_marker.capture_image_from_path(INVALID_IMAGE)

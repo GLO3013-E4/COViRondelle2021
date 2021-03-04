@@ -1,15 +1,9 @@
-import pytest
-
 from scripts.src.detection.acuro_markers.obstacle_detection import ObstacleDetection
 
 A_IMAGE = "robot_5x5_five.jpg"
 A_INVALID_IMAGE = "invalid_image.jpg"
 
 obstacle_detection = ObstacleDetection()
-
-def test_given_an_invalid_image_should_raise_error():
-    with pytest.raises(Exception):
-        obstacle_detection.detect_obstacle(A_INVALID_IMAGE)
 
 def test_given_a_valid_image_should_return_an_list():
     expected_position = obstacle_detection.detect_obstacle(A_IMAGE, DEBUG=False)

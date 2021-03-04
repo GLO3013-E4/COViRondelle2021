@@ -1,5 +1,3 @@
-import pytest
-
 from scripts.src.detection.acuro_markers.robot_detection import RobotDetection
 
 
@@ -27,7 +25,3 @@ def test_given_valid_image_should_return_a_valid_center_y_position():
     expected_position = robot_detection.detect_robot(A_IMAGE, DEBUG=False)
 
     assert expected_position["center"][1] >= 0
-
-def test_given_an_invalid_image_should_raise_error():
-    with pytest.raises(Exception):
-        robot_detection.detect_robot(A_INVALID_IMAGE)
