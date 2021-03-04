@@ -1,18 +1,11 @@
 import PlannedTrajectory from '@/components/trajectories/PlannedTrajectory.vue';
-import ControlPanel from '@/components/station/ControlPanel.vue';
 import Vuex from 'vuex';
-import { CornerFactory } from '@/factories/CornerFactory';
-import { ColorFactory } from '@/factories/ColorFactory';
+import { CoordinateFactory } from '@/factories/CoordinateFactory';
 
 export default {
   title: 'components/trajectories/PlannedTrajectory',
   component: PlannedTrajectory,
 };
-
-// export const Default = () => ({
-//   components: { PlannedTrajectory },
-//   template: `<planned-trajectory/>`,
-// });
 
 const Template = (args: any) => ({
   components: { PlannedTrajectory },
@@ -24,23 +17,6 @@ const Template = (args: any) => ({
 
 export const Default = Template.bind({}) as any;
 Default.args = {
-  tableImage: '/test.jpg',
-  plannedTrajectory: [
-    {
-      x: 80,
-      y: 120,
-    },
-    {
-      x: 200,
-      y: 180,
-    },
-    {
-      x: 200,
-      y: 230,
-    },
-    {
-      x: 60,
-      y: 230,
-    }
-  ],
+  tableImage: '/stub_table_image.jpg',
+  plannedTrajectory: CoordinateFactory.make(4),
 };

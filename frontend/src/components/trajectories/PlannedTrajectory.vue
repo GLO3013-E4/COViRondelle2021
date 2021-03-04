@@ -1,9 +1,9 @@
 <template>
   <v-card
-    class="d-flex justify-center mb-10"
-    color="#ededed"
-    :height="this.rescaleHeight + 70"
-    :width="this.rescaleWidth"
+      class="d-flex justify-center mb-10"
+      color="#ededed"
+      :height="this.rescaleHeight + 70"
+      :width="this.rescaleWidth"
   >
     <v-container>
       <v-row>
@@ -14,17 +14,19 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-col class="path"
-          v-bind:style="{
+        <v-col
+            class="path"
+            v-bind:style="{
             background: `url('${tableImage}')`,
             backgroundSize: `${this.rescaleWidth}px ${this.rescaleHeight}px`,
             backgroundRepeat: 'no-repeat',
-          }">
+          }"
+        >
           <svg :height="this.rescaleHeight" :width="this.rescaleWidth" id="svg">
             <polyline
-              id="planned_path"
-              :points = 'this.trajectoryPoint'
-              style="fill: none; stroke: blue; stroke-width: 7"
+                id="planned_path"
+                :points="this.trajectoryPoint"
+                style="fill: none; stroke: blue; stroke-width: 7"
             />
           </svg>
         </v-col>
@@ -34,9 +36,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { Coordinate } from '@/types/coordinate';
-import { mapState } from 'vuex';
+import {Component, Vue} from 'vue-property-decorator';
+import {Coordinate} from '@/types/coordinate';
+import {mapState} from 'vuex';
+import {State} from "@/store/state";
+
 @Component({
   computed: {
     ...mapState(['tableImage', 'plannedTrajectory']),

@@ -13,8 +13,8 @@ export const StateFactory = factory<State>((fake) => ({
   robotConsumption: defaultState.robotConsumption,
   puckColors: ColorFactory.get(3),
   puckFirstCorner: CornerFactory.get(),
-  plannedTrajectory: defaultState.plannedTrajectory,
-  realTrajectory: defaultState.realTrajectory,
+  plannedTrajectory: defaultState.plannedTrajectory, // TODO : Use CoordinateFactory
+  realTrajectory: defaultState.realTrajectory, // TODO : Use CoordinateFactory
   puckInGrip: fake.random.boolean(),
   currentStep: defaultState.currentStep,
 }));
