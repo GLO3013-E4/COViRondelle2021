@@ -1,6 +1,6 @@
 import cv2
 
-from AcuroMarkers import ArucoMarkers
+from scripts.src.detection.acuro_markers.AcuroMarkers import ArucoMarkers
 
 
 class ObstacleDetection(ArucoMarkers):
@@ -18,28 +18,36 @@ class ObstacleDetection(ArucoMarkers):
             ids = ids.flatten()
             for (markerCorner, markerID) in zip(corners, ids):
                 corners = markerCorner.reshape((4, 2))
-                (top_left_position, top_right_position, bottom_right_position, bottom_left_position) = corners
+                (top_left_position, top_right_position, bottom_right_position,
+                 bottom_left_position) = corners
 
                 bottom_left_position, bottom_right_position, top_left_position, top_right_position = \
                     self.get_markers_corners_position(
                     bottom_left_position, bottom_right_position, top_left_position, top_right_position)
 
-                self.draw_line_on_markers(bottom_left_position, bottom_right_position, image, top_left_position,
+                self.draw_line_on_markers(bottom_left_position, bottom_right_position,
+                                          image, top_left_position,
                                           top_right_position)
 
+
+                center_x, center_y = self.generate_center_position(bottom_right_position,
+                                                                   top_left_position)
+
                 obstacle_position = self.generate_obstacle_dict(top_right=top_right_position,
-                                                                                  top_left=top_left_position,
-                                                                                  bottom_right=bottom_right_position,
-                                                                                  bottom_left=bottom_left_position,
-                                                                                  obstacle_id=str(markerID)
-                                                                                  )
+                                                                top_left=top_left_position,
+                                                                bottom_right=bottom_right_position,
+                                                                bottom_left=bottom_left_position,
+                                                                obstacle_id=str(markerID),
+                                                                center_x=center_x,
+                                                                center_y=center_y
+                                                                )
                 obstacles_position.append(obstacle_position)
-                center_x, center_y = self.generate_center_position(bottom_right_position, top_left_position)
 
                 if DEBUG:
                     self.draw_center_position(center_x, center_y, image)
                     cv2.putText(image, str(markerID),
-                            (top_left_position[0], top_left_position[1] - 15), cv2.FONT_HERSHEY_SIMPLEX,
+                            (top_left_position[0], top_left_position[1] - 15),
+                                cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (0, 255, 0), 2)
                 print("[INFO] ArUco marker ID: {}".format(markerID))
             print(obstacles_position)

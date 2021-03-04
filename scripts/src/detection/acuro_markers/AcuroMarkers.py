@@ -24,7 +24,8 @@ class ArucoMarkers:
     def draw_center_position(self, center_x, center_y, image):
         cv2.circle(image, (center_x, center_y), 4, (0, 0, 255), -1)
 
-    def get_markers_corners_position(self, bottom_left_position, bottom_right_position, top_left_position,
+    def get_markers_corners_position(self, bottom_left_position, bottom_right_position,
+                                     top_left_position,
                                      top_right_position):
         top_right_position = (int(top_right_position[0]), int(top_right_position[1]))
         bottom_right_position = (int(bottom_right_position[0]), int(bottom_right_position[1]))
@@ -33,7 +34,8 @@ class ArucoMarkers:
         return bottom_left_position, bottom_right_position, top_left_position, top_right_position
 
 
-    def draw_line_on_markers(self, bottom_left_position, bottom_right_position, image, top_left_position,
+    def draw_line_on_markers(self, bottom_left_position, bottom_right_position, image,
+                             top_left_position,
                              top_right_position):
         cv2.line(image, top_left_position, top_right_position, (0, 255, 0), 2)
         cv2.line(image, top_right_position, bottom_right_position, (0, 255, 0), 2)
@@ -47,9 +49,11 @@ class ArucoMarkers:
         return cv2.aruco.detectMarkers(image_with_obstacle, aruco_dict,
                                        parameters=aruco_params)
 
-    def generate_obstacle_dict(self, top_right, top_left, bottom_right, bottom_left, obstacle_id):
+    def generate_obstacle_dict(self, top_right, top_left, bottom_right, bottom_left,
+                               obstacle_id, center_x, center_y):
         obstacle_report = {
             f"obstacle {obstacle_id}" : {
+            "center": (center_x, center_y),
             "top_right": top_right,
             "top_left": top_left,
             "bottom_right": bottom_right,
