@@ -17,7 +17,7 @@ class ObstacleDetection(ArucoMarkers):
 
         (corners, ids, rejected) = cv2.aruco.detectMarkers(image, aruco_dict,
                                        parameters=aruco_params)
-        
+
         if len(corners) > 0:
             ids = ids.flatten()
             for (markerCorner, markerID) in zip(corners, ids):
@@ -65,3 +65,15 @@ class ObstacleDetection(ArucoMarkers):
 
     def get_acuro_dictionnary(self):
         return cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
+
+    def generate_empty_obstacle_position(self):
+        obstacle_position = []
+        for i in range(0, 2):
+            obstacle_position.append({f"obstacle {i + 1}": {
+                "center": (0, 0),
+                "top_right": (0, 0),
+                "top_left": (0, 0),
+                "bottom_right": (0, 0),
+                "bottom_left": (0, 0)
+            }})
+        return obstacle_position

@@ -73,3 +73,12 @@ class RobotDetection(ArucoMarkers):
 
     def get_acuro_dictionnary(self):
         return cv2.aruco.Dictionary_get(cv2.aruco.DICT_5X5_50)
+
+    def generate_empty_robot_position(self):
+        return  {
+            "center": (0, 0),
+            "top_right": (0, 0),
+            "top_left": (0, 0),
+            "bottom_right": (0, 0),
+            "bottom_left": (0, 0)
+        }
