@@ -14,7 +14,7 @@
         </v-col>
         <v-col sm="4">
           <Mode />
-          <StartButton />
+          <Chronometer />
         </v-col>
       </v-row>
     </v-container>
@@ -24,14 +24,14 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import StepList from '../cycles/StepList.vue';
-import StartButton from '../cycles/StartButton.vue';
 import Mode from '../cycles/Mode.vue';
+import Chronometer from '../cycles/Chronometer.vue';
 
 @Component({
   components: {
     StepList: StepList,
-    StartButton: StartButton,
     Mode: Mode,
+    Chronometer: Chronometer,
   },
 })
 export default class CycleInformation extends Vue {}

@@ -1,13 +1,25 @@
 <template>
   <div>
-    <v-btn> start </v-btn>
+    <v-btn @click="start" width="100%" elevation=3> start </v-btn>
   </div>
 </template>
 
 <script lang="ts">
-//TODO: COMPLETE COMPONENT
+import { Step } from '@/types/step';
 import { Component, Vue } from 'vue-property-decorator';
+import { mapState } from 'vuex';
 
-@Component({})
-export default class StartButton extends Vue {}
+@Component({
+   computed: {
+    ...mapState(['cycleReady', 'currentStep']),
+  },
+})
+export default class StartButton extends Vue {
+  public cycleReady!:boolean;
+  public currentStep!:Step;
+
+  public start() {
+    this.$emit('start');
+  }
+}
 </script>
