@@ -26,8 +26,8 @@ def test_given_blue_color_then_should_return_right_lower_boundary():
     assert all([a == b for a, b in zip(actual_boundaries, expected_boundaries)])
 
 
-def test_given_yellow_color_then_should_return_right_lower_boundary():
-    expected_boundaries = [79, 255, 228]
+def test_given_yellow_color_then_should_return_right_upper_boundary():
+    expected_boundaries = [41, 255, 255]
 
     actual_boundaries = upper_boundary.get_upper_boundaries(YELLOW_COLOR)
 

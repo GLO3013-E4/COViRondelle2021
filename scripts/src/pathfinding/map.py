@@ -13,8 +13,8 @@ class Map:
     Class that represents where the robot can move and where the
     different obstacles and objects laying on the table are.
     """
-    def __init__(self, image, obstacles, pucks, start, end, node_size=25, safety_cushion=0,
-                 robot_width=100, obstacle_width=40, puck_width=25):
+    def __init__(self, image_width, image_height, obstacles, pucks, start, end, node_size=25,
+                 safety_cushion=0, robot_width=100, obstacle_width=40, puck_width=25):
         self.node_size = node_size
         self.safety_cushion = safety_cushion
         self.robot_width = robot_width
@@ -23,8 +23,7 @@ class Map:
         self.obstacle_cushion_width = self.safety_cushion + self.robot_width + self.obstacle_width
         self.obstacle_puck_width = self.safety_cushion + self.robot_width + self.puck_width
 
-        self.image = image
-        self.width, self.height = self.image.size
+        self.width, self.height = image_width, image_height
 
         self.obstacles = obstacles
         self.pucks = pucks
@@ -110,6 +109,13 @@ class Map:
                     neighbor.role = role
                 self.add_cushion(neighbor, distance - 1, role)
 
+    def add_cushion_in_direction(self, node, distance, role, direction):
+        if distance > 0:
+            for neighbor, neighbor_direction in node.neighbors:
+                if neighbor.role is TileRole.EMPTY and neighbor_direction is direction:
+                    neighbor.role = role
+                    self.add_cushion_in_direction(neighbor, distance - 1, role, direction)
+
     def create_obstacles(self):
         """Specifies which nodes should be considered as obstacles and then adds their padding."""
         for pixel_position in self.obstacles:
@@ -146,7 +152,10 @@ class Map:
         end.role = TileRole.END
 
         distance = (self.obstacle_puck_width // self.node_size) + 1
-        self.add_cushion(end, distance, TileRole.END)
+        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.DOWN)
+        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.LEFT)
+        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.UP)
+        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.RIGHT)
 
     def get_start_node(self):
         """Gets the starting node"""
