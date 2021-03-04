@@ -32,5 +32,6 @@ export const fr = {
       ToSquareCenter: 'Vers le centre du carré',
       CycleEndedAndRedLedOn: 'Fin du cycle et activation du LED rouge',
     },
+    start: 'Commencer',
   },
 };

@@ -25,13 +25,13 @@ export default class Mode extends Vue {
 
   get actualMode() {
     if (!this.cycleReady) {
-      return 'Booting';
+      return 'booting';
     } else if (this.cycleReady && this.cycleStarted) {
-      return 'Started';
+      return 'started';
     } else if (this.cycleReady) {
-      return 'Waiting';
+      return 'waiting';
     }
-    return 'no information';
+    return 'noInformation';
   }
 
   get color() {

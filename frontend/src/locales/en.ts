@@ -31,5 +31,6 @@ export const en = {
       ToSquareCenter: 'To square center',
       CycleEndedAndRedLedOn: 'Cycle ended and red DEL on',
     },
+    start: 'Start',
   },
 };
