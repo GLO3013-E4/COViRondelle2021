@@ -5,7 +5,7 @@ class UpperBoundary:
     """Upper boundaries of colors of pucks"""
     def __init__(self):
         self.upper_boundaries = {"purple": [143, 255, 233], "white": [124, 62, 186],
-                                 "yellow": [79, 255, 228],
+                                 "yellow": [41, 255, 255],
                                  "blue": [179, 255, 255], "orange": [19, 255, 153],
                                  "red": [179, 255, 106],
                                  "brown": [26, 255, 39], "green": [75, 255, 255],

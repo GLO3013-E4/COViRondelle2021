@@ -3,7 +3,6 @@ import numpy as np
 from pyzbar.pyzbar import decode
 
 from scripts.src.detection.qr_code_type import QrCodeTypes
-
 from scripts.src.detection.utils.point import Point
 
 
