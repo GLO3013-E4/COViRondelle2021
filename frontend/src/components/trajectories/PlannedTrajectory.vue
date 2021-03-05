@@ -26,7 +26,7 @@
             <polyline
               id="planned_path"
               :points="this.trajectoryPoints"
-              style="fill: none; stroke: blue; stroke-width: 2"
+              style="fill: none; stroke: blue; stroke-width: 7"
             />
           </svg>
         </v-col>
@@ -39,25 +39,10 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Coordinate } from '@/types/coordinate';
 import { mapState } from 'vuex';
-import { State } from '@/store/state';
 
 @Component({
   computed: {
-    ...mapState({
-      tableImage: 'tableImage',
-      trajectoryPoints: (state: State): string => {
-        let points = '';
-        const ratioX = 0.3;
-        const ratioY = 0.3;
-
-        state.plannedTrajectory.forEach(
-          (coordinate) =>
-            (points += `${coordinate.x * ratioX},${coordinate.y * ratioY} `)
-        );
-
-        return points;
-      },
-    }),
+    ...mapState(['tableImage', 'plannedTrajectory']),
   },
 })
 export default class PlannedTrajectory extends Vue {
@@ -69,8 +54,6 @@ export default class PlannedTrajectory extends Vue {
   private ratioY = 0.3;
   private rescaleWidth!: number;
   private rescaleHeight!: number;
-  public startPoint!: Coordinate;
-  private destination!: Coordinate;
 
   public constructor() {
     super();
@@ -82,14 +65,29 @@ export default class PlannedTrajectory extends Vue {
     // this.rescaleCoordinates();
   }
 
-  public applyRatio(coordinate: Coordinate): Coordinate {
+  private get trajectoryPoints() {
+    let points = '';
+
+    this.plannedTrajectory.forEach(
+      (coordinate) => (points += `${coordinate.x}, ${coordinate.y},`)
+    );
+
+    // TODO : Move this to a "removeLastComma" function, if possible
+    if (points !== '') {
+      points = points.substring(0, points.length - 1); // Remove last comma
+    }
+
+    return points;
+  }
+
+  private applyRatio(coordinate: Coordinate): Coordinate {
     coordinate.x = coordinate.x * this.ratioX;
     coordinate.y = coordinate.y * this.ratioY;
     return coordinate;
   }
 
   // TODO : Rescale coordinates in computed
-  public rescaleCoordinates() {
+  private rescaleCoordinates() {
     this.plannedTrajectory = this.plannedTrajectory.map((value) =>
       this.applyRatio(value)
     );
