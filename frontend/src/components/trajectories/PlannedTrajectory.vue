@@ -28,6 +28,11 @@
               :points="this.trajectoryPoints"
               style="fill: none; stroke: blue; stroke-width: 2"
             />
+            <polyline
+              id="real_path"
+              :points="this.realTrajectoryPoints"
+              style="fill: none; stroke: red; stroke-width: 2"
+            />
             <circle
               class="name"
               :cx="startPoint.x * ratioX"
@@ -52,11 +57,12 @@ import { mapState } from 'vuex';
 
 @Component({
   computed: {
-    ...mapState(['tableImage', 'plannedTrajectory']),
+    ...mapState(['tableImage', 'plannedTrajectory', 'realTrajectory']),
   },
 })
 export default class PlannedTrajectory extends Vue {
   private plannedTrajectory!: Array<Coordinate>;
+  private realTrajectory!: Array<Coordinate>;
   private readonly tableImage!: string;
   private readonly width!: number;
   private readonly height!: number;
@@ -88,6 +94,18 @@ export default class PlannedTrajectory extends Vue {
     return points;
   }
 
+  private get realTrajectoryPoints() {
+    let points = '';
+
+    this.realTrajectory.forEach(
+      (coordinate) =>
+        (points += `${coordinate.x * this.ratioX},${
+          coordinate.y * this.ratioY
+        } `)
+    );
+
+    return points;
+  }
   private get startPoint() {
     return this.plannedTrajectory[0];
   }
