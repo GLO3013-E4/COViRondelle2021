@@ -26,7 +26,7 @@
             <polyline
               id="planned_path"
               :points="this.trajectoryPoints"
-              style="fill: none; stroke: blue; stroke-width: 7"
+              style="fill: none; stroke: blue; stroke-width: 2"
             />
           </svg>
         </v-col>
@@ -69,13 +69,13 @@ export default class PlannedTrajectory extends Vue {
     let points = '';
 
     this.plannedTrajectory.forEach(
-      (coordinate) => (points += `${coordinate.x}, ${coordinate.y},`)
+      (coordinate) => (points += `${coordinate.x * this.ratioX},${coordinate.y * this.ratioY} `)
     );
 
-    // TODO : Move this to a "removeLastComma" function, if possible
-    if (points !== '') {
-      points = points.substring(0, points.length - 1); // Remove last comma
-    }
+    // // TODO : Move this to a "removeLastComma" function, if possible
+    // if (points !== '') {
+    //   points = points.substring(0, points.length - 1); // Remove last comma
+    // }
 
     return points;
   }
