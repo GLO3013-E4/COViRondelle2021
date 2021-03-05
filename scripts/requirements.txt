@@ -8,3 +8,4 @@ pyzbar >= 0.1.8
 opencv-contrib-python >= 4.3.0.38
 scikit-learn >=0.22
 sklearn
+ina219
