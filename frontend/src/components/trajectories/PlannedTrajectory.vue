@@ -28,6 +28,16 @@
               :points="this.trajectoryPoints"
               style="fill: none; stroke: blue; stroke-width: 2"
             />
+            <circle
+              class="name"
+              :cx="startPoint.x * ratioX"
+              :cy="startPoint.y * ratioY"
+              r="2"
+              stroke="red"
+              stroke-width="2"
+              fill="none"
+            />
+            }
           </svg>
         </v-col>
       </v-row>
@@ -54,6 +64,7 @@ export default class PlannedTrajectory extends Vue {
   private ratioY = 0.3;
   private rescaleWidth!: number;
   private rescaleHeight!: number;
+  // private startPoint!: Coordinate;
 
   public constructor() {
     super();
@@ -62,35 +73,23 @@ export default class PlannedTrajectory extends Vue {
     this.rescaleWidth = this.width * this.ratioX;
     this.height = 904; // TODO : Get image height in computed
     this.rescaleHeight = this.height * this.ratioY;
-    // this.rescaleCoordinates();
   }
 
   private get trajectoryPoints() {
     let points = '';
 
     this.plannedTrajectory.forEach(
-      (coordinate) => (points += `${coordinate.x * this.ratioX},${coordinate.y * this.ratioY} `)
+      (coordinate) =>
+        (points += `${coordinate.x * this.ratioX},${
+          coordinate.y * this.ratioY
+        } `)
     );
-
-    // // TODO : Move this to a "removeLastComma" function, if possible
-    // if (points !== '') {
-    //   points = points.substring(0, points.length - 1); // Remove last comma
-    // }
 
     return points;
   }
 
-  private applyRatio(coordinate: Coordinate): Coordinate {
-    coordinate.x = coordinate.x * this.ratioX;
-    coordinate.y = coordinate.y * this.ratioY;
-    return coordinate;
-  }
-
-  // TODO : Rescale coordinates in computed
-  private rescaleCoordinates() {
-    this.plannedTrajectory = this.plannedTrajectory.map((value) =>
-      this.applyRatio(value)
-    );
+  private get startPoint() {
+    return this.plannedTrajectory[0];
   }
 }
 </script>
