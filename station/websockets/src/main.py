@@ -82,8 +82,6 @@ def websockets():
     rospy.Subscriber("puck_corners", String, handle_puck_corners)
     rospy.Subscriber("end", Bool, handle_end)
 
-    socket.run(app)
-
     @socket.on('start_cycle')
     def handle_start_cycle(_):
         # TODO : Remove print
@@ -93,6 +91,8 @@ def websockets():
     # TODO : Remove print and sending to socket
     print('Station: Sending cycle ready!')
     socket.send("cycle_ready")
+
+    socket.run(app)
 
     while not rospy.is_shutdown():
         rate.sleep()
