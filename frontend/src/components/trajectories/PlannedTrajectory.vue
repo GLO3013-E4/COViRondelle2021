@@ -110,31 +110,25 @@ export default class PlannedTrajectory extends Vue {
     this.height = 904; // TODO : Get image height in computed
     this.rescaleHeight = this.height * this.ratioY;
   }
-
-  private get trajectoryPoints() {
+  private coordinatesToString(realTrajectory: boolean) {
     let points = '';
-
-    this.plannedTrajectory.forEach(
+    const trajectory = realTrajectory
+      ? this.realTrajectory
+      : this.plannedTrajectory;
+    trajectory.forEach(
       (coordinate) =>
         (points += `${coordinate.x * this.ratioX},${
           coordinate.y * this.ratioY
         } `)
     );
-
     return points;
+  }
+  private get trajectoryPoints() {
+    return this.coordinatesToString(false);
   }
 
   private get realTrajectoryPoints() {
-    let points = '';
-
-    this.realTrajectory.forEach(
-      (coordinate) =>
-        (points += `${coordinate.x * this.ratioX},${
-          coordinate.y * this.ratioY
-        } `)
-    );
-
-    return points;
+    return this.coordinatesToString(true);
   }
   private get startPoint() {
     return this.plannedTrajectory[0];
