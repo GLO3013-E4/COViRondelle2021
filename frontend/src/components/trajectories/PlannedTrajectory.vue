@@ -2,14 +2,14 @@
   <v-card
     class="d-flex justify-center mb-10"
     color="#ededed"
-    :height="this.rescaleHeight + 70"
+    :height="this.rescaleHeight + 130"
     :width="this.rescaleWidth"
   >
     <v-container>
       <v-row>
         <v-col sm="12">
           <v-card class="d-flex justify-center">
-            <h3>Planned Trajectory</h3>
+            <h3>Trajectories</h3>
           </v-card>
         </v-col>
       </v-row>
@@ -34,7 +34,7 @@
               style="fill: none; stroke: red; stroke-width: 2"
             />
             <circle
-              class="name"
+              class="start"
               :cx="startPoint.x * ratioX"
               :cy="startPoint.y * ratioY"
               r="2"
@@ -42,8 +42,38 @@
               stroke-width="2"
               fill="none"
             />
-            }
           </svg>
+        </v-col>
+        <v-col sm="12">
+          <v-card-actions class="d-flex left">
+            <svg height="100" width="200" id="legend">
+              <text x="0" y="15" fill="blue">Planned Trajectory:</text>
+              <line
+                x1="150"
+                y1="10"
+                x2="200"
+                y2="10"
+                style="stroke: blue; stroke-width: 2"
+              />
+              <text x="0" y="35" fill="red">Real Trajectory:</text>
+              <line
+                x1="150"
+                y1="30"
+                x2="200"
+                y2="30"
+                style="stroke: red; stroke-width: 2"
+              />
+              <text x="0" y="55" fill="red">Starting point:</text>
+              <circle
+                cx="150"
+                cy="50"
+                r="2"
+                stroke="red"
+                stroke-width="2"
+                fill="none"
+              />
+            </svg>
+          </v-card-actions>
         </v-col>
       </v-row>
     </v-container>
@@ -112,8 +142,4 @@ export default class PlannedTrajectory extends Vue {
 }
 </script>
 
-<style>
-#planned_path {
-  z-index: 1;
-}
-</style>
+<style></style>
