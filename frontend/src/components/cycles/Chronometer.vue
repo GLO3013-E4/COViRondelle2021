@@ -1,6 +1,8 @@
 <template>
   <div>
-    <v-card class="d-flex justify-center" ref="time" ><h2>{{ this.updatedTime }}</h2></v-card>
+    <v-card class="d-flex justify-center" ref="time"
+      ><h2>{{ this.updatedTime }}</h2></v-card
+    >
     <StartButton ref="button" @start="start" />
   </div>
 </template>

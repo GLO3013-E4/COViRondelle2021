@@ -1,5 +1,5 @@
 export interface RobotConsumption {
-  batteryPercentage: number;
+  batteryChargeLeft: number;
   batteryRemainingTimeInSeconds: number;
   // TODO : What else should we write here?
 }
