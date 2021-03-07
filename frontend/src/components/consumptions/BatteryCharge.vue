@@ -12,7 +12,7 @@
               :size="100"
               :width="15"
               :value="pourcentageBatteryLeft"
-              color="primary"
+              :color="color"
             >
               {{ currentBatteryCharge }} Ah
             </v-progress-circular>
@@ -51,6 +51,16 @@ export default class BatteryCharge extends Vue {
 
   get pourcentageBatteryLeft() {
     return (this.robotConsumption.batteryChargeLeft / this.maximumCharge) * 100;
+  }
+
+  get color(){
+      if(this.pourcentageBatteryLeft <= 10){
+          return 'red'
+      }
+      else if(this.pourcentageBatteryLeft <= 50){
+          return 'amber'
+      }
+      return 'green'
   }
 }
 </script>
