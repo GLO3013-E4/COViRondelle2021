@@ -1,5 +1,9 @@
 <template>
-  <h2 :class="timeInSeconds <= minimumTimeInSecondForCompetition ? 'red--text' : 'green--text'">{{formatedTime}}</h2>
+  <h2
+    class="light-blue--text"
+  >
+    {{ formatedTime }}
+  </h2>
 </template>
 
 <script lang="ts">
@@ -15,16 +19,12 @@ import { mapState } from 'vuex';
 export default class RemainingTime extends Vue {
   public robotConsumption!: RobotConsumption;
 
-  get minimumTimeInSecondForCompetition(){
-      return 10*60;
-  }
-
   get timeInSeconds() {
-      return this.robotConsumption.batteryRemainingTimeInSeconds;
+    return this.robotConsumption.batteryRemainingTimeInSeconds;
   }
 
   get formatedTime() {
     return new Date(this.timeInSeconds * 1000).toISOString().substr(11, 8);
-  } 
+  }
 }
 </script>
