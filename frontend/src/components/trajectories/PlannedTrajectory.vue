@@ -2,7 +2,7 @@
   <v-card
     class="d-flex justify-center mb-10"
     color="#ededed"
-    :height="this.rescaleHeight + 130"
+    :height="this.rescaleHeight + 150"
     :width="this.rescaleWidth"
   >
     <v-container>
@@ -42,6 +42,15 @@
               stroke-width="2"
               fill="none"
             />
+            <circle
+              class="start"
+              :cx="destinationPoint.x * ratioX"
+              :cy="destinationPoint.y * ratioY"
+              r="2"
+              stroke="green"
+              stroke-width="2"
+              fill="none"
+            />
           </svg>
         </v-col>
         <v-col sm="12">
@@ -69,6 +78,15 @@
                 cy="50"
                 r="2"
                 stroke="red"
+                stroke-width="2"
+                fill="none"
+              />
+              <text x="0" y="75" fill="green">Destination point:</text>
+              <circle
+                cx="150"
+                cy="70"
+                r="2"
+                stroke="green"
                 stroke-width="2"
                 fill="none"
               />
@@ -100,7 +118,6 @@ export default class PlannedTrajectory extends Vue {
   private ratioY = 0.3;
   private rescaleWidth!: number;
   private rescaleHeight!: number;
-  // private startPoint!: Coordinate;
 
   public constructor() {
     super();
@@ -132,6 +149,9 @@ export default class PlannedTrajectory extends Vue {
   }
   private get startPoint() {
     return this.plannedTrajectory[0];
+  }
+    private get destinationPoint() {
+    return this.plannedTrajectory[this.plannedTrajectory.length-1];
   }
 }
 </script>
