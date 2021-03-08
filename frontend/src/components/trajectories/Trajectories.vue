@@ -9,7 +9,7 @@
       <v-row>
         <v-col sm="12">
           <v-card class="d-flex justify-center">
-            <h3>Trajectories</h3>
+            <h3>{{ $t('trajectories.trajectories') }}</h3>
           </v-card>
         </v-col>
       </v-row>
@@ -33,10 +33,12 @@
               :points="this.realTrajectoryPoints"
               style="fill: none; stroke: red; stroke-width: 2"
             />
+            <!-- TODO : Fix start and destination points -->
+            <!--
             <circle
               class="start"
-              :cx="startPoint.x * ratioX"
-              :cy="startPoint.y * ratioY"
+              :cx="this.startPoint.x * ratioX"
+              :cy="this.startPoint.y * ratioY"
               r="2"
               stroke="red"
               stroke-width="2"
@@ -44,19 +46,22 @@
             />
             <circle
               class="start"
-              :cx="destinationPoint.x * ratioX"
-              :cy="destinationPoint.y * ratioY"
+              :cx="this.destinationPoint.x * ratioX"
+              :cy="this.destinationPoint.y * ratioY"
               r="2"
               stroke="green"
               stroke-width="2"
               fill="none"
             />
+            -->
           </svg>
         </v-col>
         <v-col sm="12">
           <v-card-actions class="d-flex left">
             <svg height="100" width="200" id="legend">
-              <text x="0" y="15" fill="blue">Planned Trajectory:</text>
+              <text x="0" y="15" fill="blue">
+                {{ `${$t('trajectories.plannedTrajectory')} :` }}
+              </text>
               <line
                 x1="150"
                 y1="10"
@@ -64,7 +69,9 @@
                 y2="10"
                 style="stroke: blue; stroke-width: 2"
               />
-              <text x="0" y="35" fill="red">Real Trajectory:</text>
+              <text x="0" y="35" fill="red">
+                {{ `${$t('trajectories.realTrajectory')} :` }}
+              </text>
               <line
                 x1="150"
                 y1="30"
@@ -72,7 +79,9 @@
                 y2="30"
                 style="stroke: red; stroke-width: 2"
               />
-              <text x="0" y="55" fill="red">Starting point:</text>
+              <text x="0" y="55" fill="red">
+                {{ `${$t('trajectories.startingPoint')} :` }}
+              </text>
               <circle
                 cx="150"
                 cy="50"
@@ -81,7 +90,9 @@
                 stroke-width="2"
                 fill="none"
               />
-              <text x="0" y="75" fill="green">Destination point:</text>
+              <text x="0" y="75" fill="green">
+                {{ `${$t('trajectories.destinationPoint')} :` }}
+              </text>
               <circle
                 cx="150"
                 cy="70"
@@ -108,7 +119,7 @@ import { mapState } from 'vuex';
     ...mapState(['tableImage', 'plannedTrajectory', 'realTrajectory']),
   },
 })
-export default class PlannedTrajectory extends Vue {
+export default class Trajectories extends Vue {
   private plannedTrajectory!: Array<Coordinate>;
   private realTrajectory!: Array<Coordinate>;
   private readonly tableImage!: string;
@@ -147,13 +158,12 @@ export default class PlannedTrajectory extends Vue {
   private get realTrajectoryPoints() {
     return this.coordinatesToString(true);
   }
+  // TODO : If no start or destination point, it crashes
   private get startPoint() {
     return this.plannedTrajectory[0];
   }
   private get destinationPoint() {
-    return this.plannedTrajectory[this.plannedTrajectory.length-1];
+    return this.plannedTrajectory[this.plannedTrajectory.length - 1];
   }
 }
 </script>
-
-<style></style>

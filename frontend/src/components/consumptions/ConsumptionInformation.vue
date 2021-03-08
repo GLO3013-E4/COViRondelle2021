@@ -1,6 +1,6 @@
 <template>
   <v-card class="d-flex justify-center" color="#ededed" height="280">
-    <h3>Consumption information</h3>
+    <h3>{{ $t('consumptions.consumptionInformation') }}</h3>
   </v-card>
 </template>
 

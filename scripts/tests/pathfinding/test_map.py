@@ -1,5 +1,3 @@
-from PIL import Image
-
 from scripts.src.pathfinding.map import Map
 from scripts.src.pathfinding.tile_role import TileRole
 
@@ -10,7 +8,6 @@ class TestMap:
     def setup_class(cls):
         cls.AN_IMAGE_WIDTH = 300
         cls.AN_IMAGE_HEIGHT = 300
-        cls.AN_IMAGE = Image.new("RGB", (cls.AN_IMAGE_WIDTH, cls.AN_IMAGE_HEIGHT))
         cls.SOME_OBSTACLES = [
             (0, 0),
             (75, 100)
@@ -58,7 +55,8 @@ class TestMap:
             (5, 7): 0
         }
         self.map = Map(
-            self.AN_IMAGE,
+            self.AN_IMAGE_WIDTH,
+            self.AN_IMAGE_HEIGHT,
             self.SOME_OBSTACLES,
             self.SOME_PUCKS,
             self.A_STARTING_POSITION,

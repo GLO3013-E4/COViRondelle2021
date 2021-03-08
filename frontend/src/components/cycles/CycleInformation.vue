@@ -4,7 +4,7 @@
       <v-row>
         <v-col sm="12">
           <v-card class="d-flex justify-center">
-            <h3>Cycle Informations</h3>
+            <h3>{{ $t('cycles.cycleInformation') }}</h3>
           </v-card>
         </v-col>
       </v-row>
@@ -13,6 +13,7 @@
           <StepList />
         </v-col>
         <v-col sm="4">
+          <Mode />
           <Chronometer />
         </v-col>
       </v-row>
@@ -23,11 +24,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import StepList from '../cycles/StepList.vue';
+import Mode from '../cycles/Mode.vue';
 import Chronometer from '../cycles/Chronometer.vue';
 
 @Component({
   components: {
     StepList: StepList,
+    Mode: Mode,
     Chronometer: Chronometer,
   },
 })

@@ -1,4 +1,4 @@
-import ControlPanel from '@/components/station/ControlPanel.vue';
+import FirstCorner from '@/components/station/FirstCorner.vue';
 import { ColorFactory } from '@/factories/ColorFactory';
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -8,12 +8,12 @@ import { CornerFactory } from '@/factories/CornerFactory';
 Vue.use(Vuex);
 
 export default {
-  title: 'components/station/ControlPanel',
-  component: ControlPanel,
+  title: 'components/station/FirstCorner',
+  component: FirstCorner,
 };
 
 const Template = (args: any) => ({
-  components: { ControlPanel },
+  components: { ControlPanel: FirstCorner },
   store: new Vuex.Store({
     state: args,
   }),

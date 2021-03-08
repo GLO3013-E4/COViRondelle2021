@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import cv2
+import serial
 
 from scripts.src.detection.lower_boundary import LowerBoundary
 from scripts.src.detection.upper_boundary import UpperBoundary
@@ -9,8 +10,8 @@ GPIO.setmode(GPIO.BOARD)
 
 GPIO.setup(12, GPIO.OUT)
 servo1 = GPIO.PWM(12, 50)
-GPIO.setup(33, GPIO.OUT)
-servo2 = GPIO.PWM(33, 50)
+GPIO.setup(13, GPIO.OUT)
+servo2 = GPIO.PWM(13, 50)
 
 servo1.start(0)
 servo2.start(0)
@@ -35,11 +36,7 @@ MOVEMENT_THRESHOLD = 30
 
 
 def angle_to_per(angle):
-    start = 2
-    end = 12
-    ratio = (end - start) / 180
-    angle_p = angle * ratio
-    return start + angle_p
+    return 2+(angle/18)
 
 
 def contour_area(contour):
@@ -57,11 +54,11 @@ def adjust_position_for_x(original, medium, center):
     elif medium > center + MOVEMENT_THRESHOLD:
         position += 1
 
-    return angle_to_per(position)
+    return position
 
 
 def adjust_position_for_y(original, medium, center):
-    if original > 180 or original < 0:
+    if original > 100 or original < 0:
         return original
 
     position = original
@@ -71,7 +68,7 @@ def adjust_position_for_y(original, medium, center):
     elif medium > center + MOVEMENT_THRESHOLD:
         position -= 1
 
-    return angle_to_per(position)
+    return position
 
 
 while True:
@@ -79,10 +76,10 @@ while True:
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     # TODO : Could we receive another color?
-    lower_red = LowerBoundary().get_lower_boundaries(Color.RED)
-    upper_red = UpperBoundary().get_upper_boundaries(Color.RED)
-    red_mask = cv2.inRange(hsv_frame, lower_red, upper_red)
-    _, contours, _ = cv2.findContours(red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    lower_color = LowerBoundary().get_lower_boundaries(Color.RED)
+    upper_color = UpperBoundary().get_upper_boundaries(Color.RED)
+    color_mask = cv2.inRange(hsv_frame, lower_color, upper_color)
+    _, contours, _ = cv2.findContours(color_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     contours = sorted(contours, key=contour_area, reverse=True)
 
     for cnt in contours:
@@ -101,6 +98,8 @@ while True:
     cv2.line(frame, (x_medium, 0), (x_medium, CAP_WIDTH), (0, 255, 0), 2)
     cv2.line(frame, (0, y_medium), (CAP_WIDTH, y_medium), (0, 255, 0), 2)
     cv2.imshow("Frame", frame)
+
+    serial.write(x_position)
 
     if cv2.waitKey(1) == ord('a'):
         servo1.stop()

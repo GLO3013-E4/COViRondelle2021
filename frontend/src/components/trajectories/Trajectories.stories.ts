@@ -1,18 +1,18 @@
-import PlannedTrajectory from '@/components/trajectories/PlannedTrajectory.vue';
+import Trajectories from '@/components/trajectories/Trajectories.vue';
 import Vuex from 'vuex';
 import { CoordinateFactory } from '@/factories/CoordinateFactory';
 
 export default {
-  title: 'components/trajectories/PlannedTrajectory',
-  component: PlannedTrajectory,
+  title: 'components/trajectories/Trajectories',
+  component: Trajectories,
 };
 
 const Template = (args: any) => ({
-  components: { PlannedTrajectory },
+  components: { Trajectories },
   store: new Vuex.Store({
     state: args,
   }),
-  template: '<planned-trajectory/>',
+  template: '<trajectories/>',
 });
 
 export const Default = Template.bind({}) as any;
