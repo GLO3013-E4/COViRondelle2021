@@ -11,10 +11,10 @@
               :rotate="-90"
               :size="100"
               :width="15"
-              :value="pourcentageBatteryLeft"
+              :value="this.pourcentageBatteryLeft"
               color="light-blue"
             >
-              {{ currentBatteryCharge }} Ah
+              <span ref="batteryCharge"> {{ currentBatteryCharge }} Ah</span>
             </v-progress-circular>
           </v-col>
           <v-col sm="6">

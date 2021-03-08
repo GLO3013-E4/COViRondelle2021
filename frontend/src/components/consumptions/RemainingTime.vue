@@ -1,6 +1,7 @@
 <template>
   <h2
     class="light-blue--text"
+    ref="time"
   >
     {{ formatedTime }}
   </h2>
