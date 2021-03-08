@@ -1,19 +1,16 @@
 import PuckDeposit from '@/components/station/PuckDeposit.vue';
 import { Step } from '@/types/step';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex';
 import * as faker from 'faker';
 import { ColorFactory } from '@/factories/ColorFactory';
+import { State } from '@/store/state';
 
-const mockStore = (puckInGrip: boolean, currentStep: Step) =>
-  new Vuex.Store({
-    state: {
-      puckColors: ColorFactory.get(3),
-      puckInGrip,
-      currentStep,
-    },
-  });
+const mockState = (puckInGrip: boolean, currentStep: Step) =>
+  ({
+    puckColors: ColorFactory.get(3),
+    puckInGrip,
+    currentStep,
+  } as State);
 
 describe('When mounting PuckDeposit component', () => {
   const wrapper = wrapWithVuetifyAndStore(PuckDeposit);
@@ -24,13 +21,10 @@ describe('When mounting PuckDeposit component', () => {
 });
 
 describe('Given no puck released yet', () => {
-  const localVue = createLocalVue();
-  localVue.use(Vuex);
-
-  const store = mockStore(false, Step.CycleNotStarted);
+  const state = mockState(false, Step.CycleNotStarted);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = shallowMount(PuckDeposit, { store, localVue });
+    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
 
     it('Should not have any puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -41,12 +35,10 @@ describe('Given no puck released yet', () => {
 });
 
 describe('Given first puck ready to get released', () => {
-  const localVue = createLocalVue();
-  localVue.use(Vuex);
-  const store = mockStore(true, Step.ToFirstCornerAndReleaseFirstPuck);
+  const state = mockState(true, Step.ToFirstCornerAndReleaseFirstPuck);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = shallowMount(PuckDeposit, { store, localVue });
+    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
 
     it('Should not have any puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -58,13 +50,10 @@ describe('Given first puck ready to get released', () => {
 });
 
 describe('Given first puck just got released', () => {
-  const localVue = createLocalVue();
-  localVue.use(Vuex);
-
-  const store = mockStore(false, Step.ToFirstCornerAndReleaseFirstPuck);
+  const state = mockState(false, Step.ToFirstCornerAndReleaseFirstPuck);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = shallowMount(PuckDeposit, { store, localVue });
+    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
 
     it('Should have first puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -76,16 +65,13 @@ describe('Given first puck just got released', () => {
 });
 
 describe('Given in between first puck and second puck released', () => {
-  const localVue = createLocalVue();
-  localVue.use(Vuex);
-
-  const store = mockStore(
+  const state = mockState(
     faker.random.boolean(),
     Step.ToSecondPuckAndGrabSecondPuck
   );
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = shallowMount(PuckDeposit, { store, localVue });
+    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
 
     it('Should have first puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -97,13 +83,10 @@ describe('Given in between first puck and second puck released', () => {
 });
 
 describe('Given second puck just released', () => {
-  const localVue = createLocalVue();
-  localVue.use(Vuex);
-
-  const store = mockStore(false, Step.ToSecondCornerAndReleaseSecondPuck);
+  const state = mockState(false, Step.ToSecondCornerAndReleaseSecondPuck);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = shallowMount(PuckDeposit, { store, localVue });
+    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
 
     it('Should have first and second puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -115,13 +98,10 @@ describe('Given second puck just released', () => {
 });
 
 describe('Given before third puck release', () => {
-  const localVue = createLocalVue();
-  localVue.use(Vuex);
-
-  const store = mockStore(false, Step.ToThirdPuckAndGrabThirdPuck);
+  const state = mockState(false, Step.ToThirdPuckAndGrabThirdPuck);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = shallowMount(PuckDeposit, { store, localVue });
+    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
 
     it('Should have first and second puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -133,13 +113,10 @@ describe('Given before third puck release', () => {
 });
 
 describe('Given third puck just released', () => {
-  const localVue = createLocalVue();
-  localVue.use(Vuex);
-
-  const store = mockStore(false, Step.ToThirdCornerAndReleaseThirdPuck);
+  const state = mockState(false, Step.ToThirdCornerAndReleaseThirdPuck);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = shallowMount(PuckDeposit, { store, localVue });
+    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
 
     it('Should have all puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -151,13 +128,10 @@ describe('Given third puck just released', () => {
 });
 
 describe('Given all puck released after thirdReleased step', () => {
-  const localVue = createLocalVue();
-  localVue.use(Vuex);
-
-  const store = mockStore(faker.random.boolean(), Step.ToSquareCenter);
+  const state = mockState(faker.random.boolean(), Step.ToSquareCenter);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = shallowMount(PuckDeposit, { store, localVue });
+    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
 
     it('Should have all puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });

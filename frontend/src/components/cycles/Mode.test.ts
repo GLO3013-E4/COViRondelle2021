@@ -1,14 +1,12 @@
 import Mode from '@/components/cycles/Mode.vue';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
-import Vuex from 'vuex';
+import { State } from '@/store/state';
 
-const mockStore = (cycleReady:boolean, cycleStarted:boolean) => new Vuex.Store({
-    state: {
-      cycleReady:cycleReady,
-      cycleStarted: cycleStarted
-    },
-  });
+const mockState = (cycleReady: boolean, cycleStarted: boolean) =>
+  ({
+    cycleReady: cycleReady,
+    cycleStarted: cycleStarted,
+  } as State);
 
 describe('When mounting Mode component', () => {
   const wrapper = wrapWithVuetifyAndStore(Mode);
@@ -19,55 +17,46 @@ describe('When mounting Mode component', () => {
 });
 
 describe('Given booting state', () => {
-  const localVue = createLocalVue();
-  localVue.use(Vuex);
-
-  const store = mockStore(false,false)
+  const state = mockState(false, false);
 
   describe('When mounting Mode', () => {
-    const wrapper = shallowMount(Mode, { store, localVue });
+    const wrapper = wrapWithVuetifyAndStore(Mode, state);
 
     it('Should be booting mode', () => {
       const mode = wrapper.findComponent({ ref: 'mode' });
 
       expect(mode.exists()).toBe(true);
-      expect(mode.text()).toBe("Booting");
+      expect(mode.text()).toBe(wrapper.vm.$t('cycles.modes.booting'));
     });
   });
 });
 
 describe('Given waiting state', () => {
-    const localVue = createLocalVue();
-    localVue.use(Vuex);
-  
-    const store = mockStore(true,false);
-  
-    describe('When mounting Mode', () => {
-      const wrapper = shallowMount(Mode, { store, localVue });
-  
-      it('Should be booting mode', () => {
-        const mode = wrapper.findComponent({ ref: 'mode' });
-  
-        expect(mode.exists()).toBe(true);
-        expect(mode.text()).toBe("Waiting");
-      });
-    });
-  });
+  const state = mockState(true, false);
 
-  describe('Given started state', () => {
-    const localVue = createLocalVue();
-    localVue.use(Vuex);
-  
-    const store = mockStore(true,true);
-  
-    describe('When mounting Mode', () => {
-      const wrapper = shallowMount(Mode, { store, localVue });
-  
-      it('Should be started mode', () => {
-        const mode = wrapper.findComponent({ ref: 'mode' });
-  
-        expect(mode.exists()).toBe(true);
-        expect(mode.text()).toBe("Started");
-      });
+  describe('When mounting Mode', () => {
+    const wrapper = wrapWithVuetifyAndStore(Mode, state);
+
+    it('Should be booting mode', () => {
+      const mode = wrapper.findComponent({ ref: 'mode' });
+
+      expect(mode.exists()).toBe(true);
+      expect(mode.text()).toBe(wrapper.vm.$t('cycles.modes.waiting'));
     });
   });
+});
+
+describe('Given started state', () => {
+  const state = mockState(true, true);
+
+  describe('When mounting Mode', () => {
+    const wrapper = wrapWithVuetifyAndStore(Mode, state);
+
+    it('Should be started mode', () => {
+      const mode = wrapper.findComponent({ ref: 'mode' });
+
+      expect(mode.exists()).toBe(true);
+      expect(mode.text()).toBe(wrapper.vm.$t('cycles.modes.started'));
+    });
+  });
+});

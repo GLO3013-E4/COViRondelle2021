@@ -7,9 +7,9 @@
         :key="i"
         :complete="currentStepNumber > i + 1"
         :step="i + 1"
-        :color="currentStepNumber == i + 1 ? 'blue' : 'green'"
+        :color="currentStepNumber === i + 1 ? 'blue' : 'green'"
       >
-        {{ step }}
+        {{ $t(`cycles.steps.${step}`) }}
       </v-stepper-step>
     </v-stepper>
   </div>
@@ -38,8 +38,8 @@ export default class StepList extends Vue {
     for (const step in Step) {
       const isValueProperty = parseInt(step, 10) >= 0;
       if (isValueProperty) {
-        const notFormatedStep: string = Step[step];
-        result.push(notFormatedStep.replace(/([A-Z]+)/g, ' $1'));
+        const stepName: string = Step[step];
+        result.push(stepName);
       }
     }
     return result;
