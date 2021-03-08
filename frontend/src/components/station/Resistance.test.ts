@@ -50,7 +50,7 @@ describe('Given no state', () => {
       const resistanceValue = wrapper.findComponent({ ref: 'resistanceValue' });
 
       expect(resistanceValue.exists()).toBe(true);
-      expect(resistanceValue.text()).toBe('Ω');
+      expect(resistanceValue.text()).toBe('0 Ω');
     });
 
     it('Should not contain pucks', () => {

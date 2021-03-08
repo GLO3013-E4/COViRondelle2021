@@ -1,6 +1,15 @@
 import RemainingTime from '@/components/consumptions/RemainingTime.vue';
+import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
+
+describe('When mounting RemainingTime component', () => {
+    const wrapper = wrapWithVuetifyAndStore(RemainingTime);
+  
+    it('Should mount', () => {
+      expect(wrapper.vm).toBeTruthy();
+    });
+  });
 
 describe('Given state', () => {
   const localVue = createLocalVue();

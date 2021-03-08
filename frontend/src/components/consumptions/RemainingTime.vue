@@ -20,11 +20,11 @@ import { mapState } from 'vuex';
 export default class RemainingTime extends Vue {
   public robotConsumption!: RobotConsumption;
 
-  get timeInSeconds() {
+  private get timeInSeconds() {
     return this.robotConsumption.batteryRemainingTimeInSeconds;
   }
 
-  get formatedTime() {
+  private get formatedTime() {
     return new Date(this.timeInSeconds * 1000).toISOString().substr(11, 8);
   }
 }

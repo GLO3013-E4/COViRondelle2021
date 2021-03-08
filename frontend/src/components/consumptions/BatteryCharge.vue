@@ -43,13 +43,13 @@ export default class BatteryCharge extends Vue {
   public maximumCharge = 8;
   public trailingDecimals = 3;
 
-  get currentBatteryCharge() {
+  private get currentBatteryCharge() {
     return this.robotConsumption.batteryChargeLeft.toFixed(
       this.trailingDecimals
     );
   }
 
-  get pourcentageBatteryLeft() {
+  private get pourcentageBatteryLeft() {
     return (this.robotConsumption.batteryChargeLeft / this.maximumCharge) * 100;
   }
 }
