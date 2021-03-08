@@ -150,7 +150,7 @@ export default class PlannedTrajectory extends Vue {
   private get startPoint() {
     return this.plannedTrajectory[0];
   }
-    private get destinationPoint() {
+  private get destinationPoint() {
     return this.plannedTrajectory[this.plannedTrajectory.length-1];
   }
 }
