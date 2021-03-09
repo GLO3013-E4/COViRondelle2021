@@ -45,6 +45,8 @@ class PuckDetection:
             hsv_dominant_color = cv2.cvtColor(dominant_color_np, cv2.COLOR_BGR2HSV)
             hsv_color = self.find_hsv_color(hsv_dominant_color[0][0])
 
+            self.show_image(image)
+
             if hsv_color == color:
                 puck_position["center_position"] = (x, y)
                 puck_position["radius"] = radius
@@ -89,3 +91,41 @@ class PuckDetection:
                     <= boundaries["upper"][2]:
                 return color
         return "None"
+
+    def runVideo(self):
+        cap = cv2.VideoCapture("puck_real_time.mp4")
+        cap.set(cv2.CAP_PROP_BUFFERSIZE, 2)
+        while True:
+            ret, frame = cap.read()
+
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            gray = cv2.medianBlur(gray, 5)
+
+            circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 10, param1=50,
+                                       param2=30, minRadius=25,maxRadius=30)
+            detected_circles = np.uint16(np.around(circles))
+
+            for (x, y, radius) in detected_circles[0].astype(np.int32):
+                roi = frame[y - radius: y + radius, x - radius: x + radius]
+                width, height = roi.shape[:2]
+                mask = np.zeros((width, height, 3), roi.dtype)
+                cv2.circle(mask, (int(width / 2), int(height / 2)), radius,
+                           (255, 255, 255), -1)
+                dominant_color = self.get_dominant_color(roi, k=4)
+
+                dominant_color_np = np.uint8([[dominant_color]])
+                hsv_dominant_color = cv2.cvtColor(dominant_color_np, cv2.COLOR_BGR2HSV)
+                hsv_color = self.find_hsv_color(hsv_dominant_color[0][0])
+
+                self.draw_on_image(hsv_color, frame, radius, x, y)
+
+            cv2.imshow("output", frame)
+
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+        cap.release()
+        cv2.destroyAllWindows()
+
+puck_detection = PuckDetection()
+puck_detection.runVideo()
+

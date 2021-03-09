@@ -6,7 +6,6 @@ from scripts.src.detection.acuro_markers.AcuroMarkers import ArucoMarkers
 class ObstacleDetection(ArucoMarkers):
 
     def detect_obstacle(self, image, DEBUG=True):
-        image = self.capture_image_from_path(image)
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
 
@@ -58,8 +57,6 @@ class ObstacleDetection(ArucoMarkers):
                 print("[INFO] ArUco marker ID: {}".format(markerID))
             print(obstacles_position)
 
-            if DEBUG:
-                self.show_image(image)
         return obstacles_position
 
 
@@ -77,3 +74,19 @@ class ObstacleDetection(ArucoMarkers):
                 "bottom_left": (0, 0)
             }})
         return obstacle_position
+
+    def runVideo(self):
+        cap = cv2.VideoCapture("move_obstacles.mp4")
+        while True:
+            ret, frame = cap.read()
+            self.detect_obstacle(frame)
+
+            cv2.imshow("output", frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        cap.release()
+        cv2.destroyAllWindows()
+
+obstacle_detection = ObstacleDetection()
+obstacle_detection.runVideo()

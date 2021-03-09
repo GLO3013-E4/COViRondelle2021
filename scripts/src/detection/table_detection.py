@@ -1,5 +1,7 @@
-import cv2
+import os
 
+import cv2
+import numpy as np
 
 from scripts.src.detection.object_detection import ObjectDetection
 from scripts.src.detection.position import Position
@@ -84,3 +86,40 @@ class TableDetection(ObjectDetection):
 
     def is_in_area(self, area):
         return self.minimum_area < area < self.maximum_area
+
+
+def detect_table(image):
+    script_dir = os.path.dirname(__file__)
+    rel_path = image
+    abs_file_path = os.path.join(script_dir, rel_path)
+    img = cv2.imread(abs_file_path)
+    imgContour = img.copy()
+    imgBlur = cv2.GaussianBlur( img, (7, 7), 0.5 )
+    imgGray = cv2.cvtColor( imgBlur, cv2.COLOR_BGR2GRAY )
+
+    imgCanny = cv2.Canny(imgGray,80,80)
+    kernel = np.ones((5,5))
+    imgDil = cv2.dilate(imgCanny, kernel, iterations=1)
+
+    get_contours(imgDil, imgContour)
+
+    cv2.imshow('square detection', imgContour)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+def get_contours(img, imgContour):
+    contours, _ = cv2.findContours( img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE )
+    four_corners = {}
+    for cnt in contours:
+        area = cv2.contourArea( cnt )
+        if area > 1200745.5:
+            print(area)
+            cv2.drawContours( imgContour, cnt, -1, (255, 255, 0), 2 )
+            peri = cv2.arcLength( cnt, True )
+            approx = cv2.approxPolyDP( cnt, 0.02 * peri, True )
+            x_position, y_position, width, height = cv2.boundingRect(approx)
+
+    return four_corners
+
+detect_table("monde10.jpg")

@@ -6,7 +6,6 @@ from scripts.src.detection.acuro_markers.AcuroMarkers import ArucoMarkers
 class RobotDetection(ArucoMarkers):
 
     def detect_robot(self, image, DEBUG=True):
-        image = self.capture_image_from_path(image)
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
 
@@ -53,8 +52,7 @@ class RobotDetection(ArucoMarkers):
                                 cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (0, 255, 0), 2)
                 print("[INFO] ArUco marker ID: {}".format(markerID))
-            if DEBUG:
-                self.show_image(image)
+
 
         print(robot_position)
         return robot_position
@@ -82,3 +80,20 @@ class RobotDetection(ArucoMarkers):
             "bottom_right": (0, 0),
             "bottom_left": (0, 0)
         }
+
+    def runVideo(self):
+        cap = cv2.VideoCapture("robot.mp4")
+        while True:
+            ret, frame = cap.read()
+            self.detect_robot(frame)
+
+            cv2.imshow("output", frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        cap.release()
+        cv2.destroyAllWindows()
+
+robot_detection = RobotDetection()
+robot_detection.runVideo()
+
