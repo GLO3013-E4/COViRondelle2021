@@ -68,7 +68,7 @@ Further information will be placed here when the project will have started.
 
 ### Code style
 
-When the technology for our frontend will have been decided, its code style and formatting process will be explained here.
+We use [eslint]https://eslint.org/) for our frontend code style. It is checked pre-commit and during CI check. To format code, use `yarn lint <filename>`.
 
 We use [pylint](https://www.pylint.org/) for our backend code style. It is checked pre-commit and during CI check. To format code, use `pylint <filename>`.
 
