@@ -1,24 +1,25 @@
 import RPi.GPIO as GPIO
 import cv2
 import serial
+import numpy as np
 
-from scripts.src.detection.lower_boundary import LowerBoundary
-from scripts.src.detection.upper_boundary import UpperBoundary
-from scripts.src.mapping.color import Color
+from lower_boundary import LowerBoundary
+from upper_boundary import UpperBoundary
+from color import Color
 
 GPIO.setmode(GPIO.BOARD)
 
 GPIO.setup(12, GPIO.OUT)
 servo1 = GPIO.PWM(12, 50)
-GPIO.setup(13, GPIO.OUT)
-servo2 = GPIO.PWM(13, 50)
+GPIO.setup(33, GPIO.OUT)
+servo2 = GPIO.PWM(33, 50)
 
 servo1.start(0)
 servo2.start(0)
 
 cap = cv2.VideoCapture(0)
-CAP_WIDTH = 480
-CAP_HEIGHT = 320
+CAP_WIDTH = 720
+CAP_HEIGHT = 480
 cap.set(3, CAP_WIDTH)
 cap.set(4, CAP_HEIGHT)
 
@@ -58,7 +59,7 @@ def adjust_position_for_x(original, medium, center):
 
 
 def adjust_position_for_y(original, medium, center):
-    if original > 100 or original < 0:
+    if original > 180 or original < 0:
         return original
 
     position = original
@@ -76,8 +77,8 @@ while True:
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     # TODO : Could we receive another color?
-    lower_color = LowerBoundary().get_lower_boundaries(Color.RED)
-    upper_color = UpperBoundary().get_upper_boundaries(Color.RED)
+    lower_color = np.array([161,155,84])
+    upper_color = np.array([179,255,255])
     color_mask = cv2.inRange(hsv_frame, lower_color, upper_color)
     _, contours, _ = cv2.findContours(color_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     contours = sorted(contours, key=contour_area, reverse=True)
@@ -90,16 +91,19 @@ while True:
         break
 
     x_position = adjust_position_for_x(x_position, x_medium, x_center)
-    servo2.ChangeDutyCycle(angle_to_per(x_position))
+    if(x_medium < x_center - MOVEMENT_THRESHOLD or x_medium > x_center + MOVEMENT_THRESHOLD):
+        servo2.ChangeDutyCycle(angle_to_per(x_position))
 
     y_position = adjust_position_for_y(y_position, y_medium, y_center)
-    servo1.ChangeDutyCycle(angle_to_per(y_position))
+    if(y_medium < y_center - MOVEMENT_THRESHOLD or y_medium > y_center + MOVEMENT_THRESHOLD):
+        servo1.ChangeDutyCycle(angle_to_per(y_position))
 
     cv2.line(frame, (x_medium, 0), (x_medium, CAP_WIDTH), (0, 255, 0), 2)
     cv2.line(frame, (0, y_medium), (CAP_WIDTH, y_medium), (0, 255, 0), 2)
     cv2.imshow("Frame", frame)
 
-    serial.write(x_position)
+    #serial.write(x_position)
+    print(x_position)
 
     if cv2.waitKey(1) == ord('a'):
         servo1.stop()
