@@ -11,15 +11,15 @@ GPIO.setmode(GPIO.BOARD)
 
 GPIO.setup(12, GPIO.OUT)
 servo1 = GPIO.PWM(12, 50)
-GPIO.setup(33, GPIO.OUT)
-servo2 = GPIO.PWM(33, 50)
+GPIO.setup(13, GPIO.OUT)
+servo2 = GPIO.PWM(13, 50)
 
 servo1.start(0)
 servo2.start(0)
 
 cap = cv2.VideoCapture(0)
-CAP_WIDTH = 720
-CAP_HEIGHT = 480
+CAP_WIDTH = 480
+CAP_HEIGHT = 320
 cap.set(3, CAP_WIDTH)
 cap.set(4, CAP_HEIGHT)
 
@@ -77,8 +77,8 @@ while True:
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     # TODO : Could we receive another color?
-    lower_color = np.array([161,155,84])
-    upper_color = np.array([179,255,255])
+    lower_color = LowerBoundary().get_lower_boundaries(Color.RED)
+    upper_color = UpperBoundary().get_upper_boundaries(Color.RED)
     color_mask = cv2.inRange(hsv_frame, lower_color, upper_color)
     _, contours, _ = cv2.findContours(color_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     contours = sorted(contours, key=contour_area, reverse=True)
