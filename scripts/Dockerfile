@@ -7,6 +7,8 @@ RUN apt-get update \
         libtesseract-dev \
         libleptonica-dev \
         libzbar0 \
+        libgtk2.0-dev \
+        pkg-config \
     && ldconfig \
     && apt-get install -y --no-install-recommends \
         libsm6 \

@@ -30,7 +30,7 @@ class TrackBarDetection:
             v_min = cv2.getTrackbarPos("Val Min", "TrackBars")
             v_max = cv2.getTrackbarPos("Val Max", "TrackBars")
 
-            print(h_min, h_max, s_min, s_max, v_min, v_max)
+            print(h_min, s_min, v_min, h_max, s_max, v_max)
 
             lower = np.array([h_min, s_min, v_min])
             upper = np.array([h_max, s_max, v_max])

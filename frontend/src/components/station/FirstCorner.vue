@@ -1,7 +1,7 @@
 <template>
   <v-card class="grey lighten-3" height="100%">
     <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
-      <h5 class="white--text">1st corner</h5>
+      <h5 class="white--text">{{ $t('station.firstCorner') }}</h5>
     </v-card-title>
     <v-container height="100%">
       <v-row align="center">
@@ -33,7 +33,7 @@ import { Color } from '@/types/color';
     ...mapState(['puckFirstCorner', 'puckColors']),
   },
 })
-export default class ControlPanel extends Vue {
+export default class FirstCorner extends Vue {
   private puckFirstCorner!: Corner;
   private puckColors!: Array<Color>;
 
