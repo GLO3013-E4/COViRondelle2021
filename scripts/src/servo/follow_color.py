@@ -3,9 +3,9 @@ import cv2
 import serial
 import numpy as np
 
-from lower_boundary import LowerBoundary
-from upper_boundary import UpperBoundary
-from color import Color
+from scripts.src.detection.lower_boundary import LowerBoundary
+from scripts.src.detection.upper_boundary import UpperBoundary
+from scripts.src.mapping.color import Color
 
 GPIO.setmode(GPIO.BOARD)
 

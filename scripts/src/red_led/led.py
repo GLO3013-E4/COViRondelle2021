@@ -9,7 +9,7 @@ LED = 15
 GPIO.setup(LED, GPIO.OUT)
 
 state = GPIO.input(LED)
-while(True):
+while True:
     GPIO.output(LED, GPIO.HIGH)
     time.sleep(3)
     GPIO.output(LED, GPIO.LOW)
