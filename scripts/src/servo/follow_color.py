@@ -1,7 +1,5 @@
 import RPi.GPIO as GPIO
 import cv2
-import serial
-import numpy as np
 
 from scripts.src.detection.lower_boundary import LowerBoundary
 from scripts.src.detection.upper_boundary import UpperBoundary
