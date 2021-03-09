@@ -1,7 +1,8 @@
 import cv2
 import glob
 import numpy as np
-import CameraCalibration
+from CameraCalibration import CameraCalibration
+from camera_calibration_repository import CameraCalibrationRepository
 
 # termination criteria
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
@@ -17,7 +18,7 @@ class CameraCalibrator:
         self.__termination_criteria = termination_criteria
         self.__known_board_positions = self.__create_known_board_positions()
 
-    def calibrate_camera(self, calibration_images_path) -> CameraCalibration:
+    def calibrate_camera(self, calibration_images_path):
         image_space_chessboards_corners = self.get_image_space_chessboards_corners(calibration_images_path)
         all_known_board_positions = [self.__known_board_positions for i in range(len(image_space_chessboards_corners))]
         image_size = cv2.imread(glob.glob(calibration_images_path)[0]).shape[1::-1]
@@ -67,7 +68,7 @@ class CameraCalibrator:
 
         return total_error / len(object_points)
 
-    def get_image_space_chessboards_corners(self, calibration_images_path, show_images=False):
+    def get_image_space_chessboards_corners(self, calibration_images_path, show_images=True):
         image_space_chessboards_corners = []
         filenames = glob.glob(calibration_images_path)
 
@@ -75,18 +76,27 @@ class CameraCalibrator:
             image = cv2.imread(filename)
             grayscaled_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-            corners_founded, corners = cv2.findChessboardCorners(grayscaled_image, (self.__n_chessboard_rows, self.__n_chessboard_columns), None)
+            corners_founded, corners = cv2.findChessboardCorners(grayscaled_image, (self.__n_chessboard_rows,
+                                                                                    self.__n_chessboard_columns), None)
 
             if corners_founded:
-                corners_with_better_accuracy = cv2.cornerSubPix(grayscaled_image, corners, (11, 11), (-1, -1), self.__termination_criteria)
+                corners_with_better_accuracy = cv2.cornerSubPix(grayscaled_image, corners, (11, 11), (-1, -1),
+                                                                self.__termination_criteria)
                 image_space_chessboards_corners.append(corners_with_better_accuracy)
-
                 if show_images:
                     self.draw_chessboard_corners(image, corners_with_better_accuracy)
 
         return image_space_chessboards_corners
 
     def draw_chessboard_corners(self, chessboard_image, chessboard_corners):
-        image = cv2.drawChessboardCorners(chessboard_image, (self.__n_chessboard_rows, self.__n_chessboard_columns), chessboard_corners, True)
+        image = cv2.drawChessboardCorners(chessboard_image, (self.__n_chessboard_rows, self.__n_chessboard_columns),
+                                          chessboard_corners, True)
         cv2.imshow('Chessboard corners', image)
-        cv2.waitKey(5000)
+        cv2.waitKey(50000)
+
+#   Remove this to create a new table.json
+# if __name__ == '__main__':
+#     calibration = CameraCalibrator(7, 6, 3)
+#     # calibration.calibrate_camera('../../data/calibrations/*.jpg')
+#     save = CameraCalibrationRepository()
+#     save.save_calibration(calibration.calibrate_camera('../../data/calibrations/*.jpg'), 1)
