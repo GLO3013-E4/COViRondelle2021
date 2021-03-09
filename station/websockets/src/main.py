@@ -87,7 +87,6 @@ def websockets():
 
     @socket.on('start_cycle')
     def handle_start_cycle(_):
-        # TODO : Remove print
         start_cycle_publisher.publish(True)
 
     is_running = False
