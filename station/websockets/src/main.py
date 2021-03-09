@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import json
 import rospy
+import threading
 from flask import Flask
 from flask_socketio import SocketIO
 from std_msgs.msg import Bool, Float32, String
@@ -18,7 +19,7 @@ def to_json(data):
 
 def handle_ready(_):
     # TODO : Make sure this works once cycle_ready is implemented
-    socket.send("cycle_ready")
+    socket.emit("cycle_ready")
 
 
 def handle_world_camera_image_raw(image):
@@ -71,7 +72,7 @@ def handle_end(_):
 def websockets():
     start_cycle_publisher = rospy.Publisher("start_cycle", Bool, queue_size=10)
     rospy.init_node("websockets", anonymous=True)
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(1)
 
     rospy.Subscriber("ready", Bool, handle_ready)
     rospy.Subscriber("world_camera/image_raw", Image, handle_world_camera_image_raw)
@@ -88,13 +89,17 @@ def websockets():
         print('Station: Received start cycle!')
         start_cycle_publisher.publish(True)
 
-    # TODO : Remove print and sending to socket
-    print('Station: Sending cycle ready!')
-    socket.send("cycle_ready")
-
-    socket.run(app)
+    is_running = False
 
     while not rospy.is_shutdown():
+        if not is_running:
+            is_running = True
+            threading.Thread(target=lambda: socket.run(app, host='0.0.0.0', port=4000)).start()
+
+        # TODO : Remove print and sending to socket
+        print('Station: Sending cycle ready!')
+        socket.emit("cycle_ready")
+
         rate.sleep()
 
 

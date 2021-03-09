@@ -30,6 +30,8 @@ services:
       - ./station:/root/catkin_ws/src
     links:
       - robot
+    ports:
+      - 4000:4000
     tty: true
     networks:
       ros:
@@ -50,4 +52,7 @@ services:
     volumes:
       - ./frontend:/usr/src/app
     tty: true
+    networks:
+      ros:
+        ipv4_address: 172.18.1.6
     stdin_open: true
