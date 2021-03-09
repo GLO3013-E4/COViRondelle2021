@@ -23,25 +23,26 @@ def handle_ready(_):
 
 
 def handle_world_camera_image_raw(image):
+    # TODO : Only send one
     # TODO : Make sure this works once world_camera/image_row is implemented (most likely not this way)
     json_data = to_json({"tableImage": image})
     socket.emit("table_image", json_data)
 
 
-def handle_robot(coordinate):
+def handle_robot(pose):
     # TODO : Make sure this works once robot (coordinate) is implemented (most likely not this way)
-    json_data = to_json({"realTrajectoryCoordinate": {"x": coordinate.x, "y": coordinate.y}})
+    json_data = to_json({"realTrajectoryCoordinate": {"x": pose.position.x, "y": pose.position.y}})
     socket.emit("real_trajectory_coordinate", json_data)
 
 
 def handle_path(path):
     # TODO : Make sure this works once path is implemented (most likely not this way)
-    coordinates = []
+    poses = []
 
-    for coordinate in path.coordinates:
-        coordinates.append({"x": coordinate.x, "y": coordinate.y})
+    for pose in path.poses:
+        poses.append({"x": pose.position.x, "y": pose.position.y})
 
-    json_data = to_json({"plannedTrajectoryCoordinates": coordinates})
+    json_data = to_json({"plannedTrajectoryCoordinates": poses})
     socket.emit("planned_trajectory_coordinates", json_data)
 
 
@@ -77,6 +78,7 @@ def websockets():
     rospy.Subscriber("ready", Bool, handle_ready)
     rospy.Subscriber("world_camera/image_raw", Image, handle_world_camera_image_raw)
     rospy.Subscriber("robot", Pose, handle_robot)
+    rospy.Subscriber("mock_robot", Pose, handle_robot)  # TODO : Remove this
     rospy.Subscriber("path", Path, handle_path)
     rospy.Subscriber("resistance", Float32, handle_resistance)
     rospy.Subscriber("puck_colors", String, handle_puck_colors)

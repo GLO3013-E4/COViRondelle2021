@@ -65,6 +65,7 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [SOCKET_REAL_TRAJECTORY_COORDINATE](state: State, message: Message) {
     // TODO : Implement get real trajectory coordinate from state in associated component
+    console.log(message);
     if (message.realTrajectoryCoordinate)
       state.realTrajectory.push(message.realTrajectoryCoordinate);
   },
