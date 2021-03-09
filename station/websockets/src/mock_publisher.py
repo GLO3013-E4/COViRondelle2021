@@ -1,5 +1,5 @@
 import rospy
-from geometry_msgs.msg import Pose, PoseArray
+from geometry_msgs.msg import Pose
 
 
 def create_robot_pose():
@@ -9,6 +9,7 @@ def create_robot_pose():
     return pose
 
 
+# TODO : Remove this mock (and usage)
 if __name__ == '__main__':
 
     robot_publisher = rospy.Publisher('robot', Pose, queue_size=10)

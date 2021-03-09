@@ -46,6 +46,7 @@ def create_goal_pose():
     return pose
 
 
+# TODO : Remove this mock (and usage)
 if __name__ == '__main__':
 
     robot_publisher = rospy.Publisher('robot', Pose, queue_size=10)

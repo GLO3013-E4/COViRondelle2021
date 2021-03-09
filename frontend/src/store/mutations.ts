@@ -19,62 +19,65 @@ import { Step } from '@/types/step';
 export type Mutations<S = State> = {
   [START_CYCLE](state: S): void;
   [SOCKET_CYCLE_READY](state: S): void;
-  [SOCKET_ROBOT_CONSUMPTION](state: S, message: Message): void;
-  [SOCKET_TABLE_IMAGE](state: S, message: Message): void;
-  [SOCKET_RESISTANCE](state: S, message: Message): void;
-  [SOCKET_PUCK_COLORS](state: S, message: Message): void;
-  [SOCKET_PUCK_FIRST_CORNER](state: S, message: Message): void;
-  [SOCKET_PLANNED_TRAJECTORY_COORDINATES](state: S, message: Message): void;
-  [SOCKET_REAL_TRAJECTORY_COORDINATE](state: S, message: Message): void;
-  [SOCKET_GRIP_STATE](state: S, message: Message): void;
-  [SOCKET_CURRENT_STEP](state: S, message: Message): void;
+  [SOCKET_ROBOT_CONSUMPTION](state: S, data: string): void;
+  [SOCKET_TABLE_IMAGE](state: S, data: string): void;
+  [SOCKET_RESISTANCE](state: S, data: string): void;
+  [SOCKET_PUCK_COLORS](state: S, data: string): void;
+  [SOCKET_PUCK_FIRST_CORNER](state: S, data: string): void;
+  [SOCKET_PLANNED_TRAJECTORY_COORDINATES](state: S, data: string): void;
+  [SOCKET_REAL_TRAJECTORY_COORDINATE](state: S, data: string): void;
+  [SOCKET_GRIP_STATE](state: S, data: string): void;
+  [SOCKET_CURRENT_STEP](state: S, data: string): void;
 };
+
+const toMessage = (data: string): Message => JSON.parse(data);
 
 export const mutations: MutationTree<State> & Mutations = {
   [START_CYCLE](state: State) {
     state.currentStep = Step.CycleStarted;
   },
   [SOCKET_CYCLE_READY](state: State) {
-    // TODO : Implement get cycle ready from state in associated component
-    console.log('Frontend : Received cycle ready!'); // TODO : Remove console log
     state.cycleReady = true;
   },
-  [SOCKET_ROBOT_CONSUMPTION](state: State, message: Message) {
-    // TODO : Implement get robot consumption from state in associated component
+  [SOCKET_ROBOT_CONSUMPTION](state: State, data: string) {
+    const message = toMessage(data);
     state.robotConsumption =
       message.robotConsumption || defaultState.robotConsumption;
   },
-  [SOCKET_TABLE_IMAGE](state: State, message: Message) {
-    // TODO : Implement get table image from state in associated component
+  [SOCKET_TABLE_IMAGE](state: State, data: string) {
+    const message = toMessage(data);
     state.tableImage = message.tableImage || defaultState.tableImage;
   },
-  [SOCKET_RESISTANCE](state: State, message: Message) {
+  [SOCKET_RESISTANCE](state: State, data: string) {
+    const message = toMessage(data);
     state.resistance = message.resistance || defaultState.resistance;
   },
-  [SOCKET_PUCK_COLORS](state: State, message: Message) {
+  [SOCKET_PUCK_COLORS](state: State, data: string) {
+    const message = toMessage(data);
     state.puckColors = message.puckColors || defaultState.puckColors;
   },
-  [SOCKET_PUCK_FIRST_CORNER](state: State, message: Message) {
+  [SOCKET_PUCK_FIRST_CORNER](state: State, data: string) {
+    const message = toMessage(data);
+
     state.puckFirstCorner =
       message.puckFirstCorner || defaultState.puckFirstCorner;
   },
-  [SOCKET_PLANNED_TRAJECTORY_COORDINATES](state: State, message: Message) {
-    // TODO : Implement get planned trajectory coordinate from state in associated component
+  [SOCKET_PLANNED_TRAJECTORY_COORDINATES](state: State, data: string) {
+    const message = toMessage(data);
     if (message.plannedTrajectoryCoordinates)
       state.plannedTrajectory.push(...message.plannedTrajectoryCoordinates);
   },
-  [SOCKET_REAL_TRAJECTORY_COORDINATE](state: State, message: Message) {
-    // TODO : Implement get real trajectory coordinate from state in associated component
-    console.log(message);
+  [SOCKET_REAL_TRAJECTORY_COORDINATE](state: State, data: string) {
+    const message = toMessage(data);
     if (message.realTrajectoryCoordinate)
       state.realTrajectory.push(message.realTrajectoryCoordinate);
   },
-  [SOCKET_GRIP_STATE](state: State, message: Message) {
-    // TODO : Implement get puck grip state from state in associated component
+  [SOCKET_GRIP_STATE](state: State, data: string) {
+    const message = toMessage(data);
     state.puckInGrip = message.puckInGrip || defaultState.puckInGrip;
   },
-  [SOCKET_CURRENT_STEP](state: State, message: Message) {
-    // TODO : Implement get current step from state in associated component
+  [SOCKET_CURRENT_STEP](state: State, data: string) {
+    const message = toMessage(data);
     state.currentStep = message.currentStep || defaultState.currentStep;
   },
 };
