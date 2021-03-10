@@ -1,8 +1,8 @@
-import cv2
 import glob
+import cv2
 import numpy as np
 from CameraCalibration import CameraCalibration
-from camera_calibration_repository import CameraCalibrationRepository
+# from camera_calibration_repository import CameraCalibrationRepository Remove this to generate table
 
 # termination criteria
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
@@ -52,7 +52,8 @@ class CameraCalibrator:
         ], dtype=np.float32) * self.__chessboard_square_length
         return board_positions
 
-    def __calculate_error(self, object_points, image_points, rotation_vectors, translation_vectors, camera_matrix, distortion_coefficients):
+    def __calculate_error(self, object_points, image_points, rotation_vectors, translation_vectors, camera_matrix,
+                          distortion_coefficients):
         total_error = 0
 
         for i in range(len(object_points)):
