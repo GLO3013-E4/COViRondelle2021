@@ -2,7 +2,8 @@ import glob
 import cv2
 import numpy as np
 from CameraCalibration import CameraCalibration
-# from camera_calibration_repository import CameraCalibrationRepository Remove this to generate table
+
+# from camera_calibration_repository import CameraCalibrationRepository
 
 # termination criteria
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
@@ -19,8 +20,10 @@ class CameraCalibrator:
         self.__known_board_positions = self.__create_known_board_positions()
 
     def calibrate_camera(self, calibration_images_path):
-        image_space_chessboards_corners = self.get_image_space_chessboards_corners(calibration_images_path)
-        all_known_board_positions = [self.__known_board_positions for i in range(len(image_space_chessboards_corners))]
+        image_space_chessboards_corners = \
+            self.get_image_space_chessboards_corners(calibration_images_path)
+        all_known_board_positions = \
+            [self.__known_board_positions for i in range(len(image_space_chessboards_corners))]
         image_size = cv2.imread(glob.glob(calibration_images_path)[0]).shape[1::-1]
         # (corners_founded), camera_matrix, distortion_coefficients, (rotation_vectors, translation_vectors)
         camera_matrix, distortion_coefficients, rotation_vectors, translation_vectors = cv2.calibrateCamera(
@@ -48,11 +51,13 @@ class CameraCalibrator:
     def __create_known_board_positions(self):
         # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(ROWS-1,COLUMNS-1,0)
         board_positions = np.array([
-            [i, j, 0] for j in range(self.__n_chessboard_columns) for i in range(self.__n_chessboard_rows)
+            [i, j, 0] for j in range(self.__n_chessboard_columns)
+            for i in range(self.__n_chessboard_rows)
         ], dtype=np.float32) * self.__chessboard_square_length
         return board_positions
 
-    def __calculate_error(self, object_points, image_points, rotation_vectors, translation_vectors, camera_matrix,
+    def __calculate_error(self, object_points, image_points, rotation_vectors,
+                          translation_vectors, camera_matrix,
                           distortion_coefficients):
         total_error = 0
 
@@ -77,12 +82,14 @@ class CameraCalibrator:
             image = cv2.imread(filename)
             grayscaled_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-            corners_founded, corners = cv2.findChessboardCorners(grayscaled_image, (self.__n_chessboard_rows,
-                                                                                    self.__n_chessboard_columns), None)
+            corners_founded, corners = \
+                cv2.findChessboardCorners(grayscaled_image, (self.__n_chessboard_rows,
+                                                             self.__n_chessboard_columns), None)
 
             if corners_founded:
-                corners_with_better_accuracy = cv2.cornerSubPix(grayscaled_image, corners, (11, 11), (-1, -1),
-                                                                self.__termination_criteria)
+                corners_with_better_accuracy = \
+                    cv2.cornerSubPix(grayscaled_image, corners, (11, 11), (-1, -1),
+                                     self.__termination_criteria)
                 image_space_chessboards_corners.append(corners_with_better_accuracy)
                 if show_images:
                     self.draw_chessboard_corners(image, corners_with_better_accuracy)
@@ -90,17 +97,18 @@ class CameraCalibrator:
         return image_space_chessboards_corners
 
     def draw_chessboard_corners(self, chessboard_image, chessboard_corners):
-        image = cv2.drawChessboardCorners(chessboard_image, (self.__n_chessboard_rows, self.__n_chessboard_columns),
+        image = cv2.drawChessboardCorners(chessboard_image,
+                                          (self.__n_chessboard_rows, self.__n_chessboard_columns),
                                           chessboard_corners, True)
         cv2.imshow('Chessboard corners', image)
         cv2.waitKey(50000)
 
-#   Remove this to create a new table.json
+  # Remove this to create a new table.json
 # if __name__ == '__main__':
 #     calibration = CameraCalibrator(7, 6, 3)
 #     # calibration.calibrate_camera('../../data/calibrations/*.jpg')
 #     save = CameraCalibrationRepository()
-#     save.save_calibration(calibration.calibrate_camera('../../data/calibrations/*.jpg'), 1)
+#     save.save_calibration(calibration.calibrate_camera('../../data/calibrations/*.jpg'), 2)
 
 
 # This code calibrate the camera and return a new image (idk if we keeping this)
@@ -129,7 +137,8 @@ class CameraCalibrator:
 #             cv.imshow('img', img)
 #             cv.waitKey(9000)
 #     cv.destroyAllWindows()
-#     ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
+#     ret, mtx, dist, rvecs, tvecs = \
+#         cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 #     img = cv.imread('calibration/calibration.jpg')
 #     h, w = img.shape[:2]
 #     newcameramtx, roi = cv.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h))
