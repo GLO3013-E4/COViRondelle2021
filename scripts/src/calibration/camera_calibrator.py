@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from CameraCalibration import CameraCalibration
 
-# from camera_calibration_repository import CameraCalibrationRepository
+from camera_calibration_repository import CameraCalibrationRepository
 
 # termination criteria
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
@@ -25,8 +25,10 @@ class CameraCalibrator:
         all_known_board_positions = \
             [self.__known_board_positions for i in range(len(image_space_chessboards_corners))]
         image_size = cv2.imread(glob.glob(calibration_images_path)[0]).shape[1::-1]
-        # (corners_founded), camera_matrix, distortion_coefficients, (rotation_vectors, translation_vectors)
-        camera_matrix, distortion_coefficients, rotation_vectors, translation_vectors = cv2.calibrateCamera(
+        # (corners_founded), camera_matrix, distortion_coefficients,
+        # (rotation_vectors, translation_vectors)
+        camera_matrix, distortion_coefficients, \
+        rotation_vectors, translation_vectors = cv2.calibrateCamera(
             all_known_board_positions, image_space_chessboards_corners, image_size, None, None
         )[1:]
 
@@ -61,7 +63,7 @@ class CameraCalibrator:
                           distortion_coefficients):
         total_error = 0
 
-        for i in range(len(object_points)):
+        for i, n in enumerate(object_points):
             image_points_2, _ = cv2.projectPoints(
                 object_points[i],
                 rotation_vectors[i],
@@ -103,12 +105,12 @@ class CameraCalibrator:
         cv2.imshow('Chessboard corners', image)
         cv2.waitKey(50000)
 
-  # Remove this to create a new table.json
-# if __name__ == '__main__':
-#     calibration = CameraCalibrator(7, 6, 3)
-#     # calibration.calibrate_camera('../../data/calibrations/*.jpg')
-#     save = CameraCalibrationRepository()
-#     save.save_calibration(calibration.calibrate_camera('../../data/calibrations/*.jpg'), 2)
+# Remove this to create a new table.json
+if __name__ == '__main__':
+    calibration = CameraCalibrator(7, 6, 3)
+    # calibration.calibrate_camera('../../data/calibrations/*.jpg')
+    save = CameraCalibrationRepository()
+    save.save_calibration(calibration.calibrate_camera('../../data/calibrations/*.jpg'), 2)
 
 
 # This code calibrate the camera and return a new image (idk if we keeping this)
