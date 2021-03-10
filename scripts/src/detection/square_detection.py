@@ -11,18 +11,18 @@ class SquareDetection():
         script_dir = os.path.dirname(__file__)
         rel_path = image
         abs_file_path = os.path.join(script_dir, rel_path)
-        img = cv2.imread(abs_file_path)
-        imgContour = img.copy()
-        imgBlur = cv2.GaussianBlur( img, (7, 7), 1 )
-        imgGray = cv2.cvtColor( imgBlur, cv2.COLOR_BGR2GRAY )
+        image = cv2.imread(abs_file_path)
+        image_copy = image.copy()
+        image_blur = cv2.GaussianBlur( image, (7, 7), 1 )
+        image_gray = cv2.cvtColor( image_blur, cv2.COLOR_BGR2GRAY )
 
-        imgCanny = cv2.Canny(imgGray, 90, 90)
+        image_canny = cv2.Canny(image_gray, 90, 90)
         kernel = np.ones((5,5))
-        imgDil = cv2.dilate( imgCanny, kernel, iterations=1)
-
-        square_corners = self.get_contours(imgDil, imgContour)
+        image_dilate = cv2.dilate( image_canny, kernel, iterations=1)
+        square_corners = self.get_contours(image_dilate, image_copy)
         if Debug:
-            self.show_image(imgContour)
+            self.show_image(image_copy)
+
         return square_corners
 
 
@@ -47,6 +47,9 @@ class SquareDetection():
         return four_corners
 
     def get_contours(self, img, imgContour):
+        if img is None:
+            return self.generate_four_corners(0, 0, 0, 0)
+
         contours, _ = cv2.findContours( img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE )
         four_corners = {}
         for cnt in contours:
@@ -59,5 +62,3 @@ class SquareDetection():
                 four_corners = self.generate_four_corners(x_position, y_position, width, height)
                 break
         return four_corners
-
-
