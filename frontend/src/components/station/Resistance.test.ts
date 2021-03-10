@@ -1,8 +1,7 @@
 import Resistance from '@/components/station/Resistance.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex';
 import { Color } from '@/types/color';
+import { State } from '@/store/state';
 
 describe('When mounting Resistance component', () => {
   const wrapper = wrapWithVuetifyAndStore(Resistance);
@@ -13,18 +12,13 @@ describe('When mounting Resistance component', () => {
 });
 
 describe('Given state', () => {
-  const localVue = createLocalVue();
-  localVue.use(Vuex);
-
-  const store = new Vuex.Store({
-    state: {
-      resistance: 100000,
-      puckColors: [Color.Red, Color.Blue, Color.Yellow],
-    },
-  });
+  const state = {
+    resistance: 100000,
+    puckColors: [Color.Red, Color.Blue, Color.Yellow],
+  } as State;
 
   describe('When mounting Resistance', () => {
-    const wrapper = shallowMount(Resistance, { store, localVue });
+    const wrapper = wrapWithVuetifyAndStore(Resistance, state);
 
     it('Should contains the right resistanceValue', () => {
       const resistanceValue = wrapper.findComponent({ ref: 'resistanceValue' });
@@ -50,7 +44,7 @@ describe('Given no state', () => {
       const resistanceValue = wrapper.findComponent({ ref: 'resistanceValue' });
 
       expect(resistanceValue.exists()).toBe(true);
-      expect(resistanceValue.text()).toBe('0 Ω');
+      expect(resistanceValue.text()).toBe('Ω');
     });
 
     it('Should not contain pucks', () => {

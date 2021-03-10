@@ -1,16 +1,7 @@
 import Chronometer from '@/components/cycles/Chronometer.vue';
 import { Step } from '@/types/step';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex';
-
-const mockStore = (cycleReady: boolean, currentStep: Step) =>
-  new Vuex.Store({
-    state: {
-      cycleReady,
-      currentStep,
-    },
-  });
+import { State } from '@/store/state';
 
 describe('When mounting Chronometer component', () => {
   const wrapper = wrapWithVuetifyAndStore(Chronometer);
@@ -21,13 +12,13 @@ describe('When mounting Chronometer component', () => {
 });
 
 describe('Given no puck released yet', () => {
-  const localVue = createLocalVue();
-  localVue.use(Vuex);
-
-  const store = mockStore(true, Step.CycleNotStarted);
+  const state = {
+    cycleReady: true,
+    currentStep: Step.CycleNotStarted,
+  } as State;
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = shallowMount(Chronometer, { store, localVue });
+    const wrapper = wrapWithVuetifyAndStore(Chronometer, state);
 
     it('Should have button and time', () => {
       const button = wrapper.findAllComponents({ ref: 'button' });

@@ -1,7 +1,7 @@
 <template>
   <v-card class="grey lighten-3">
     <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
-      <h5 class="white--text">Grip state</h5>
+      <h5 class="white--text">{{ $t('station.gripState') }}</h5>
     </v-card-title>
     <div
       ref="gripState"
@@ -10,7 +10,7 @@
     >
       <v-chip :color="puckInGrip ? 'green' : 'red'">
         <h3 class="white--text">
-          {{ puckInGrip ? 'puck in grip' : 'no puck' }}
+          {{ puckInGrip ? $t('station.puckInGrip') : $t('station.noPuck') }}
         </h3></v-chip
       >
     </div>
@@ -25,14 +25,14 @@ import { mapState } from 'vuex';
     ...mapState(['puckInGrip']),
   },
 })
-export default class PuckInGrip extends Vue {
+export default class GripState extends Vue {
   public puckInGrip!: boolean;
 }
 </script>
 
 <style scoped>
 .v-card__title {
-  padding: 0px;
+  padding: 0;
 }
 #divChip {
   padding: 0.3em;

@@ -1,15 +1,6 @@
 import BatteryCharge from '@/components/consumptions/BatteryCharge.vue';
-import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
-
-describe('When mounting BatteryCharge component', () => {
-    const wrapper = wrapWithVuetifyAndStore(BatteryCharge);
-  
-    it('Should mount', () => {
-      expect(wrapper.vm).toBeTruthy();
-    });
-  });
 
 describe('Given state', () => {
   const localVue = createLocalVue();

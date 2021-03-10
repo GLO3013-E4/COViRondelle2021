@@ -4,7 +4,7 @@
       <v-row>
         <v-col sm="12">
           <v-card class="d-flex justify-center">
-            <h3>Consumption Informations</h3>
+            <h3>{{ $t('consumptions.consumptionInformation') }}</h3>
           </v-card>
         </v-col>
       </v-row>
