@@ -7,12 +7,9 @@ from scripts.src.detection.position import Position
 
 class SquareDetection():
 
-    def __init__(self, image):
-        self.image = image
-
-    def detect_square(self, Debug=True):
+    def detect_square(self, image, Debug=True):
         script_dir = os.path.dirname(__file__)
-        rel_path = self.image
+        rel_path = image
         abs_file_path = os.path.join(script_dir, rel_path)
         img = cv2.imread(abs_file_path)
         imgContour = img.copy()
@@ -53,13 +50,14 @@ class SquareDetection():
         contours, _ = cv2.findContours( img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE )
         four_corners = {}
         for cnt in contours:
-            area = cv2.contourArea( cnt )
+            area = cv2.contourArea(cnt)
             if area > 200000:
-                cv2.drawContours( imgContour, cnt, -1, (255, 255, 0), 2 )
-                peri = cv2.arcLength( cnt, True )
-                approx = cv2.approxPolyDP( cnt, 0.02 * peri, True )
+                cv2.drawContours(imgContour, cnt, -1, (255, 255, 0), 2)
+                peri = cv2.arcLength(cnt, True)
+                approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
                 x_position, y_position, width, height = cv2.boundingRect(approx)
                 four_corners = self.generate_four_corners(x_position, y_position, width, height)
                 break
         return four_corners
+
 
