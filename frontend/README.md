@@ -21,6 +21,10 @@ yarn install
 
 ## Usage
 
+### Set station URL for websockets messages
+
+`.env` contains the URL of station (python app). This can be changed before running the frontend's app with any URL or IP address.
+
 ### Execute app
 
 Run the following commands in this directory.
