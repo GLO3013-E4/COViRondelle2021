@@ -1,8 +1,9 @@
 import rospy
-from controller.src.handlers.handler import Handler
 from std_msgs.msg import Bool
+from controller.src.handlers.handler import Handler
 
 
+# TODO : Test this handler
 class WaitForFrontendCycleStartHandler(Handler):
     is_finished = False
 
@@ -10,6 +11,9 @@ class WaitForFrontendCycleStartHandler(Handler):
         self.is_finished = start
 
     def handle(self, handled_data=None):
-        rospy.Subscriber("start", Bool, self.handle_start)
+        self.start_subscriber = rospy.Subscriber("start", Bool, self.handle_start)
 
         return handled_data, self.is_finished
+
+    def unregister(self):
+        self.start_subscriber.unregister()
