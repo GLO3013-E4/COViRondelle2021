@@ -84,9 +84,6 @@ def websockets():
     rospy.Subscriber("puck_corners", String, handle_puck_corners)
     rospy.Subscriber("end", Bool, handle_end)
 
-    # TODO : Remove mock subscribers
-    rospy.Subscriber("mock_robot", Pose, handle_robot)
-
     @socket.on('start_cycle')
     def handle_start_cycle(_):
         start_cycle_publisher.publish(True)

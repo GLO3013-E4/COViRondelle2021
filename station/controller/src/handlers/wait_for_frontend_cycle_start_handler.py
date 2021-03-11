@@ -3,7 +3,7 @@ from std_msgs.msg import Bool
 from controller.src.handlers.handler import Handler
 
 
-# TODO : Test this handler
+# TODO : Test this handler (how do we mock rospy?)
 class WaitForFrontendCycleStartHandler(Handler):
     is_finished = False
 

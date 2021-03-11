@@ -9,9 +9,9 @@ def create_robot_pose():
     return pose
 
 
-# TODO : Remove this mock (and usage)
+# TODO : Remove this mock
 if __name__ == '__main__':
-    robot_publisher = rospy.Publisher('mock_robot', Pose, queue_size=10)
+    robot_publisher = rospy.Publisher('robot', Pose, queue_size=10)
 
     rospy.init_node('mock_robot', anonymous=True)
     rate = rospy.Rate(1)
