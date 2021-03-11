@@ -78,12 +78,14 @@ def websockets():
     rospy.Subscriber("ready", Bool, handle_ready)
     rospy.Subscriber("world_camera/image_raw", Image, handle_world_camera_image_raw)
     rospy.Subscriber("robot", Pose, handle_robot)
-    rospy.Subscriber("mock_robot", Pose, handle_robot)  # TODO : Remove this, it's to test
     rospy.Subscriber("path", Path, handle_path)
     rospy.Subscriber("resistance", Float32, handle_resistance)
     rospy.Subscriber("puck_colors", String, handle_puck_colors)
     rospy.Subscriber("puck_corners", String, handle_puck_corners)
     rospy.Subscriber("end", Bool, handle_end)
+
+    # TODO : Remove mock subscribers
+    rospy.Subscriber("mock_robot", Pose, handle_robot)
 
     @socket.on('start_cycle')
     def handle_start_cycle(_):

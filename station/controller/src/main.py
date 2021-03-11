@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import rospy
 from controller.src.commands.command_builder import CommandBuilder
 from controller.src.commands.chain_of_commands_factory import ChainOfCommandsFactory
 
