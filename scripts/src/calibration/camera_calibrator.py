@@ -3,7 +3,6 @@ import cv2
 import numpy as np
 from CameraCalibration import CameraCalibration
 
-# from camera_calibration_repository import CameraCalibrationRepository
 
 # termination criteria
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
@@ -104,10 +103,3 @@ class CameraCalibrator:
                                           chessboard_corners, True)
         cv2.imshow('Chessboard corners', image)
         cv2.waitKey(50000)
-
-# Remove this to create a new table.json
-# if __name__ == '__main__':
-#     calibration = CameraCalibrator(7, 6, 3)
-#     # calibration.calibrate_camera('../../data/calibrations/*.jpg')
-#     save = CameraCalibrationRepository()
-#     save.save_calibration(calibration.calibrate_camera('../../data/calibrations/*.jpg'), 2)
