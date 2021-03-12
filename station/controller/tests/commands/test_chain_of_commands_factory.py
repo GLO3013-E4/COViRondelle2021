@@ -1,8 +1,8 @@
-from controller.src.commands.step import Step
-from controller.src.commands.cycle_steps import cycle_steps
-from controller.src.commands.command import Command
-from controller.src.commands.command_builder import CommandBuilder
-from controller.src.commands.chain_of_commands_factory import ChainOfCommandsFactory
+from commands.step import Step
+from commands.cycle_steps import cycle_steps
+from commands.command import Command
+from commands.command_builder import CommandBuilder
+from commands.chain_of_commands_factory import ChainOfCommandsFactory
 
 sent_steps = [Step.GRIP_PUCK]
 command_for_sent_steps = Command([])

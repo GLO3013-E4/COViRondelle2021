@@ -1,7 +1,7 @@
 from unittest.mock import call
 
-from controller.src.commands.command import Command
-from controller.src.handlers.handler import Handler
+from commands.command import Command
+from handlers.handler import Handler
 
 ONCE_HANDLED_DATA = 'ONCE_HANDLED_DATA'
 
