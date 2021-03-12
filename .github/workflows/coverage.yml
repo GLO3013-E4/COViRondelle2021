@@ -3,10 +3,10 @@ name: Coverage
 on:
   workflow_run:
     workflows:
-      - Scripts CI
-      - Robot CI
-      - Station CI
-      - Frontend CI
+      - "Scripts CI"
+      - "Robot CI"
+      - "Station CI"
+      - "Frontend CI"
     types:
       - completed
     branches:
