@@ -1,16 +1,8 @@
-from scripts.src.mapping.letter import Letter
-
-
 class Corner:
-    def __init__(self, letter):
-        self.next_letter = {
-            Letter.A: Letter.B,
-            Letter.B: Letter.C,
-            Letter.C: Letter.D,
-            Letter.D: Letter.A
-        }
-
+    def __init__(self, letter, position):
         self.letter = letter
+        self.position = position
+        self.color = None
 
-    def get_next(self):
-        return self.next_letter[self.letter]
+    def set_color(self, color):
+        self.color = color
