@@ -4,7 +4,7 @@ from std_msgs.msg import Bool
 
 # TODO : Remove this mock
 if __name__ == '__main__':
-    start_publisher = rospy.Publisher('start', Bool, queue_size=10)
+    start_publisher = rospy.Publisher('start_cycle', Bool, queue_size=10)
 
     rospy.init_node('mock_start', anonymous=True)
     rate = rospy.Rate(1)

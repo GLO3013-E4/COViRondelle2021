@@ -11,5 +11,7 @@ class Command:
             while not is_finished:
                 handled_data, is_finished = handler.handle(handled_data)
 
+            handler.unregister()
+
         if self.next_command:
             self.next_command.execute(handled_data)
