@@ -33,9 +33,7 @@
               :points="this.realTrajectoryPoints"
               style="fill: none; stroke: red; stroke-width: 2"
             />
-            <!-- TODO : Fix start and destination points -->
-            <!--
-            <circle
+            <circle v-if="startPoint !== null"
               class="start"
               :cx="this.startPoint.x * ratioX"
               :cy="this.startPoint.y * ratioY"
@@ -44,8 +42,8 @@
               stroke-width="2"
               fill="none"
             />
-            <circle
-              class="start"
+            <circle v-if="destinationPoint !== null"
+              class="destination"
               :cx="this.destinationPoint.x * ratioX"
               :cy="this.destinationPoint.y * ratioY"
               r="2"
@@ -53,7 +51,6 @@
               stroke-width="2"
               fill="none"
             />
-            -->
           </svg>
         </v-col>
         <v-col sm="12">
