@@ -28,7 +28,6 @@ def controller():
         rate.sleep()
 
 
-# TODO : Fix tests imports
 if __name__ == '__main__':
     try:
         controller()

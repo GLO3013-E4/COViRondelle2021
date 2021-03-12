@@ -1,5 +1,4 @@
 from commands.cycle_steps import cycle_steps
-from commands.step import Step
 
 
 class ChainOfCommandsFactory:
