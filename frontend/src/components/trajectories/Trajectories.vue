@@ -33,7 +33,9 @@
               :points="this.realTrajectoryPoints"
               style="fill: none; stroke: red; stroke-width: 2"
             />
-            <circle v-if="startPoint !== null"
+            <!--
+            <circle
+              v-if="startPoint !== null"
               class="start"
               :cx="this.startPoint.x * ratioX"
               :cy="this.startPoint.y * ratioY"
@@ -42,7 +44,8 @@
               stroke-width="2"
               fill="none"
             />
-            <circle v-if="destinationPoint !== null"
+            <circle
+              v-if="destinationPoint !== null"
               class="destination"
               :cx="this.destinationPoint.x * ratioX"
               :cy="this.destinationPoint.y * ratioY"
@@ -51,6 +54,7 @@
               stroke-width="2"
               fill="none"
             />
+            -->
           </svg>
         </v-col>
         <v-col sm="12">
@@ -135,9 +139,9 @@ export default class Trajectories extends Vue {
     this.height = 904; // TODO : Get image height in computed
     this.rescaleHeight = this.height * this.ratioY;
   }
-  private coordinatesToString(realTrajectory: boolean) {
+  private coordinatesToString(isRealTrajectory: boolean) {
     let points = '';
-    const trajectory = realTrajectory
+    const trajectory = isRealTrajectory
       ? this.realTrajectory
       : this.plannedTrajectory;
     trajectory.forEach(
@@ -146,7 +150,7 @@ export default class Trajectories extends Vue {
           coordinate.y * this.ratioY
         } `)
     );
-    return points;
+    return this.updateTrajectories(points, isRealTrajectory);
   }
   private get trajectoryPoints() {
     return this.coordinatesToString(false);
@@ -155,12 +159,31 @@ export default class Trajectories extends Vue {
   private get realTrajectoryPoints() {
     return this.coordinatesToString(true);
   }
-  // TODO : If no start or destination point, it crashes
   private get startPoint() {
     return this.plannedTrajectory[0];
   }
   private get destinationPoint() {
     return this.plannedTrajectory[this.plannedTrajectory.length - 1];
+  }
+  private updateTrajectories(points: string, isRealTrajectory: boolean) {
+    const trajectoryType = isRealTrajectory
+      ? 'realTrajectories'
+      : 'plannedTrajectories';
+    let actualPoints = localStorage.getItem(trajectoryType);
+    if (!actualPoints) {
+      localStorage.setItem(trajectoryType, points);
+      return points;
+    } else {
+      actualPoints += points;
+      localStorage.setItem(trajectoryType, actualPoints);
+      return actualPoints;
+    }
+  }
+  mounted() {
+    // Clear the browser cache data in localStorage when closing the browser window
+    window.onbeforeunload = () => {
+      localStorage.clear();
+    };
   }
 }
 </script>

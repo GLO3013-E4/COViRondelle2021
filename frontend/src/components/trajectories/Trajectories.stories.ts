@@ -18,7 +18,7 @@ const Template = (args: any) => ({
 export const Default = Template.bind({}) as any;
 Default.args = {
   tableImage: '/stub_table_image.jpg',
-  plannedTrajectory: CoordinateFactory.make(4),
+  plannedTrajectory: CoordinateFactory.make(2),
   realTrajectory: [],
 };
 
