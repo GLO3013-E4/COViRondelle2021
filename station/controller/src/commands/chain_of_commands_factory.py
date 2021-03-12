@@ -1,5 +1,5 @@
-from controller.src.commands.cycle_steps import cycle_steps
-from controller.src.commands.step import Step
+from commands.cycle_steps import cycle_steps
+from commands.step import Step
 
 
 class ChainOfCommandsFactory:
@@ -7,7 +7,7 @@ class ChainOfCommandsFactory:
         self.command_builder = command_builder
 
     # TODO : Steps should always be cycle_steps, this is for testing until the final implementation
-    def create(self, steps: [Step] = cycle_steps):
+    def create(self, steps = cycle_steps):
         commands = self.command_builder.some_commands().with_steps(steps).build_many()
 
         next_command = commands.pop()

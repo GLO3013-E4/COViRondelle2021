@@ -1,4 +1,4 @@
-from controller.src.commands.step import Step
+from commands.step import Step
 
 cycle_steps = [
     Step.WAIT_FOR_ROBOT_READY_STATE,

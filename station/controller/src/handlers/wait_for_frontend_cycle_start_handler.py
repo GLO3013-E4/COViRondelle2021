@@ -1,19 +1,15 @@
 import rospy
 from std_msgs.msg import Bool
-from controller.src.handlers.handler import Handler
+from handlers.handler import Handler
 
 
 # TODO : Test this handler (how do we mock rospy?)
 class WaitForFrontendCycleStartHandler(Handler):
-    is_finished = False
-
-    def handle_start(self, start: Bool):
-        self.is_finished = start
-
     def handle(self, handled_data=None):
-        self.start_subscriber = rospy.Subscriber("start", Bool, self.handle_start)
+        print('Looping in wait for frontend cycle start handler')  # TODO : Remove print
+        is_finished = rospy.wait_for_message("start", Bool)
 
-        return handled_data, self.is_finished
+        if is_finished:
+            print('Done!')  # TODO : Remove print
 
-    def unregister(self):
-        self.start_subscriber.unregister()
+        return handled_data, is_finished

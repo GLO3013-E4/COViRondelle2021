@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import rospy
-from controller.src.commands.command_builder import CommandBuilder
-from controller.src.commands.chain_of_commands_factory import ChainOfCommandsFactory
+from commands.command_builder import CommandBuilder
+from commands.chain_of_commands_factory import ChainOfCommandsFactory
 
 
 def create_chain_of_commands():
@@ -28,6 +28,7 @@ def controller():
         rate.sleep()
 
 
+# TODO : Fix tests imports
 if __name__ == '__main__':
     try:
         controller()

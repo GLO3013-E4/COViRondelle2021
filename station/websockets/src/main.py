@@ -85,7 +85,7 @@ def websockets():
     rospy.Subscriber("end", Bool, handle_end)
 
     @socket.on('start_cycle')
-    def handle_start_cycle(_):
+    def handle_start_cycle():
         start_cycle_publisher.publish(True)
 
     is_running = False
