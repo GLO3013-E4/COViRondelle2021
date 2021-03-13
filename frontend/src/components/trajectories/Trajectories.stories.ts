@@ -1,6 +1,9 @@
 import Trajectories from '@/components/trajectories/Trajectories.vue';
+import Vue from 'vue';
 import Vuex from 'vuex';
 import { CoordinateFactory } from '@/factories/CoordinateFactory';
+
+Vue.use(Vuex);
 
 export default {
   title: 'components/trajectories/Trajectories',
