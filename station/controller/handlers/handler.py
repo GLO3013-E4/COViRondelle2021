@@ -2,5 +2,5 @@ class Handler:
     def handle(self, handled_data=None):
         pass
 
-    def unregister(self):
+    def unsubscribe(self):
         pass
