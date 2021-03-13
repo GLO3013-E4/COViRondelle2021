@@ -1,6 +1,5 @@
-# coding=utf-8
-import serial
 import time
+import serial
 
 ser = serial.Serial('/dev/ttyACM0',9600, timeout=2)
 ser.flush()
@@ -9,9 +8,8 @@ action = str(input('Quel action effectué? :'))
 
 if int(action) <= 5:
     value = input('Quelle valeur associé à cet action?:')
-    if ser.isOpen() == True:
+    if ser.isOpen():
         print("is open")
-        
     ser.write(str.encode(action + ':' + str(value)))
     print('Commande envoyé: ' + str(action) + ':' + str(value))
 else:
@@ -39,10 +37,9 @@ time.sleep(1)
 
 
 for x in actionList:
-    ser.write(x);
+    ser.write(x)
     while ser.in_waiting == 0:
         pass
     line = ser.readline().decode('utf-8').rstrip()
     print(line)
     time.sleep(5)
-    
