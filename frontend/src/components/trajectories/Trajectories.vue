@@ -140,20 +140,16 @@ export default class Trajectories extends Vue {
   private plannedTrajectory!: Array<Coordinate>;
   private realTrajectory!: Array<Coordinate>;
   private readonly tableImage!: string;
-  private readonly width!: number;
-  private readonly height!: number;
+  private readonly width = 1600;
+  private readonly height = 904;
   private ratioX = 0.5;
   private ratioY = 0.5;
-  private rescaleWidth!: number;
-  private rescaleHeight!: number;
 
-  public constructor() {
-    super();
-
-    this.width = 1600; // TODO : Get image width in computed
-    this.rescaleWidth = this.width * this.ratioX;
-    this.height = 904; // TODO : Get image height in computed
-    this.rescaleHeight = this.height * this.ratioY;
+  private get rescaleWidth() {
+    return this.width * this.ratioX;
+  }
+  private get rescaleHeight() {
+    return this.height * this.ratioY;
   }
   private coordinatesToString(isRealTrajectory: boolean) {
     let points = '';
