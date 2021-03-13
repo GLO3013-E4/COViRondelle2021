@@ -25,7 +25,8 @@ class CommandPanel:
 
     def get_goals(self):
         if not self.can_find_goals():
-            raise Exception("Either the coordinates, the resistance or the mapped_letters are set to None.")
+            raise Exception("Either the coordinates, the resistance"
+                            "or the mapped_letters are set to None.")
         first_corner_letter = self.find_first_corner_letter()
         second_corner_letter = first_corner_letter.get_next_letter()
         third_corner_letter = second_corner_letter.get_next_letter()
@@ -33,7 +34,8 @@ class CommandPanel:
         colors = self.resistance_mapper.find_colors(self.resistance)
         corners = self.decode_corners()
 
-        (corners[i].set_color(colors[i]) for i in range(len(colors)))
+        for i in range(len(colors)):
+            corners[i].set_color(colors[i])
 
         first_corner = [corner for corner in corners if corner.letter is first_corner_letter][0]
         second_corner = [corner for corner in corners if corner.letter is second_corner_letter][0]
@@ -50,7 +52,12 @@ class CommandPanel:
         position_B = self.decode_corner_B(self.coordinates)
         position_C = self.decode_corner_C(self.coordinates)
         position_D = self.decode_corner_D(self.coordinates)
-        return [Corner(Letter.A, position_A), Corner(Letter.B, position_B), Corner(Letter.C, position_C), Corner(Letter.D, position_D)]
+        return [
+            Corner(Letter.A, position_A),
+            Corner(Letter.B, position_B),
+            Corner(Letter.C, position_C),
+            Corner(Letter.D, position_D)
+        ]
 
     def decode_corner_A(self, coordinates):
         coordinates = sorted(coordinates, key=lambda x: x[1])

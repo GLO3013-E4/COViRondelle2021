@@ -1,7 +1,7 @@
+import pytest
+
 from scripts.src.mapping.command_panel import CommandPanel
 from scripts.src.mapping.letter import Letter
-
-import pytest
 
 
 class TestCommandPanel:
