@@ -1,4 +1,4 @@
-from path_planning.src.pathfinding.rotation_helper import RotationHelper
+from pathfinding.rotation_helper import RotationHelper
 
 
 class TestRotationHelper:

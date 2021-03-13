@@ -3,9 +3,9 @@ Class that represents where the robot can move and where the
 different obstacles and objects laying on the table are.
 """
 
-from path_planning.src.pathfinding.node import Node
-from path_planning.src.pathfinding.tile_role import TileRole
-from path_planning.src.pathfinding.direction import Direction
+from pathfinding.node import Node
+from pathfinding.tile_role import TileRole
+from pathfinding.direction import Direction
 
 
 class Map:
