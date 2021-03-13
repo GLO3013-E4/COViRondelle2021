@@ -7,12 +7,11 @@
       </v-col>
       <v-col>
         <station-information />
+        <consumption-information />
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
-        <consumption-information />
-      </v-col>
+      <v-col> </v-col>
       <v-col>
         <div class="d-flex flex-column">
           <planned-trajectory />
