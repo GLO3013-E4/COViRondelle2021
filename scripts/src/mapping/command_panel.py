@@ -34,8 +34,8 @@ class CommandPanel:
         colors = self.resistance_mapper.find_colors(self.resistance)
         corners = self.decode_corners()
 
-        for i in range(len(colors)):
-            corners[i].set_color(colors[i])
+        for i, color in enumerate(colors):
+            corners[i].set_color(color)
 
         first_corner = [corner for corner in corners if corner.letter is first_corner_letter][0]
         second_corner = [corner for corner in corners if corner.letter is second_corner_letter][0]
