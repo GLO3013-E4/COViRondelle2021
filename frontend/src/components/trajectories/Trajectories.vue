@@ -2,7 +2,7 @@
   <v-card
     class="d-flex justify-center mb-10"
     color="#ededed"
-    :height="this.rescaleHeight + 150"
+    :height="this.rescaleHeight + 200"
     :width="this.rescaleWidth"
   >
     <v-container>
@@ -55,44 +55,44 @@
         </v-col>
         <v-col sm="12">
           <v-card-actions class="d-flex left">
-            <svg height="100" width="200" id="legend">
-              <text x="0" y="15" fill="blue">
+            <svg :height="this.rescaleHeight/2" :width="this.rescaleWidth" id="legend">
+              <text :x="this.rescaleWidth/2" :y="this.rescaleHeight/20" fill="blue">
                 {{ `${$t('trajectories.plannedTrajectory')} :` }}
               </text>
               <line
-                x1="150"
-                y1="10"
-                x2="200"
-                y2="10"
+                :x1="this.rescaleWidth-this.rescaleWidth/6"
+                :y1="this.rescaleHeight/20-5"
+                :x2="this.rescaleWidth-this.rescaleWidth/12"
+                :y2="this.rescaleHeight/20-5"
                 style="stroke: blue; stroke-width: 2"
               />
-              <text x="0" y="35" fill="red">
+              <text :x="this.rescaleWidth/2" :y="this.rescaleHeight/8" fill="red">
                 {{ `${$t('trajectories.realTrajectory')} :` }}
               </text>
               <line
-                x1="150"
-                y1="30"
-                x2="200"
-                y2="30"
+                :x1="this.rescaleWidth-this.rescaleWidth/6"
+                :y1="this.rescaleHeight/8 - 5"
+                :x2="this.rescaleWidth-this.rescaleWidth/12"
+                :y2="this.rescaleHeight/8 - 5"
                 style="stroke: red; stroke-width: 2"
               />
-              <text x="0" y="55" fill="red">
+              <text :x="this.rescaleWidth/2" :y="this.rescaleHeight/5" fill="red">
                 {{ `${$t('trajectories.startingPoint')} :` }}
               </text>
               <circle
-                cx="150"
-                cy="50"
+                :cx="this.rescaleWidth-this.rescaleWidth/6"
+                :cy="this.rescaleHeight/5-5"
                 r="2"
                 stroke="red"
                 stroke-width="2"
                 fill="none"
               />
-              <text x="0" y="75" fill="green">
+              <text :x="this.rescaleWidth/2" :y="13*this.rescaleHeight/48" fill="green">
                 {{ `${$t('trajectories.destinationPoint')} :` }}
               </text>
               <circle
-                cx="150"
-                cy="70"
+                :cx="this.rescaleWidth-this.rescaleWidth/6"
+                :cy="13*this.rescaleHeight/48-5"
                 r="2"
                 stroke="green"
                 stroke-width="2"
@@ -122,8 +122,8 @@ export default class Trajectories extends Vue {
   private readonly tableImage!: string;
   private readonly width!: number;
   private readonly height!: number;
-  private ratioX = 0.3;
-  private ratioY = 0.3;
+  private ratioX = 0.5;
+  private ratioY = 0.5;
   private rescaleWidth!: number;
   private rescaleHeight!: number;
 
