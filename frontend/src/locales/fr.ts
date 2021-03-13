@@ -1,8 +1,11 @@
 export const fr = {
   appName: 'Robot culinaire',
   trajectories: {
+    trajectories: 'Trajectoires',
     plannedTrajectory: 'Trajectoire planifiée',
     realTrajectory: 'Trajectoire réelle',
+    startingPoint: 'Point de départ',
+    destinationPoint: 'Point de destination',
   },
   station: {
     stationInformation: 'Information de la station',

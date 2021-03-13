@@ -14,8 +14,7 @@
       <v-col> </v-col>
       <v-col>
         <div class="d-flex flex-column">
-          <planned-trajectory />
-          <real-trajectory />
+          <trajectories />
         </div>
       </v-col>
     </v-row>
@@ -26,17 +25,15 @@
 import { Component, Vue } from 'vue-property-decorator';
 import ConsumptionInformation from '../components/consumptions/ConsumptionInformation.vue';
 import CycleInformation from '../components/cycles/CycleInformation.vue';
-import PlannedTrajectory from '../components/trajectories/PlannedTrajectory.vue';
-import RealTrajectory from '../components/trajectories/RealTrajectory.vue';
 import StationInformation from '../components/station/StationInformation.vue';
+import Trajectories from '../components/trajectories/Trajectories.vue';
 
 @Component({
   components: {
     ConsumptionInformation,
     CycleInformation,
     StationInformation,
-    PlannedTrajectory,
-    RealTrajectory,
+    Trajectories,
   },
 })
 export default class MainLayout extends Vue {}

@@ -37,9 +37,9 @@ describe('Given state', () => {
 });
 
 describe('Given no state', () => {
-  describe('When mounting Resistance', () => {
-    const wrapper = wrapWithVuetifyAndStore(Resistance);
+  const wrapper = wrapWithVuetifyAndStore(Resistance);
 
+  describe('When mounting Resistance', () => {
     it('Should not contain resistanceValue', () => {
       const resistanceValue = wrapper.findComponent({ ref: 'resistanceValue' });
 

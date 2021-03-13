@@ -2,8 +2,7 @@ import MainLayout from '@/layouts/MainLayout.vue';
 import ConsumptionInformation from '@/components/consumptions/ConsumptionInformation.vue';
 import CycleInformation from '@/components/cycles/CycleInformation.vue';
 import StationInformation from '@/components/station/StationInformation.vue';
-import PlannedTrajectory from '@/components/trajectories/PlannedTrajectory.vue';
-import RealTrajectory from '@/components/trajectories/RealTrajectory.vue';
+import Trajectories from '@/components/trajectories/Trajectories.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 
 const wrapper = wrapWithVuetifyAndStore(MainLayout);
@@ -25,11 +24,7 @@ describe('When mounting main layout', () => {
     expect(wrapper.findComponent(StationInformation).vm).toBeTruthy();
   });
 
-  it('Should contain planned trajectory', () => {
-    expect(wrapper.findComponent(PlannedTrajectory).vm).toBeTruthy();
-  });
-
-  it('Should contain real trajectory', () => {
-    expect(wrapper.findComponent(RealTrajectory).vm).toBeTruthy();
+  it('Should contain trajectories', () => {
+    expect(wrapper.findComponent(Trajectories).vm).toBeTruthy();
   });
 });
