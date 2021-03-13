@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>controller</name>
-  <version>2.0.0</version>
-  <description>The main package</description>
+  <version>2.0.1</version>
+  <description>The controller package</description>
 
   <maintainer email="fabienroy28@gmail.com">Fabien Roy</maintainer>
 
