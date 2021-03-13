@@ -1,0 +1,31 @@
+name: Robot CI
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'robot/**'
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - 'robot/**'
+
+defaults:
+  run:
+    working-directory: robot
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build docker image
+        run: docker build -t robot .
+      # TODO : Add lint CI check when code will be implemented
+      # - name: Lint application
+      #   run: docker run robot pylint src
+      # TODO : Add test CI check when tests will be implemented
+      # - name: Test application
+      #   run: docker run robot pytest src/controller/tests

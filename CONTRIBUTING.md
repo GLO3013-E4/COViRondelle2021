@@ -50,6 +50,8 @@ The one in charge of merging the PR is the one in charge of the associated issue
 
 To review a PR is a lot of things. First, you must read each added line, understand them, make sur they make sense and point out if there is any way to improve it. You must then pull the branch, test the app, make sure it works in execution by running the app and testing manually. Only approve PRs that are 100% ready to merge. Otherwise, request changes explaining clearly what must be added for approval.
 
+One exception to the two reviewer approvals rule applies : PRs marked only as `dependencies` (like PRs made by Dependabot) require only one person to checkout the branch, test every script and make sure nothing is broken when starting the application.
+
 **Since our repo is private and we do not want to pay for an upgraded organization, the branches cannot be automatically protected. We expect developpers to respect our pull request management process.**
 
 `main` is our production branch. Once in a while, when `develop` is perfectly stable and operationnal, we merge `develop` into `main`.
@@ -63,8 +65,6 @@ Issues are closed once all described tasks are confirmed done by the reviewers, 
 ## Development
 
 Further information will be placed here when the project will have started.
-
-Useful sections to add here would be : 
 
 ### Code style
 
@@ -80,7 +80,7 @@ TODOs are okay, as long as they do not make it to the release. They can be used 
 
 Almost every single piece of code added to the application must be written using test driven development. Of course, we're in a robotics project, so we don't expect everything so much, but we still aim for it. For TDD, we follow the three basic steps : write failing tests for new feature, write basic code to get tests to pass and finally reformat newly added code. Once the new feature is correctly implemented, commit.
 
-Unit tests must have sections Arrange-Act-Assert separated by one blank line. Set up of tests must be extracted as much as possible from unit tests.
+Unit tests must have sections Arrange-Act-Assert separated by one blank line. Set up of tests must be extracted as much as possible from unit tests. Unit test names should follow a given, when then structure (example :  `Given obstacle in direct trajectory when creating trajectory then return corrected trajectory`).
 
 ## Contributors
 
@@ -92,7 +92,7 @@ Unit tests must have sections Arrange-Act-Assert separated by one blank line. Se
 
 ### Computer engineers (GIF)
 
-- Dave Roussel ([davidaroussel](https://github.com/davidaroussel)) (project lead)
+- David Roussel ([davidaroussel](https://github.com/davidaroussel)) (project lead)
 - Olivier Lajoie ([labonnesauce](https://github.com/labonnesauce)) (GEL/GIF team lead)
 - Dave Caron ([davecaron](https://github.com/davecaron))
 
