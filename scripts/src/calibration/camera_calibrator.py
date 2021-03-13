@@ -24,8 +24,6 @@ class CameraCalibrator:
         all_known_board_positions = \
             [self.__known_board_positions for i in range(len(image_space_chessboards_corners))]
         image_size = cv2.imread(glob.glob(calibration_images_path)[0]).shape[1::-1]
-        # (corners_founded), camera_matrix, distortion_coefficients,
-        # (rotation_vectors, translation_vectors)
         camera_matrix, distortion_coefficients, \
         rotation_vectors, translation_vectors = cv2.calibrateCamera(
             all_known_board_positions, image_space_chessboards_corners, image_size, None, None
@@ -50,7 +48,6 @@ class CameraCalibrator:
         )
 
     def __create_known_board_positions(self):
-        # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(ROWS-1,COLUMNS-1,0)
         board_positions = np.array([
             [i, j, 0] for j in range(self.__n_chessboard_columns)
             for i in range(self.__n_chessboard_rows)
