@@ -30,7 +30,6 @@ class Vectorizer:
             if path[i+2] in diagonals:
                 smoothed_path.append(path[i])
                 i += 2
-                continue
             else:
                 smoothed_path.append(path[i])
                 i += 1
@@ -61,7 +60,10 @@ class Vectorizer:
         # la distance et ensuite si elle est plus grande qu'un certain threshold on
         # applique une correction?
 
-        robot_node = ((self.robot_position[0]//NODE_SIZE)*NODE_SIZE, (self.robot_position[1]//NODE_SIZE)*NODE_SIZE)
+        robot_node = (
+            (self.robot_position[0]//NODE_SIZE)*NODE_SIZE,
+            (self.robot_position[1]//NODE_SIZE)*NODE_SIZE
+        )
         if robot_node in nodes:
             index = nodes.index(robot_node)
             return nodes[index:]
@@ -74,8 +76,8 @@ class Vectorizer:
             ]
             minimum_distance = min(distance_from_robot)
             index = distance_from_robot.index(minimum_distance)
-
-            return [self.robot_position] + nodes[index:]
+            corrected_path = [self.robot_position] + nodes[index:]
+            return corrected_path
 
     def vectorize(self, nodes: [(int, int)]):
         vectors = []
