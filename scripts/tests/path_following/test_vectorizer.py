@@ -165,3 +165,32 @@ class TestVectorizer:
         adjusted_angles = [vector[1] for vector in adjusted_vectors]
         assert adjusted_angles == [math.pi, -math.pi/4, 0, -math.pi/2, 0, math.pi/4, 0]
 
+    def test_when_minimize_vectors_then_return_correct_vectors(self):
+        robot_angle = math.pi*(3/4)
+        self.vectorizer.set_robot_angle(robot_angle)
+        vectors = [
+            (1, -math.pi / 4), (1, -math.pi / 2), (1, -math.pi / 2), (1, math.pi), (1, math.pi),
+            (1, -math.pi * (3 / 4)), (1, -math.pi * (3 / 4))
+        ]
+        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
+
+        minimized_vectors = self.vectorizer.minimize_vectors(adjusted_vectors)
+
+        assert minimized_vectors == [
+            (1, math.pi), (2, -math.pi/4), (2, -math.pi/2), (2, math.pi/4)
+        ]
+
+    def test_given_first_vector_is_aligned_when_minimize_vectors_then_return_correct_vectors(self):
+        robot_angle = -math.pi/4
+        self.vectorizer.set_robot_angle(robot_angle)
+        vectors = [
+            (1, -math.pi / 4), (1, -math.pi / 2), (1, -math.pi / 2), (1, math.pi), (1, math.pi),
+            (1, -math.pi * (3 / 4)), (1, -math.pi * (3 / 4))
+        ]
+        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
+
+        minimized_vectors = self.vectorizer.minimize_vectors(adjusted_vectors)
+
+        assert minimized_vectors == [
+            (1, 0), (2, -math.pi/4), (2, -math.pi/2), (2, math.pi/4)
+        ]

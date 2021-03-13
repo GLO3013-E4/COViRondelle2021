@@ -44,9 +44,19 @@ class Vectorizer:
             smoothed_path.append(path[j])
         return smoothed_path
 
-    # TODO:
-    def minimize_nodes(self, nodes: [(int, int)]):
-        pass
+    def minimize_vectors(self, vectors: [(float, float)]):
+        minimized_vectors = []
+        for i, vector in enumerate(vectors):
+            distance, angle = vector
+            if angle != 0:
+                minimized_vectors.append(vector)
+            elif angle == 0:
+                if not minimized_vectors:
+                    minimized_vectors.append(vector)
+                else:
+                    last_vector_distance, last_vector_angle = minimized_vectors[-1]
+                    minimized_vectors[-1] = (last_vector_distance + distance, last_vector_angle)
+        return minimized_vectors
 
     # TODO: add tests correct_path
     def correct_path(self, nodes: [(int, int)]):
@@ -57,7 +67,7 @@ class Vectorizer:
         # la distance et ensuite si elle est plus grande qu'un certain threshold on
         # applique une correction?
 
-        robot_node = (self.robot_position[0]//NODE_SIZE, self.robot_position[1]//NODE_SIZE)
+        robot_node = ((self.robot_position[0]//NODE_SIZE)*NODE_SIZE, (self.robot_position[1]//NODE_SIZE)*NODE_SIZE)
         if robot_node in nodes:
             index = nodes.index(robot_node)
             return nodes[index:]
@@ -126,3 +136,7 @@ class Vectorizer:
 
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle
+
+    # TODO:
+    def path_to_vectors(self):
+        pass
