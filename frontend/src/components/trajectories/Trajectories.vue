@@ -3,7 +3,7 @@
     class="d-flex justify-center mb-10"
     color="#ededed"
     :height="this.rescaleHeight + 200"
-    :width="this.rescaleWidth"
+    :width="this.rescaleWidth + 50"
   >
     <v-container>
       <v-row>
