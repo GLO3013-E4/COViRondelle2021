@@ -10,7 +10,7 @@ export const defaultState = {
   tableImage: '', // TODO : Table image most likely won't be a string, this is temporary
   resistance: 0,
   robotConsumption: {
-    batteryPercentage: 0,
+    batteryChargeLeft: 8,
     batteryRemainingTimeInSeconds: 0,
   } as RobotConsumption,
   puckColors: [] as Array<Color>,
