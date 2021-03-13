@@ -48,10 +48,6 @@ class Vectorizer:
     def minimize_nodes(self, nodes: [(int, int)]):
         pass
 
-    # TODO:
-    def maximize_nodes(self, nodes: [(int, int)]):
-        pass
-
     # TODO: add tests correct_path
     def correct_path(self, nodes: [(int, int)]):
         #TODO:
@@ -94,21 +90,39 @@ class Vectorizer:
             vectors.append(vector)
         return vectors
 
-    def adjust_first_vector_angle_from_robot_pov(self, vector : (float, float)):
-        distance, angle = vector
-        robot_angle = self.robot_angle
-        if angle < 0:
-            angle = 2*math.pi + angle
-        if robot_angle < 0:
-            robot_angle = 2*math.pi + robot_angle
+    def adjust_vector_angles_from_robot_pov(self, vectors: [(float, float)]):
+        """
+        Changes the vectors' orientation from their absolute value from the top camera
+        to the angle the robot will need to use to align itself with the vector.
+        (For all vectors)
+        """
+        new_vectors = []
+        last_vector = (None, self.robot_angle)
+        for vector in vectors:
+            new_vectors.append(self.adjust_vector_angle_from_robot_pov(last_vector, vector))
+            last_vector = vector
+        return new_vectors
 
-        angle_correction = angle - robot_angle
+    def adjust_vector_angle_from_robot_pov(self, last_vector, current_vector):
+        """
+        Changes the vector orientation from the absolute value from the top camera
+        to the angle the robot will need to use to align itself with the vector.
+        (For one vector)
+        """
+        distance1, angle1 = last_vector
+        distance2, angle2 = current_vector
+        if angle2 < 0:
+            angle2 = 2 * math.pi + angle2
+        if angle1 < 0:
+            angle1 = 2 * math.pi + angle1
+
+        angle_correction = angle2 - angle1
 
         if angle_correction > math.pi:
-            angle_correction -= 2*math.pi
+            angle_correction -= 2 * math.pi
         elif angle_correction < -math.pi:
-            angle_correction += 2*math.pi
-        return distance, angle_correction
+            angle_correction += 2 * math.pi
+        return distance2, angle_correction
 
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle
