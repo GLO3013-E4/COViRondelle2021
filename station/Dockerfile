@@ -24,6 +24,8 @@ RUN echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && catkin_init_workspace /root/catkin_ws/src && catkin_make"
 
+EXPOSE 4000
+
 ENTRYPOINT ["/ros_entrypoint.sh"]
 
 CMD ["bash"]

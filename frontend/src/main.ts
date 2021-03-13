@@ -10,9 +10,7 @@ import { messages, defaultLocale } from './i18n';
 
 Vue.config.productionTip = false;
 
-// TODO : Change socket server URL
-const STATION_URL = 'http://localhost:4000';
-const socket = io(STATION_URL);
+const socket = io(process.env.VUE_APP_STATION_URL);
 Vue.use(VueSocketIOExt, socket, { store });
 
 Vue.use(VueRouter);

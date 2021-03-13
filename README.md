@@ -35,6 +35,8 @@ With Docker Compose :
 docker-compose up
 ```
 
+If you have issues with the Docker network, use `docker system prune -a`.
+
 Without Docker Compose : refer to each app's README.md file.
 
 Each app will run on : 

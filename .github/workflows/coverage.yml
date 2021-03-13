@@ -1,7 +1,14 @@
 name: Coverage
 
 on:
-  push:
+  workflow_run:
+    workflows:
+      - "Scripts CI"
+      - "Robot CI"
+      - "Station CI"
+      - "Frontend CI"
+    types:
+      - completed
     branches:
       - develop
   pull_request:
