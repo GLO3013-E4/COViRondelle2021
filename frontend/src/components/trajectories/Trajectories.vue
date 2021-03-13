@@ -33,28 +33,24 @@
               :points="this.realTrajectoryPoints"
               style="fill: none; stroke: red; stroke-width: 2"
             />
-            <!--
             <circle
-              v-if="startPoint !== null"
               class="start"
-              :cx="this.startPoint.x * ratioX"
-              :cy="this.startPoint.y * ratioY"
+              :cx="this.startPointX"
+              :cy="this.startPointY"
               r="2"
               stroke="red"
               stroke-width="2"
               fill="none"
             />
             <circle
-              v-if="destinationPoint !== null"
               class="destination"
-              :cx="this.destinationPoint.x * ratioX"
-              :cy="this.destinationPoint.y * ratioY"
+              :cx="this.destinationPointX"
+              :cy="this.destinationPointY"
               r="2"
               stroke="green"
               stroke-width="2"
               fill="none"
             />
-            -->
           </svg>
         </v-col>
         <v-col sm="12">
@@ -121,8 +117,8 @@ import { mapState } from 'vuex';
   },
 })
 export default class Trajectories extends Vue {
-  private plannedTrajectory!: Array<Coordinate>;
-  private realTrajectory!: Array<Coordinate>;
+  private plannedTrajectory!: Array<Coordinate> | undefined;
+  private realTrajectory!: Array<Coordinate> | undefined;
   private readonly tableImage!: string;
   private readonly width!: number;
   private readonly height!: number;
@@ -144,12 +140,15 @@ export default class Trajectories extends Vue {
     const trajectory = isRealTrajectory
       ? this.realTrajectory
       : this.plannedTrajectory;
-    trajectory.forEach(
-      (coordinate) =>
-        (points += `${coordinate.x * this.ratioX},${
-          coordinate.y * this.ratioY
-        } `)
-    );
+    if (trajectory !== undefined) {
+      trajectory.forEach(
+        (coordinate) =>
+          (points += `${coordinate.x * this.ratioX},${
+            coordinate.y * this.ratioY
+          } `)
+      );
+      this.newTrajectorySize += trajectory.length;
+    }
     return this.updateTrajectories(points, isRealTrajectory);
   }
   private get trajectoryPoints() {
@@ -159,11 +158,29 @@ export default class Trajectories extends Vue {
   private get realTrajectoryPoints() {
     return this.coordinatesToString(true);
   }
-  private get startPoint() {
-    return this.plannedTrajectory[0];
+  private get startPointX() {
+    return this.plannedTrajectory[0] !== undefined
+      ? this.plannedTrajectory[0].x * this.ratioX
+      : 0;
   }
-  private get destinationPoint() {
-    return this.plannedTrajectory[this.plannedTrajectory.length - 1];
+  private get startPointY() {
+    return this.plannedTrajectory[0] !== undefined
+      ? this.plannedTrajectory[0].y * this.ratioY
+      : 0;
+  }
+  private get destinationPointX() {
+    return this.plannedTrajectory[this.plannedTrajectory.length - 1] !==
+      undefined
+      ? this.plannedTrajectory[this.plannedTrajectory.length - 1].x *
+          this.ratioX
+      : 0;
+  }
+  private get destinationPointY() {
+    return this.plannedTrajectory[this.plannedTrajectory.length - 1] !==
+      undefined
+      ? this.plannedTrajectory[this.plannedTrajectory.length - 1].y *
+          this.ratioY
+      : 0;
   }
   private updateTrajectories(points: string, isRealTrajectory: boolean) {
     const trajectoryType = isRealTrajectory
