@@ -1,10 +1,5 @@
 import math
 
-from scripts.src.pathfinding.node import Node
-
-#TODO: se rappeller que vectorizer va tout le temps avoir le full path.
-# Donc, recalculer les vecteurs à envoyer selon le robot est où dans le path ou de où off il est.
-
 # TODO: SUPER IMPORTANT QUE CE SOIT LE MÊME QUE LUI DANS LE NOEUD DE PATHFINDING.
 # TODO: QU'EST-CE QU'ON DEVRAIT FAIRE POUR S'ASSURER QUE C'EST LE MÊME
 NODE_SIZE = 15
@@ -136,6 +131,13 @@ class Vectorizer:
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle
 
-    # TODO:
-    def path_to_vectors(self):
-        pass
+    def path_to_vectors(self, nodes: [(int, int)], to_min=False):
+        smoothed_path = self.smooth_path(nodes)
+        corrected_path = self.correct_path(smoothed_path)
+        vectors = self.vectorize(corrected_path)
+        adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
+
+        if to_min:
+            adjusted_vectors = self.minimize_vectors(adjusted_vectors)
+
+        return adjusted_vectors
