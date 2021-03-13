@@ -55,44 +55,64 @@
         </v-col>
         <v-col sm="12">
           <v-card-actions class="d-flex left">
-            <svg :height="this.rescaleHeight/2" :width="this.rescaleWidth" id="legend">
-              <text :x="this.rescaleWidth/2" :y="this.rescaleHeight/20" fill="blue">
+            <svg
+              :height="this.rescaleHeight / 2"
+              :width="this.rescaleWidth"
+              id="legend"
+            >
+              <text
+                :x="this.rescaleWidth / 2"
+                :y="this.rescaleHeight / 20"
+                fill="blue"
+              >
                 {{ `${$t('trajectories.plannedTrajectory')} :` }}
               </text>
               <line
-                :x1="this.rescaleWidth-this.rescaleWidth/6"
-                :y1="this.rescaleHeight/20-5"
-                :x2="this.rescaleWidth-this.rescaleWidth/12"
-                :y2="this.rescaleHeight/20-5"
+                :x1="this.rescaleWidth - this.rescaleWidth / 6"
+                :y1="this.rescaleHeight / 20 - 5"
+                :x2="this.rescaleWidth - this.rescaleWidth / 12"
+                :y2="this.rescaleHeight / 20 - 5"
                 style="stroke: blue; stroke-width: 2"
               />
-              <text :x="this.rescaleWidth/2" :y="this.rescaleHeight/8" fill="red">
+              <text
+                :x="this.rescaleWidth / 2"
+                :y="this.rescaleHeight / 8"
+                fill="red"
+              >
                 {{ `${$t('trajectories.realTrajectory')} :` }}
               </text>
               <line
-                :x1="this.rescaleWidth-this.rescaleWidth/6"
-                :y1="this.rescaleHeight/8 - 5"
-                :x2="this.rescaleWidth-this.rescaleWidth/12"
-                :y2="this.rescaleHeight/8 - 5"
+                :x1="this.rescaleWidth - this.rescaleWidth / 6"
+                :y1="this.rescaleHeight / 8 - 5"
+                :x2="this.rescaleWidth - this.rescaleWidth / 12"
+                :y2="this.rescaleHeight / 8 - 5"
                 style="stroke: red; stroke-width: 2"
               />
-              <text :x="this.rescaleWidth/2" :y="this.rescaleHeight/5" fill="red">
+              <text
+                :x="this.rescaleWidth / 2"
+                :y="this.rescaleHeight / 5"
+                fill="red"
+              >
                 {{ `${$t('trajectories.startingPoint')} :` }}
               </text>
               <circle
-                :cx="this.rescaleWidth-this.rescaleWidth/6"
-                :cy="this.rescaleHeight/5-5"
+                :cx="this.rescaleWidth - this.rescaleWidth / 6"
+                :cy="this.rescaleHeight / 5 - 5"
                 r="2"
                 stroke="red"
                 stroke-width="2"
                 fill="none"
               />
-              <text :x="this.rescaleWidth/2" :y="13*this.rescaleHeight/48" fill="green">
+              <text
+                :x="this.rescaleWidth / 2"
+                :y="(13 * this.rescaleHeight) / 48"
+                fill="green"
+              >
                 {{ `${$t('trajectories.destinationPoint')} :` }}
               </text>
               <circle
-                :cx="this.rescaleWidth-this.rescaleWidth/6"
-                :cy="13*this.rescaleHeight/48-5"
+                :cx="this.rescaleWidth - this.rescaleWidth / 6"
+                :cy="(13 * this.rescaleHeight) / 48 - 5"
                 r="2"
                 stroke="green"
                 stroke-width="2"
