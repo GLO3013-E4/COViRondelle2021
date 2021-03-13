@@ -1,4 +1,4 @@
-from controller.src.handlers.handler import Handler
+from handlers.handler import Handler
 
 
 class MoveRobotToSquareCenterHandler(Handler):

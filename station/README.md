@@ -73,3 +73,40 @@ Run all test files within a module
 ```shell
 pytest module
 ```
+
+ROS isn't suited for unit testing. To test individual handlers that subscribe or publish thing, the best strategy is to start the chain of commands and mock the required nodes. For instance, this is how we test "ready" and "start_cycle" topics reception : 
+
+Terminal 1
+```shell
+docker-compose up
+# Open frontend in browser
+```
+
+Terminal 2
+```shell
+docker exec -it covirondelle2021_station_1 /bin/bash
+roscore
+```
+
+Terminal 3
+```shell
+docker exec -it covirondelle2021_station_1 /bin/bash
+cd src/websockets/src
+python3 main.py
+```
+
+Terminal 4
+```shell
+docker exec -it covirondelle2021_station_1 /bin/bash
+cd src/controller/src
+python main.py
+```
+
+Terminal 5
+```shell
+docker exec -it covirondelle2021_station_1 /bin/bash
+cd src/controller/src
+python mock_ready.py
+```
+
+Then, you can print in the required handler that the topic was received. You can also test "start_cycle" reception by pressing the button in the frontend, which will be handled by the websocket and will publish the correct topic.

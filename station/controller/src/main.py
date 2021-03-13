@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from controller.src.commands.command_builder import CommandBuilder
-from controller.src.commands.chain_of_commands_factory import ChainOfCommandsFactory
+import rospy
+from commands.command_builder import CommandBuilder
+from commands.chain_of_commands_factory import ChainOfCommandsFactory
 
 
 def create_chain_of_commands():
@@ -11,7 +12,24 @@ def create_chain_of_commands():
     return chain_of_commands_factory.create()
 
 
-if __name__ == '__main__':
-    first_command = create_chain_of_commands()
+def controller():
+    rospy.init_node('controller', anonymous=True)
 
-    first_command.execute()
+    rate = rospy.Rate(10)
+
+    is_started = False
+
+    while not rospy.is_shutdown():
+        if not is_started:
+            first_command = create_chain_of_commands()
+            first_command.execute()
+            is_started = True
+
+        rate.sleep()
+
+
+if __name__ == '__main__':
+    try:
+        controller()
+    except rospy.ROSInterruptException:
+        pass
