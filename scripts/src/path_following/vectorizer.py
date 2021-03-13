@@ -77,6 +77,9 @@ class Vectorizer:
     def vectorize(self, nodes: [(int, int)]):
         vectors = []
         for i in range(len(nodes)-1):
-            vector = ()
+            x1, y1 = nodes[i]
+            x2, y2 = nodes[i+1]
+            distance = math.sqrt(pow(x2-x1, 2) + pow(y2-y1, 2))
+            vector = (distance, math.atan2(y2-y1, x2-x1))
             vectors.append(vector)
         return vectors
