@@ -117,8 +117,8 @@ import { mapState } from 'vuex';
   },
 })
 export default class Trajectories extends Vue {
-  private plannedTrajectory!: Array<Coordinate> | undefined;
-  private realTrajectory!: Array<Coordinate> | undefined;
+  private plannedTrajectory!: Array<Coordinate>;
+  private realTrajectory!: Array<Coordinate>;
   private readonly tableImage!: string;
   private readonly width!: number;
   private readonly height!: number;
@@ -140,15 +140,12 @@ export default class Trajectories extends Vue {
     const trajectory = isRealTrajectory
       ? this.realTrajectory
       : this.plannedTrajectory;
-    if (trajectory !== undefined) {
-      trajectory.forEach(
-        (coordinate) =>
-          (points += `${coordinate.x * this.ratioX},${
-            coordinate.y * this.ratioY
-          } `)
-      );
-      this.newTrajectorySize += trajectory.length;
-    }
+    trajectory.forEach(
+      (coordinate) =>
+        (points += `${coordinate.x * this.ratioX},${
+          coordinate.y * this.ratioY
+        } `)
+    );
     return this.updateTrajectories(points, isRealTrajectory);
   }
   private get trajectoryPoints() {
@@ -159,25 +156,23 @@ export default class Trajectories extends Vue {
     return this.coordinatesToString(true);
   }
   private get startPointX() {
-    return this.plannedTrajectory[0] !== undefined
+    return this.plannedTrajectory[0]
       ? this.plannedTrajectory[0].x * this.ratioX
       : 0;
   }
   private get startPointY() {
-    return this.plannedTrajectory[0] !== undefined
+    return this.plannedTrajectory[0]
       ? this.plannedTrajectory[0].y * this.ratioY
       : 0;
   }
   private get destinationPointX() {
-    return this.plannedTrajectory[this.plannedTrajectory.length - 1] !==
-      undefined
+    return this.plannedTrajectory[this.plannedTrajectory.length - 1]
       ? this.plannedTrajectory[this.plannedTrajectory.length - 1].x *
           this.ratioX
       : 0;
   }
   private get destinationPointY() {
-    return this.plannedTrajectory[this.plannedTrajectory.length - 1] !==
-      undefined
+    return this.plannedTrajectory[this.plannedTrajectory.length - 1]
       ? this.plannedTrajectory[this.plannedTrajectory.length - 1].y *
           this.ratioY
       : 0;
