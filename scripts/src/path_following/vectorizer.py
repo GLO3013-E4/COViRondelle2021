@@ -1,11 +1,5 @@
 from scripts.src.pathfinding.node import Node
-#smooth escaliers
-
-#vectorize min
-
-#vectorize max
-
-#correct path
+import math
 
 #TODO: se rappeller que vectorizer va tout le temps avoir le full path.
 # Donc, recalculer les vecteurs à envoyer selon le robot est où dans le path ou de où off il est.
@@ -13,6 +7,7 @@ from scripts.src.pathfinding.node import Node
 #TODO: SUPER IMPORTANT QUE CE SOIT LE MÊME QUE LUI DANS LE NOEUD DE PATHFINDING.
 #TODO: QU'EST-CE QU'ON DEVRAIT FAIRE POUR S'ASSURER QUE C'EST LE MÊME
 NODE_SIZE = 15
+
 
 class Vectorizer:
     def __init__(self):
@@ -37,25 +32,30 @@ class Vectorizer:
             if path[i+2].matrix_center in diagonals:
                 smoothed_path.append(path[i])
                 i += 2
-                if i > len(path)-2:
-                    smoothed_path.append(path[i])
                 continue
             else:
                 smoothed_path.append(path[i])
                 i += 1
+
+        for j in range(i, len(path)):
+            smoothed_path.append(path[j])
         return smoothed_path
 
+    #TODO:
     def minimize_nodes(self, nodes: [(int, int)]):
         pass
 
+    #TODO:
     def maximize_nodes(self, nodes: [(int, int)]):
         pass
 
+    #TODO: add tests correct_path
     def correct_path(self, nodes: [(int, int)]):
-        # jveux tu distance from robot - distance from goal parce que peut-être qu'il va
+        #TODO:
+        # jveux tu (distance_from _robot - distance_from_goal) parce que peut-être qu'il va
         # souvent essayer de retourner en arrière. Si nos carrés sont trop petit la fonction de correct
         # path va être trop sensible aussi. À la place on pourrait calculer la distance et ensuite si
-        # elle est plus grand qu'un certain nombre on fait une correction?
+        # elle est plus grande qu'un certain threshold on applique une correction?
 
         robot_node = (self.robot_position[0]//NODE_SIZE, self.robot_position[1]//NODE_SIZE)
         if robot_node in nodes:
@@ -65,8 +65,18 @@ class Vectorizer:
         elif robot_node not in nodes:
             x, y = self.robot_position
 
-            distance_from_robot = [ #jveux tu distance from robot - distance from goal parce que peut-être qu'il va souvent essayer de retourner en arrière. Si nos carrés sont trop petit la fonction de correct path va être trop sensible aussi. À la place on pourrait calculer la distance et ensuite si elle est plus grand qu'un certain nombre on fait une correction?
-                ()
+            distance_from_robot = [
+                math.sqrt(pow(x2-x, 2) + pow(y2-y, 2)) for (x2, y2) in nodes
             ]
+            minimum_distance = min(distance_from_robot)
+            index = distance_from_robot.index(minimum_distance)
 
+            return [self.robot_position] + nodes[index:]
 
+    #TODO: add tests vectorize
+    def vectorize(self, nodes: [(int, int)]):
+        vectors = []
+        for i in range(len(nodes)-1):
+            vector = ()
+            vectors.append(vector)
+        return vectors
