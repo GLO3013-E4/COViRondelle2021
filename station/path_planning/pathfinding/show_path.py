@@ -1,6 +1,6 @@
-from path_planning.src.pathfinding.pathfinder import Pathfinder
-from path_planning.src.pathfinding.pathfinding_algorithm_factory import PathfindingAlgorithmFactory
-from path_planning.src.pathfinding.map import Map
+from pathfinding.pathfinder import Pathfinder
+from pathfinding.pathfinding_algorithm_factory import PathfindingAlgorithmFactory
+from pathfinding.map import Map
 
 
 def get_path(node_size, algorithm, obstacles, start, end, pucks, image_width, image_height):

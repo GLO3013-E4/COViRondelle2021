@@ -1,5 +1,5 @@
-from path_planning.src.pathfinding.map import Map
-from path_planning.src.pathfinding.tile_role import TileRole
+from pathfinding.map import Map
+from pathfinding.tile_role import TileRole
 
 
 class TestMap:

@@ -91,21 +91,21 @@ roscore
 Terminal 3
 ```shell
 docker exec -it covirondelle2021_station_1 /bin/bash
-cd src/websockets/src
+cd src/websockets
 python3 main.py
 ```
 
 Terminal 4
 ```shell
 docker exec -it covirondelle2021_station_1 /bin/bash
-cd src/controller/src
+cd src/controller
 python main.py
 ```
 
 Terminal 5
 ```shell
 docker exec -it covirondelle2021_station_1 /bin/bash
-cd src/controller/src
+cd src/controller
 python mock_ready.py
 ```
 
