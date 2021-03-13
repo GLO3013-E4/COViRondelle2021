@@ -19,20 +19,20 @@ class Vectorizer:
         self.robot_position = position
 
     @staticmethod
-    def smooth_path(path: [Node]):
+    def smooth_path(path: [(int, int)]):
         # TODO: c'est deg
         smoothed_path = []
 
         i = 0
         while i < len(path)-2:
-            x, y = path[i].matrix_center
+            x, y = path[i]
             diagonals = [
-                (x - 1, y - 1),
-                (x - 1, y + 1),
-                (x + 1, y - 1),
-                (x + 1, y + 1)
+                (x - NODE_SIZE, y - NODE_SIZE),
+                (x - NODE_SIZE, y + NODE_SIZE),
+                (x + NODE_SIZE, y - NODE_SIZE),
+                (x + NODE_SIZE, y + NODE_SIZE)
             ]
-            if path[i+2].matrix_center in diagonals:
+            if path[i+2] in diagonals:
                 smoothed_path.append(path[i])
                 i += 2
                 continue
