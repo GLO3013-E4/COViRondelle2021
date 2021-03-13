@@ -194,3 +194,47 @@ class TestVectorizer:
         assert minimized_vectors == [
             (1, 0), (2, -math.pi/4), (2, -math.pi/2), (2, math.pi/4)
         ]
+
+    def test_given_robot_not_in_path_at_start_when_correct_path_then_return_correct_path(self):
+        robot_position = (-100, -100)
+        self.vectorizer.set_robot_position(robot_position)
+        nodes = [
+            (0, 0), (15, 0), (30, 0)
+        ]
+
+        corrected_path = self.vectorizer.correct_path(nodes)
+
+        assert corrected_path == [(-100, -100), (0, 0), (15, 0), (30, 0)]
+
+    def test_given_robot_not_in_path_in_middle_when_correct_path_then_return_correct_path(self):
+        robot_position = (35, -40)
+        self.vectorizer.set_robot_position(robot_position)
+        nodes = [
+            (0, 0), (15, 0), (30, 0), (45, 0)
+        ]
+
+        corrected_path = self.vectorizer.correct_path(nodes)
+
+        assert corrected_path == [(35,-40), (30, 0), (45, 0)]
+
+    def test_given_robot_in_path_at_start_when_correct_path_then_return_correct_path(self):
+        robot_position = (5, 5)
+        self.vectorizer.set_robot_position(robot_position)
+        nodes = [
+            (0, 0), (15, 0), (30, 0)
+        ]
+
+        corrected_path = self.vectorizer.correct_path(nodes)
+
+        assert corrected_path == [(0, 0), (15, 0), (30, 0)]
+
+    def test_given_robot_in_path_in_middle_when_correct_path_then_return_correct_path(self):
+        robot_position = (35, 5)
+        self.vectorizer.set_robot_position(robot_position)
+        nodes = [
+            (0, 0), (15, 0), (30, 0), (45, 0)
+        ]
+
+        corrected_path = self.vectorizer.correct_path(nodes)
+
+        assert corrected_path == [(30, 0), (45, 0)]

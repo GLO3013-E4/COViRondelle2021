@@ -58,7 +58,6 @@ class Vectorizer:
                     minimized_vectors[-1] = (last_vector_distance + distance, last_vector_angle)
         return minimized_vectors
 
-    # TODO: add tests correct_path
     def correct_path(self, nodes: [(int, int)]):
         #TODO:
         # jveux tu (distance_from _robot - distance_from_goal) parce que peut-être qu'il va
