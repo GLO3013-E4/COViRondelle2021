@@ -54,10 +54,10 @@ class Vectorizer:
 
     def correct_path(self, nodes: [(int, int)]):
         #TODO:
-        # jveux tu (distance_from _robot - distance_from_goal) parce que peut-être qu'il va
-        # souvent essayer de retourner en arrière. Si nos carrés sont trop petits la fonction
-        # de correct path va être trop sensible aussi. À la place on pourrait calculer
-        # la distance et ensuite si elle est plus grande qu'un certain threshold on
+        # Est-ce que je veux minimiser sur (distance_from _robot + distance_from_goal) parce que
+        # peut-être qu'il va souvent essayer de retourner en arrière. Si nos carrés sont trop
+        # petits la fonction de correct path va être trop sensible aussi. À la place on pourrait
+        # calculer la distance et ensuite si elle est plus grande qu'un certain threshold on
         # applique une correction?
 
         robot_node = (
@@ -68,7 +68,7 @@ class Vectorizer:
             index = nodes.index(robot_node)
             return nodes[index:]
 
-        elif robot_node not in nodes:
+        else:
             x, y = self.robot_position
 
             distance_from_robot = [
@@ -76,8 +76,7 @@ class Vectorizer:
             ]
             minimum_distance = min(distance_from_robot)
             index = distance_from_robot.index(minimum_distance)
-            corrected_path = [self.robot_position] + nodes[index:]
-            return corrected_path
+            return [self.robot_position] + nodes[index:]
 
     def vectorize(self, nodes: [(int, int)]):
         vectors = []
