@@ -13,6 +13,7 @@ NODE_SIZE = 15
 class Vectorizer:
     def __init__(self):
         self.robot_position = None
+        self.robot_angle = None
 
     def set_robot_position(self, position):
         self.robot_position = position
@@ -93,6 +94,21 @@ class Vectorizer:
             vectors.append(vector)
         return vectors
 
-    # TODO:
-    def adjust_angle_from_robot_pov(self, vectors: [(float, float)]):
-        pass
+    def adjust_first_vector_angle_from_robot_pov(self, vector : (float, float)):
+        distance, angle = vector
+        robot_angle = self.robot_angle
+        if angle < 0:
+            angle = 2*math.pi + angle
+        if robot_angle < 0:
+            robot_angle = 2*math.pi + robot_angle
+
+        angle_correction = angle - robot_angle
+
+        if angle_correction > math.pi:
+            angle_correction -= 2*math.pi
+        elif angle_correction < -math.pi:
+            angle_correction += 2*math.pi
+        return distance, angle_correction
+
+    def set_robot_angle(self, robot_angle):
+        self.robot_angle = robot_angle

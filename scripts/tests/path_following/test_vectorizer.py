@@ -100,5 +100,58 @@ class TestVectorizer:
         vector = vectors[0]
         assert vector[0] == 5
 
+    def test_given_diagonal_vectors_1_when_adjust_first_vector_angle_from_robot_pov_then_return_correct_angle(self):
+        robot_angle = math.pi*(3/4)
+        vector = (1, -math.pi/2)
+        self.vectorizer.set_robot_angle(robot_angle)
+
+        corrected_vector = self.vectorizer.adjust_first_vector_angle_from_robot_pov(vector)
+
+        assert corrected_vector == (1, math.pi*(3/4))
+
+    def test_given_diagonal_vectors_2_when_adjust_first_vector_angle_from_robot_pov_then_return_correct_angle(self):
+        robot_angle = math.pi*(1/4)
+        vector = (1, -math.pi*(1/4))
+        self.vectorizer.set_robot_angle(robot_angle)
+
+        corrected_vector = self.vectorizer.adjust_first_vector_angle_from_robot_pov(vector)
+
+        assert corrected_vector == (1, -math.pi*(1/2))
+
+    def test_given_two_negative_vectors_when_adjust_first_vector_angle_from_robot_pov_then_return_correct_angle(self):
+        robot_angle = -math.pi/2
+        vector = (1, -math.pi*(3/4))
+        self.vectorizer.set_robot_angle(robot_angle)
+
+        corrected_vector = self.vectorizer.adjust_first_vector_angle_from_robot_pov(vector)
+
+        assert corrected_vector == (1, -math.pi/4)
+
+    def test_given_two_positive_vectors_when_adjust_first_vector_angle_from_robot_pov_then_return_correct_angle(self):
+        robot_angle = 0
+        vector = (1, math.pi/2)
+        self.vectorizer.set_robot_angle(robot_angle)
+
+        corrected_vector = self.vectorizer.adjust_first_vector_angle_from_robot_pov(vector)
+
+        assert corrected_vector == (1, math.pi/2)
+
+    def test_given_two_equal_vectors_when_adjust_first_vector_angle_from_robot_pov_then_return_correct_angle(self):
+        robot_angle = math.pi
+        vector = (1, math.pi)
+        self.vectorizer.set_robot_angle(robot_angle)
+
+        corrected_vector = self.vectorizer.adjust_first_vector_angle_from_robot_pov(vector)
+
+        assert corrected_vector == (1, 0)
+
+    def test_given_two_positive_vectors_where_difference_is_bigger_than_pi_when_adjust_first_vector_angle_then_correction_angle_is_negative(self):
+        robot_angle = 0
+        vector = (1, math.pi*(3/2))
+        self.vectorizer.set_robot_angle(robot_angle)
+
+        corrected_vector = self.vectorizer.adjust_first_vector_angle_from_robot_pov(vector)
+
+        assert corrected_vector == (1, -math.pi/2)
 
 
