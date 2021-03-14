@@ -4,7 +4,7 @@ import { State } from '@/store/state';
 
 describe('Given state', () => {
   const state = {
-    robotConsumption: {
+    batteryConsumption: {
       batteryChargeLeft: 4.0,
       batteryRemainingTimeInSeconds: 0,
     },

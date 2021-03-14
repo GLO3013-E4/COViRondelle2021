@@ -11,6 +11,7 @@ export const StateFactory = factory<State>((fake) => ({
   tableImage: defaultState.tableImage,
   // TODO : Find a way to implement ResistanceFactory
   resistance: fake.random.number(10000),
+  batteryConsumption: defaultState.batteryConsumption,
   robotConsumption: defaultState.robotConsumption,
   puckColors: ColorFactory.get(3),
   puckFirstCorner: CornerFactory.get(),

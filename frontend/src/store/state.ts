@@ -36,6 +36,7 @@ export const state = {
   tableImage: defaultState.tableImage,
   resistance: defaultState.resistance,
   batteryConsumption: defaultState.batteryConsumption,
+  robotConsumption: defaultState.robotConsumption,
   puckColors: defaultState.puckColors,
   puckFirstCorner: defaultState.puckFirstCorner,
   plannedTrajectory: defaultState.plannedTrajectory,

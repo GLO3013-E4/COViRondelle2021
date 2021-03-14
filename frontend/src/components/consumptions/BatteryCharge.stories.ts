@@ -19,12 +19,12 @@ const Template = (args: any) => ({
 
 export const AllChargeLeft = Template.bind({}) as any;
 AllChargeLeft.args = {
-  robotConsumption: { batteryChargeLeft: 8, batteryRemainingTimeInSeconds: 0 },
+  batteryConsumption: { batteryChargeLeft: 8, batteryRemainingTimeInSeconds: 0 },
 };
 
 export const HalfChargeLeft = Template.bind({}) as any;
 HalfChargeLeft.args = {
-  robotConsumption: {
+  batteryConsumption: {
     batteryChargeLeft: 4.0,
     batteryRemainingTimeInSeconds: 0,
   },
@@ -32,17 +32,17 @@ HalfChargeLeft.args = {
 
 export const ThirdChargeLeft = Template.bind({}) as any;
 ThirdChargeLeft.args = {
-  robotConsumption: { batteryChargeLeft: 2, batteryRemainingTimeInSeconds: 0 },
+  batteryConsumption: { batteryChargeLeft: 2, batteryRemainingTimeInSeconds: 0 },
 };
 
 export const NoChargeLeft = Template.bind({}) as any;
 NoChargeLeft.args = {
-  robotConsumption: { batteryChargeLeft: 0, batteryRemainingTimeInSeconds: 0 },
+  batteryConsumption: { batteryChargeLeft: 0, batteryRemainingTimeInSeconds: 0 },
 };
 
 export const ChargeWith3Decimals = Template.bind({}) as any;
 ChargeWith3Decimals.args = {
-  robotConsumption: {
+  batteryConsumption: {
     batteryChargeLeft: 2.455,
     batteryRemainingTimeInSeconds: 0,
   },
@@ -50,7 +50,7 @@ ChargeWith3Decimals.args = {
 
 export const ChargeWith2Decimals = Template.bind({}) as any;
 ChargeWith2Decimals.args = {
-  robotConsumption: {
+  batteryConsumption: {
     batteryChargeLeft: 5.04,
     batteryRemainingTimeInSeconds: 0,
   },

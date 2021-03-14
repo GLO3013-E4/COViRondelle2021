@@ -7,18 +7,16 @@
       <v-container>
         <v-row align="center">
           <v-col sm="6">
-            <h4>{{ $t(`consumptions.wheel1`) }} :</h4>
-            <h4>{{ $t(`consumptions.wheel2`) }} :</h4>
+            <h5>{{ $t(`consumptions.wheel1`) }} : {{ wheel1Info }}</h5>
+            <h5>{{ $t(`consumptions.wheel2`) }} : {{wheel2Info}}</h5>
           </v-col>
           <v-col sm="6">
-            <h4>{{ $t(`consumptions.wheel3`) }} :</h4>
-            <h4>{{ $t(`consumptions.wheel4`) }} :</h4>
-          </v-col>
-          <v-col sm="6">
-            <h4>{{ $t(`consumptions.servoMotor`) }} :</h4>
-          </v-col>
-          <v-col sm="6">
-            <h4>{{ $t(`consumptions.total`) }} :</h4>
+            <h5>{{ $t(`consumptions.wheel3`) }} : {{wheel3Info}} </h5>
+            <h5>{{ $t(`consumptions.wheel4`) }} : {{wheel4Info}} </h5>
+            </v-col>
+          <v-col sm="12" class="servoMotorAndTotal">
+            <h5>{{ $t(`consumptions.servoMotor`) }} : {{servoMotorInfo}}</h5>
+            <h5>{{ $t(`consumptions.total`) }} : {{totalInfo}}</h5>
           </v-col>
         </v-row>
       </v-container>
@@ -27,21 +25,45 @@
 </template>
 
 <script lang="ts">
+import { RobotConsumption } from '@/types/robotConsumption';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-import RemainingTime from '../consumptions/RemainingTime.vue';
 
 @Component({
-  components: { RemainingTime: RemainingTime },
   computed: {
-    ...mapState(['robotConsumption']),
+    ...mapState(['robotConsumption', 'batteryConsumption']),
   },
 })
-export default class BatteryCharge extends Vue {}
+export default class BatteryCharge extends Vue {
+  public robotConsumption!: RobotConsumption;
+
+  public get wheel1Info(){
+      return `${this.robotConsumption.wheel1} Watts`;
+  }
+  public get wheel2Info(){
+      return `${this.robotConsumption.wheel2} Watts`
+  }
+public get wheel3Info(){
+      return `${this.robotConsumption.wheel3} Watts`
+  }
+  public get wheel4Info(){
+      return `${this.robotConsumption.wheel4} Watts`
+  }
+    public get servoMotorInfo(){
+      return `${this.robotConsumption.servoMotor} Watts`
+  }
+      public get totalInfo(){
+      return `${this.robotConsumption.total} Watts`
+  }
+}
 </script>
 
 <style scoped>
 .v-card__title {
   padding: 0em;
+}
+
+.servoMotorAndTotal{
+  padding-top: 0.5em;
 }
 </style>
