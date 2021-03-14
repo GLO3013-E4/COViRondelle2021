@@ -19,7 +19,7 @@ const Template = (args: any) => ({
 
 export const HoursLeft = Template.bind({}) as any;
 HoursLeft.args = {
-  robotConsumption: {
+  batteryConsumption: {
     batteryChargeLeft: 0,
     batteryRemainingTimeInSeconds: 3 * 60 * 60,
   },
@@ -27,7 +27,7 @@ HoursLeft.args = {
 
 export const MinutesLeft = Template.bind({}) as any;
 MinutesLeft.args = {
-  robotConsumption: {
+  batteryConsumption: {
     batteryChargeLeft: 0,
     batteryRemainingTimeInSeconds: 60 * 40,
   },
@@ -35,12 +35,12 @@ MinutesLeft.args = {
 
 export const SecondsLeft = Template.bind({}) as any;
 SecondsLeft.args = {
-  robotConsumption: { batteryChargeLeft: 0, batteryRemainingTimeInSeconds: 34 },
+  batteryConsumption: { batteryChargeLeft: 0, batteryRemainingTimeInSeconds: 34 },
 };
 
 export const aWeirdNumber = Template.bind({}) as any;
 aWeirdNumber.args = {
-  robotConsumption: {
+  batteryConsumption: {
     batteryChargeLeft: 0,
     batteryRemainingTimeInSeconds: 1234,
   },

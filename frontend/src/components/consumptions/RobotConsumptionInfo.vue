@@ -4,7 +4,7 @@
       <v-card-title class="grey darken-1 d-flex justify-center">
         <h5 class="white--text">{{ $t(`consumptions.robotConsumption`) }}</h5>
       </v-card-title>
-      <v-container>
+      <v-container ref="consumptions">
         <v-row align="center">
           <v-col sm="6">
             <h5>{{ $t(`consumptions.wheel1`) }} : {{ wheel1Info }}</h5>
@@ -38,22 +38,22 @@ export default class BatteryCharge extends Vue {
   public robotConsumption!: RobotConsumption;
 
   public get wheel1Info(){
-      return `${this.robotConsumption.wheel1} Watts`;
+      return `${this.robotConsumption.wheel1} W`;
   }
   public get wheel2Info(){
-      return `${this.robotConsumption.wheel2} Watts`
+      return `${this.robotConsumption.wheel2} W`
   }
 public get wheel3Info(){
-      return `${this.robotConsumption.wheel3} Watts`
+      return `${this.robotConsumption.wheel3} W`
   }
   public get wheel4Info(){
-      return `${this.robotConsumption.wheel4} Watts`
+      return `${this.robotConsumption.wheel4} W`
   }
     public get servoMotorInfo(){
-      return `${this.robotConsumption.servoMotor} Watts`
+      return `${this.robotConsumption.servoMotor} W`
   }
       public get totalInfo(){
-      return `${this.robotConsumption.total} Watts`
+      return `${this.robotConsumption.total} W`
   }
 }
 </script>

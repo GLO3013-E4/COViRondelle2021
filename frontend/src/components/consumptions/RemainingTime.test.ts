@@ -4,7 +4,7 @@ import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 
 describe('Given state', () => {
   const state = {
-    robotConsumption: {
+    batteryConsumption: {
       batteryChargeLeft: 0,
       batteryRemainingTimeInSeconds: 60,
     },
