@@ -19,5 +19,5 @@ const Template = (args: any) => ({
 
 export const anyData = Template.bind({}) as any;
 anyData.args = {
-  robotConsumption: { wheel1: 800, wheel2: 504, wheel3: 0, wheel4: 0, servoMotor:0, total:0},
+  robotConsumption: { wheel1: 800, wheel2: 4, wheel3: 10, wheel4: 10, servoMotor:0, total:0},
 };

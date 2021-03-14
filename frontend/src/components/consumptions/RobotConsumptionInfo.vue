@@ -38,22 +38,28 @@ export default class BatteryCharge extends Vue {
   public robotConsumption!: RobotConsumption;
 
   public get wheel1Info(){
-      return `${this.robotConsumption.wheel1} W`;
+    return this.formatInfo(this.robotConsumption.wheel1);
   }
   public get wheel2Info(){
-      return `${this.robotConsumption.wheel2} W`
+      return this.formatInfo(this.robotConsumption.wheel2);
   }
 public get wheel3Info(){
-      return `${this.robotConsumption.wheel3} W`
+      return this.formatInfo(this.robotConsumption.wheel3);
   }
   public get wheel4Info(){
-      return `${this.robotConsumption.wheel4} W`
+      return this.formatInfo(this.robotConsumption.wheel4);
   }
     public get servoMotorInfo(){
-      return `${this.robotConsumption.servoMotor} W`
+      return this.formatInfo(this.robotConsumption.servoMotor);
   }
       public get totalInfo(){
-      return `${this.robotConsumption.total} W`
+      return this.formatInfo(this.robotConsumption.total);
+  }
+  public formatInfo(value:number){
+    if(value < 10){
+      return `${0+value.toFixed(2)} W`;
+    }
+      return `${(value.toFixed(2))} W`;
   }
 }
 </script>

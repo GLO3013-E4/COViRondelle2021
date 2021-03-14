@@ -52,7 +52,7 @@ export const fr = {
     wheel2: 'Roue 2',
     wheel3: 'Roue 3',
     wheel4: 'Roue 4',
-    servoMotor: 'Servo moteur',
+    servoMotor: 'Tourelle',
     total: 'Total',
   },
 };
