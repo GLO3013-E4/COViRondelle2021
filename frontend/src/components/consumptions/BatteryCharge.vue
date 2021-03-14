@@ -2,7 +2,9 @@
   <div>
     <v-card class="grey lighten-3">
       <v-card-title class="grey darken-1 d-flex justify-center">
-        <h5 class="white--text">Current battery charge</h5>
+        <h5 class="white--text">
+          {{ $t(`consumptions.currentBatteryCharge`) }}
+        </h5>
       </v-card-title>
       <v-container>
         <v-row align="center">
@@ -14,7 +16,7 @@
               :value="this.pourcentageBatteryLeft"
               color="light-blue"
             >
-              <h4 ref="batteryCharge"> {{ currentBatteryCharge }} Ah</h4>
+              <h4 ref="batteryCharge">{{ currentBatteryCharge }} Ah</h4>
             </v-progress-circular>
           </v-col>
           <v-col sm="6">
@@ -27,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { RobotConsumption } from '@/types/robotConsumption';
+import { BatteryConsumption } from '@/types/batteryConsumption';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import RemainingTime from '../consumptions/RemainingTime.vue';
@@ -35,22 +37,22 @@ import RemainingTime from '../consumptions/RemainingTime.vue';
 @Component({
   components: { RemainingTime: RemainingTime },
   computed: {
-    ...mapState(['robotConsumption']),
+    ...mapState(['batteryConsumption']),
   },
 })
 export default class BatteryCharge extends Vue {
-  public robotConsumption!: RobotConsumption;
+  public batteryConsumption!: BatteryConsumption;
   public maximumCharge = 8;
   public trailingDecimals = 3;
 
   private get currentBatteryCharge() {
-    return this.robotConsumption.batteryChargeLeft.toFixed(
+    return this.batteryConsumption.batteryChargeLeft.toFixed(
       this.trailingDecimals
     );
   }
 
   private get pourcentageBatteryLeft() {
-    return (this.robotConsumption.batteryChargeLeft / this.maximumCharge) * 100;
+    return (this.batteryConsumption.batteryChargeLeft / this.maximumCharge) * 100;
   }
 }
 </script>

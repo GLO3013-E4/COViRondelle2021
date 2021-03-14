@@ -1,17 +1,26 @@
 import { Color } from '@/types/color';
-import { RobotConsumption } from '@/types/robotConsumption';
+import { BatteryConsumption } from '@/types/batteryConsumption';
 import { Corner } from '@/types/corner';
 import { Coordinate } from '@/types/coordinate';
 import { Step } from '@/types/step';
+import { RobotConsumption } from '@/types/robotConsumption';
 
 export const defaultState = {
   cycleReady: false,
   cycleStarted: false,
   tableImage: '', // TODO : Table image most likely won't be a string, this is temporary
   resistance: 0,
-  robotConsumption: {
+  batteryConsumption: {
     batteryChargeLeft: 8,
     batteryRemainingTimeInSeconds: 0,
+  } as BatteryConsumption,
+  robotConsumption: {
+    wheel1: 0,
+    wheel2: 0,
+    wheel3: 0,
+    wheel4: 0,
+    servoMotor: 0,
+    total: 0,
   } as RobotConsumption,
   puckColors: [] as Array<Color>,
   puckFirstCorner: null as Corner | unknown,
@@ -26,7 +35,7 @@ export const state = {
   cycleStarted: defaultState.cycleStarted,
   tableImage: defaultState.tableImage,
   resistance: defaultState.resistance,
-  robotConsumption: defaultState.robotConsumption,
+  batteryConsumption: defaultState.batteryConsumption,
   puckColors: defaultState.puckColors,
   puckFirstCorner: defaultState.puckFirstCorner,
   plannedTrajectory: defaultState.plannedTrajectory,

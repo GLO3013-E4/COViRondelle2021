@@ -12,6 +12,9 @@
         <v-col sm="6">
           <BatteryCharge />
         </v-col>
+        <v-col sm="6">
+          <RobotConsumptionInfo />
+        </v-col>
       </v-row>
     </v-container>
   </v-card>
@@ -20,9 +23,13 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import BatteryCharge from './BatteryCharge.vue';
+import RobotConsumptionInfo from './RobotConsumptionInfo.vue';
 
 @Component({
-  components: { BatteryCharge: BatteryCharge },
+  components: {
+    BatteryCharge: BatteryCharge,
+    RobotConsumptionInfo: RobotConsumptionInfo,
+  },
 })
 export default class ConsumptionInformation extends Vue {}
 </script>

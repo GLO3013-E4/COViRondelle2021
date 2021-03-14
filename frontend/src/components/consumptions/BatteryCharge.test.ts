@@ -17,7 +17,7 @@ describe('Given state', () => {
       const batteryCharge = wrapper.findComponent({ ref: 'batteryCharge' });
 
       expect(batteryCharge.exists()).toBe(true);
-      expect(batteryCharge.text()).toBe("4.000 Ah");
+      expect(batteryCharge.text()).toBe('4.000 Ah');
     });
   });
 });

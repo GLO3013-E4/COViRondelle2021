@@ -2,6 +2,7 @@ import { MutationTree } from 'vuex/types';
 import {
   START_CYCLE,
   SOCKET_ROBOT_CONSUMPTION,
+  SOCKET_BATTERY_CONSUMPTION,
   SOCKET_TABLE_IMAGE,
   SOCKET_RESISTANCE,
   SOCKET_PUCK_COLORS,
@@ -20,7 +21,7 @@ export type Mutations<S = State> = {
   [START_CYCLE](state: S): void;
   [SOCKET_CYCLE_READY](state: S): void;
   [SOCKET_ROBOT_CONSUMPTION](state: S, data: string): void;
-  [SOCKET_TABLE_IMAGE](state: S, data: string): void;
+  [SOCKET_BATTERY_CONSUMPTION](state: S, data: string): void;
   [SOCKET_RESISTANCE](state: S, data: string): void;
   [SOCKET_PUCK_COLORS](state: S, data: string): void;
   [SOCKET_PUCK_FIRST_CORNER](state: S, data: string): void;
@@ -43,6 +44,11 @@ export const mutations: MutationTree<State> & Mutations = {
     const message = toMessage(data);
     state.robotConsumption =
       message.robotConsumption || defaultState.robotConsumption;
+  },
+  [SOCKET_BATTERY_CONSUMPTION](state: State, data: string) {
+    const message = toMessage(data);
+    state.batteryConsumption =
+      message.batteryConsumption || defaultState.batteryConsumption;
   },
   [SOCKET_TABLE_IMAGE](state: State, data: string) {
     const message = toMessage(data);

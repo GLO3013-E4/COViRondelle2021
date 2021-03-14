@@ -1,27 +1,24 @@
 <template>
-  <h2
-    class="light-blue--text"
-    ref="time"
-  >
+  <h2 class="light-blue--text" ref="time">
     {{ formatedTime }}
   </h2>
 </template>
 
 <script lang="ts">
-import { RobotConsumption } from '@/types/robotConsumption';
+import { BatteryConsumption } from '@/types/batteryConsumption';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 
 @Component({
   computed: {
-    ...mapState(['robotConsumption']),
+    ...mapState(['batteryConsumption']),
   },
 })
 export default class RemainingTime extends Vue {
-  public robotConsumption!: RobotConsumption;
+  public batteryConsumption!: BatteryConsumption;
 
   private get timeInSeconds() {
-    return this.robotConsumption.batteryRemainingTimeInSeconds;
+    return this.batteryConsumption.batteryRemainingTimeInSeconds;
   }
 
   private get formatedTime() {
