@@ -11,9 +11,6 @@ on:
       - completed
     branches:
       - develop
-  pull_request:
-    branches:
-      - develop
 
 # TODO : Add robot coverage when there will be some tests
 jobs:
