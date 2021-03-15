@@ -19,7 +19,10 @@ const Template = (args: any) => ({
 
 export const AllChargeLeft = Template.bind({}) as any;
 AllChargeLeft.args = {
-  batteryConsumption: { batteryChargeLeft: 8, batteryRemainingTimeInSeconds: 0 },
+  batteryConsumption: {
+    batteryChargeLeft: 8,
+    batteryRemainingTimeInSeconds: 0,
+  },
 };
 
 export const HalfChargeLeft = Template.bind({}) as any;
@@ -32,12 +35,18 @@ HalfChargeLeft.args = {
 
 export const ThirdChargeLeft = Template.bind({}) as any;
 ThirdChargeLeft.args = {
-  batteryConsumption: { batteryChargeLeft: 2, batteryRemainingTimeInSeconds: 0 },
+  batteryConsumption: {
+    batteryChargeLeft: 2,
+    batteryRemainingTimeInSeconds: 0,
+  },
 };
 
 export const NoChargeLeft = Template.bind({}) as any;
 NoChargeLeft.args = {
-  batteryConsumption: { batteryChargeLeft: 0, batteryRemainingTimeInSeconds: 0 },
+  batteryConsumption: {
+    batteryChargeLeft: 0,
+    batteryRemainingTimeInSeconds: 0,
+  },
 };
 
 export const ChargeWith3Decimals = Template.bind({}) as any;

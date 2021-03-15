@@ -35,7 +35,10 @@ MinutesLeft.args = {
 
 export const SecondsLeft = Template.bind({}) as any;
 SecondsLeft.args = {
-  batteryConsumption: { batteryChargeLeft: 0, batteryRemainingTimeInSeconds: 34 },
+  batteryConsumption: {
+    batteryChargeLeft: 0,
+    batteryRemainingTimeInSeconds: 34,
+  },
 };
 
 export const aWeirdNumber = Template.bind({}) as any;

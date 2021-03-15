@@ -52,7 +52,9 @@ export default class BatteryCharge extends Vue {
   }
 
   private get pourcentageBatteryLeft() {
-    return (this.batteryConsumption.batteryChargeLeft / this.maximumCharge) * 100;
+    return (
+      (this.batteryConsumption.batteryChargeLeft / this.maximumCharge) * 100
+    );
   }
 }
 </script>
