@@ -6,9 +6,10 @@ NODE_SIZE = 15
 
 
 class Vectorizer:
-    def __init__(self):
+    def __init__(self, minimize=False):
         self.robot_position = None
         self.robot_angle = None
+        self.minimize = minimize
 
     def set_robot_position(self, position):
         self.robot_position = position
@@ -132,13 +133,13 @@ class Vectorizer:
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle
 
-    def path_to_vectors(self, nodes: [(int, int)], to_min=False):
+    def path_to_vectors(self, nodes: [(int, int)]):
         smoothed_path = self.smooth_path(nodes)
         corrected_path = self.correct_path(smoothed_path)
         vectors = self.vectorize(corrected_path)
         adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
 
-        if to_min:
+        if self.minimize:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
 
         return adjusted_vectors

@@ -1,6 +1,5 @@
 import math
 
-from unittest.mock import MagicMock
 
 from scripts.src.path_following.vectorizer import Vectorizer
 
@@ -242,57 +241,33 @@ class TestVectorizer:
         assert corrected_path == [(30, 0), (45, 0)]
 
     def test_given_to_min_is_true_when_path_to_vectors_then_call_right_methods(self):
-        to_min = True
-        mock_nodes = MagicMock()
-        mock_smoothed_path = MagicMock()
-        mock_corrected_path = MagicMock()
-        mock_vectors = MagicMock()
-        mock_adjusted_vectors = MagicMock()
-        mock_minimized_vectors = MagicMock()
-        self.vectorizer.smooth_path = MagicMock()
-        self.vectorizer.smooth_path.return_value = mock_smoothed_path
-        self.vectorizer.correct_path = MagicMock()
-        self.vectorizer.correct_path.return_value = mock_corrected_path
-        self.vectorizer.vectorize = MagicMock()
-        self.vectorizer.vectorize.return_value = mock_vectors
-        self.vectorizer.adjust_vector_angles_from_robot_pov = MagicMock()
-        self.vectorizer.adjust_vector_angles_from_robot_pov.return_value = mock_adjusted_vectors
-        self.vectorizer.minimize_vectors = MagicMock(mock_adjusted_vectors)
-        self.vectorizer.minimize_vectors.return_value = mock_minimized_vectors
+        robot_position = (0, 0)
+        robot_angle = 0
+        vectorizer = Vectorizer(minimize=True)
+        vectorizer.set_robot_position(robot_position)
+        vectorizer.set_robot_angle(robot_angle)
+        nodes = [
+            (15, 0), (30, 0), (45, 0)
+        ]
 
-        vectors = self.vectorizer.path_to_vectors(mock_nodes, to_min)
+        vectors = vectorizer.path_to_vectors(nodes)
 
-        self.vectorizer.smooth_path.assert_called_once_with(mock_nodes)
-        self.vectorizer.correct_path.assert_called_once_with(mock_smoothed_path)
-        self.vectorizer.vectorize.assert_called_once_with(mock_corrected_path)
-        self.vectorizer.adjust_vector_angles_from_robot_pov.assert_called_once_with(mock_vectors)
-        self.vectorizer.minimize_vectors.assert_called_once_with(mock_adjusted_vectors)
-        assert vectors == mock_minimized_vectors
+        assert vectors == [
+            (45, 0)
+        ]
 
     def test_given_to_min_is_false_when_path_to_vectors_then_call_right_methods(self):
-        to_min = False
-        mock_nodes = MagicMock()
-        mock_smoothed_path = MagicMock()
-        mock_corrected_path = MagicMock()
-        mock_vectors = MagicMock()
-        mock_adjusted_vectors = MagicMock()
-        mock_minimized_vectors = MagicMock()
-        self.vectorizer.smooth_path = MagicMock()
-        self.vectorizer.smooth_path.return_value = mock_smoothed_path
-        self.vectorizer.correct_path = MagicMock()
-        self.vectorizer.correct_path.return_value = mock_corrected_path
-        self.vectorizer.vectorize = MagicMock()
-        self.vectorizer.vectorize.return_value = mock_vectors
-        self.vectorizer.adjust_vector_angles_from_robot_pov = MagicMock()
-        self.vectorizer.adjust_vector_angles_from_robot_pov.return_value = mock_adjusted_vectors
-        self.vectorizer.minimize_vectors = MagicMock()
-        self.vectorizer.minimize_vectors.return_value = mock_minimized_vectors
+        robot_position = (0, 0)
+        robot_angle = 0
+        vectorizer = Vectorizer(minimize=False)
+        vectorizer.set_robot_position(robot_position)
+        vectorizer.set_robot_angle(robot_angle)
+        nodes = [
+            (15, 0), (30, 0), (45, 0)
+        ]
 
-        vectors = self.vectorizer.path_to_vectors(mock_nodes, to_min)
+        vectors = vectorizer.path_to_vectors(nodes)
 
-        self.vectorizer.smooth_path.assert_called_once_with(mock_nodes)
-        self.vectorizer.correct_path.assert_called_once_with(mock_smoothed_path)
-        self.vectorizer.vectorize.assert_called_once_with(mock_corrected_path)
-        self.vectorizer.adjust_vector_angles_from_robot_pov.assert_called_once_with(mock_vectors)
-        self.vectorizer.minimize_vectors.assert_not_called()
-        assert vectors == mock_adjusted_vectors
+        assert vectors == [
+            (15, 0), (15, 0), (15, 0)
+        ]
