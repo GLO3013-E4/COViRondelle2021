@@ -19,5 +19,5 @@ class WaitForRobotReadyStateHandler(Handler):
 
         return handled_data, self.is_finished
 
-    def unsubscribe(self):
-        self.ready_subscriber.unsubscribe()
+    def unregister(self):
+        self.ready_subscriber.unregister()

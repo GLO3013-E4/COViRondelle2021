@@ -19,5 +19,5 @@ class WaitForFrontendCycleStartHandler(Handler):
 
         return handled_data, self.is_finished
 
-    def unsubscribe(self):
-        self.start_cycle_subscriber.unsubscribe()
+    def unregister(self):
+        self.start_cycle_subscriber.unregister()
