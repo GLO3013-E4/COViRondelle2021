@@ -22,8 +22,8 @@ anyData.args = {
   robotConsumption: {
     wheel1: 80.9,
     wheel2: 4,
-    wheel3: 10,
-    wheel4: 10,
+    wheel3: 0.01,
+    wheel4: 0.2,
     servoMotor: 10,
     total: 0,
   },
