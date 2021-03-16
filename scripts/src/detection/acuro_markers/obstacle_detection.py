@@ -6,7 +6,6 @@ from scripts.src.detection.acuro_markers.AcuroMarkers import ArucoMarkers
 class ObstacleDetection(ArucoMarkers):
 
     def detect_obstacle(self, image, DEBUG=True):
-        image = self.capture_image_from_path(image)
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
 
@@ -55,13 +54,10 @@ class ObstacleDetection(ArucoMarkers):
                             (top_left_position[0], top_left_position[1] - 15),
                                 cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (0, 255, 0), 2)
-                print("[INFO] ArUco marker ID: {}".format(markerID))
-            print(obstacles_position)
 
             if DEBUG:
                 self.show_image(image)
         return obstacles_position
-
 
     def get_acuro_dictionnary(self):
         return cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)

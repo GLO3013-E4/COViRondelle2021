@@ -10,9 +10,13 @@ class Vectorizer:
         self.robot_position = None
         self.robot_angle = None
         self.minimize = minimize
+        self.path = None
 
     def set_robot_position(self, position):
         self.robot_position = position
+
+    def set_path(self, path: [(int, int)]):
+        self.path = path
 
     @staticmethod
     def smooth_path(path: [(int, int)]):
@@ -132,7 +136,8 @@ class Vectorizer:
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle
 
-    def path_to_vectors(self, nodes: [(int, int)]):
+    def path_to_vectors(self):
+        nodes = self.path
         smoothed_path = self.smooth_path(nodes)
         corrected_path = self.correct_path(smoothed_path)
         vectors = self.vectorize(corrected_path)

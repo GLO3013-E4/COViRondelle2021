@@ -19,11 +19,7 @@ class PuckDetection:
             raise AttributeError("L'image est invalide") from invalid_image
         return img
 
-    def detect_puck(self, image, color, Debug=True):
-        script_dir = os.path.dirname(__file__)
-        rel_path = image
-        abs_file_path = os.path.join(script_dir, rel_path)
-        img = cv2.imread(abs_file_path)
+    def detect_puck(self, img, color, Debug=True):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = cv2.medianBlur(gray, 5)
 
