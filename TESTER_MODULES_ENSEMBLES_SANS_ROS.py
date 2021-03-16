@@ -4,8 +4,9 @@ import math
 from scripts.src.detection.acuro_markers.obstacle_detection import ObstacleDetection
 from scripts.src.detection.acuro_markers.robot_detection import RobotDetection
 from scripts.src.detection.puck_detection import PuckDetection
-from scripts.src.pathfinding.show_path import get_path
+from scripts.src.pathfinding.show_path import get_path, get_path_plus_map
 from scripts.src.path_following.vectorizer import Vectorizer
+from scripts.src.pathfinding.map_drawer import MapDrawer
 
 # TODO: @time_it
 
@@ -40,7 +41,7 @@ def first_test():
     obstacle_detection = ObstacleDetection()
     robot_detection = RobotDetection()
     puck_detection = PuckDetection()
-    vectorizer = Vectorizer()
+    vectorizer = Vectorizer(debug=True)
 
     ret, frame = None, cv2.imread("./scripts/tests/detection/acuro_marker/robot_5x5_four.jpg")
     #ret, frame = cap.read()
@@ -62,14 +63,23 @@ def first_test():
     goal = pucks[GOAL_COLOR]
     other_pucks = [val for item, val in pucks.items() if item != GOAL_COLOR]
 
-    path = get_path(15, "BreadthFirstSearch", obstacles, robot_position, goal, other_pucks, width, height)
+    print("goal", goal)
+    print("other_pucks", other_pucks)
+    print("robot position", robot_position)
+    print("robot angle", robot_angle)
+    print("obstacles", obstacles)
+    print(width, height)
+
+    path, _map = get_path_plus_map(15, "BreadthFirstSearch", obstacles, robot_position, goal, other_pucks, width, height)
 
     nodes = [node.pixel_coordinates_center for node in path]
     vectorizer.set_path(nodes)
     vectorizer.set_robot_angle(robot_angle)
     vectorizer.set_robot_position(robot_position)
     vectors = vectorizer.path_to_vectors()
-    print(vectors)
+
+    visualize_map(_map, path, frame)
+    frame = visualize_vectors(vectorizer, frame)
 
     """
     while True:
@@ -91,6 +101,8 @@ def first_test():
     cap.release()
     cv2.destroyAllWindows()
     """
+    cv2.imshow('bleh', frame)
+    cv2.waitKey(0)
 
 
 def second_test():
@@ -135,6 +147,30 @@ def get_objects(obstacle_detection, robot_detection, puck_detection, image):
     }
 
     return obstacles, robot, pucks
+
+
+def visualize_vectors(vectorizer, image):
+    for i in range(len(vectorizer.corrected_path)-1):
+        point1 = vectorizer.corrected_path[i]
+        point1 = tuple(map(int, point1))
+
+        point2 = vectorizer.corrected_path[i+1]
+        point2 = tuple(map(int, point2))
+
+        thickness = 3
+
+        color = (0, 0, 255)
+        if i == 0:
+            color = (255, 0, 0)
+
+        image = cv2.arrowedLine(image, point1, point2, color, thickness)
+    return image
+
+
+def visualize_map(_map, path, frame):
+    drawer = MapDrawer(15//3, 15, frame)
+    drawer.draw_map(_map, path)
+    drawer.get_image().show()
 
 
 if __name__ == '__main__':

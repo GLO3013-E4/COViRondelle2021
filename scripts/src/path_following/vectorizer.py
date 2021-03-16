@@ -6,11 +6,12 @@ NODE_SIZE = 15
 
 
 class Vectorizer:
-    def __init__(self, minimize=False):
+    def __init__(self, minimize=False, debug=False):
         self.robot_position = None
         self.robot_angle = None
         self.minimize = minimize
         self.path = None
+        self.debug = debug
 
     def set_robot_position(self, position):
         self.robot_position = position
@@ -145,5 +146,10 @@ class Vectorizer:
 
         if self.minimize:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
+
+        if self.debug:
+            self.corrected_path = corrected_path
+            self.vectors = vectors
+            self.adjusted_vectors = adjusted_vectors
 
         return adjusted_vectors

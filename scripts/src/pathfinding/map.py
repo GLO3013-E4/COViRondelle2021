@@ -152,10 +152,10 @@ class Map:
         end.role = TileRole.END
 
         distance = (self.obstacle_puck_width // self.node_size) + 1
-        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.DOWN)
-        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.LEFT)
-        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.UP)
-        self.add_cushion_in_direction(end, distance, TileRole.END, Direction.RIGHT)
+        #self.add_cushion_in_direction(end, distance, TileRole.END, Direction.DOWN)
+        #self.add_cushion_in_direction(end, distance, TileRole.END, Direction.LEFT)
+        #self.add_cushion_in_direction(end, distance, TileRole.END, Direction.UP)
+        #self.add_cushion_in_direction(end, distance, TileRole.END, Direction.RIGHT)
 
     def get_start_node(self):
         """Gets the starting node"""
