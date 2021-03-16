@@ -4,18 +4,15 @@ import cv2
 
 from AcuroMarkers import ArucoMarkers
 from obstacle_position import ObstaclePosition
+from marker_position import MarkerPosition
 
 
 class ObstacleDetection(ArucoMarkers):
 
     def detect_obstacle(self, image, DEBUG=True):
-        image = self.capture_image_from_path(image)
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
-
         print(image.shape)
-
-
         if image is None:
             return self.generate_empty_obstacle_position()
 
@@ -79,7 +76,7 @@ class ObstacleDetection(ArucoMarkers):
     def calculate_3D_position(self, obstacles_position: List[ObstaclePosition],
                               aruco_marker_width,
                               camera_matrix,
-                              distortion_coefficient):
+                              distortion_coefficient) -> List[MarkerPosition]:
 
         aruco_markers_corner = [obstacle_position.get_corner()
                                 for obstacle_position in
@@ -87,9 +84,8 @@ class ObstacleDetection(ArucoMarkers):
 
         corner_length = len(aruco_markers_corner)
 
-        aruco_markers_position = []
         if 1 > corner_length:
-            return aruco_markers_position
+            return []
 
         rotation_vectors, translation_vectors, objects_points = cv2.aruco.estimatePoseSingleMarkers(
             aruco_markers_corner,
@@ -98,12 +94,14 @@ class ObstacleDetection(ArucoMarkers):
             distortion_coefficient
         )
 
-        aruco_markers_position = [
-            MarkerPosition()
+        aruco_markers_positions = [
+            MarkerPosition(
+                markers_points=object_point,
+                rotation_vector=rotation_vector,
+                translation_vector=translation_vector
+            )
+            for rotation_vector, translation_vector, object_point
+            in zip(rotation_vectors, translation_vectors, objects_points)
         ]
 
-
-
-
-obstacle = ObstacleDetection()
-obstacle.detect_obstacle("monde10.jpg")
+        return aruco_markers_positions

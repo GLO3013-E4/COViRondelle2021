@@ -10,4 +10,3 @@ class ObstaclePosition:
     def get_corner(self):
         return self.marker_corner
 
-
