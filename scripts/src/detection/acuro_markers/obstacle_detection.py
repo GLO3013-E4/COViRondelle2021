@@ -1,6 +1,9 @@
+from typing import List
+
 import cv2
 
-from scripts.src.detection.acuro_markers.AcuroMarkers import ArucoMarkers
+from AcuroMarkers import ArucoMarkers
+from obstacle_position import ObstaclePosition
 
 
 class ObstacleDetection(ArucoMarkers):
@@ -10,17 +13,21 @@ class ObstacleDetection(ArucoMarkers):
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
 
-        obstacles_position = []
+        print(image.shape)
+
 
         if image is None:
             return self.generate_empty_obstacle_position()
 
         (corners, ids, rejected) = cv2.aruco.detectMarkers(image, aruco_dict,
                                        parameters=aruco_params)
+        obstacles_position = []
+
 
         if len(corners) > 0:
             ids = ids.flatten()
             for (markerCorner, markerID) in zip(corners, ids):
+                obstacles_position.append(ObstaclePosition(markerID, markerCorner))
                 corners = markerCorner.reshape((4, 2))
                 (top_left_position, top_right_position, bottom_right_position,
                  bottom_left_position) = corners
@@ -39,15 +46,6 @@ class ObstacleDetection(ArucoMarkers):
                 center_x, center_y = self.generate_center_position(bottom_right_position,
                                                                    top_left_position)
 
-                obstacle_position = self.generate_obstacle_dict(top_right=top_right_position,
-                                                                top_left=top_left_position,
-                                                                bottom_right=bottom_right_position,
-                                                                bottom_left=bottom_left_position,
-                                                                obstacle_id=str(markerID),
-                                                                center_x=center_x,
-                                                                center_y=center_y
-                                                                )
-                obstacles_position.append(obstacle_position)
 
                 if DEBUG:
                     self.draw_center_position(center_x, center_y, image)
@@ -77,3 +75,35 @@ class ObstacleDetection(ArucoMarkers):
                 "bottom_left": (0, 0)
             }})
         return obstacle_position
+
+    def calculate_3D_position(self, obstacles_position: List[ObstaclePosition],
+                              aruco_marker_width,
+                              camera_matrix,
+                              distortion_coefficient):
+
+        aruco_markers_corner = [obstacle_position.get_corner()
+                                for obstacle_position in
+                                obstacles_position]
+
+        corner_length = len(aruco_markers_corner)
+
+        aruco_markers_position = []
+        if 1 > corner_length:
+            return aruco_markers_position
+
+        rotation_vectors, translation_vectors, objects_points = cv2.aruco.estimatePoseSingleMarkers(
+            aruco_markers_corner,
+            aruco_marker_width,
+            camera_matrix,
+            distortion_coefficient
+        )
+
+        aruco_markers_position = [
+            MarkerPosition()
+        ]
+
+
+
+
+obstacle = ObstacleDetection()
+obstacle.detect_obstacle("monde10.jpg")
