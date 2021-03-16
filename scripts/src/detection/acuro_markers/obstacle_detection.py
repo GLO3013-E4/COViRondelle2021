@@ -94,6 +94,9 @@ class ObstacleDetection(ArucoMarkers):
             distortion_coefficient
         )
 
+        print(rotation_vectors)
+        print(translation_vectors)
+
         aruco_markers_positions = [
             MarkerPosition(
                 markers_points=object_point,

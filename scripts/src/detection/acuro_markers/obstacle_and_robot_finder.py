@@ -17,32 +17,33 @@ class ObstacleRobotFinder:
         self.obstacle_height = 412 #mm
         self.aruco_marker_width = 100 # mm
         self.obstacle_pixel = 46
-        self.distortion_coefficients  = [
+        self.distortion_coefficients  = np.array(
+            [
+                [
+                    0.055764032942161694,
+                    -0.1700050453380352,
+                    -0.0028056916670508593,
+                    0.0006434607299710345,
+                    0.0331770702717552
+                ]
+        ])
+        self.camera_matrix = np.array([
         [
-            4.767177288453392,
-            0.016944982578597136,
-            0.009067230348369367,
-            0.03617489894832692,
-            8.084050600445835e-06
-        ]
-    ]
-        self.camera_matrix = [
-        [
-            20870.2343261594,
+            1321.5030177675765,
             0.0,
-            799.4716877771021
+            763.385168511886
         ],
         [
             0.0,
-            20966.11071161727,
-            452.15228742450336
+            1327.9592573621323,
+            494.93250836436187
         ],
         [
             0.0,
             0.0,
             1.0
         ]
-    ]
+    ])
 
     def detect_obstacle_position(self, image):
         script_dir = os.path.dirname(__file__)
@@ -50,7 +51,7 @@ class ObstacleRobotFinder:
         abs_file_path = os.path.join(script_dir, rel_path)
         image = cv2.imread(abs_file_path)
 
-        obstacles_position = self.obstacle_detection.detect_obstacle(image)
+        obstacles_position = self.obstacle_detection.detect_obstacle(image, DEBUG=False)
 
         obstacles_3d_positions = self.obstacle_detection\
             .calculate_3D_position(obstacles_position=obstacles_position,
@@ -60,7 +61,7 @@ class ObstacleRobotFinder:
 
         for marker_position in obstacles_3d_positions:
             marker_position.set_markers_points(np.array([[0.0, 0.0, self.obstacle_height]]))
-            marker_position.set_rotation_vector(np.array([[0.0, 0.0, 0.0, 0.0]]))
+            marker_position.set_rotation_vector(np.array([[0.0, 0.0, 0.0]]))
 
         image_copy = self.draw_obstacle_bottom(image=image, markers_position=obstacles_3d_positions)
 
@@ -77,7 +78,9 @@ class ObstacleRobotFinder:
 
         image_copy = image.copy()
 
+
         for marker_position in markers_position:
+            print(marker_position.get_rotation_vector())
             image_to_draw, _ = cv2.projectPoints(
                 marker_position.get_markers_points(),
                 marker_position.get_rotation_vector(),
