@@ -16,7 +16,6 @@ class Vectorizer:
 
     @staticmethod
     def smooth_path(path: [(int, int)]):
-        # TODO: c'est deg
         smoothed_path = []
 
         i = 0
