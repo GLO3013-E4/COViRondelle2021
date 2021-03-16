@@ -1,7 +1,7 @@
-from scripts.src.detection.position import Position
-from scripts.src.detection.table_detection import TableDetection
+from detection.position import Position
+from detection.table_detection import TableDetection
 
-A_VALID_IMAGE = "camera_monde_qr.jpg"
+A_VALID_IMAGE = "./detection/tests/images/camera_monde_qr.jpg"
 A_NUMBER_LOWER_THAN_AREA = 1100000
 A_NUMBER_IN_AREA = 1190000
 A_NUMBER_HIGHER_THAN_AREA = 1300000

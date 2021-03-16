@@ -1,6 +1,6 @@
 import cv2
 
-from scripts.src.detection.acuro_markers.AcuroMarkers import ArucoMarkers
+from detection.acuro_markers.AcuroMarkers import ArucoMarkers
 
 
 class ObstacleDetection(ArucoMarkers):
@@ -61,7 +61,6 @@ class ObstacleDetection(ArucoMarkers):
             if DEBUG:
                 self.show_image(image)
         return obstacles_position
-
 
     def get_acuro_dictionnary(self):
         return cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)

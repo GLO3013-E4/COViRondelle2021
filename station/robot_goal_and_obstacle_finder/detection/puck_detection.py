@@ -3,7 +3,7 @@ from collections import Counter
 import cv2
 import numpy as np
 from sklearn.cluster import KMeans
-from scripts.src.detection.color_boundaries import ColorBoundaries
+from detection.color_boundaries import ColorBoundaries
 
 
 class PuckDetection:

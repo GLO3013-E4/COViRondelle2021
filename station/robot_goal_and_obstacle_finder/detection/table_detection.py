@@ -1,8 +1,8 @@
 import cv2
 
 
-from scripts.src.detection.object_detection import ObjectDetection
-from scripts.src.detection.position import Position
+from detection.object_detection import ObjectDetection
+from detection.position import Position
 
 
 class TableDetection(ObjectDetection):

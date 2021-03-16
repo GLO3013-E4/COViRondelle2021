@@ -1,7 +1,7 @@
-from scripts.src.detection.puck_detection import PuckDetection
+from detection.puck_detection import PuckDetection
 
 puck_detection = PuckDetection()
-AN_IMAGE = "../../data/images/monde3.jpg"
+AN_IMAGE = "./detection/tests/images/monde3.jpg"
 puck_position = puck_detection.detect_puck(AN_IMAGE, "red", False)
 
 PURPLE_HSV = [130, 50, 100]

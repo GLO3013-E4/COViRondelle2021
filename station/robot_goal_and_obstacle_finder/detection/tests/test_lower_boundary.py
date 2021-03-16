@@ -1,4 +1,4 @@
-from scripts.src.detection.lower_boundary import LowerBoundary
+from detection.lower_boundary import LowerBoundary
 
 RED_COLOR = "red"
 BROWN_COLOR = "brown"

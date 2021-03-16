@@ -1,6 +1,7 @@
-from scripts.src.detection.acuro_markers.obstacle_detection import ObstacleDetection
+from detection.acuro_markers.obstacle_detection import ObstacleDetection
 
-A_IMAGE = "robot_5x5_five.jpg"
+
+A_IMAGE = "./detection/tests/images/robot_5x5_five.jpg"
 A_INVALID_IMAGE = "invalid_image.jpg"
 
 obstacle_detection = ObstacleDetection()

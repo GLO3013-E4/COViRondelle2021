@@ -1,8 +1,8 @@
 import os
 import cv2
 
-class ArucoMarkers:
 
+class ArucoMarkers:
     def capture_image_from_path(self, path):
         absolute_path = os.path.join(os.getcwd(), path)
         image = cv2.imread(absolute_path)

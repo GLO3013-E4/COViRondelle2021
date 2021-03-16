@@ -1,4 +1,5 @@
-from scripts.src.detection.upper_boundary import UpperBoundary
+from detection.upper_boundary import UpperBoundary
+
 
 RED_COLOR = "red"
 BLUE_COLOR = "blue"

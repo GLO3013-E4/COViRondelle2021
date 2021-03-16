@@ -1,7 +1,7 @@
-from scripts.src.detection.acuro_markers.robot_detection import RobotDetection
+from detection.acuro_markers.robot_detection import RobotDetection
 
 
-A_IMAGE = "robot_5x5_five.jpg"
+A_IMAGE = "./detection/tests/images/robot_5x5_five.jpg"
 A_INVALID_IMAGE = "invalid_image.jpg"
 
 robot_detection = RobotDetection()

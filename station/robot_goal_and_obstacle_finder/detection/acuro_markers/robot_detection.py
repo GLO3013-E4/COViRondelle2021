@@ -1,6 +1,6 @@
 import cv2
 
-from scripts.src.detection.acuro_markers.AcuroMarkers import ArucoMarkers
+from detection.acuro_markers.AcuroMarkers import ArucoMarkers
 
 
 class RobotDetection(ArucoMarkers):

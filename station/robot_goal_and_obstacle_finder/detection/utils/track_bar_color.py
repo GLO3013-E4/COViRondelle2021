@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import stack_images
+from dection.utils.stack_image import stackImages
 
 
 class TrackBarDetection:
@@ -39,7 +39,7 @@ class TrackBarDetection:
 
             image_result = cv2.bitwise_and(image_camera_monde, image_camera_monde, mask=mask)
 
-            image_stack = stack_images.stackImages(0.6, ([image_camera_monde, hsv_image], [mask, image_result]))
+            image_stack = stackImages(0.6, ([image_camera_monde, hsv_image], [mask, image_result]))
 
             cv2.imshow("Image hsv", image_stack)
 
