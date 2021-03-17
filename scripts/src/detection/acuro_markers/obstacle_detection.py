@@ -12,7 +12,6 @@ class ObstacleDetection(ArucoMarkers):
     def detect_obstacle(self, image, DEBUG=True):
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
-        print(image.shape)
         if image is None:
             return self.generate_empty_obstacle_position()
 
@@ -50,8 +49,6 @@ class ObstacleDetection(ArucoMarkers):
                             (top_left_position[0], top_left_position[1] - 15),
                                 cv2.FONT_HERSHEY_SIMPLEX,
                             0.5, (0, 255, 0), 2)
-                print("[INFO] ArUco marker ID: {}".format(markerID))
-            print(obstacles_position)
 
             if DEBUG:
                 self.show_image(image)
@@ -73,17 +70,16 @@ class ObstacleDetection(ArucoMarkers):
             }})
         return obstacle_position
 
-    def calculate_3D_position(self, obstacles_position: List[ObstaclePosition],
-                              aruco_marker_width,
-                              camera_matrix,
-                              distortion_coefficient) -> List[MarkerPosition]:
+    def calculate_obstacle_position(self, obstacles_position: List[ObstaclePosition],
+                                    aruco_marker_width,
+                                    camera_matrix,
+                                    distortion_coefficient) -> List[MarkerPosition]:
 
         aruco_markers_corner = [obstacle_position.get_corner()
                                 for obstacle_position in
                                 obstacles_position]
 
         corner_length = len(aruco_markers_corner)
-
         if 1 > corner_length:
             return []
 
@@ -93,9 +89,6 @@ class ObstacleDetection(ArucoMarkers):
             camera_matrix,
             distortion_coefficient
         )
-
-        print(rotation_vectors)
-        print(translation_vectors)
 
         aruco_markers_positions = [
             MarkerPosition(
