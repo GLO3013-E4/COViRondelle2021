@@ -63,7 +63,7 @@ class ObstacleRobotFinder:
             marker_position.set_markers_points(np.array([[0.0, 0.0, self.obstacle_height]]))
             marker_position.set_rotation_vector(np.array([[0.0, 0.0, 0.0]]))
 
-        image_copy, center_of_bottom_obstacle = self.draw_obstacle_bottom(image=image, markers_position=obstacles_3d_positions)
+        image_copy, center_of_bottom_obstacle = self.detect_bottom_of_obstacle(image=image, markers_position=obstacles_3d_positions)
 
         cv2.imshow("Est-ce que ca marche mon vieux max", image_copy)
         cv2.waitKey(0)
@@ -72,7 +72,7 @@ class ObstacleRobotFinder:
 
 
 
-    def draw_obstacle_bottom(self, markers_position: List[MarkerPosition], image):
+    def detect_bottom_of_obstacle(self, markers_position: List[MarkerPosition], image):
         if image is None:
             return []
 
