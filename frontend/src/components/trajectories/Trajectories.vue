@@ -141,7 +141,7 @@ const height = 904;
 const ratioX = 0.5;
 const ratioY = 0.5;
 
-const coordinatesToString = (trajectory: Array<Coordinate>): string => {
+const coordinatesToString = (trajectory: Array<Coordinate>) => {
   let points = '';
   trajectory.forEach(
     (coordinate) =>
