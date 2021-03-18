@@ -9,6 +9,7 @@ from scripts.src.pathfinding.tile_role import TileRole
 
 
 class AStar(PathfindingAlgorithm):
+    """https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode"""
     def find_path(self, start, end):
         heuristic = partial(distance, point2=end.pixel_coordinates_center)
         openSet = {start}
