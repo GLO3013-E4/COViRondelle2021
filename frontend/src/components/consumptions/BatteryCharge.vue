@@ -14,7 +14,7 @@
               :value="this.pourcentageBatteryLeft"
               color="light-blue"
             >
-              <h4 ref="batteryCharge"> {{ currentBatteryCharge }} Ah</h4>
+              <h4 ref="batteryCharge">{{ currentBatteryCharge }} Ah</h4>
             </v-progress-circular>
           </v-col>
           <v-col sm="6">
