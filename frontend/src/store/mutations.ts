@@ -10,7 +10,6 @@ import {
   SOCKET_REAL_TRAJECTORY_COORDINATE,
   SOCKET_GRIP_STATE,
   SOCKET_CURRENT_STEP,
-  SOCKET_CYCLE_READY,
 } from './mutation-types';
 import { defaultState, State } from './state';
 import { Message } from '@/types/message';
@@ -18,7 +17,6 @@ import { Step } from '@/types/step';
 
 export type Mutations<S = State> = {
   [START_CYCLE](state: S): void;
-  [SOCKET_CYCLE_READY](state: S): void;
   [SOCKET_ROBOT_CONSUMPTION](state: S, data: string): void;
   [SOCKET_TABLE_IMAGE](state: S, data: string): void;
   [SOCKET_RESISTANCE](state: S, data: string): void;
@@ -39,15 +37,11 @@ export const mutations: MutationTree<State> & Mutations = {
     state.currentStep = Step.CycleStarted;
     console.log(state);
   },
-  [SOCKET_CYCLE_READY](state: State) {
-    console.log('CYCLE_READY : Received!');
-    state.cycleReady = true;
-    console.log(state);
-  },
   [SOCKET_ROBOT_CONSUMPTION](state: State, data: string) {
     const message = toMessage(data);
     console.log('ROBOT_CONSUMPTION : Received!');
     console.log(message);
+    state.cycleReady = true;
     state.robotConsumption =
       message.robotConsumption || defaultState.robotConsumption;
     // TODO : When removing those values, remove this here

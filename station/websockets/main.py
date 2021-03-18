@@ -17,8 +17,8 @@ def to_json(data):
     return json.dumps(data)
 
 
-def handle_ready(_):
-    socket.emit("cycle_ready")
+def handle_robot_consumption(robot_consumption):
+    socket.emit("robot_consumption", robot_consumption.data)
 
 
 def handle_world_camera_image_raw(image):
@@ -71,7 +71,7 @@ def websockets():
     rospy.init_node("websockets", anonymous=True)
     rate = rospy.Rate(1)
 
-    rospy.Subscriber("ready", Bool, handle_ready)  # TODO : Change for robot consumption
+    rospy.Subscriber("robot_consumption", String, handle_robot_consumption)
     rospy.Subscriber("world_camera/image_raw", Image, handle_world_camera_image_raw)
     rospy.Subscriber("robot", Pose, handle_robot)
     rospy.Subscriber("path", Path, handle_path)
