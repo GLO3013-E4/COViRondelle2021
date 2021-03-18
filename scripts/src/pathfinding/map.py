@@ -36,14 +36,61 @@ class Map:
 
         self.node_matrix = []
 
+        self.table_walls_start_y = 40
+        self.table_walls_end_y = 810
+        self.table_walls_start_x = 0
+        self.table_walls_end_x = 1600
+
     def render_map(self):
         """Creates the nodes and generates the obstacles, pucks, start and end node."""
         self.create_nodes()
         self.connect_nodes()
+        self.add_table_walls()
         self.create_obstacles()
         self.create_pucks()
         self.create_start_node()
         self.create_end_node()
+
+    def add_top_wall(self, width):
+        start_wall_top = max(0, self.table_walls_start_y // self.node_size)
+        for row in range(
+                start_wall_top,
+                ((self.table_walls_start_y + width) // self.node_size) + 1):
+            for node in self.node_matrix[row]:
+                node.role = TileRole.OBSTACLE
+
+    def add_bottom_wall(self, width):
+        end_wall_bot = min(len(self.node_matrix), (self.table_walls_end_y // self.node_size)+1)
+        for row in range(
+                (self.table_walls_end_y - width) // self.node_size,
+                end_wall_bot):
+            for node in self.node_matrix[row]:
+                node.role = TileRole.OBSTACLE
+
+    def add_right_wall(self, width):
+        end_wall_right = min(len(self.node_matrix[0]), (self.table_walls_end_x//self.node_size)+1)
+        for column in range(
+                (self.table_walls_end_x - width) // self.node_size,
+                end_wall_right):
+            for row in range(len(self.node_matrix)):
+                node = self.get_node_from_matrix_coordinates((column, row))
+                node.role = TileRole.OBSTACLE
+
+    def add_left_wall(self, width):
+        start_wall_left = max(0, (self.table_walls_start_x // self.node_size))
+        for column in range(
+                start_wall_left,
+                ((self.table_walls_start_x + width)//self.node_size)+1):
+            for row in range(len(self.node_matrix)):
+                node = self.get_node_from_matrix_coordinates((column, row))
+                node.role = TileRole.OBSTACLE
+
+    def add_table_walls(self):
+        width = self.robot_width + self.safety_cushion
+        self.add_top_wall(width)
+        self.add_bottom_wall(width)
+        self.add_left_wall(width)
+        self.add_right_wall(width)
 
     def create_nodes(self):
         """Creates the matrix containing the nodes."""
@@ -136,17 +183,18 @@ class Map:
         if self.obstacle_representation is ObstacleRepresentation.RADIUS:
             radius = self.obstacle_cushion_width
             width, height = obstacle.pixel_coordinates_center
-            lower_range_column = min(0, ( (height-radius) // self.node_size))
-            lower_range_row = min(0, ( (width-radius) // self.node_size))
-            higher_range_column = max(len(self.node_matrix), ( (height+radius) // self.node_size) + 1)
-            higher_range_row = max(len(self.node_matrix[0]), ( (width+radius) // self.node_size) + 1)
+            lower_range_column = int(max(0, ((height-radius) // self.node_size)))
+            lower_range_row = int(max(0, ((width-radius) // self.node_size)))
+            higher_range_column = int(min(len(self.node_matrix), ((height+radius) // self.node_size) + 1))
+            higher_range_row = int(min(len(self.node_matrix[0]), ((width+radius) // self.node_size) + 1))
 
             for column in range(lower_range_column, higher_range_column):
                 for row in range(lower_range_row, higher_range_row):
                     node = self.get_node_from_matrix_coordinates((row, column))
                     distance = get_distance(obstacle.pixel_coordinates_center, node.pixel_coordinates_center)
                     if distance < radius:
-                        node.role = TileRole.OBSTACLE
+                        node.role = TileRole.CUSHION
+            obstacle.role = TileRole.OBSTACLE
 
         elif self.obstacle_representation is ObstacleRepresentation.DIAGONAL:
             obstacle.role = TileRole.OBSTACLE
@@ -167,17 +215,18 @@ class Map:
         if self.obstacle_representation is ObstacleRepresentation.RADIUS:
             radius = self.obstacle_puck_width
             width, height = puck.pixel_coordinates_center
-            lower_range_column = min(0, ((height - radius) // self.node_size))
-            lower_range_row = min(0, ((width - radius) // self.node_size))
-            higher_range_column = max(len(self.node_matrix), ((height + radius) // self.node_size) + 1)
-            higher_range_row = max(len(self.node_matrix[0]), ((width + radius) // self.node_size) + 1)
+            lower_range_column = int(max(0, ((height - radius) // self.node_size)))
+            lower_range_row = int(max(0, ((width - radius) // self.node_size)))
+            higher_range_column = int(min(len(self.node_matrix), ((height + radius) // self.node_size) + 1))
+            higher_range_row = int(min(len(self.node_matrix[0]), ((width + radius) // self.node_size) + 1))
 
             for column in range(lower_range_column, higher_range_column):
                 for row in range(lower_range_row, higher_range_row):
                     node = self.get_node_from_matrix_coordinates((row, column))
                     distance = get_distance(puck.pixel_coordinates_center, node.pixel_coordinates_center)
                     if distance < radius:
-                        node.role = TileRole.OBSTACLE
+                        node.role = TileRole.CUSHION
+            puck.role = TileRole.PUCK
         elif self.obstacle_representation is ObstacleRepresentation.DIAGONAL:
             puck.role = TileRole.PUCK
 
