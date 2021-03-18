@@ -1,8 +1,8 @@
+import os
 import math
 from typing import List
 import numpy as np
 import cv2
-import os
 
 from obstacle_detection import ObstacleDetection
 from robot_detection import RobotDetection
