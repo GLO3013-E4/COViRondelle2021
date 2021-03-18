@@ -6,7 +6,7 @@ from geometry_msgs.msg import Pose
 def create_robot_pose():
     pose = Pose()
     pose.position.x = random.randint(100, 1500)
-    pose.position.y = random.randint(100, 814)
+    pose.position.y = random.randint(100, 804)
     return pose
 
 

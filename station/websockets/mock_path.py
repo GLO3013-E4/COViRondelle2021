@@ -11,7 +11,7 @@ def create_path():
     for pose in range(0, poses_amount):
         pose = Pose()
         pose.position.x = random.randint(100, 1500)
-        pose.position.y = random.randint(100, 814)
+        pose.position.y = random.randint(100, 804)
 
         path.poses.append(pose)
 
