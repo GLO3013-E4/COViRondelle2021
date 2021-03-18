@@ -7,7 +7,7 @@ from scripts.src.detection.acuro_markers.aruco_position import ArucoPosition
 
 class RobotDetection(ArucoMarkers):
 
-    def detect_aruco_marker_on_robot(self, image, camera_matrix, distorsion_coefficient, DEBUG=True):
+    def detect_aruco_marker_on_robot(self, image, DEBUG=True):
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
 
@@ -17,9 +17,7 @@ class RobotDetection(ArucoMarkers):
         robot_position = {}
 
         (corners, ids, rejected) = cv2.aruco.detectMarkers(image, aruco_dict,
-                                                           parameters=aruco_params,
-                                                           cameraMatrix=camera_matrix,
-                                                           distCoeff=distorsion_coefficient)
+                                                           parameters=aruco_params)
 
         position = None
         if len(corners) > 0:

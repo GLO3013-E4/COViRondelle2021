@@ -2,9 +2,9 @@ from typing import List
 
 import cv2
 
-from AcuroMarkers import ArucoMarkers
-from aruco_position import ArucoPosition
-from marker_position import MarkerPosition
+from scripts.src.detection.acuro_markers.AcuroMarkers import ArucoMarkers
+from scripts.src.detection.acuro_markers.aruco_position import ArucoPosition
+from scripts.src.detection.acuro_markers.marker_position import MarkerPosition
 
 
 class ObstacleDetection(ArucoMarkers):
