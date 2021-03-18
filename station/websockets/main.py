@@ -71,7 +71,7 @@ def websockets():
     rospy.init_node("websockets", anonymous=True)
     rate = rospy.Rate(1)
 
-    rospy.Subscriber("ready", Bool, handle_ready)
+    rospy.Subscriber("ready", Bool, handle_ready)  # TODO : Change for robot consumption
     rospy.Subscriber("world_camera/image_raw", Image, handle_world_camera_image_raw)
     rospy.Subscriber("robot", Pose, handle_robot)
     rospy.Subscriber("path", Path, handle_path)
