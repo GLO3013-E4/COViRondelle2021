@@ -256,3 +256,98 @@ class TestMap:
         node = self.map.get_node_from_matrix_coordinates(self.A_MATRIX_POSITION)
 
         assert node.matrix_center == self.EXPECTED_MATRIX_POSITION
+
+    def test_when_add_top_wall_then_there_are_obstacles_at_the_top(self):
+        self.map.create_nodes()
+        self.map.connect_nodes()
+        width = "BLEH"
+
+        self.map.add_top_wall(width)
+
+        assert "" is False
+
+    def test_when_add_bottom_wall_then_there_are_obstacles_at_the_bottom(self):
+        self.map.create_nodes()
+        self.map.connect_nodes()
+        width = "BLEH"
+
+        self.map.add_top_wall(width)
+
+        assert "" is False
+
+    def test_when_add_left_wall_then_there_are_obstacles_to_the_left(self):
+        self.map.create_nodes()
+        self.map.connect_nodes()
+        width = "BLEH"
+
+        self.map.add_top_wall(width)
+
+        assert "" is False
+
+    def test_when_add_right_wall_then_there_are_obstacles_to_the_right(self):
+        self.map.create_nodes()
+        self.map.connect_nodes()
+        width = "BLEH"
+
+        self.map.add_top_wall(width)
+
+        assert "" is False
+
+    def test_when_create_round_obstacle_then_the_obstacle_is_round(self):
+        self.map.create_nodes()
+        self.map.connect_nodes()
+        node = self.map.get_node_from_matrix_coordinates((30, 30))
+        width = "BLEH"
+        role = TileRole.OBSTACLE
+
+        self.map.create_round_obstacle(node, width, role)
+
+        assert True is False
+
+    def test_when_create_square_obstacle_then_the_obstacle_is_square(self):
+        self.map.create_nodes()
+        self.map.connect_nodes()
+        node = self.map.get_node_from_matrix_coordinates((30, 30))
+        width = "BLEH"
+        role = TileRole.OBSTACLE
+
+        self.map.create_round_obstacle(node, width, role)
+
+        assert True is False
+
+    def test_when_create_diagonal_obstacle_then_the_obstacle_is_a_diamond(self):
+        self.map.create_nodes()
+        self.map.connect_nodes()
+        node = self.map.get_node_from_matrix_coordinates((30, 30))
+        width = "BLEH"
+        role = TileRole.OBSTACLE
+
+        self.map.create_round_obstacle(node, width, role)
+
+        assert True is False
+
+    def test_when_set_obstacle_then_an_obstacle_is_set(self):
+        self.map.create_nodes()
+        self.map.connect_nodes()
+        node = self.map.get_node_from_matrix_coordinates((30, 30))
+
+        self.map.set_obstacle(node)
+
+        assert True is False
+
+    def test_when_set_puck_then_a_puck_is_set(self):
+        self.map.create_nodes()
+        self.map.connect_nodes()
+        node = self.map.get_node_from_matrix_coordinates((30, 30))
+
+        self.map.set_puck(node)
+
+        assert True is False
+
+    def test_when_add_table_walls_then_there_are_obstacles_all_around(self):
+        self.map.create_nodes()
+        self.map.connect_nodes()
+
+        self.map.add_table_walls()
+
+        assert True is False

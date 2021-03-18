@@ -179,8 +179,8 @@ class Map:
             node = self.get_node_from_pixel(pixel_position)
             self.set_puck(node)
 
-    def create_round_object(self, object, radius, role):
-        width, height = object.pixel_coordinates_center
+    def create_round_obstacle(self, obstacle, radius, role):
+        width, height = obstacle.pixel_coordinates_center
         lower_range_column = int(max(0, ((height - radius) // self.node_size)))
         lower_range_row = int(max(0, ((width - radius) // self.node_size)))
         higher_range_column = int(min(len(self.node_matrix), ((height + radius) // self.node_size) + 1))
@@ -189,13 +189,13 @@ class Map:
         for column in range(lower_range_column, higher_range_column):
             for row in range(lower_range_row, higher_range_row):
                 node = self.get_node_from_matrix_coordinates((row, column))
-                distance = get_distance(object.pixel_coordinates_center, node.pixel_coordinates_center)
+                distance = get_distance(obstacle.pixel_coordinates_center, node.pixel_coordinates_center)
                 if distance < radius:
                     node.role = TileRole.CUSHION
-        object.role = role
+        obstacle.role = role
 
-    def create_square_object(self, object, length, role):
-        width, height = object.pixel_coordinates_center
+    def create_square_obstacle(self, obstacle, length, role):
+        width, height = obstacle.pixel_coordinates_center
         lower_range_column = int(max(0, ((height - length) // self.node_size)))
         lower_range_row = int(max(0, ((width - length) // self.node_size)))
         higher_range_column = int(min(len(self.node_matrix), ((height + length) // self.node_size) + 1))
@@ -205,9 +205,9 @@ class Map:
             for row in range(lower_range_row, higher_range_row):
                 node = self.get_node_from_matrix_coordinates((row, column))
                 node.role = TileRole.CUSHION
-        object.role = role
+        obstacle.role = role
 
-    def create_diagonal_object(self, obstacle, cushion, role):
+    def create_diagonal_obstacle(self, obstacle, cushion, role):
         obstacle.role = role
 
         distance = (cushion // self.node_size) + 1
@@ -215,25 +215,25 @@ class Map:
 
     def set_obstacle(self, obstacle):
         if self.obstacle_representation is ObstacleRepresentation.RADIUS:
-            self.create_round_object(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
+            self.create_round_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
 
         elif self.obstacle_representation is ObstacleRepresentation.DIAGONAL:
-            self.create_diagonal_object(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
+            self.create_diagonal_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
 
         elif self.obstacle_representation is ObstacleRepresentation.SQUARE:
-            self.create_square_object(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
+            self.create_square_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
         else:
-            self.create_round_object(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
+            self.create_round_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
 
     def set_puck(self, puck):
         if self.obstacle_representation is ObstacleRepresentation.RADIUS:
-            self.create_round_object(puck, self.obstacle_puck_width, TileRole.PUCK)
+            self.create_round_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK)
         elif self.obstacle_representation is ObstacleRepresentation.DIAGONAL:
-            self.create_diagonal_object(puck, self.obstacle_puck_width, TileRole.PUCK)
+            self.create_diagonal_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK)
         elif self.obstacle_representation is ObstacleRepresentation.SQUARE:
-            self.create_square_object(puck, self.obstacle_puck_width, TileRole.PUCK)
+            self.create_square_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK)
         else:
-            self.create_round_object(puck, self.obstacle_puck_width, TileRole.PUCK)
+            self.create_round_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK)
 
     def create_start_node(self):
         """Specifies which node should be considered as the starting node."""
