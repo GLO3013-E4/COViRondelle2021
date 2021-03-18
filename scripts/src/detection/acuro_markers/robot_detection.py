@@ -1,12 +1,14 @@
 import cv2
 
 from scripts.src.detection.acuro_markers.AcuroMarkers import ArucoMarkers
+from scripts.src.detection.acuro_markers.marker_position import MarkerPosition
+from scripts.src.detection.acuro_markers.obstacle_position import ObstaclePosition
+from scripts.src.detection.acuro_markers.robot_position import RobotPosition
 
 
 class RobotDetection(ArucoMarkers):
 
-    def detect_robot(self, image, DEBUG=True):
-        image = self.capture_image_from_path(image)
+    def detect_robot(self, image, camera_matrix, distorsion_coefficient, DEBUG=True):
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
 
@@ -15,10 +17,12 @@ class RobotDetection(ArucoMarkers):
             return self.generate_empty_robot_position()
 
         (corners, ids, rejected) = cv2.aruco.detectMarkers(image, aruco_dict,
-                                       parameters=aruco_params)
+                                       parameters=aruco_params, cameraMatrix=camera_matrix, distCoeff=distorsion_coefficient)
+        position = None
         if len(corners) > 0:
             ids = ids.flatten()
             for (markerCorner, markerID) in zip(corners, ids):
+                position = ObstaclePosition(markerID, markerCorner)
                 corners = markerCorner.reshape((4, 2))
                 (top_left_position, top_right_position, bottom_right_position,
                  bottom_left_position) = corners
@@ -56,8 +60,7 @@ class RobotDetection(ArucoMarkers):
             if DEBUG:
                 self.show_image(image)
 
-        print(robot_position)
-        return robot_position
+        return robot_position, position
 
     def generate_robot_position(self, bottom_left_position, bottom_right_position,
                                 center_x,
@@ -82,3 +85,28 @@ class RobotDetection(ArucoMarkers):
             "bottom_right": (0, 0),
             "bottom_left": (0, 0)
         }
+
+    def calculate_robot_position(self, robot_position: RobotPosition,
+                                 aruco_marker_width,
+                                 camera_matrix,
+                                 distortion_coefficient) -> MarkerPosition:
+
+        aruco_marker_corner = robot_position.get_corner()
+
+
+
+        rotation_vector, translation_vector, objects_point = cv2.aruco.estimatePoseSingleMarkers(
+            aruco_marker_corner,
+            aruco_marker_width,
+            camera_matrix,
+            distortion_coefficient
+        )
+
+        aruco_marker_position = MarkerPosition(
+                markers_points=objects_point,
+                rotation_vector=rotation_vector,
+                translation_vector=translation_vector
+            )
+
+
+        return aruco_marker_position

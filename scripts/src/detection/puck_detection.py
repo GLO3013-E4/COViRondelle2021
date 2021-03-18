@@ -2,9 +2,10 @@ import os
 from collections import Counter
 import cv2
 import numpy as np
+from numpy.testing import measure
 from sklearn.cluster import KMeans
 from scripts.src.detection.color_boundaries import ColorBoundaries
-
+from skimage import measure
 
 class PuckDetection:
 
@@ -19,21 +20,52 @@ class PuckDetection:
             raise AttributeError("L'image est invalide") from invalid_image
         return img
 
+    def create_mask(self,image):
+        gray = cv2.cvtColor( image, cv2.COLOR_BGR2GRAY )
+        blurred = cv2.GaussianBlur( gray, (9,9), 0 )
+        _,thresh_img = cv2.threshold( blurred, 180, 255, cv2.THRESH_BINARY)
+        thresh_img = cv2.erode( thresh_img, None, iterations=2 )
+        thresh_img  = cv2.dilate( thresh_img, None, iterations=4 )
+        labels = measure.label( thresh_img, background=0 )
+        mask = np.zeros( thresh_img.shape, dtype="uint8" )
+        for label in np.unique( labels ):
+            if label == 0:
+                continue
+            labelMask = np.zeros( thresh_img.shape, dtype="uint8" )
+            labelMask[labels == label] = 255
+            numPixels = cv2.countNonZero( labelMask )
+            if numPixels > 300:
+                mask = cv2.add( mask, labelMask )
+        return mask
+
     def detect_puck(self, image, color, Debug=True):
         script_dir = os.path.dirname(__file__)
         rel_path = image
         abs_file_path = os.path.join(script_dir, rel_path)
         img = cv2.imread(abs_file_path)
+
+        mask = self.create_mask(img)
+        dst = cv2.inpaint( img, mask,2,cv2.INPAINT_TELEA)
+        cv2.imshow("???", dst)
+        cv2.waitKey(0)
+
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = cv2.medianBlur(gray, 5)
 
-        circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 10, param1=50,
+        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+        cl1 = clahe.apply(gray)
+        cv2.imshow('erwg',cl1)
+        cv2.waitKey(0)
+
+        circles = cv2.HoughCircles(cl1, cv2.HOUGH_GRADIENT, 1.2, 10, param1=50,
                                    param2=30, minRadius=25,maxRadius=30)
         detected_circles = np.uint16(np.around(circles))
 
         puck_position = {}
+        puck_radius = 0
 
         for (x, y, radius) in detected_circles[0].astype(np.int32):
+            puck_radius = radius
             roi = img[y - radius: y + radius, x - radius: x + radius]
             width, height = roi.shape[:2]
             mask = np.zeros((width, height, 3), roi.dtype)
@@ -49,9 +81,11 @@ class PuckDetection:
                 puck_position["center_position"] = (x, y)
                 puck_position["radius"] = radius
                 if Debug:
+                    self.draw_on_image(hsv_color, img, radius, x, y)
+                    self.show_image(img)
                     print("Debug mode is on")
                 break
-        return puck_position
+        return puck_position, puck_radius
 
     def show_image(self, output):
         cv2.imshow('output', output)
@@ -89,3 +123,9 @@ class PuckDetection:
                     <= boundaries["upper"][2]:
                 return color
         return "None"
+
+
+puck_detection = PuckDetection()
+puck_detection.detect_puck("robot_obstacles3.jpg", "black")
+
+

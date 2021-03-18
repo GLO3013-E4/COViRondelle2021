@@ -1,5 +1,4 @@
-from math import atan2, degrees
-
+from math import atan2, degrees, radians
 
 class PositionCalculator:
 
@@ -11,8 +10,8 @@ class PositionCalculator:
 
     @staticmethod
     def calculate_difference_of_x(position_one, position_two):
-        return position_two.get_position_x() - position_one.get_position_x()
+        return position_two[0] - position_one[0]
 
     @staticmethod
     def calculate_difference_of_y(position_one, position_two):
-        return position_two.get_position_y() - position_one.get_position_y()
+        return -(position_two[1] - position_one[1])

@@ -3,11 +3,6 @@ import cv2
 
 class ArucoMarkers:
 
-    def capture_image_from_path(self, path):
-        absolute_path = os.path.join(os.getcwd(), path)
-        image = cv2.imread(absolute_path)
-        return image
-
     def generate_center_position(self, bottom_right_position, top_left_position):
         center_x = int((top_left_position[0] + bottom_right_position[0]) / 2.0)
         center_y = int((top_left_position[1] + bottom_right_position[1]) / 2.0)
