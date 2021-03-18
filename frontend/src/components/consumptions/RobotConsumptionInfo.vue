@@ -15,7 +15,6 @@
             <h5>{{ $t(`consumptions.wheel4`) }} : {{ wheel4Info }}</h5>
           </v-col>
           <v-col sm="12" class="servoMotorAndTotal">
-            <h5>{{ $t(`consumptions.servoMotor`) }} : {{ servoMotorInfo }}</h5>
             <h5>{{ $t(`consumptions.total`) }} : {{ totalInfo }}</h5>
           </v-col>
         </v-row>
@@ -31,7 +30,7 @@ import { mapState } from 'vuex';
 
 @Component({
   computed: {
-    ...mapState(['robotConsumption', 'batteryConsumption']),
+    ...mapState(['robotConsumption']),
   },
 })
 export default class BatteryCharge extends Vue {
@@ -48,9 +47,6 @@ export default class BatteryCharge extends Vue {
   }
   public get wheel4Info() {
     return this.formatInfo(this.robotConsumption.wheel4);
-  }
-  public get servoMotorInfo() {
-    return this.formatInfo(this.robotConsumption.servoMotor);
   }
   public get totalInfo() {
     return this.formatInfo(this.robotConsumption.total);

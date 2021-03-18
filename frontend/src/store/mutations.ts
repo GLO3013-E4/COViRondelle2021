@@ -2,7 +2,6 @@ import { MutationTree } from 'vuex/types';
 import {
   START_CYCLE,
   SOCKET_ROBOT_CONSUMPTION,
-  SOCKET_BATTERY_CONSUMPTION,
   SOCKET_TABLE_IMAGE,
   SOCKET_RESISTANCE,
   SOCKET_PUCK_COLORS,
@@ -21,7 +20,6 @@ export type Mutations<S = State> = {
   [START_CYCLE](state: S): void;
   [SOCKET_CYCLE_READY](state: S): void;
   [SOCKET_ROBOT_CONSUMPTION](state: S, data: string): void;
-  [SOCKET_BATTERY_CONSUMPTION](state: S, data: string): void;
   [SOCKET_RESISTANCE](state: S, data: string): void;
   [SOCKET_PUCK_COLORS](state: S, data: string): void;
   [SOCKET_PUCK_FIRST_CORNER](state: S, data: string): void;
@@ -45,11 +43,6 @@ export const mutations: MutationTree<State> & Mutations = {
     state.robotConsumption =
       message.robotConsumption || defaultState.robotConsumption;
   },
-  [SOCKET_BATTERY_CONSUMPTION](state: State, data: string) {
-    const message = toMessage(data);
-    state.batteryConsumption =
-      message.batteryConsumption || defaultState.batteryConsumption;
-  },
   [SOCKET_TABLE_IMAGE](state: State, data: string) {
     const message = toMessage(data);
     state.tableImage = message.tableImage || defaultState.tableImage;
@@ -70,8 +63,12 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [SOCKET_PLANNED_TRAJECTORY_COORDINATES](state: State, data: string) {
     const message = toMessage(data);
-    if (message.plannedTrajectoryCoordinates)
+    if (message.plannedTrajectoryCoordinates) {
       state.plannedTrajectory.push(...message.plannedTrajectoryCoordinates);
+      state.currentPlannedTrajectory =
+        message.plannedTrajectoryCoordinates ||
+        defaultState.currentPlannedTrajectory;
+    }
   },
   [SOCKET_REAL_TRAJECTORY_COORDINATE](state: State, data: string) {
     const message = toMessage(data);

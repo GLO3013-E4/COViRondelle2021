@@ -4,9 +4,14 @@ import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 
 describe('Given state', () => {
   const state = {
-    batteryConsumption: {
-      batteryChargeLeft: 0,
-      batteryRemainingTimeInSeconds: 60,
+    robotConsumption: {
+      wheel1: 0,
+      wheel2: 0,
+      wheel3: 0,
+      wheel4: 0,
+      total: 0,
+      remainingTime: 60,
+      batteryCharge: 0,
     },
   } as State;
 

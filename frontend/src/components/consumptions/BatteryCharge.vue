@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { BatteryConsumption } from '@/types/batteryConsumption';
+import { RobotConsumption } from '@/types/robotConsumption';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import RemainingTime from '../consumptions/RemainingTime.vue';
@@ -37,24 +37,20 @@ import RemainingTime from '../consumptions/RemainingTime.vue';
 @Component({
   components: { RemainingTime: RemainingTime },
   computed: {
-    ...mapState(['batteryConsumption']),
+    ...mapState(['robotConsumption']),
   },
 })
 export default class BatteryCharge extends Vue {
-  public batteryConsumption!: BatteryConsumption;
+  public robotConsumption!: RobotConsumption;
   public maximumCharge = 8;
   public trailingDecimals = 3;
 
   private get currentBatteryCharge() {
-    return this.batteryConsumption.batteryChargeLeft.toFixed(
-      this.trailingDecimals
-    );
+    return this.robotConsumption.batteryCharge.toFixed(this.trailingDecimals);
   }
 
   private get pourcentageBatteryLeft() {
-    return (
-      (this.batteryConsumption.batteryChargeLeft / this.maximumCharge) * 100
-    );
+    return (this.robotConsumption.batteryCharge / this.maximumCharge) * 100;
   }
 }
 </script>

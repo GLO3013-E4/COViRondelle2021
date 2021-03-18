@@ -5,20 +5,20 @@
 </template>
 
 <script lang="ts">
-import { BatteryConsumption } from '@/types/batteryConsumption';
+import { RobotConsumption } from '@/types/robotConsumption';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 
 @Component({
   computed: {
-    ...mapState(['batteryConsumption']),
+    ...mapState(['robotConsumption']),
   },
 })
 export default class RemainingTime extends Vue {
-  public batteryConsumption!: BatteryConsumption;
+  public robotConsumption!: RobotConsumption;
 
   private get timeInSeconds() {
-    return this.batteryConsumption.batteryRemainingTimeInSeconds;
+    return this.robotConsumption.remainingTime;
   }
 
   private get formatedTime() {

@@ -10,8 +10,9 @@ describe('Given state', () => {
       wheel2: 0,
       wheel3: 0,
       wheel4: 0,
-      servoMotor: 0,
       total: 0,
+      remainingTime: 0,
+      batteryCharge: 0,
     } as RobotConsumption,
   } as State;
 
@@ -23,7 +24,7 @@ describe('Given state', () => {
       const everyConsumption = consumptions.findAll('h5');
 
       expect(everyConsumption.exists()).toBe(true);
-      expect(everyConsumption).toHaveLength(6);
+      expect(everyConsumption).toHaveLength(5);
     });
   });
 });
