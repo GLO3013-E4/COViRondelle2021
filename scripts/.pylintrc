@@ -21,6 +21,7 @@ disable=
     R1729, # use-a-generator
     R0914, # too-many-locals
     E1136, # unsubscriptable-object
+    E1126, # invalid-sequence-index
 
 ignore=
     Dockerfile,

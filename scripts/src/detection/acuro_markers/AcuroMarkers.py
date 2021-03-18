@@ -1,5 +1,5 @@
-import os
 import cv2
+
 
 class ArucoMarkers:
 
@@ -43,7 +43,7 @@ class ArucoMarkers:
     def generate_obstacle_dict(self, top_right, top_left, bottom_right, bottom_left,
                                obstacle_id, center_x, center_y):
         obstacle_report = {
-            f"obstacle {obstacle_id}" : {
+            f"obstacle {obstacle_id}": {
             "center": (center_x, center_y),
             "top_right": top_right,
             "top_left": top_left,

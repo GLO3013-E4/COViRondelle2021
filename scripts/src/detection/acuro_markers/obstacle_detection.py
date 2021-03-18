@@ -53,7 +53,7 @@ class ObstacleDetection(ArucoMarkers):
 
         corner_length = len(aruco_markers_corner)
 
-        if 1 > corner_length:
+        if corner_length < 1:
             return []
 
         rotation_vectors, translation_vectors, objects_points = cv2.aruco.estimatePoseSingleMarkers(

@@ -1,5 +1,6 @@
-from scripts.src.detection.position_calculator import PositionCalculator
 from math import pi
+from scripts.src.detection.position_calculator import PositionCalculator
+
 
 A_POINT = (700, 300)
 ANOTHER_POINT = (900, 450)

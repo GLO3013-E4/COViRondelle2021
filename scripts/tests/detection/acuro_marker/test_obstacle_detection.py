@@ -39,7 +39,3 @@ def test_generate_empty_obstacle_position():
     assert len(obstacle_1) == 5
     assert len(obstacle_2) == 5
     assert obstacle_1["center"] == (0, 0)
-
-
-
-

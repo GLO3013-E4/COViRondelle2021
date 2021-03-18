@@ -1,5 +1,6 @@
-from scripts.src.detection.acuro_markers.robot_detection import RobotDetection
 import cv2
+from scripts.src.detection.acuro_markers.robot_detection import RobotDetection
+
 
 A_IMAGE = "robot_5x5_five.jpg"
 A_READ_IMAGE = cv2.imread(A_IMAGE)
