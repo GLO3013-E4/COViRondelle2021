@@ -1,13 +1,19 @@
 import BatteryCharge from '@/components/consumptions/BatteryCharge.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import { State } from '@/store/state';
+import { RobotConsumption } from '@/types/robotConsumption';
 
 describe('Given state', () => {
   const state = {
     robotConsumption: {
-      batteryChargeLeft: 4.0,
-      batteryRemainingTimeInSeconds: 0,
-    },
+      wheel1: 0,
+      wheel2: 0,
+      wheel3: 0,
+      wheel4: 0,
+      total: 0,
+      remainingTime: 0,
+      batteryCharge: 4,
+    } as RobotConsumption,
   } as State;
 
   describe('When mounting BatteryCharge', () => {
