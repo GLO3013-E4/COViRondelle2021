@@ -193,13 +193,8 @@ class ObstacleRobotFinder:
         return image_copy, center_of_bottom_of_robot, prehenseur_position
 
 
-
 AN_IMAGE = "robot_obstacles6.jpg"
 obstacle_robot_finder = ObstacleRobotFinder()
 obstacle_position = obstacle_robot_finder.detect_obstacle_position(image=AN_IMAGE, DEBUG=True)
-print(obstacle_position)
 
-x, y, r = obstacle_robot_finder.detect_robot(AN_IMAGE, True)
-print(x, y, r)
-
-
+x, y, angle = obstacle_robot_finder.detect_robot(AN_IMAGE, True)

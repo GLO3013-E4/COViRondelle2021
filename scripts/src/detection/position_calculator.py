@@ -1,5 +1,4 @@
-import math
-from math import atan2
+from math import atan2, pi
 
 
 class PositionCalculator:
@@ -18,5 +17,5 @@ class PositionCalculator:
 
     def convert_negative_to_positive(self, angle):
         if angle < 0:
-            angle += 2*math.pi
+            angle += 2*pi
         return angle
