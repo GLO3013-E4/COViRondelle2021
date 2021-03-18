@@ -134,58 +134,70 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Coordinate } from '@/types/coordinate';
 import { mapState } from 'vuex';
-import { State } from '@/store/state';
-
-const width = 1600;
-const height = 904;
-const ratioX = 0.5;
-const ratioY = 0.5;
-
-const coordinatesToString = (trajectory: Array<Coordinate>) => {
-  let points = '';
-  trajectory.forEach(
-    (coordinate) =>
-      (points += `${coordinate.x * ratioX},${coordinate.y * ratioY} `)
-  );
-  return points;
-};
 
 @Component({
-  computed: {
-    rescaledWidth: () => width * ratioX,
-    rescaledHeight: () => height * ratioY,
-    ...mapState({
-      tableImage: (state: State) => state.tableImage,
-      plannedTrajectoryPoints: (state: State) =>
-        coordinatesToString(state.plannedTrajectory),
-      realTrajectoryPoints: (state: State) =>
-        coordinatesToString(state.realTrajectory),
-      startPointX: (state: State) =>
-        state.plannedTrajectory[0] ? state.plannedTrajectory[0].x * ratioX : 0,
-      startPointY: (state: State) =>
-        state.plannedTrajectory[0] ? state.plannedTrajectory[0].y * ratioY : 0,
-      destinationPointX: (state: State) =>
-        state.plannedTrajectory[state.plannedTrajectory.length - 1]
-          ? state.plannedTrajectory[state.plannedTrajectory.length - 1].x *
-            ratioX
-          : 0,
-      destinationPointY: (state: State) =>
-        state.plannedTrajectory[state.plannedTrajectory.length - 1]
-          ? state.plannedTrajectory[state.plannedTrajectory.length - 1].y *
-            ratioY
-          : 0,
-    }),
-  },
+  computed: mapState(['tableImage', 'plannedTrajectory', 'realTrajectory']),
 })
 export default class Trajectories extends Vue {
-  private rescaledWidth!: number;
-  private rescaledHeight!: number;
   private tableImage!: string;
-  private plannedTrajectoryPoints!: string;
-  private realTrajectoryPoints!: string;
-  private startPointX!: number;
-  private startPointY!: number;
-  private destinationPointX!: number;
-  private destinationPointY!: number;
+  private plannedTrajectory!: Array<Coordinate>;
+  private realTrajectory!: Array<Coordinate>;
+  private readonly width = 1600;
+  private readonly height = 904;
+  private readonly ratioX = 0.5;
+  private readonly ratioY = 0.5;
+
+  private get rescaledWidth() {
+    return this.width * this.ratioX;
+  }
+
+  private get rescaledHeight() {
+    return this.height * this.ratioY;
+  }
+
+  private get plannedTrajectoryPoints() {
+    return this.coordinatesToString(this.plannedTrajectory);
+  }
+
+  private get realTrajectoryPoints() {
+    return this.coordinatesToString(this.realTrajectory);
+  }
+
+  private get startPointX() {
+    return this.plannedTrajectory[0]
+      ? this.plannedTrajectory[0].x * this.ratioX
+      : 0;
+  }
+
+  private get startPointY() {
+    return this.plannedTrajectory[0]
+      ? this.plannedTrajectory[0].y * this.ratioY
+      : 0;
+  }
+
+  private get destinationPointX() {
+    return this.plannedTrajectory[this.plannedTrajectory.length - 1]
+      ? this.plannedTrajectory[this.plannedTrajectory.length - 1].x *
+          this.ratioX
+      : 0;
+  }
+
+  private get destinationPointY() {
+    return this.plannedTrajectory[this.plannedTrajectory.length - 1]
+      ? this.plannedTrajectory[this.plannedTrajectory.length - 1].y *
+          this.ratioY
+      : 0;
+  }
+
+  private coordinatesToString(trajectory: Array<Coordinate>) {
+    let points = '';
+    trajectory.forEach(
+      (coordinate) =>
+        (points += `${coordinate.x * this.ratioX},${
+          coordinate.y * this.ratioY
+        } `)
+    );
+    return points;
+  }
 }
 </script>
