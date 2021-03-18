@@ -1,8 +1,6 @@
 import math
 
-# TODO: SUPER IMPORTANT QUE CE SOIT LE MÊME QUE LUI DANS LE NOEUD DE PATHFINDING.
-# TODO: QU'EST-CE QU'ON DEVRAIT FAIRE POUR S'ASSURER QUE C'EST LE MÊME
-NODE_SIZE = 15
+from scripts.src.path_following.config import NODE_SIZE
 
 
 class Vectorizer:
@@ -53,13 +51,6 @@ class Vectorizer:
         return minimized_vectors
 
     def correct_path(self, nodes: [(int, int)]):
-        #TODO:
-        # Est-ce que je veux minimiser sur (distance_from _robot + distance_from_goal) parce que
-        # peut-être qu'il va souvent essayer de retourner en arrière. Si nos carrés sont trop
-        # petits la fonction de correct path va être trop sensible aussi. À la place on pourrait
-        # calculer la distance et ensuite si elle est plus grande qu'un certain threshold on
-        # applique une correction?
-
         robot_node = (
             (self.robot_position[0]//NODE_SIZE)*NODE_SIZE,
             (self.robot_position[1]//NODE_SIZE)*NODE_SIZE
