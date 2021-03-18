@@ -18,10 +18,21 @@ const Template = (args: any) => ({
   template: '<trajectories/>',
 });
 
-export const Default = Template.bind({}) as any;
-Default.args = {
+const plannedTrajectory = CoordinateFactory.make(4);
+
+export const WithCurrentTrajectorySameAsPlanned = Template.bind({}) as any;
+WithCurrentTrajectorySameAsPlanned.args = {
   tableImage: '/stub_table_image.jpg',
-  plannedTrajectory: CoordinateFactory.make(4),
+  plannedTrajectory,
+  currentPlannedTrajectory: plannedTrajectory,
+  realTrajectory: [],
+};
+
+export const WithCurrentTrajectoryPartOfPlanned = Template.bind({}) as any;
+WithCurrentTrajectoryPartOfPlanned.args = {
+  tableImage: '/stub_table_image.jpg',
+  plannedTrajectory,
+  currentPlannedTrajectory: plannedTrajectory.slice(0, 2),
   realTrajectory: [],
 };
 
@@ -29,95 +40,68 @@ export const withoutTrajectories = Template.bind({}) as any;
 withoutTrajectories.args = {
   tableImage: '/stub_table_image.jpg',
   plannedTrajectory: [],
+  currentPlannedTrajectory: [],
   realTrajectory: [],
 };
+
+const plannedTrajectoryToYellowPuck = [
+  { x: 1037.5, y: 512.5 },
+  { x: 1037.5, y: 537.5 },
+  { x: 1012.5, y: 537.5 },
+  { x: 1012.5, y: 562.5 },
+  { x: 987.5, y: 562.5 },
+  { x: 987.5, y: 587.5 },
+  { x: 962.5, y: 587.5 },
+  { x: 962.5, y: 612.5 },
+  { x: 937.5, y: 612.5 },
+  { x: 912.5, y: 612.5 },
+  { x: 887.5, y: 612.5 },
+  { x: 862.5, y: 612.5 },
+  { x: 837.5, y: 612.5 },
+  { x: 812.5, y: 612.5 },
+  { x: 787.5, y: 612.5 },
+  { x: 787.5, y: 587.5 },
+  { x: 762.5, y: 587.5 },
+  { x: 762.5, y: 562.5 },
+  { x: 737.5, y: 562.5 },
+  { x: 737.5, y: 537.5 },
+  { x: 712.5, y: 537.5 },
+  { x: 712.5, y: 512.5 },
+  { x: 687.5, y: 512.5 },
+  { x: 687.5, y: 487.5 },
+  { x: 662.5, y: 487.5 },
+  { x: 662.5, y: 462.5 },
+  { x: 637.5, y: 462.5 },
+  { x: 637.5, y: 437.5 },
+  { x: 637.5, y: 412.5 },
+  { x: 612.5, y: 412.5 },
+  { x: 587.5, y: 412.5 },
+  { x: 562.5, y: 412.5 },
+  { x: 537.5, y: 412.5 },
+];
 
 export const TrajectoryToYellowPuck = Template.bind({}) as any;
 TrajectoryToYellowPuck.args = {
   tableImage: '/stub_table_image1.jpg',
-  plannedTrajectory: [
-    { x: 1037.5, y: 512.5 },
-    { x: 1037.5, y: 537.5 },
-    { x: 1012.5, y: 537.5 },
-    { x: 1012.5, y: 562.5 },
-    { x: 987.5, y: 562.5 },
-    { x: 987.5, y: 587.5 },
-    { x: 962.5, y: 587.5 },
-    { x: 962.5, y: 612.5 },
-    { x: 937.5, y: 612.5 },
-    { x: 912.5, y: 612.5 },
-    { x: 887.5, y: 612.5 },
-    { x: 862.5, y: 612.5 },
-    { x: 837.5, y: 612.5 },
-    { x: 812.5, y: 612.5 },
-    { x: 787.5, y: 612.5 },
-    { x: 787.5, y: 587.5 },
-    { x: 762.5, y: 587.5 },
-    { x: 762.5, y: 562.5 },
-    { x: 737.5, y: 562.5 },
-    { x: 737.5, y: 537.5 },
-    { x: 712.5, y: 537.5 },
-    { x: 712.5, y: 512.5 },
-    { x: 687.5, y: 512.5 },
-    { x: 687.5, y: 487.5 },
-    { x: 662.5, y: 487.5 },
-    { x: 662.5, y: 462.5 },
-    { x: 637.5, y: 462.5 },
-    { x: 637.5, y: 437.5 },
-    { x: 637.5, y: 412.5 },
-    { x: 612.5, y: 412.5 },
-    { x: 587.5, y: 412.5 },
-    { x: 562.5, y: 412.5 },
-    { x: 537.5, y: 412.5 },
-  ],
+  plannedTrajectory: plannedTrajectoryToYellowPuck,
+  currentPlannedTrajectory: plannedTrajectoryToYellowPuck,
   realTrajectory: [],
 };
+
+const realTrajectoryToYellowPuck = [
+  { x: 1037.5, y: 512.5 },
+  { x: 1037.5, y: 537.5 },
+  { x: 1012.5, y: 537.5 },
+  { x: 1012.5, y: 562.5 },
+  { x: 987.5, y: 562.5 },
+  { x: 987.5, y: 587.5 },
+  { x: 962.5, y: 587.5 },
+];
 
 export const RealTrajectoryToYellowPuck = Template.bind({}) as any;
 RealTrajectoryToYellowPuck.args = {
   tableImage: '/stub_table_image1.jpg',
-  plannedTrajectory: [
-    { x: 1037.5, y: 512.5 },
-    { x: 1037.5, y: 537.5 },
-    { x: 1012.5, y: 537.5 },
-    { x: 1012.5, y: 562.5 },
-    { x: 987.5, y: 562.5 },
-    { x: 987.5, y: 587.5 },
-    { x: 962.5, y: 587.5 },
-    { x: 962.5, y: 612.5 },
-    { x: 937.5, y: 612.5 },
-    { x: 912.5, y: 612.5 },
-    { x: 887.5, y: 612.5 },
-    { x: 862.5, y: 612.5 },
-    { x: 837.5, y: 612.5 },
-    { x: 812.5, y: 612.5 },
-    { x: 787.5, y: 612.5 },
-    { x: 787.5, y: 587.5 },
-    { x: 762.5, y: 587.5 },
-    { x: 762.5, y: 562.5 },
-    { x: 737.5, y: 562.5 },
-    { x: 737.5, y: 537.5 },
-    { x: 712.5, y: 537.5 },
-    { x: 712.5, y: 512.5 },
-    { x: 687.5, y: 512.5 },
-    { x: 687.5, y: 487.5 },
-    { x: 662.5, y: 487.5 },
-    { x: 662.5, y: 462.5 },
-    { x: 637.5, y: 462.5 },
-    { x: 637.5, y: 437.5 },
-    { x: 637.5, y: 412.5 },
-    { x: 612.5, y: 412.5 },
-    { x: 587.5, y: 412.5 },
-    { x: 562.5, y: 412.5 },
-    { x: 537.5, y: 412.5 },
-  ],
-  realTrajectory: [
-    { x: 1037.5, y: 512.5 },
-    { x: 1037.5, y: 537.5 },
-    { x: 1012.5, y: 537.5 },
-    { x: 1012.5, y: 562.5 },
-    { x: 987.5, y: 562.5 },
-    { x: 987.5, y: 587.5 },
-    { x: 962.5, y: 587.5 },
-  ],
+  plannedTrajectory: plannedTrajectoryToYellowPuck,
+  currentPlannedTrajectory: plannedTrajectoryToYellowPuck,
+  realTrajectory: realTrajectoryToYellowPuck,
 };
