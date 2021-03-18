@@ -19,14 +19,17 @@ const Template = (args: any) => ({
 
 export const HoursLeft = Template.bind({}) as any;
 HoursLeft.args = {
-  robotConsumption: { batteryChargeLeft: 0, batteryRemainingTimeInSeconds: 3*60*60 },
+  robotConsumption: {
+    batteryChargeLeft: 0,
+    batteryRemainingTimeInSeconds: 3 * 60 * 60,
+  },
 };
 
 export const MinutesLeft = Template.bind({}) as any;
 MinutesLeft.args = {
   robotConsumption: {
     batteryChargeLeft: 0,
-    batteryRemainingTimeInSeconds: 60*40,
+    batteryRemainingTimeInSeconds: 60 * 40,
   },
 };
 
