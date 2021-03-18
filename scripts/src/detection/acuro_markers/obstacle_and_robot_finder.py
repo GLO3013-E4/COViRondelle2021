@@ -122,27 +122,35 @@ class ObstacleRobotFinder:
     def detect_robot(self, image, DEBUG=False):
         image = self.read_image(image)
 
-        robot_position = self.robot_detection.detect_robot(image, self.camera_matrix, self.distortion_coefficients)
-        bottom_left = robot_position[0]["bottom_left"]
-        bottom_right = robot_position[0]["bottom_right"]
-        angle = self.position_calculator.calculate_angle_between_two_position(bottom_right, bottom_left)
+        robot_position, aruco_marker_position = self.robot_detection.detect_aruco_marker_on_robot(
+            image,
+            self.camera_matrix,
+            self.distortion_coefficients
+        )
+
+        bottom_left = robot_position["bottom_left"]
+        bottom_right = robot_position["bottom_right"]
+
+        angle_robot = self.position_calculator.calculate_angle_between_two_position(bottom_right, bottom_left)
 
         robot_3d_position = self.robot_detection \
-            .calculate_robot_position(robot_position=robot_position[1],
-                                         aruco_marker_width=self.aruco_robot_marker_width,
-                                         camera_matrix=self.camera_matrix,
-                                         distortion_coefficient=self.distortion_coefficients)
+            .calculate_3d_robot_position(robot_position=aruco_marker_position,
+                                          aruco_marker_width=self.aruco_robot_marker_width,
+                                          camera_matrix=self.camera_matrix,
+                                          distortion_coefficient=self.distortion_coefficients )
         robot_3d_position.set_markers_points(np.array([[0.0, 0.0, self.robot_height]]))
         robot_3d_position.set_rotation_vector(np.array([[0.0, 0.0, 0.0]]))
 
-        image_copy, center_of_bottom_robot, prehenseur_position, angle_robot = self.detect_bottom_of_robot(image=image,
-                                                                             marker_position=robot_3d_position,
-                                                                             angle=angle, DEBUG=DEBUG)
+        image_copy, center_of_bottom_robot, prehenseur_position = self.detect_bottom_of_robot(
+            image=image,
+            marker_position=robot_3d_position,
+            angle=angle_robot, DEBUG=DEBUG
+        )
+
         if DEBUG:
             cv2.putText(image, "1", bottom_left,
                         cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
-            cv2.putText(image, "2", bottom_right,
-                    cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
+            cv2.putText(image, "2", bottom_right, cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
 
             cv2.imshow("Detection robot and prehenseur", image_copy)
             cv2.waitKey(0)
@@ -165,30 +173,33 @@ class ObstacleRobotFinder:
 
         center_of_bottom_of_robot = tuple(center_of_bottom_of_robot.reshape(2,).astype(np.int32))
 
-        prehenseur_position = (int( center_of_bottom_of_robot[0] +
-                                    (self.distance_between_center_and_prehenseur * math.cos( angle )) ),
-                               int( center_of_bottom_of_robot[1] +
-                                    (self.distance_between_center_and_prehenseur * math.sin( angle )) ))
+        prehenseur_position = (int(center_of_bottom_of_robot[0] +
+                                    (self.distance_between_center_and_prehenseur * math.cos(angle))),
+                               int(center_of_bottom_of_robot[1] -
+                                    (self.distance_between_center_and_prehenseur * math.sin(angle))))
 
         if DEBUG:
             image_copy = cv2.circle(image_copy, center_of_bottom_of_robot, 1, color=(0, 255, 255), thickness=5)
             image_copy = cv2.circle(image_copy, prehenseur_position, 1, color=(255, 255, 255), thickness=5)
 
-            cv2.putText(image_copy, "Point central base", (center_of_bottom_of_robot[0] -90, center_of_bottom_of_robot[1] - 20),
-                    cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 255, 255), 2)
+            cv2.putText(image_copy, "Point central base", (center_of_bottom_of_robot[0] - 90,
+                                                           center_of_bottom_of_robot[1] - 20),
+                        cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 255, 255), 2)
 
-            cv2.putText(image_copy, "Prehenseur", (prehenseur_position[0], prehenseur_position[1] - 20),
-                    cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 2)
+            cv2.putText(image_copy, "Prehenseur", (prehenseur_position[0],
+                                                   prehenseur_position[1] - 20),
+                        cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 2)
+
+        return image_copy, center_of_bottom_of_robot, prehenseur_position
 
 
-        return image_copy, center_of_bottom_of_robot, prehenseur_position, angle
 
-
-
-AN_IMAGE = "robot_obstacles3.jpg"
+AN_IMAGE = "robot_obstacles6.jpg"
 obstacle_robot_finder = ObstacleRobotFinder()
 obstacle_position = obstacle_robot_finder.detect_obstacle_position(image=AN_IMAGE, DEBUG=True)
 print(obstacle_position)
 
-obstacle_robot_finder.detect_robot(AN_IMAGE, True)
+x, y, r = obstacle_robot_finder.detect_robot(AN_IMAGE, True)
+print(x, y, r)
+
 

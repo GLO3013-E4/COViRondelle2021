@@ -3,7 +3,7 @@ from typing import List
 import cv2
 
 from AcuroMarkers import ArucoMarkers
-from obstacle_position import ObstaclePosition
+from aruco_position import ArucoPosition
 from marker_position import MarkerPosition
 
 
@@ -23,7 +23,7 @@ class ObstacleDetection(ArucoMarkers):
         if len(corners) > 0:
             ids = ids.flatten()
             for (markerCorner, markerID) in zip(corners, ids):
-                obstacles_position.append(ObstaclePosition(markerID, markerCorner))
+                obstacles_position.append( ArucoPosition( markerID, markerCorner ) )
         return obstacles_position
 
 
@@ -42,7 +42,7 @@ class ObstacleDetection(ArucoMarkers):
             }})
         return obstacle_position
 
-    def calculate_obstacle_position(self, obstacles_position: List[ObstaclePosition],
+    def calculate_obstacle_position(self, obstacles_position: List[ArucoPosition],
                                     aruco_marker_width,
                                     camera_matrix,
                                     distortion_coefficient) -> List[MarkerPosition]:

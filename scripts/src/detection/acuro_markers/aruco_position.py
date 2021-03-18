@@ -1,4 +1,4 @@
-class RobotPosition:
+class ArucoPosition:
 
     def __init__(self, marker_id, marker_corner):
         self.marker_id = marker_id

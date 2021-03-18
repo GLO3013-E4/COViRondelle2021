@@ -1,5 +1,6 @@
 import math
-from math import atan2, degrees, radians
+from math import atan2
+
 
 class PositionCalculator:
 
