@@ -10,8 +10,8 @@ def create_path():
 
     for pose in range(0, poses_amount):
         pose = Pose()
-        pose.position.x = random.randint(0, 20)
-        pose.position.y = random.randint(0, 400)
+        pose.position.x = random.randint(100, 1500)
+        pose.position.y = random.randint(100, 814)
 
         path.poses.append(pose)
 
