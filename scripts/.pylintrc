@@ -22,6 +22,8 @@ disable=
     R0914, # too-many-locals
     E1136, # unsubscriptable-object
     E1126, # invalid-sequence-index
+    C0301, # line-too-long
+
 
 ignore=
     Dockerfile,
