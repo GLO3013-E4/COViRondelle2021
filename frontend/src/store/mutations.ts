@@ -43,9 +43,6 @@ export const mutations: MutationTree<State> & Mutations = {
     state.cycleReady = true;
     state.robotConsumption =
       message.robotConsumption || defaultState.robotConsumption;
-    // TODO : When removing those values, remove this here
-    state.robotConsumption.batteryChargeLeft = defaultState.robotConsumption.batteryChargeLeft;
-    state.robotConsumption.batteryRemainingTimeInSeconds = defaultState.robotConsumption.batteryRemainingTimeInSeconds;
     console.log(state);
   },
   [SOCKET_TABLE_IMAGE](state: State, data: string) {
