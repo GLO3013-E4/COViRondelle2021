@@ -130,18 +130,19 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Coordinate } from '@/types/coordinate';
 import { mapState } from 'vuex';
+import {State} from "@/store/state";
 
 @Component({
-  computed: mapState([
-    'tableImage',
-    'plannedTrajectory',
-    'realTrajectory',
-  ]),
+  computed: mapState({
+    tableImage: (state: State) => state.tableImage,
+    plannedTrajectory: (state: State) => state.plannedTrajectory,
+    realTrajectory: (state: State) => state.realTrajectory,
+  }),
 })
 export default class Trajectories extends Vue {
+  private tableImage!: string;
   private plannedTrajectory!: Array<Coordinate>;
   private realTrajectory!: Array<Coordinate>;
-  private readonly tableImage!: string;
   private readonly width = 1600;
   private readonly height = 904;
   private ratioX = 0.5;
