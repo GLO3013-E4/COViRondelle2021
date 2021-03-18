@@ -61,7 +61,6 @@ class ObstacleRobotFinder:
         return image
 
     def detect_obstacle_position(self, image, DEBUG=False):
-        image = self.read_image(image)
         obstacles_position = self.obstacle_detection.detect_aruco_marker_on_obstacle( image )
 
         obstacles_3d_positions = self.obstacle_detection\
@@ -118,8 +117,6 @@ class ObstacleRobotFinder:
 
 
     def detect_robot(self, image, DEBUG=False):
-        image = self.read_image(image)
-
         robot_position, aruco_marker_position = self.robot_detection.detect_aruco_marker_on_robot(
             image
         )
