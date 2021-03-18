@@ -25,7 +25,7 @@
           <svg :height="this.rescaleHeight" :width="this.rescaleWidth" id="svg">
             <polyline
               id="planned_path"
-              :points="this.trajectoryPoints"
+              :points="this.plannedTrajectoryPoints"
               style="fill: none; stroke: blue; stroke-width: 2"
             />
             <polyline
@@ -132,9 +132,11 @@ import { Coordinate } from '@/types/coordinate';
 import { mapState } from 'vuex';
 
 @Component({
-  computed: {
-    ...mapState(['tableImage', 'plannedTrajectory', 'realTrajectory']),
-  },
+  computed: mapState([
+    'tableImage',
+    'plannedTrajectory',
+    'realTrajectory',
+  ]),
 })
 export default class Trajectories extends Vue {
   private plannedTrajectory!: Array<Coordinate>;
@@ -162,9 +164,9 @@ export default class Trajectories extends Vue {
           coordinate.y * this.ratioY
         } `)
     );
-    return this.updateTrajectories(points, isRealTrajectory);
+    return points;
   }
-  private get trajectoryPoints() {
+  private get plannedTrajectoryPoints() {
     return this.coordinatesToString(false);
   }
 
@@ -192,26 +194,6 @@ export default class Trajectories extends Vue {
       ? this.plannedTrajectory[this.plannedTrajectory.length - 1].y *
           this.ratioY
       : 0;
-  }
-  private updateTrajectories(points: string, isRealTrajectory: boolean) {
-    const trajectoryType = isRealTrajectory
-      ? 'realTrajectories'
-      : 'plannedTrajectories';
-    let actualPoints = localStorage.getItem(trajectoryType);
-    if (!actualPoints) {
-      localStorage.setItem(trajectoryType, points);
-      return points;
-    } else {
-      actualPoints += points;
-      localStorage.setItem(trajectoryType, actualPoints);
-      return actualPoints;
-    }
-  }
-  mounted() {
-    // Clear the browser cache data in localStorage when closing the browser window
-    window.onbeforeunload = () => {
-      localStorage.clear();
-    };
   }
 }
 </script>
