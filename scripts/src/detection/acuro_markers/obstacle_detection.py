@@ -9,9 +9,10 @@ from marker_position import MarkerPosition
 
 class ObstacleDetection(ArucoMarkers):
 
-    def detect_obstacle(self, image, DEBUG=True):
+    def detect_aruco_marker_on_obstacle(self, image):
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
+
         if image is None:
             return self.generate_empty_obstacle_position()
 
@@ -19,39 +20,10 @@ class ObstacleDetection(ArucoMarkers):
                                        parameters=aruco_params)
         obstacles_position = []
 
-
         if len(corners) > 0:
             ids = ids.flatten()
             for (markerCorner, markerID) in zip(corners, ids):
                 obstacles_position.append(ObstaclePosition(markerID, markerCorner))
-                corners = markerCorner.reshape((4, 2))
-                (top_left_position, top_right_position, bottom_right_position,
-                 bottom_left_position) = corners
-
-                bottom_left_position, bottom_right_position, top_left_position, \
-                top_right_position = \
-                    self.get_markers_corners_position(
-                    bottom_left_position, bottom_right_position, top_left_position,
-                        top_right_position)
-
-                self.draw_line_on_markers(bottom_left_position, bottom_right_position,
-                                          image, top_left_position,
-                                          top_right_position)
-
-
-                center_x, center_y = self.generate_center_position(bottom_right_position,
-                                                                   top_left_position)
-
-
-                if DEBUG:
-                    self.draw_center_position(center_x, center_y, image)
-                    cv2.putText(image, str(markerID),
-                            (top_left_position[0], top_left_position[1] - 15),
-                                cv2.FONT_HERSHEY_SIMPLEX,
-                            0.5, (0, 255, 0), 2)
-
-            if DEBUG:
-                self.show_image(image)
         return obstacles_position
 
 
@@ -80,6 +52,7 @@ class ObstacleDetection(ArucoMarkers):
                                 obstacles_position]
 
         corner_length = len(aruco_markers_corner)
+
         if 1 > corner_length:
             return []
 

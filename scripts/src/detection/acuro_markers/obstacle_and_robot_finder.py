@@ -55,11 +55,16 @@ class ObstacleRobotFinder:
             ]
     ])
 
-    def detect_obstacle_position(self, image):
+    def read_image(self, image):
+        script_dir = os.path.dirname( __file__ )
+        rel_path = image
+        abs_file_path = os.path.join( script_dir, rel_path )
+        image = cv2.imread( abs_file_path )
+        return image
+
+    def detect_obstacle_position(self, image, DEBUG=False):
         image = self.read_image(image)
-        obstacles_position = self.obstacle_detection.detect_obstacle(image, DEBUG=False)
-
-
+        obstacles_position = self.obstacle_detection.detect_aruco_marker_on_obstacle( image )
 
         obstacles_3d_positions = self.obstacle_detection\
             .calculate_obstacle_position(obstacles_position=obstacles_position,
@@ -71,19 +76,21 @@ class ObstacleRobotFinder:
             marker_position.set_markers_points(np.array([[0.0, 0.0, self.obstacle_height]]))
             marker_position.set_rotation_vector(np.array([[0.0, 0.0, 0.0]]))
 
-        image_copy, center_of_bottom_obstacle = self.detect_bottom_of_obstacle(image=image, markers_position=obstacles_3d_positions)
+        image_copy, obstacles_bottom_position = self.detect_bottom_of_obstacle(
+            image=image,
+            markers_position=obstacles_3d_positions)
 
-        cv2.imshow("Est-ce que ca marche mon vieux max", image_copy)
-        cv2.waitKey(0)
+        if DEBUG:
+            cv2.putText(image_copy, "1", obstacles_bottom_position[0]["center_of_obstacle"],
+                        cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 2)
 
-        return center_of_bottom_obstacle, self.obstacle_radius
+            cv2.putText(image_copy, "2", (obstacles_bottom_position[1]["center_of_obstacle"]),
+                        cv2.FONT_HERSHEY_COMPLEX, 0.5, (255, 255, 255), 2)
+            cv2.imshow("Detect obstacle", image_copy)
+            cv2.waitKey(0)
 
-    def read_image(self, image):
-        script_dir = os.path.dirname( __file__ )
-        rel_path = image
-        abs_file_path = os.path.join( script_dir, rel_path )
-        image = cv2.imread( abs_file_path )
-        return image
+        return obstacles_bottom_position
+
 
     def detect_bottom_of_obstacle(self, markers_position: List[MarkerPosition], image):
         if image is None:
@@ -91,6 +98,7 @@ class ObstacleRobotFinder:
 
         image_copy = image.copy()
         obstacles_bottom_position = []
+
         for marker_position in markers_position:
             center_of_bottom_obstacle, _ = cv2.projectPoints(
                 marker_position.get_markers_points(),
@@ -101,7 +109,11 @@ class ObstacleRobotFinder:
             )
 
             center_of_bottom_obstacle = tuple(center_of_bottom_obstacle.reshape(2, ).astype(np.int32))
-            obstacles_bottom_position.append(center_of_bottom_obstacle)
+            obstacles_bottom_position.append({
+                "center_of_obstacle": center_of_bottom_obstacle,
+                "radius": self.obstacle_radius
+            })
+
             image_copy = cv2.circle(image_copy, center_of_bottom_obstacle, self.obstacle_radius, (0, 255, 255), 2)
 
         return image_copy, obstacles_bottom_position
@@ -131,6 +143,7 @@ class ObstacleRobotFinder:
                         cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
             cv2.putText(image, "2", bottom_right,
                     cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 2)
+
             cv2.imshow("Detection robot and prehenseur", image_copy)
             cv2.waitKey(0)
 
@@ -174,6 +187,8 @@ class ObstacleRobotFinder:
 
 AN_IMAGE = "robot_obstacles3.jpg"
 obstacle_robot_finder = ObstacleRobotFinder()
-x, r = obstacle_robot_finder.detect_obstacle_position(image=AN_IMAGE)
+obstacle_position = obstacle_robot_finder.detect_obstacle_position(image=AN_IMAGE, DEBUG=True)
+print(obstacle_position)
+
 obstacle_robot_finder.detect_robot(AN_IMAGE, True)
 
