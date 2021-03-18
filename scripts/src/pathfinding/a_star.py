@@ -33,7 +33,9 @@ class AStar(PathfindingAlgorithm):
             openSet.remove(current)
             for neighbor, _ in current.neighbors:
 
-                if neighbor.role is TileRole.EMPTY or neighbor.role is TileRole.END or neighbor.role is TileRole.START:
+                if neighbor.role is TileRole.EMPTY or \
+                        neighbor.role is TileRole.END or \
+                        neighbor.role is TileRole.START:
                     tentative_gScore = gScore[current] + 1
                 else:
                     tentative_gScore = float('inf')
@@ -41,7 +43,8 @@ class AStar(PathfindingAlgorithm):
                 if tentative_gScore < gScore[neighbor]:
                     cameFrom[neighbor] = current
                     gScore[neighbor] = tentative_gScore
-                    fScore[neighbor] = gScore[neighbor] + heuristic(neighbor.pixel_coordinates_center)
+                    fScore[neighbor] = gScore[neighbor] + \
+                                       heuristic(neighbor.pixel_coordinates_center)
                     if neighbor not in openSet:
                         openSet.add(neighbor)
 
