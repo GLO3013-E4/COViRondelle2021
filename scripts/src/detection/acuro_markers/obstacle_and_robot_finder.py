@@ -16,7 +16,7 @@ class ObstacleRobotFinder:
         self.robot_detection = RobotDetection()
         self.position_calculator = PositionCalculator()
         #mm
-        self.image_with = 1600
+        self.image_width = 1600
         self.image_height = 904
         self.obstacle_height = 412
         self.robot_height = 240
