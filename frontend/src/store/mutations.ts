@@ -20,7 +20,6 @@ export type Mutations<S = State> = {
   [START_CYCLE](state: S): void;
   [SOCKET_CYCLE_READY](state: S): void;
   [SOCKET_ROBOT_CONSUMPTION](state: S, data: string): void;
-  [SOCKET_TABLE_IMAGE](state: S, data: string): void;
   [SOCKET_RESISTANCE](state: S, data: string): void;
   [SOCKET_PUCK_COLORS](state: S, data: string): void;
   [SOCKET_PUCK_FIRST_CORNER](state: S, data: string): void;

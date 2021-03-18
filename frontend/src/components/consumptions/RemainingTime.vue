@@ -18,7 +18,7 @@ export default class RemainingTime extends Vue {
   public robotConsumption!: RobotConsumption;
 
   private get timeInSeconds() {
-    return this.robotConsumption.batteryRemainingTimeInSeconds;
+    return this.robotConsumption.remainingTime;
   }
 
   private get formatedTime() {

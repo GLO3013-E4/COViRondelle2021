@@ -1,5 +1,9 @@
 export interface RobotConsumption {
-  batteryChargeLeft: number;
-  batteryRemainingTimeInSeconds: number;
-  // TODO : What else should we write here?
+  wheel1: number;
+  wheel2: number;
+  wheel3: number;
+  wheel4: number;
+  total: number;
+  remainingTime: number;
+  batteryCharge: number;
 }
