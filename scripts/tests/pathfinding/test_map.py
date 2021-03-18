@@ -314,59 +314,110 @@ class TestMap:
     def test_when_create_round_obstacle_then_the_obstacle_is_round(self):
         self.map.create_nodes()
         self.map.connect_nodes()
-        node = self.map.get_node_from_matrix_coordinates((30, 30))
-        width = "BLEH"
+        node = self.map.get_node_from_matrix_coordinates((5, 5))
+        width = 2*self.map.node_size
         role = TileRole.OBSTACLE
 
         self.map.create_round_obstacle(node, width, role)
 
-        assert True is False
-"""
+        expected_obstacle_positions = {
+            (5, 5),
+            (4, 4), (6, 4), (4, 6), (6, 6),
+            (4, 5),
+            (6, 5),
+            (5, 4), (5, 6)
+        }
+        found_obstacle_positions = set()
+        for i in range(len(self.map.node_matrix)):
+            for j in range(len(self.map.node_matrix[0])):
+                node = self.map.node_matrix[i][j]
+                if node.role is TileRole.OBSTACLE or node.role is TileRole.CUSHION:
+                    found_obstacle_positions.add(node.matrix_center)
+        assert expected_obstacle_positions == found_obstacle_positions
+
     def test_when_create_square_obstacle_then_the_obstacle_is_square(self):
         self.map.create_nodes()
         self.map.connect_nodes()
-        node = self.map.get_node_from_matrix_coordinates((30, 30))
-        width = "BLEH"
+        node = self.map.get_node_from_matrix_coordinates((5, 5))
+        width = 2*self.map.node_size
         role = TileRole.OBSTACLE
 
-        self.map.create_round_obstacle(node, width, role)
+        self.map.create_square_obstacle(node, width, role)
 
-        assert True is False
+        expected_obstacle_positions = {
+            (5, 5), (6, 3), (3, 6), (4, 3),
+            (4, 4), (6, 4), (4, 6), (6, 6),
+            (4, 5), (3, 3), (3, 4),
+            (6, 5), (3, 5), (5, 3),
+            (5, 4), (5, 6)
+        }
+        found_obstacle_positions = set()
+        for i in range(len(self.map.node_matrix)):
+            for j in range(len(self.map.node_matrix[0])):
+                node = self.map.node_matrix[i][j]
+                if node.role is TileRole.OBSTACLE or node.role is TileRole.CUSHION:
+                    found_obstacle_positions.add(node.matrix_center)
+        assert expected_obstacle_positions == found_obstacle_positions
 
     def test_when_create_diagonal_obstacle_then_the_obstacle_is_a_diamond(self):
         self.map.create_nodes()
         self.map.connect_nodes()
-        node = self.map.get_node_from_matrix_coordinates((30, 30))
-        width = "BLEH"
+        node = self.map.get_node_from_matrix_coordinates((5, 5))
+        width = 2*self.map.node_size
         role = TileRole.OBSTACLE
 
-        self.map.create_round_obstacle(node, width, role)
+        self.map.create_diagonal_obstacle(node, width, role)
 
-        assert True is False
+        expected_obstacle_positions = {
+            (5, 5), (6, 3), (3, 6), (4, 3),
+            (4, 4), (6, 4), (4, 6), (6, 6),
+            (4, 5), (3, 4), (4, 7), (6, 7),
+            (6, 5), (3, 5), (5, 3), (7, 6),
+            (5, 4), (5, 6), (5, 7), (5, 2),
+            (7, 4), (7, 5), (2, 5), (8, 5),
+            (5, 8)
+        }
+        found_obstacle_positions = set()
+        for i in range(len(self.map.node_matrix)):
+            for j in range(len(self.map.node_matrix[0])):
+                node = self.map.node_matrix[i][j]
+                if node.role is TileRole.OBSTACLE or node.role is TileRole.CUSHION:
+                    found_obstacle_positions.add(node.matrix_center)
+        assert expected_obstacle_positions == found_obstacle_positions
 
     def test_when_set_obstacle_then_an_obstacle_is_set(self):
         self.map.create_nodes()
         self.map.connect_nodes()
-        node = self.map.get_node_from_matrix_coordinates((30, 30))
+        node = self.map.get_node_from_pixel((30, 30))
 
         self.map.set_obstacle(node)
 
-        assert True is False
+        assert node.role is TileRole.OBSTACLE
 
     def test_when_set_puck_then_a_puck_is_set(self):
         self.map.create_nodes()
         self.map.connect_nodes()
-        node = self.map.get_node_from_matrix_coordinates((30, 30))
+        node = self.map.get_node_from_pixel((30, 30))
 
         self.map.set_puck(node)
 
-        assert True is False
+        assert node.role is TileRole.PUCK
 
     def test_when_add_table_walls_then_there_are_obstacles_all_around(self):
         self.map.create_nodes()
         self.map.connect_nodes()
+        self.map.table_walls_start_x = 0
+        self.map.table_walls_end_x = self.AN_IMAGE_WIDTH
+        self.map.table_walls_start_y = 0
+        self.map.table_walls_end_y = self.AN_IMAGE_HEIGHT
+        self.map.robot_width = 1
+        self.map.safety_cushion = 0
 
         self.map.add_table_walls()
 
-        assert True is False
-"""
+        first_column = [self.map.node_matrix[i][0] for i in range(len(self.map.node_matrix))]
+        last_column = [self.map.node_matrix[i][-1] for i in range(len(self.map.node_matrix))]
+        assert all([True if node.role is TileRole.OBSTACLE else False for node in self.map.node_matrix[0]])
+        assert all([True if node.role is TileRole.OBSTACLE else False for node in self.map.node_matrix[-1]])
+        assert all([True if node.role is TileRole.OBSTACLE else False for node in first_column])
+        assert all([True if node.role is TileRole.OBSTACLE else False for node in last_column])

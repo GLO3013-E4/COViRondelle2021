@@ -198,8 +198,8 @@ class Map:
         width, height = obstacle.pixel_coordinates_center
         lower_range_column = int(max(0, ((height - length) // self.node_size)))
         lower_range_row = int(max(0, ((width - length) // self.node_size)))
-        higher_range_column = int(min(len(self.node_matrix), ((height + length) // self.node_size) + 1))
-        higher_range_row = int(min(len(self.node_matrix[0]), ((width + length) // self.node_size) + 1))
+        higher_range_column = int(min(len(self.node_matrix), ((height + length) // self.node_size)))
+        higher_range_row = int(min(len(self.node_matrix[0]), ((width + length) // self.node_size)))
 
         for column in range(lower_range_column, higher_range_column):
             for row in range(lower_range_row, higher_range_row):
