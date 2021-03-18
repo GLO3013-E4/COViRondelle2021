@@ -7,6 +7,7 @@ describe('When mounting Trajectories', () => {
   const state = {
     tableImage: '/stub_table_image.jpg',
     plannedTrajectory: CoordinateFactory.make(4),
+    currentPlannedTrajectory: CoordinateFactory.make(4),
     realTrajectory: CoordinateFactory.make(4),
   } as State;
 

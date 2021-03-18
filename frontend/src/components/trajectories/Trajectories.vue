@@ -136,11 +136,17 @@ import { Coordinate } from '@/types/coordinate';
 import { mapState } from 'vuex';
 
 @Component({
-  computed: mapState(['tableImage', 'plannedTrajectory', 'realTrajectory']),
+  computed: mapState([
+    'tableImage',
+    'plannedTrajectory',
+    'currentPlannedTrajectory',
+    'realTrajectory',
+  ]),
 })
 export default class Trajectories extends Vue {
   private tableImage!: string;
   private plannedTrajectory!: Array<Coordinate>;
+  private currentPlannedTrajectory!: Array<Coordinate>;
   private realTrajectory!: Array<Coordinate>;
   private readonly width = 1600;
   private readonly height = 904;
@@ -164,28 +170,32 @@ export default class Trajectories extends Vue {
   }
 
   private get startPointX() {
-    return this.plannedTrajectory[0]
-      ? this.plannedTrajectory[0].x * this.ratioX
+    return this.currentPlannedTrajectory[0]
+      ? this.currentPlannedTrajectory[0].x * this.ratioX
       : 0;
   }
 
   private get startPointY() {
-    return this.plannedTrajectory[0]
-      ? this.plannedTrajectory[0].y * this.ratioY
+    return this.currentPlannedTrajectory[0]
+      ? this.currentPlannedTrajectory[0].y * this.ratioY
       : 0;
   }
 
   private get destinationPointX() {
-    return this.plannedTrajectory[this.plannedTrajectory.length - 1]
-      ? this.plannedTrajectory[this.plannedTrajectory.length - 1].x *
-          this.ratioX
+    return this.currentPlannedTrajectory[
+      this.currentPlannedTrajectory.length - 1
+    ]
+      ? this.currentPlannedTrajectory[this.currentPlannedTrajectory.length - 1]
+          .x * this.ratioX
       : 0;
   }
 
   private get destinationPointY() {
-    return this.plannedTrajectory[this.plannedTrajectory.length - 1]
-      ? this.plannedTrajectory[this.plannedTrajectory.length - 1].y *
-          this.ratioY
+    return this.currentPlannedTrajectory[
+      this.currentPlannedTrajectory.length - 1
+    ]
+      ? this.currentPlannedTrajectory[this.currentPlannedTrajectory.length - 1]
+          .y * this.ratioY
       : 0;
   }
 

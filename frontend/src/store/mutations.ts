@@ -64,8 +64,12 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [SOCKET_PLANNED_TRAJECTORY_COORDINATES](state: State, data: string) {
     const message = toMessage(data);
-    if (message.plannedTrajectoryCoordinates)
+    if (message.plannedTrajectoryCoordinates) {
       state.plannedTrajectory.push(...message.plannedTrajectoryCoordinates);
+      state.currentPlannedTrajectory =
+        message.plannedTrajectoryCoordinates ||
+        defaultState.currentPlannedTrajectory;
+    }
   },
   [SOCKET_REAL_TRAJECTORY_COORDINATE](state: State, data: string) {
     const message = toMessage(data);
