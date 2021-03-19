@@ -72,6 +72,8 @@ def test_on_an_image(image_path: str, goal_color: str):
     #TODO: est-ce que c'est ça qu'on veut?
     robot_position = grip
 
+    print(robot_angle)
+
     # transform obstacles, robot, pucks
     pucks = {key: value for key, value in pucks.items() if value}
     pucks = {
@@ -96,10 +98,10 @@ def test_on_an_image(image_path: str, goal_color: str):
     print(vectors)
 
     visualize_map(_map, path, frame)
-    #frame = visualize_vectors(vectorizer, frame)
+    frame = visualize_vectors(vectorizer, frame)
 
-    #cv2.imshow('bleh', frame)
-    #cv2.waitKey(0)
+    cv2.imshow('bleh', frame)
+    cv2.waitKey(0)
 
 """
 def test_on_multiple_images_recalculate_path(images: [str], goal_color: str):

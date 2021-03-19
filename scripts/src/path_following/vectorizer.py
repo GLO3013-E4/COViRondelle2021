@@ -133,6 +133,7 @@ class Vectorizer:
         smoothed_path = self.smooth_path(nodes)
         corrected_path = self.correct_path(smoothed_path)
         vectors = self.vectorize(corrected_path)
+        vectors = self.vectorize(smoothed_path)
         adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
 
         if self.minimize:
