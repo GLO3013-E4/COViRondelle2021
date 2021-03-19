@@ -1,6 +1,7 @@
 import math
 
 from scripts.src.path_following.config import NODE_SIZE
+from scripts.src.path_following.movement_mode import MovementMode
 
 
 class Vectorizer:
@@ -39,15 +40,15 @@ class Vectorizer:
     def minimize_vectors(self, vectors: [(float, float)]):
         minimized_vectors = []
         for i, vector in enumerate(vectors):
-            distance, angle = vector
+            distance, angle, mode = vector
             if angle != 0:
                 minimized_vectors.append(vector)
             elif angle == 0:
                 if not minimized_vectors:
                     minimized_vectors.append(vector)
                 else:
-                    last_vector_distance, last_vector_angle = minimized_vectors[-1]
-                    minimized_vectors[-1] = (last_vector_distance + distance, last_vector_angle)
+                    last_vector_distance, last_vector_angle, last_mode = minimized_vectors[-1]
+                    minimized_vectors[-1] = (last_vector_distance + distance, last_vector_angle, last_mode)
         return minimized_vectors
 
     def correct_path(self, nodes: [(int, int)]):
@@ -86,16 +87,20 @@ class Vectorizer:
             vectors.append(vector)
         return vectors
 
-    def adjust_vector_angles_from_robot_pov(self, vectors: [(float, float)]):
+    def adjust_vector_angles_from_robot_pov(self, vectors: [(float, float)], mode: MovementMode):
         """
         Changes the vectors' orientation from their absolute value from the top camera
         to the angle the robot will need to use to align itself with the vector.
         (For all vectors)
         """
         new_vectors = []
-        last_vector = (None, self.robot_angle)
+        if mode is MovementMode.OHMMETER:
+            last_vector = (None, self.robot_angle - math.pi/2)
+        else:
+            last_vector = (None, self.robot_angle)
         for vector in vectors:
-            new_vectors.append(self.adjust_vector_angle_from_robot_pov(last_vector, vector))
+            distance, angle = self.adjust_vector_angle_from_robot_pov(last_vector, vector)
+            new_vectors.append((distance, angle, mode))
             last_vector = vector
         return new_vectors
 
@@ -123,11 +128,11 @@ class Vectorizer:
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle
 
-    def path_to_vectors(self, nodes: [(int, int)]):
+    def path_to_vectors(self, nodes: [(int, int)], mode=MovementMode.GRIP) -> [(float, float, int)]:
         smoothed_path = self.smooth_path(nodes)
         corrected_path = self.correct_path(smoothed_path)
         vectors = self.vectorize(corrected_path)
-        adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
+        adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors, mode)
 
         if self.minimize:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
