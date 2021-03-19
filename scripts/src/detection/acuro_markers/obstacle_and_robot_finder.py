@@ -4,9 +4,9 @@ from typing import List
 import numpy as np
 import cv2
 
-from obstacle_detection import ObstacleDetection
-from robot_detection import RobotDetection
-from marker_position import MarkerPosition
+from scripts.src.detection.acuro_markers.obstacle_detection import ObstacleDetection
+from scripts.src.detection.acuro_markers.robot_detection import RobotDetection
+from scripts.src.detection.acuro_markers.marker_position import MarkerPosition
 from scripts.src.detection.position_calculator import PositionCalculator
 
 
