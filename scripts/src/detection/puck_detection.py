@@ -85,7 +85,7 @@ class PuckDetection:
         for color, boundaries in colors.items():
             if boundaries["lower"][0] <= hsv[0] <= boundaries["upper"][0] and \
                     boundaries["lower"][1] <= hsv[1] <= \
-                    boundaries["upper"][1] and boundaries["lower"][2] <= hsv[2]\
+                    boundaries["upper"][1] and boundaries["lower"][2] <= hsv[2] \
                     <= boundaries["upper"][2]:
                 return color
         return "None"
