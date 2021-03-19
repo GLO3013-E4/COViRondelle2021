@@ -13,7 +13,8 @@ def test_given_two_position_then_should_return_the_right_center_x_position():
 
     expected_center_x = 3
 
-    assert  actual_center_x == expected_center_x
+    assert actual_center_x == expected_center_x
+
 
 def test_given_two_position_then_should_return_the_right_center_y_position():
     actual_center_x, actual_center_y = aruco_marker.\
@@ -21,4 +22,4 @@ def test_given_two_position_then_should_return_the_right_center_y_position():
 
     expected_center_y = 3
 
-    assert  actual_center_y == expected_center_y
+    assert actual_center_y == expected_center_y
