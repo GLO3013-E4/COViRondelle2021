@@ -4,9 +4,11 @@ import math
 from scripts.src.detection.acuro_markers.obstacle_detection import ObstacleDetection
 from scripts.src.detection.acuro_markers.robot_detection import RobotDetection
 from scripts.src.detection.puck_detection import PuckDetection
-from scripts.src.pathfinding.show_path import get_path, get_path_plus_map
+from scripts.src.pathfinding.show_path import get_path, get_path_and_map
 from scripts.src.path_following.vectorizer import Vectorizer
 from scripts.src.pathfinding.map_drawer import MapDrawer
+from scripts.src.pathfinding.pathfinding_algorithms import PathfindingAlgorithms
+from scripts.src.pathfinding.config import NODE_SIZE
 
 # TODO: @time_it
 
@@ -107,8 +109,8 @@ def test_on_an_image(image_path: str, goal_color: str):
     goal = pucks[goal_color]
     other_pucks = [val for item, val in pucks.items() if item != goal_color]
 
-    path, _map = get_path_plus_map(15, "BreadthFirstSearch", obstacles, robot_position, goal, other_pucks, width,
-                                   height)
+    path, _map = get_path_and_map(NODE_SIZE, PathfindingAlgorithms.A_STAR, obstacles, robot_position, goal,
+                                  other_pucks, width, height)
 
     nodes = [node.pixel_coordinates_center for node in path]
     vectorizer.set_path(nodes)
