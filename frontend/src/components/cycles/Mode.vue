@@ -14,7 +14,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-
 @Component({
   computed: {
     ...mapState(['cycleReady', 'cycleStarted']),
@@ -23,7 +22,6 @@ import { mapState } from 'vuex';
 export default class Mode extends Vue {
   public cycleReady!: boolean;
   public cycleStarted!: boolean;
-
   get actualMode() {
     if (!this.cycleReady) {
       return 'booting';
@@ -34,7 +32,6 @@ export default class Mode extends Vue {
     }
     return 'noInformation';
   }
-
   get color() {
     if (!this.cycleReady) {
       return 'red';

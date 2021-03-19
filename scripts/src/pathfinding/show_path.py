@@ -14,7 +14,7 @@ def get_path(node_size, algorithm, obstacles, start, end, pucks, image_width, im
     return pathfinder.path
 
 
-def get_path_plus_map(node_size, algorithm, obstacles, start, end, pucks, image_width, image_height):
+def get_path_and_map(node_size, algorithm, obstacles, start, end, pucks, image_width, image_height):
     pathfinding_algorithm_factory = PathfindingAlgorithmFactory()
     pathfinding_algorithm = pathfinding_algorithm_factory.create(algorithm)
     board_map = Map(image_width, image_height, obstacles, pucks, start, end, node_size=node_size)

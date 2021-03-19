@@ -34,10 +34,7 @@ export default class Chronometer extends Vue {
   public prevTime: number | null = 0;
 
   public start() {
-    if (
-      this.cycleReady ||
-      this.currentStep == Step.CycleEndedAndRedLedOn
-    ) {
+    if (this.cycleReady || this.currentStep == Step.CycleEndedAndRedLedOn) {
       this.emitSocketStartCycle();
 
       if (!this.interval) {

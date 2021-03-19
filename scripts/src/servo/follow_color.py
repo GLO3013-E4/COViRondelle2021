@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 import cv2
-import serial
 
 from scripts.src.detection.lower_boundary import LowerBoundary
 from scripts.src.detection.upper_boundary import UpperBoundary
@@ -58,7 +57,7 @@ def adjust_position_for_x(original, medium, center):
 
 
 def adjust_position_for_y(original, medium, center):
-    if original > 100 or original < 0:
+    if original > 180 or original < 0:
         return original
 
     position = original
@@ -90,16 +89,19 @@ while True:
         break
 
     x_position = adjust_position_for_x(x_position, x_medium, x_center)
-    servo2.ChangeDutyCycle(angle_to_per(x_position))
+    if(x_medium < x_center - MOVEMENT_THRESHOLD or x_medium > x_center + MOVEMENT_THRESHOLD):
+        servo2.ChangeDutyCycle(angle_to_per(x_position))
 
     y_position = adjust_position_for_y(y_position, y_medium, y_center)
-    servo1.ChangeDutyCycle(angle_to_per(y_position))
+    if(y_medium < y_center - MOVEMENT_THRESHOLD or y_medium > y_center + MOVEMENT_THRESHOLD):
+        servo1.ChangeDutyCycle(angle_to_per(y_position))
 
     cv2.line(frame, (x_medium, 0), (x_medium, CAP_WIDTH), (0, 255, 0), 2)
     cv2.line(frame, (0, y_medium), (CAP_WIDTH, y_medium), (0, 255, 0), 2)
     cv2.imshow("Frame", frame)
 
-    serial.write(x_position)
+    #serial.write(x_position)
+    print(x_position)
 
     if cv2.waitKey(1) == ord('a'):
         servo1.stop()

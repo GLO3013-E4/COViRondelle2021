@@ -1,8 +1,11 @@
 export const en = {
   appName: 'Culinary robot',
   trajectories: {
+    trajectories: 'Trajectories',
     plannedTrajectory: 'Planned trajectory',
     realTrajectory: 'Real trajectory',
+    startingPoint: 'Starting point',
+    destinationPoint: 'Destination point',
   },
   station: {
     stationInformation: 'Station information',
@@ -42,5 +45,13 @@ export const en = {
   },
   consumptions: {
     consumptionInformation: 'Consumption information',
+    currentBatteryCharge: 'Current battery charge',
+    robotConsumption: 'Robot coonsumption',
+    wheel1: 'Wheel 1',
+    wheel2: 'Wheel 2',
+    wheel3: 'Wheel 3',
+    wheel4: 'Wheel 4',
+    servoMotor: 'Servo motor',
+    total: 'Total',
   },
 };
