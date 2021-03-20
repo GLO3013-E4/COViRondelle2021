@@ -33,7 +33,7 @@ export const StateFactory = factory<State>((fake) => {
     puckColors: ColorFactory.get(3),
     puckFirstCorner: CornerFactory.get(),
     plannedTrajectory,
-    currentPlannedTrajectory: plannedTrajectory.splice(
+    currentPlannedTrajectory: plannedTrajectory.slice(
       0,
       CURRENT_TRAJECTORY_POINTS
     ),
