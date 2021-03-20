@@ -9,7 +9,7 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-col sm="8">
+        <v-spacer >
           <div
             class="path"
             v-bind:style="{
@@ -53,7 +53,7 @@
               />
             </svg>
           </div>
-        </v-col>
+        </v-spacer>
         <v-col sm="4">
           <Legend />
         </v-col>
