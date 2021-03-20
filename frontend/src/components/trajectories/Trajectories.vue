@@ -150,8 +150,8 @@ export default class Trajectories extends Vue {
   private realTrajectory!: Array<Coordinate>;
   private readonly width = 1600;
   private readonly height = 904;
-  private readonly ratioX = 0.5;
-  private readonly ratioY = 0.5;
+  private readonly ratioX = 0.45;
+  private readonly ratioY = 0.45;
 
   private get rescaledWidth() {
     return this.width * this.ratioX;
