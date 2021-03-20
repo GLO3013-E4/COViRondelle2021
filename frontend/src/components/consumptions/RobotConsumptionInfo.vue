@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <v-card class="grey lighten-3">
+    <v-card class="grey lighten-3" height="100%">
       <v-card-title class="grey darken-1 d-flex justify-center">
         <h5 class="white--text">{{ $t(`consumptions.robotConsumption`) }}</h5>
       </v-card-title>
@@ -20,7 +19,6 @@
         </v-row>
       </v-container>
     </v-card>
-  </div>
 </template>
 
 <script lang="ts">
