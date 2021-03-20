@@ -9,9 +9,10 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-col sm="8">
+        <v-col sm="8" class="stepList">
           <StepList />
         </v-col>
+        <v-spacer></v-spacer>
         <v-col sm="4">
           <Mode />
           <Chronometer />
@@ -37,4 +38,8 @@ import Chronometer from '../cycles/Chronometer.vue';
 export default class CycleInformation extends Vue {}
 </script>
 
-<style></style>
+<style>
+.stepList{
+  padding-right: 1em !important;
+}
+</style>
