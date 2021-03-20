@@ -6,6 +6,7 @@ export const en = {
     realTrajectory: 'Real trajectory',
     startingPoint: 'Starting point',
     destinationPoint: 'Destination point',
+    legend: 'Legend',
   },
   station: {
     stationInformation: 'Station information',
