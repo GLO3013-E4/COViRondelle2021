@@ -1,9 +1,9 @@
 <template>
-  <v-card class="d-flex justify-center mb-10" color="#ededed">
+  <v-card color="lighten2">
     <v-container>
       <v-row>
         <v-col sm="12">
-          <v-card class="d-flex justify-center">
+          <v-card class="d-flex justify-center lighten1">
             <h3>{{ $t('trajectories.legend') }}</h3>
           </v-card>
         </v-col>

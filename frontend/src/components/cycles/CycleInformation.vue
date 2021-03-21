@@ -1,5 +1,5 @@
 <template>
-  <v-card color="#ededed" height="475">
+  <v-card color="base" height="475">
     <v-container>
       <v-row>
         <v-col sm="12">
@@ -8,7 +8,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row no-gutters>
+      <v-row>
         <v-col sm="8" class="stepList">
           <StepList />
         </v-col>
@@ -39,7 +39,8 @@ export default class CycleInformation extends Vue {}
 </script>
 
 <style>
-.stepList{
+.stepList {
   padding-right: 1em !important;
+  padding-top: 0em !important;
 }
 </style>

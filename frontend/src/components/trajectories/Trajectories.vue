@@ -1,5 +1,5 @@
 <template>
-  <v-card class="d-flex justify-center mb-10" color="#ededed">
+  <v-card class="d-flex justify-center mb-10" color="base">
     <v-container>
       <v-row>
         <v-col sm="12">
@@ -9,7 +9,7 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-spacer >
+        <v-spacer>
           <div
             class="path"
             v-bind:style="{

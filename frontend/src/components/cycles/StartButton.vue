@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn @click="start" width="100%" elevation="3">{{
+    <v-btn color="primary" @click="start" width="100%" elevation="3">{{
       $t('cycles.start')
     }}</v-btn>
   </div>
