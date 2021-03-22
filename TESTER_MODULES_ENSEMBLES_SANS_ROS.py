@@ -8,7 +8,6 @@ from scripts.src.pathfinding.map_drawer import MapDrawer
 from scripts.src.pathfinding.pathfinding_algorithms import PathfindingAlgorithms
 from scripts.src.pathfinding.config import NODE_SIZE
 
-# TODO: @time_it
 
 colors = {
     "purple",
@@ -72,7 +71,7 @@ def test_on_an_image(image_path: str, goal_color: str):
     #TODO: est-ce que c'est ça qu'on veut?
     robot_position = grip
 
-    print(robot_angle)
+    #print(robot_angle)
 
     # transform obstacles, robot, pucks
     pucks = {key: value for key, value in pucks.items() if value}
@@ -92,16 +91,23 @@ def test_on_an_image(image_path: str, goal_color: str):
     nodes = [node.pixel_coordinates_center for node in path]
     vectorizer.set_path(nodes)
     vectorizer.set_robot_angle(robot_angle)
+
+    #TODO: pour time_it tester temps correction
+    #vectorizer.set_robot_position((393, 446))
     vectorizer.set_robot_position(robot_position)
-    vectors = vectorizer.path_to_vectors()
 
-    print(vectors)
+    vectors = vectorizer.path_to_vectors_from_current_robot_position()
 
-    visualize_map(_map, path, frame)
-    frame = visualize_vectors(vectorizer, frame)
+    #TODO: pour time_it
+    vectorizer.path_to_vectors_from_initial_robot_position()
 
-    cv2.imshow('bleh', frame)
-    cv2.waitKey(0)
+    #print(vectors)
+
+    #visualize_map(_map, path, frame)
+    #frame = visualize_vectors(vectorizer, frame)
+
+    #cv2.imshow('bleh', frame)
+    #cv2.waitKey(0)
 
 """
 def test_on_multiple_images_recalculate_path(images: [str], goal_color: str):
@@ -330,7 +336,8 @@ if __name__ == '__main__':
     AN_IMAGE = "./scripts/src/detection/robot_obstacles4.jpg"
     MULTIPLE_IMAGES = []
 
-    test_on_an_image(AN_IMAGE, GOAL_COLOR)
+    for i in range(10):
+        test_on_an_image(AN_IMAGE, GOAL_COLOR)
     # test_on_multiple_images_recalculate_path(MULTIPLE_IMAGES, GOAL_COLOR)
     # test_on_multiple_images_dont_recalculate_path(MULTIPLE_IMAGES, GOAL_COLOR)
     # test_on_cam_dont_recalculate_path(GOAL_COLOR)

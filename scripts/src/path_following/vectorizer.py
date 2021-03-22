@@ -1,6 +1,7 @@
 import math
 
 from scripts.src.path_following.config import NODE_SIZE
+from scripts.src.util.time_it import time_it
 
 
 class Vectorizer:
@@ -55,7 +56,7 @@ class Vectorizer:
                     minimized_vectors[-1] = (last_vector_distance + distance, last_vector_angle)
         return minimized_vectors
 
-    def correct_path(self, nodes: [(int, int)]):
+    def get_path_from_robot(self, nodes: [(int, int)]):
         robot_node = (
             (self.robot_position[0]//NODE_SIZE)*NODE_SIZE,
             (self.robot_position[1]//NODE_SIZE)*NODE_SIZE
@@ -65,14 +66,17 @@ class Vectorizer:
             return nodes[index:]
 
         else:
-            x, y = self.robot_position
+            return self.correct_path(nodes)
 
-            distance_from_robot = [
-                math.sqrt(pow(x2-x, 2) + pow(y2-y, 2)) for (x2, y2) in nodes
-            ]
-            minimum_distance = min(distance_from_robot)
-            index = distance_from_robot.index(minimum_distance)
-            return [self.robot_position] + nodes[index:]
+    def correct_path(self, nodes):
+        x, y = self.robot_position
+
+        distance_from_robot = [
+            math.sqrt(pow(x2 - x, 2) + pow(y2 - y, 2)) for (x2, y2) in nodes
+        ]
+        minimum_distance = min(distance_from_robot)
+        index = distance_from_robot.index(minimum_distance)
+        return [self.robot_position] + nodes[index:]
 
     def vectorize(self, nodes: [(int, int)]):
         vectors = []
@@ -128,11 +132,28 @@ class Vectorizer:
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle
 
-    def path_to_vectors(self):
+    @time_it
+    def path_to_vectors_from_current_robot_position(self):
         nodes = self.path
         smoothed_path = self.smooth_path(nodes)
-        corrected_path = self.correct_path(smoothed_path)
-        vectors = self.vectorize(corrected_path)
+        path_from_robot = self.get_path_from_robot(smoothed_path)
+        vectors = self.vectorize(path_from_robot)
+        adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
+
+        if self.minimize:
+            adjusted_vectors = self.minimize_vectors(adjusted_vectors)
+
+        if self.debug:
+            self.path_from_robot = path_from_robot
+            self.vectors = vectors
+            self.adjusted_vectors = adjusted_vectors
+
+        return adjusted_vectors
+
+    @time_it
+    def path_to_vectors_from_initial_robot_position(self):
+        nodes = self.path
+        smoothed_path = self.smooth_path(nodes)
         vectors = self.vectorize(smoothed_path)
         adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
 
@@ -140,7 +161,7 @@ class Vectorizer:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
 
         if self.debug:
-            self.corrected_path = corrected_path
+            #self.path_from_robot = path_from_robot
             self.vectors = vectors
             self.adjusted_vectors = adjusted_vectors
 

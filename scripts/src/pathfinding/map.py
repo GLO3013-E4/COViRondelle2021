@@ -8,6 +8,7 @@ from scripts.src.pathfinding.node import Node
 from scripts.src.pathfinding.tile_role import TileRole
 from scripts.src.pathfinding.direction import Direction
 from scripts.src.pathfinding.obstacle_representation import ObstacleRepresentation
+from scripts.src.util.time_it import time_it
 
 
 class Map:
@@ -225,6 +226,7 @@ class Map:
         else:
             self.create_round_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
 
+    #@time_it
     def set_puck(self, puck):
         if self.obstacle_representation is ObstacleRepresentation.RADIUS:
             self.create_round_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK)

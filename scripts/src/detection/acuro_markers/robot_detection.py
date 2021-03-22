@@ -3,11 +3,15 @@ import cv2
 from scripts.src.detection.acuro_markers.AcuroMarkers import ArucoMarkers
 from scripts.src.detection.acuro_markers.marker_position import MarkerPosition
 from scripts.src.detection.acuro_markers.aruco_position import ArucoPosition
+from scripts.src.util.time_it import time_it
+import time
+
+
 
 
 class RobotDetection(ArucoMarkers):
-
-    def detect_aruco_marker_on_robot(self, image, DEBUG=True):
+    @time_it
+    def detect_aruco_marker_on_robot(self, image, DEBUG=False):
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
 
@@ -56,7 +60,6 @@ class RobotDetection(ArucoMarkers):
                     cv2.putText(image, str(markerID),
                             (top_left_position[0], top_left_position[1] - 15),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-                print("[INFO] ArUco marker ID: {}".format(markerID))
             if DEBUG:
                 self.show_image(image)
 
