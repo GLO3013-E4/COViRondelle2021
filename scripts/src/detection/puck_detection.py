@@ -19,15 +19,9 @@ class PuckDetection:
             raise AttributeError("L'image est invalide") from invalid_image
         return img
 
-    def detect_pucks(self, image, Debug=True):
-        script_dir = os.path.dirname(__file__)
-        rel_path = image
-        abs_file_path = os.path.join(script_dir, rel_path)
-        img = cv2.imread(abs_file_path)
-
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    def detect_pucks(self, image):
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.medianBlur(gray, 5)
-
 
         circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 10, param1=50,
                                    param2=30, minRadius=23,maxRadius=30)
@@ -36,7 +30,7 @@ class PuckDetection:
         puck_positions = {}
 
         for (x, y, radius) in detected_circles[0].astype(np.int32):
-            roi = img[y - radius: y + radius, x - radius: x + radius]
+            roi = image[y - radius: y + radius, x - radius: x + radius]
             width, height = roi.shape[:2]
             mask = np.zeros((width, height, 3), roi.dtype)
 
@@ -52,11 +46,6 @@ class PuckDetection:
             puck_positions[hsv_color] = {}
             puck_positions[hsv_color]["center_position"] = (x, y)
             puck_positions[hsv_color]["radius"] = (x, y)
-
-        if Debug:
-            print("Debug mode is on")
-            self.draw_on_image(hsv_color, img, radius, x, y)
-            self.show_image(img)
 
         return puck_positions
 

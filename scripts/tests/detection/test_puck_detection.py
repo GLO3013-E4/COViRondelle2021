@@ -1,8 +1,10 @@
+import cv2
+
 from scripts.src.detection.puck_detection import PuckDetection
 
 puck_detection = PuckDetection()
-AN_IMAGE = "../../data/images/monde3.jpg"
-wanted_puck_position, all_pucks = puck_detection.detect_pucks( AN_IMAGE, "red", False )
+AN_IMAGE = cv2.imread("../../data/images/monde3.jpg")
+wanted_puck_position, all_pucks = puck_detection.detect_pucks(AN_IMAGE)
 
 PURPLE_HSV = [130, 50, 100]
 BLUE_HSV = [105, 70, 200]
