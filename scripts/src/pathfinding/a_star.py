@@ -27,7 +27,7 @@ class AStar(PathfindingAlgorithm):
 
             current = min(openSet_fScores.items(), key=lambda x: x[1])[0]
 
-            if current.role is TileRole.END:
+            if current == end:
                 return reconstruct_path(cameFrom, current)
 
             openSet.remove(current)
