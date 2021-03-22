@@ -1,8 +1,8 @@
-import { RobotConsumption } from '@/types/robotConsumption';
 import { Color } from '@/types/color';
 import { Corner } from '@/types/corner';
 import { Coordinate } from '@/types/coordinate';
 import { Step } from '@/types/step';
+import { RobotConsumption } from './robotConsumption';
 
 export interface Message {
   resistance?: number;

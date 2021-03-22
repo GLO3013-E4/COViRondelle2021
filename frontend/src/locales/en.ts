@@ -45,5 +45,13 @@ export const en = {
   },
   consumptions: {
     consumptionInformation: 'Consumption information',
+    currentBatteryCharge: 'Current battery charge',
+    robotConsumption: 'Robot coonsumption',
+    wheel1: 'Wheel 1',
+    wheel2: 'Wheel 2',
+    wheel3: 'Wheel 3',
+    wheel4: 'Wheel 4',
+    servoMotor: 'Servo motor',
+    total: 'Total',
   },
 };

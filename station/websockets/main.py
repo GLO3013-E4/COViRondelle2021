@@ -17,9 +17,8 @@ def to_json(data):
     return json.dumps(data)
 
 
-def handle_ready(_):
-    # TODO : Make sure this works once cycle_ready is implemented
-    socket.emit("cycle_ready")
+def handle_robot_consumption(robot_consumption):
+    socket.emit("robot_consumption", robot_consumption.data)
 
 
 def handle_world_camera_image_raw(image):
@@ -30,13 +29,11 @@ def handle_world_camera_image_raw(image):
 
 
 def handle_robot(pose):
-    # TODO : Make sure this works once robot (coordinate) is implemented (most likely not this way)
     json_data = to_json({"realTrajectoryCoordinate": {"x": pose.position.x, "y": pose.position.y}})
     socket.emit("real_trajectory_coordinate", json_data)
 
 
 def handle_path(path):
-    # TODO : Make sure this works once path is implemented (most likely not this way)
     poses = []
 
     for pose in path.poses:
@@ -65,7 +62,6 @@ def handle_puck_corners(puck_corners):
 
 
 def handle_end(_):
-    # TODO : Make sure this works once end is implemented
     json_data = to_json({"currentStep": "CycleEndedAndRedLedOn"})
     socket.emit("current_step", json_data)
 
@@ -75,14 +71,14 @@ def websockets():
     rospy.init_node("websockets", anonymous=True)
     rate = rospy.Rate(1)
 
-    rospy.Subscriber("ready", Bool, handle_ready)
+    rospy.Subscriber("robot_consumption", String, handle_robot_consumption)
     rospy.Subscriber("world_camera/image_raw", Image, handle_world_camera_image_raw)
     rospy.Subscriber("robot", Pose, handle_robot)
     rospy.Subscriber("path", Path, handle_path)
     rospy.Subscriber("resistance", Float32, handle_resistance)
     rospy.Subscriber("puck_colors", String, handle_puck_colors)
     rospy.Subscriber("puck_corners", String, handle_puck_corners)
-    rospy.Subscriber("end", Bool, handle_end)
+    rospy.Subscriber("end", Bool, handle_end)  # TODO : Remove end, subscribe to current_step
 
     @socket.on('start_cycle')
     def handle_start_cycle():

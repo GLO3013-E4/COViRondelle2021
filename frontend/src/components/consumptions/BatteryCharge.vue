@@ -2,7 +2,9 @@
   <div>
     <v-card class="grey lighten-3">
       <v-card-title class="grey darken-1 d-flex justify-center">
-        <h5 class="white--text">Current battery charge</h5>
+        <h5 class="white--text">
+          {{ $t(`consumptions.currentBatteryCharge`) }}
+        </h5>
       </v-card-title>
       <v-container>
         <v-row align="center">
@@ -14,7 +16,7 @@
               :value="this.pourcentageBatteryLeft"
               color="light-blue"
             >
-              <h4 ref="batteryCharge"> {{ currentBatteryCharge }} Ah</h4>
+              <h4 ref="batteryCharge">{{ currentBatteryCharge }} Ah</h4>
             </v-progress-circular>
           </v-col>
           <v-col sm="6">
@@ -44,13 +46,11 @@ export default class BatteryCharge extends Vue {
   public trailingDecimals = 3;
 
   private get currentBatteryCharge() {
-    return this.robotConsumption.batteryChargeLeft.toFixed(
-      this.trailingDecimals
-    );
+    return this.robotConsumption.batteryCharge.toFixed(this.trailingDecimals);
   }
 
   private get pourcentageBatteryLeft() {
-    return (this.robotConsumption.batteryChargeLeft / this.maximumCharge) * 100;
+    return (this.robotConsumption.batteryCharge / this.maximumCharge) * 100;
   }
 }
 </script>

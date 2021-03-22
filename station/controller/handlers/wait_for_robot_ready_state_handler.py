@@ -1,5 +1,5 @@
 import rospy
-from std_msgs.msg import Bool
+from std_msgs.msg import String
 from handlers.handler import Handler
 
 
@@ -7,15 +7,15 @@ class WaitForRobotReadyStateHandler(Handler):
     is_finished = False
     ready_subscriber = None
 
-    def handle_ready(self, ready):
+    def handle_robot_consumption(self, _):
         print('Finished : wait for robot ready state handler')  # TODO : Remove print
-        self.is_finished = ready
+        self.is_finished = True
 
     def handle(self, handled_data=None):
         print('Looping in wait for robot ready state handler')  # TODO : Remove print
 
         if not self.ready_subscriber:
-            self.ready_subscriber = rospy.Subscriber("ready", Bool, self.handle_ready)
+            self.ready_subscriber = rospy.Subscriber("robot_consumption", String, self.handle_robot_consumption)
 
         return handled_data, self.is_finished
 

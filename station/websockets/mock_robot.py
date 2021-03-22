@@ -1,11 +1,12 @@
+import random
 import rospy
 from geometry_msgs.msg import Pose
 
 
 def create_robot_pose():
     pose = Pose()
-    pose.position.x = 20
-    pose.position.y = 240
+    pose.position.x = random.randint(100, 1500)
+    pose.position.y = random.randint(100, 804)
     return pose
 
 
