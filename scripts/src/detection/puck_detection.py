@@ -19,7 +19,7 @@ class PuckDetection:
             raise AttributeError("L'image est invalide") from invalid_image
         return img
 
-    def detect_pucks(self, image, color, Debug=True):
+    def detect_pucks(self, image, Debug=True):
         script_dir = os.path.dirname(__file__)
         rel_path = image
         abs_file_path = os.path.join(script_dir, rel_path)
@@ -33,8 +33,7 @@ class PuckDetection:
                                    param2=30, minRadius=23,maxRadius=30)
         detected_circles = np.uint16(np.around(circles))
 
-        wanted_puck_position = {}
-        other_pucks_positions = []
+        puck_positions = {}
 
         for (x, y, radius) in detected_circles[0].astype(np.int32):
             roi = img[y - radius: y + radius, x - radius: x + radius]
@@ -50,22 +49,16 @@ class PuckDetection:
             hsv_dominant_color = cv2.cvtColor(dominant_color_np, cv2.COLOR_BGR2HSV)
             hsv_color = self.find_hsv_color(hsv_dominant_color[0][0])
 
-            if hsv_color == color:
-                wanted_puck_position["center_position"] = (x, y)
-                wanted_puck_position["radius"] = radius
-                break
-
-        for (x, y, radius) in detected_circles[0].astype(np.int32):
-            cv2.circle(img, (x, y), radius, (255, 0, 0), 1)
-            if wanted_puck_position["center_position"] != (x, y):
-                other_pucks_positions.append({"center_position" : (x, y), "radius" : radius})
+            puck_positions[hsv_color] = {}
+            puck_positions[hsv_color]["center_position"] = (x, y)
+            puck_positions[hsv_color]["radius"] = (x, y)
 
         if Debug:
             print("Debug mode is on")
             self.draw_on_image(hsv_color, img, radius, x, y)
             self.show_image(img)
 
-        return wanted_puck_position, other_pucks_positions
+        return puck_positions
 
     def show_image(self, output):
         cv2.imshow('output', output)
