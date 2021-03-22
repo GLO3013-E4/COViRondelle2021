@@ -1,16 +1,16 @@
 <template>
-  <v-card color="lighten2">
+  <v-card color="lighten2" elevation="5">
     <v-container>
       <v-row>
         <v-col sm="12">
-          <v-card class="d-flex justify-center lighten1">
+          <v-card class="d-flex justify-center lighten1" elevation="6">
             <h3>{{ $t('trajectories.legend') }}</h3>
           </v-card>
         </v-col>
       </v-row>
       <v-row no-gutters>
         <svg height="120" width="400" id="legend">
-          <text :x="xInitialPlacement" :y="yInitialPlacement" fill="blue">
+          <text :x="xInitialPlacement" :y="yInitialPlacement" fill="white">
             {{ `${$t('trajectories.plannedTrajectory')} :` }}
           </text>
           <line
@@ -23,7 +23,7 @@
           <text
             :x="xInitialPlacement"
             :y="yInitialPlacement + deltaRealTrajectory"
-            fill="red"
+            fill="white"
           >
             {{ `${$t('trajectories.realTrajectory')} :` }}
           </text>
@@ -37,7 +37,7 @@
           <text
             :x="xInitialPlacement"
             :y="yInitialPlacement + deltaStartingPoint"
-            fill="red"
+            fill="white"
           >
             {{ `${$t('trajectories.startingPoint')} :` }}
           </text>
@@ -52,7 +52,7 @@
           <text
             :x="xInitialPlacement"
             :y="yInitialPlacement + deltaEndingPoint"
-            fill="green"
+            fill="white"
           >
             {{ `${$t('trajectories.destinationPoint')} :` }}
           </text>

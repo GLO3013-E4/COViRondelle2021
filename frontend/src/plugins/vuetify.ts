@@ -12,7 +12,7 @@ export default new Vuetify({
         dark: {
           primary: colors.lightBlue.accent2,//TODO: change
           secondary: colors.red.lighten4, //TODO: change
-          accent: colors.indigo.base, //TODO: change
+          accent: colors.blue, //TODO: change
           base: colors.grey.darken4,
           lighten1: colors.grey.darken3,
           lighten2: colors.grey.darken2,
