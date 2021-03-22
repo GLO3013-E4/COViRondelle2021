@@ -86,7 +86,3 @@ class PuckDetection:
                     <= boundaries["upper"][2]:
                 return color
         return "None"
-
-puck_detection = PuckDetection()
-pucks = puck_detection.detect_pucks("monde.png")
-print(pucks)
