@@ -19,6 +19,7 @@ class PuckDetection:
         return img
 
     def detect_pucks(self, image):
+        image = cv2.imread(image)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.medianBlur(gray, 5)
 
@@ -86,3 +87,7 @@ class PuckDetection:
                     <= boundaries["upper"][2]:
                 return color
         return "None"
+
+puck_detection = PuckDetection()
+pucks = puck_detection.detect_pucks("monde.png")
+print(pucks)

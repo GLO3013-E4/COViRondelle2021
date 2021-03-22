@@ -2,7 +2,7 @@ class ColorBoundaries:
     """Color boundaries of pucks"""
     def __init__(self):
         self.color_boundaries = {"purple": {"lower": [117, 20, 94], "upper":[143, 255, 233]},
-                                 "white": {"lower": [20, 0, 155], "upper":[124, 62, 186]} ,
+                                 "white": {"lower": [29, 2, 138], "upper":[85, 123, 157]} ,
                                  "yellow": {"lower": [19, 105, 40], "upper":[41, 255, 255]},
                                  "blue": {"lower": [101, 50, 0], "upper":[179, 255, 255]} ,
                                  "orange": {"lower": [5, 127, 60], "upper":[22, 255, 255]},
