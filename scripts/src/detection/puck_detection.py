@@ -1,4 +1,3 @@
-import os
 from collections import Counter
 import cv2
 import numpy as np
@@ -43,9 +42,11 @@ class PuckDetection:
             hsv_dominant_color = cv2.cvtColor(dominant_color_np, cv2.COLOR_BGR2HSV)
             hsv_color = self.find_hsv_color(hsv_dominant_color[0][0])
 
-            puck_positions[hsv_color] = {}
-            puck_positions[hsv_color]["center_position"] = (x, y)
-            puck_positions[hsv_color]["radius"] = (x, y)
+            puck_positions[hsv_color] = [] if puck_positions.get(hsv_color) is None else puck_positions.get(hsv_color)
+            puck = dict()
+            puck["center_position"] = (x, y)
+            puck["radius"] = (x, y)
+            puck_positions[hsv_color].append(puck)
 
         return puck_positions
 
