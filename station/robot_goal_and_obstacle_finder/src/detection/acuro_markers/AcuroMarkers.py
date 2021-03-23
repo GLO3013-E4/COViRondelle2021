@@ -1,12 +1,7 @@
-import os
 import cv2
 
 
 class ArucoMarkers:
-    def capture_image_from_path(self, path):
-        absolute_path = os.path.join(os.getcwd(), path)
-        image = cv2.imread(absolute_path)
-        return image
 
     def generate_center_position(self, bottom_right_position, top_left_position):
         center_x = int((top_left_position[0] + bottom_right_position[0]) / 2.0)
@@ -48,7 +43,7 @@ class ArucoMarkers:
     def generate_obstacle_dict(self, top_right, top_left, bottom_right, bottom_left,
                                obstacle_id, center_x, center_y):
         obstacle_report = {
-            f"obstacle {obstacle_id}" : {
+            f"obstacle {obstacle_id}": {
             "center": (center_x, center_y),
             "top_right": top_right,
             "top_left": top_left,
