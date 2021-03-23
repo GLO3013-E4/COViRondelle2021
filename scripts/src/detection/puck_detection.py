@@ -1,7 +1,6 @@
 from collections import Counter
 import cv2
 import numpy as np
-from skimage import measure
 from sklearn.cluster import KMeans
 from scripts.src.detection.color_boundaries import ColorBoundaries
 
@@ -21,41 +20,9 @@ class PuckDetection:
 
 
     def detect_pucks(self, image):
-        image = cv2.imread(image)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.medianBlur(gray, 5)
-
-        GLARE_MIN = np.array([0, 0, 20],np.uint8)
-        GLARE_MAX = np.array([0, 0, 255],np.uint8)
-
-        hsv_img = cv2.cvtColor(image,cv2.COLOR_BGR2HSV)
-
-        frame_threshed = cv2.inRange(hsv_img, GLARE_MIN, GLARE_MAX)
-
-        result = cv2.inpaint(image, frame_threshed, 0.6, cv2.INPAINT_TELEA)
-        lab1 = cv2.cvtColor(result, cv2.COLOR_BGR2LAB)
-        lab_planes1 = cv2.split(lab1)
-        clahe1 = cv2.createCLAHE(clipLimit=2.0,tileGridSize=(8,8))
-        lab_planes1[0] = clahe1.apply(lab_planes1[0])
-        lab1 = cv2.merge(lab_planes1)
-        image = cv2.cvtColor(lab1, cv2.COLOR_LAB2BGR)
-
-        imghsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV).astype("float32")
-        (h, s, v) = cv2.split(imghsv)
-        s = s*2
-        s = np.clip(s,0,255)
-        imghsv = cv2.merge([h,s,v])
-
-        image = cv2.cvtColor(imghsv.astype("uint8"), cv2.COLOR_HSV2BGR)
-
-        hsvImg = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-
-
-        hsvImg[...,2] = hsvImg[...,2]*0.8
-        image=cv2.cvtColor(hsvImg,cv2.COLOR_HSV2BGR)
-
-
-
+        image = self.remove_glare(image)
 
         circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 10, param1=50,
                                    param2=30, minRadius=23, maxRadius=30)
@@ -75,7 +42,7 @@ class PuckDetection:
 
             dominant_color_np = np.uint8([[dominant_color]])
             hsv_dominant_color = cv2.cvtColor(dominant_color_np, cv2.COLOR_BGR2HSV)
-            hsv_color = self.find_hsv_color(hsv_dominant_color[0][0], x, y)
+            hsv_color = self.find_hsv_color(hsv_dominant_color[0][0])
 
             puck_positions[hsv_color] = [] if puck_positions.get(hsv_color) is None else puck_positions.get(hsv_color)
             puck = dict()
@@ -83,10 +50,33 @@ class PuckDetection:
             puck["radius"] = radius
             puck_positions[hsv_color].append(puck)
 
-            self.draw_on_image(hsv_color, image, radius, x, y)
-        self.show_image(image)
-
         return puck_positions
+
+    def remove_glare(self, image):
+        GLARE_MIN = np.array([0, 0, 20], np.uint8)
+        GLARE_MAX = np.array([0, 0, 255], np.uint8)
+
+        hsv_img = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        frame_threshed = cv2.inRange(hsv_img, GLARE_MIN, GLARE_MAX)
+        result = cv2.inpaint(image, frame_threshed, 0.6, cv2.INPAINT_TELEA)
+
+        image_lab = cv2.cvtColor(result, cv2.COLOR_BGR2LAB)
+        image_lab_planes = cv2.split(image_lab)
+        image_clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+        image_lab_planes[0] = image_clahe.apply(image_lab_planes[0])
+        image_lab = cv2.merge(image_lab_planes)
+
+        image = cv2.cvtColor(image_lab, cv2.COLOR_LAB2BGR)
+        image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV).astype("float32")
+        (h, s, v) = cv2.split(image_hsv)
+        s = s * 2
+        s = np.clip(s, 0, 255)
+        image_hsv = cv2.merge([h, s, v])
+        image = cv2.cvtColor(image_hsv.astype("uint8"), cv2.COLOR_HSV2BGR)
+        hsvImg = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        hsvImg[..., 2] = hsvImg[..., 2] * 0.85
+        image = cv2.cvtColor(hsvImg, cv2.COLOR_HSV2BGR)
+        return image
 
     def show_image(self, output):
         cv2.imshow('output', output)
@@ -115,9 +105,8 @@ class PuckDetection:
         dominant_color = clt.cluster_centers_[label_counts.most_common(1)[0][0]]
         return list(dominant_color)
 
-    def find_hsv_color(self, hsv, x, y,):
+    def find_hsv_color(self, hsv):
         colors = self.color_boundaries.get_boundaries_dict()
-        print(x, y, hsv)
         for color, boundaries in colors.items():
             if boundaries["lower"][0] <= hsv[0] <= boundaries["upper"][0] and \
                     boundaries["lower"][1] <= hsv[1] <= \
@@ -125,5 +114,3 @@ class PuckDetection:
                     <= boundaries["upper"][2]:
                 return color
         return "None"
-puck_detection = PuckDetection()
-puck_detection.detect_pucks("new_monde4.jpg")
