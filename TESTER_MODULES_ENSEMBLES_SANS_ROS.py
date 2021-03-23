@@ -342,6 +342,25 @@ def test_on_cam_dont_recalculate_path(goal_color: str):
     cv2.destroyAllWindows()
 
 
+def pixel_to_cm(pixel_distance):
+    # table = 1600x904 pixels
+
+    #longueur_table = BLEH
+    #return longueur_table/1600*pixel_distance
+
+    #largeur_table = BLEH
+    #return largeur_table/904*pixel_distance
+    pass
+
+
+def convert_vectors_to_cm(vectors):
+    new_vectors = []
+    for vector in vectors:
+        new_vector = (pixel_to_cm(vector[0]), vector[1], vector[2])
+        new_vectors.append(new_vector)
+    return new_vectors
+
+
 if __name__ == '__main__':
     GOAL_COLOR = "purple"
 
