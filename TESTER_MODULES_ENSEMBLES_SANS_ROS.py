@@ -34,11 +34,11 @@ def get_objects(obstacle_and_robot, puck_detection, image):
 
 
 def visualize_vectors(vectorizer, image):
-    for i in range(len(vectorizer.corrected_path)-1):
-        point1 = vectorizer.corrected_path[i]
+    for i in range(len(vectorizer.path_from_robot)-1):
+        point1 = vectorizer.path_from_robot[i]
         point1 = tuple(map(int, point1))
 
-        point2 = vectorizer.corrected_path[i+1]
+        point2 = vectorizer.path_from_robot[i+1]
         point2 = tuple(map(int, point2))
 
         thickness = 3
@@ -95,61 +95,68 @@ def test_on_an_image(image_path: str, goal_color: str):
     vectorizer.set_robot_position(robot_position)
 
     vectors = vectorizer.path_to_vectors_from_current_robot_position()
-    #vectorizer.path_to_vectors_from_initial_robot_position()
+    #vectors = vectorizer.path_to_vectors_from_initial_robot_position()
 
     print(vectors)
 
     visualize_map(_map, path, frame)
-    #frame = visualize_vectors(vectorizer, frame)
+    frame = visualize_vectors(vectorizer, frame)
 
-    #cv2.imshow('bleh', frame)
-    #cv2.waitKey(0)
+    cv2.imshow('bleh', frame)
+    cv2.waitKey(0)
 
-"""
+
 def test_on_multiple_images_recalculate_path(images: [str], goal_color: str):
-    obstacle_detection = ObstacleDetection()
-    robot_detection = RobotDetection()
+    obstacle_and_robot_detection = ObstacleRobotFinder()
     puck_detection = PuckDetection()
-    vectorizer = Vectorizer(debug=True)
+    vectorizer = Vectorizer(mode=MovementMode.GRIP, debug=True)
 
     for image_path in images:
         ret, frame = None, cv2.imread(image_path)
         height, width, channels = frame.shape
 
-        obstacles, robot, pucks = get_objects(obstacle_detection, robot_detection, puck_detection, frame)
+        obstacles, pucks, robot_position, grip, robot_angle = get_objects(obstacle_and_robot_detection, puck_detection,
+                                                                          frame)
+
+        # TODO: est-ce que c'est ça qu'on veut?
+        robot_position = grip
 
         # transform obstacles, robot, pucks
-        pucks = {key: value for key, value in pucks.items() if value}
-        pucks = {
-            color: pucks[color]['center_position'] for color in pucks
-        }
         obstacles = [
-            obstacles[index][f"obstacle {index + 1}"]['center'] for index in range(len(obstacles))
+            obstacles[index]['center_of_obstacle'] for index in range(len(obstacles))
         ]
-        robot_position = robot['center']
-        robot_angle = get_robot_angle(robot)
 
-        goal = pucks[goal_color]
-        other_pucks = [val for item, val in pucks.items() if item != goal_color]
+        goal = pucks[goal_color][0]["center_position"]
 
-        path, _map = get_path_plus_map(15, "BreadthFirstSearch", obstacles, robot_position, goal, other_pucks, width,
-                                       height)
+        all_pucks = []
+        for color in pucks:
+            all_pucks += pucks[color]
+        other_pucks = [puck["center_position"] for puck in all_pucks if puck["center_position"] != goal]
+
+        path, _map = get_path_and_map(NODE_SIZE, PathfindingAlgorithms.A_STAR, obstacles, robot_position, goal,
+                                      other_pucks, width, height)
 
         nodes = [node.pixel_coordinates_center for node in path]
         vectorizer.set_path(nodes)
         vectorizer.set_robot_angle(robot_angle)
+
+        # vectorizer.set_robot_position((393, 446))
         vectorizer.set_robot_position(robot_position)
-        vectors = vectorizer.path_to_vectors()
+
+        vectors = vectorizer.path_to_vectors_from_current_robot_position()
+        # vectorizer.path_to_vectors_from_initial_robot_position()
+
+        print(vectors)
 
         visualize_map(_map, path, frame)
-        frame = visualize_vectors(vectorizer, frame)
+        #frame = visualize_vectors(vectorizer, frame)
 
-        cv2.imshow('bleh', frame)
-        cv2.waitKey(0)
+        #cv2.imshow('bleh', frame)
+        #cv2.waitKey(0)
 
     cv2.destroyAllWindows()
 
-
+"""
 def test_on_multiple_images_dont_recalculate_path(images: [str], goal_color: str):
     obstacle_detection = ObstacleDetection()
     robot_detection = RobotDetection()
@@ -209,44 +216,53 @@ def test_on_multiple_images_dont_recalculate_path(images: [str], goal_color: str
         cv2.waitKey(0)
 
     cv2.destroyAllWindows()
-
+"""
 
 def test_on_cam_recalculate_path(goal_color: str):
     cap = cv2.VideoCapture(0)
 
-    obstacle_detection = ObstacleDetection()
-    robot_detection = RobotDetection()
+    obstacle_and_robot_detection = ObstacleRobotFinder()
     puck_detection = PuckDetection()
-    vectorizer = Vectorizer(debug=True)
+    vectorizer = Vectorizer(mode=MovementMode.GRIP, debug=True)
 
     while True:
         ret, frame = cap.read()
         height, width, channels = frame.shape
 
-        obstacles, robot, pucks = get_objects(obstacle_detection, robot_detection, puck_detection, frame)
+        obstacles, pucks, robot_position, grip, robot_angle = get_objects(obstacle_and_robot_detection, puck_detection,
+                                                                          frame)
+
+        # TODO: est-ce que c'est ça qu'on veut?
+        robot_position = grip
+
+        # print(robot_angle)
 
         # transform obstacles, robot, pucks
-        pucks = {key: value for key, value in pucks.items() if value}
-        pucks = {
-            color: pucks[color]['center_position'] for color in pucks
-        }
         obstacles = [
-            obstacles[index][f"obstacle {index + 1}"]['center'] for index in range(len(obstacles))
+            obstacles[index]['center_of_obstacle'] for index in range(len(obstacles))
         ]
-        robot_position = robot['center']
-        robot_angle = get_robot_angle(robot)
 
-        goal = pucks[goal_color]
-        other_pucks = [val for item, val in pucks.items() if item != goal_color]
+        goal = pucks[goal_color][0]["center_position"]
 
-        path, _map = get_path_plus_map(15, "BreadthFirstSearch", obstacles, robot_position, goal, other_pucks, width,
-                                       height)
+        all_pucks = []
+        for color in pucks:
+            all_pucks += pucks[color]
+        other_pucks = [puck["center_position"] for puck in all_pucks if puck["center_position"] != goal]
+
+        path, _map = get_path_and_map(NODE_SIZE, PathfindingAlgorithms.A_STAR, obstacles, robot_position, goal,
+                                      other_pucks, width, height)
 
         nodes = [node.pixel_coordinates_center for node in path]
         vectorizer.set_path(nodes)
         vectorizer.set_robot_angle(robot_angle)
+
+        # vectorizer.set_robot_position((393, 446))
         vectorizer.set_robot_position(robot_position)
-        vectors = vectorizer.path_to_vectors()
+
+        vectors = vectorizer.path_to_vectors_from_current_robot_position()
+        # vectors = vectorizer.path_to_vectors_from_initial_robot_position()
+
+        print(vectors)
 
         #visualize_map(_map, path, frame)
         frame = visualize_vectors(vectorizer, frame)
@@ -262,55 +278,57 @@ def test_on_cam_recalculate_path(goal_color: str):
 def test_on_cam_dont_recalculate_path(goal_color: str):
     cap = cv2.VideoCapture(0)
 
-    obstacle_detection = ObstacleDetection()
-    robot_detection = RobotDetection()
+    obstacle_and_robot_detection = ObstacleRobotFinder()
     puck_detection = PuckDetection()
-    vectorizer = Vectorizer(debug=True)
+    vectorizer = Vectorizer(mode=MovementMode.GRIP, debug=True)
 
     ret, frame = cap.read()
     height, width, channels = frame.shape
 
-    obstacles, robot, pucks = get_objects(obstacle_detection, robot_detection, puck_detection, frame)
+    obstacles, pucks, robot_position, grip, robot_angle = get_objects(obstacle_and_robot_detection, puck_detection,
+                                                                      frame)
 
     # transform obstacles, robot, pucks
-    pucks = {key: value for key, value in pucks.items() if value}
-    pucks = {
-        color: pucks[color]['center_position'] for color in pucks
-    }
+    # transform obstacles, robot, pucks
     obstacles = [
-        obstacles[index][f"obstacle {index + 1}"]['center'] for index in range(len(obstacles))
+        obstacles[index]['center_of_obstacle'] for index in range(len(obstacles))
     ]
-    robot_position = robot['center']
-    robot_angle = get_robot_angle(robot)
 
-    goal = pucks[goal_color]
-    other_pucks = [val for item, val in pucks.items() if item != goal_color]
+    goal = pucks[goal_color][0]["center_position"]
 
-    path, _map = get_path_plus_map(15, "BreadthFirstSearch", obstacles, robot_position, goal, other_pucks, width,
-                                   height)
+    all_pucks = []
+    for color in pucks:
+        all_pucks += pucks[color]
+    other_pucks = [puck["center_position"] for puck in all_pucks if puck["center_position"] != goal]
+
+    path, _map = get_path_and_map(NODE_SIZE, PathfindingAlgorithms.A_STAR, obstacles, robot_position, goal,
+                                  other_pucks, width, height)
 
     nodes = [node.pixel_coordinates_center for node in path]
     vectorizer.set_path(nodes)
     vectorizer.set_robot_angle(robot_angle)
+    # vectorizer.set_robot_position((393, 446))
     vectorizer.set_robot_position(robot_position)
-    vectors = vectorizer.path_to_vectors()
+    vectors = vectorizer.path_to_vectors_from_current_robot_position()
+    # vectors = vectorizer.path_to_vectors_from_initial_robot_position()
 
-    visualize_map(_map, path, frame)
-    frame = visualize_vectors(vectorizer, frame)
-    cv2.imshow('bleh', frame)
-    cv2.waitKey(0)
+    #visualize_map(_map, path, frame)
+    #frame = visualize_vectors(vectorizer, frame)
+    #cv2.imshow('bleh', frame)
+    #cv2.waitKey(0)
 
     while True:
         ret, frame = cap.read()
 
-        obstacles, robot, pucks = get_objects(obstacle_detection, robot_detection, puck_detection, frame)
-
-        robot_position = robot['center']
-        robot_angle = get_robot_angle(robot)
+        obstacles, pucks, robot_position, grip, robot_angle = get_objects(obstacle_and_robot_detection, puck_detection,
+                                                                          frame)
+        robot_position = grip
 
         vectorizer.set_robot_angle(robot_angle)
+        # vectorizer.set_robot_position((393, 446))
         vectorizer.set_robot_position(robot_position)
-        vectors = vectorizer.path_to_vectors()
+        vectors = vectorizer.path_to_vectors_from_current_robot_position()
+        # vectors = vectorizer.path_to_vectors_from_initial_robot_position()
 
         # visualize vectors on image
         #visualize_map(_map, path, frame)
@@ -322,7 +340,7 @@ def test_on_cam_dont_recalculate_path(goal_color: str):
 
     cap.release()
     cv2.destroyAllWindows()
-"""
+
 
 if __name__ == '__main__':
     GOAL_COLOR = "purple"
@@ -331,7 +349,6 @@ if __name__ == '__main__':
 
     AN_IMAGE = "./scripts/data/images/robot_obstacles4.jpg"
     MULTIPLE_IMAGES = []
-
 
     test_on_an_image(AN_IMAGE, GOAL_COLOR)
     # test_on_multiple_images_recalculate_path(MULTIPLE_IMAGES, GOAL_COLOR)
