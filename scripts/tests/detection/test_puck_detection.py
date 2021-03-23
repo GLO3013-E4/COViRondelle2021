@@ -3,13 +3,13 @@ import cv2
 from scripts.src.detection.puck_detection import PuckDetection
 
 puck_detection = PuckDetection()
-AN_IMAGE = cv2.imread("./data/images/monde3.jpg")
+AN_IMAGE = cv2.imread("monde3.jpg")
 pucks = puck_detection.detect_pucks(AN_IMAGE)
 
 PURPLE_HSV = [130, 50, 100]
 BLUE_HSV = [105, 70, 200]
 GREEN_HSV = [60, 110, 40]
-INVALID_HSV = [0, 2, 0]
+INVALID_HSV = [250, 255, 200]
 
 
 def test_given_puck_should_return_dict_with_tuple_position_and_int_radius():
