@@ -18,7 +18,36 @@ class TrackBarDetection:
         cv2.createTrackbar("Val Min", "TrackBars", 0, 255, self.on_track_bar_change)
         cv2.createTrackbar("Val Max", "TrackBars", 255, 255, self.on_track_bar_change)
 
-        image_camera_monde = cv2.imread("monde.png")
+        image_camera_monde = cv2.imread("new_monde2.jpg")
+
+        GLARE_MIN = np.array([0, 0, 20],np.uint8)
+        GLARE_MAX = np.array([0, 0, 255],np.uint8)
+
+        hsv_img = cv2.cvtColor(image_camera_monde,cv2.COLOR_BGR2HSV)
+
+        frame_threshed = cv2.inRange(hsv_img, GLARE_MIN, GLARE_MAX)
+
+        result = cv2.inpaint(image_camera_monde, frame_threshed, 0.6, cv2.INPAINT_TELEA)
+        lab1 = cv2.cvtColor(result, cv2.COLOR_BGR2LAB)
+        lab_planes1 = cv2.split(lab1)
+        clahe1 = cv2.createCLAHE(clipLimit=2.0,tileGridSize=(8,8))
+        lab_planes1[0] = clahe1.apply(lab_planes1[0])
+        lab1 = cv2.merge(lab_planes1)
+        image = cv2.cvtColor(lab1, cv2.COLOR_LAB2BGR)
+
+        imghsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV).astype("float32")
+        (h, s, v) = cv2.split(imghsv)
+        s = s*2
+        s = np.clip(s,0,255)
+        imghsv = cv2.merge([h,s,v])
+
+        image = cv2.cvtColor(imghsv.astype("uint8"), cv2.COLOR_HSV2BGR)
+
+        hsvImg = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+
+
+        hsvImg[...,2] = hsvImg[...,2]*0.8
+        image_camera_monde=cv2.cvtColor(hsvImg,cv2.COLOR_HSV2BGR)
 
         while True:
             hsv_image = cv2.cvtColor(image_camera_monde, cv2.COLOR_BGR2HSV)

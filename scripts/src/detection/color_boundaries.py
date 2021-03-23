@@ -1,16 +1,17 @@
 class ColorBoundaries:
     """Color boundaries of pucks"""
     def __init__(self):
-        self.color_boundaries = {"purple": {"lower": [117, 20, 94], "upper":[143, 255, 233]},
-                                 "white": {"lower": [29, 2, 138], "upper":[85, 123, 157]} ,
-                                 "yellow": {"lower": [19, 105, 40], "upper":[41, 255, 255]},
-                                 "blue": {"lower": [101, 50, 0], "upper":[179, 255, 255]} ,
-                                 "orange": {"lower": [5, 127, 60], "upper":[22, 255, 255]},
-                                 "red": {"lower": [0, 143, 49], "upper":[35, 255, 106]},
-                                 "brown": {"lower": [0, 121, 15], "upper":[26, 255, 39]} ,
-                                 "green":{"lower": [49, 36, 11], "upper":[84, 255, 139]} ,
-                                 "black":{"lower": [31, 21, 0], "upper":[126, 255, 17]} ,
-                                 "grey": {"lower": [11, 18, 27], "upper":[56, 108, 96]},
+        self.color_boundaries = {"purple": {"lower": [110, 16, 80], "upper":[172, 245, 255]},
+                                 "white": {"lower": [12, 0, 135], "upper":[96, 159, 232]} ,
+                                 "yellow": {"lower": [19, 148, 60], "upper":[40, 255, 255]},
+                                 "blue": {"lower": [95, 66, 36], "upper":[124, 255, 255]} ,
+                                 "orange": {"lower": [6, 139, 77], "upper":[24, 255, 161]},
+                                 "red": {"lower": [0, 239, 65], "upper":[7, 255, 143]},
+                                 "brown": {"lower": [0, 59, 0], "upper":[41, 255, 57]} ,
+                                 "green":{"lower": [56, 74, 18], "upper":[79, 255, 147]} ,
+                                 "grey": {"lower": [20, 0, 42], "upper":[96, 157, 111]},
+                                 "black":{"lower": [0, 0, 0], "upper":[161, 255, 28]}
+
                                 }
 
     def get_boundaries_dict(self):
