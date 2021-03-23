@@ -24,5 +24,5 @@ def get_path_and_map(node_size, algorithm, obstacles, start, end, pucks, image_w
     pathfinder = Pathfinder(board_map, pathfinding_algorithm)
 
     pathfinder.find_square_matrix_path()
-
+    #pathfinder.path = []
     return pathfinder.path, board_map

@@ -8,6 +8,7 @@ from scripts.src.pathfinding.map_drawer import MapDrawer
 from scripts.src.pathfinding.pathfinding_algorithms import PathfindingAlgorithms
 from scripts.src.pathfinding.config import NODE_SIZE
 from scripts.src.path_following.movement_mode import MovementMode
+import time
 
 
 colors = {
@@ -219,60 +220,80 @@ def test_on_multiple_images_dont_recalculate_path(images: [str], goal_color: str
 """
 
 def test_on_cam_recalculate_path(goal_color: str):
-    cap = cv2.VideoCapture(0)
+    try:
+        cap = cv2.VideoCapture(0)
 
-    obstacle_and_robot_detection = ObstacleRobotFinder()
-    puck_detection = PuckDetection()
-    vectorizer = Vectorizer(mode=MovementMode.GRIP, debug=True)
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1600)
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 904)
 
-    while True:
-        ret, frame = cap.read()
-        height, width, channels = frame.shape
 
-        obstacles, pucks, robot_position, grip, robot_angle = get_objects(obstacle_and_robot_detection, puck_detection,
-                                                                          frame)
 
-        # TODO: est-ce que c'est ça qu'on veut?
-        robot_position = grip
+        obstacle_and_robot_detection = ObstacleRobotFinder()
+        puck_detection = PuckDetection()
+        vectorizer = Vectorizer(mode=MovementMode.GRIP, debug=True, minimize=True)
 
-        # print(robot_angle)
+        while True:
 
-        # transform obstacles, robot, pucks
-        obstacles = [
-            obstacles[index]['center_of_obstacle'] for index in range(len(obstacles))
-        ]
+            cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1600)
+            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 904)
 
-        goal = pucks[goal_color][0]["center_position"]
+            ret, frame = cap.read()
+            if frame is None:
+                print(':(')
+                continue
 
-        all_pucks = []
-        for color in pucks:
-            all_pucks += pucks[color]
-        other_pucks = [puck["center_position"] for puck in all_pucks if puck["center_position"] != goal]
+            before = time.time()
 
-        path, _map = get_path_and_map(NODE_SIZE, PathfindingAlgorithms.A_STAR, obstacles, robot_position, goal,
-                                      other_pucks, width, height)
+            height, width, channels = frame.shape
 
-        nodes = [node.pixel_coordinates_center for node in path]
-        vectorizer.set_path(nodes)
-        vectorizer.set_robot_angle(robot_angle)
+            obstacles, pucks, robot_position, grip, robot_angle = get_objects(obstacle_and_robot_detection, puck_detection,
+                                                                              frame)
 
-        # vectorizer.set_robot_position((393, 446))
-        vectorizer.set_robot_position(robot_position)
+            # TODO: est-ce que c'est ça qu'on veut?
+            #robot_position = grip
 
-        vectors = vectorizer.path_to_vectors_from_current_robot_position()
-        # vectors = vectorizer.path_to_vectors_from_initial_robot_position()
+            # print(robot_angle)
 
-        print(vectors)
+            # transform obstacles, robot, pucks
+            obstacles = [
+                obstacles[index]['center_of_obstacle'] for index in range(len(obstacles))
+            ]
 
-        #visualize_map(_map, path, frame)
-        frame = visualize_vectors(vectorizer, frame)
+            goal = pucks[goal_color][0]["center_position"]
 
-        cv2.imshow('bleh', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+            all_pucks = []
+            for color in pucks:
+                all_pucks += pucks[color]
+            other_pucks = [puck["center_position"] for puck in all_pucks if puck["center_position"] != goal]
+
+            path, _map = get_path_and_map(NODE_SIZE, PathfindingAlgorithms.A_STAR, obstacles, robot_position, goal,
+                                          other_pucks, width, height)
+
+
+            nodes = [node.pixel_coordinates_center for node in path]
+            vectorizer.set_path(nodes)
+            vectorizer.set_robot_angle(robot_angle)
+
+            # vectorizer.set_robot_position((393, 446))
+            vectorizer.set_robot_position(robot_position)
+
+            #vectors = vectorizer.path_to_vectors_from_current_robot_position()
+            vectors = vectorizer.path_to_vectors_from_initial_robot_position()
+
+            print(convert_radians_to_deg(convert_vectors_to_cm(vectors)))
+
+            #visualize_map(_map, path, frame)
+            #frame = visualize_vectors(vectorizer, frame)
+
+            after = time.time()
+            print(after - before)
+
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                cap.release()
+                cv2.destroyAllWindows()
             break
-
-    cap.release()
-    cv2.destroyAllWindows()
+    except:
+        print("Ouin ca marche moyen")
 
 
 def test_on_cam_dont_recalculate_path(goal_color: str):
@@ -345,18 +366,23 @@ def test_on_cam_dont_recalculate_path(goal_color: str):
 def pixel_to_cm(pixel_distance):
     # table = 1600x904 pixels
 
-    #longueur_table = BLEH
-    #return longueur_table/1600*pixel_distance
-
-    #largeur_table = BLEH
-    #return largeur_table/904*pixel_distance
-    pass
+    grosseur_puck = 7.5
+    return grosseur_puck/54*pixel_distance
 
 
 def convert_vectors_to_cm(vectors):
     new_vectors = []
     for vector in vectors:
         new_vector = (pixel_to_cm(vector[0]), vector[1], vector[2])
+        new_vectors.append(new_vector)
+    return new_vectors
+
+
+def convert_radians_to_deg(vectors):
+    import math
+    new_vectors = []
+    for vector in vectors:
+        new_vector = (vector[0], math.degrees(vector[1]), vector[2])
         new_vectors.append(new_vector)
     return new_vectors
 
@@ -369,8 +395,8 @@ if __name__ == '__main__':
     AN_IMAGE = "./scripts/data/images/robot_obstacles4.jpg"
     MULTIPLE_IMAGES = []
 
-    test_on_an_image(AN_IMAGE, GOAL_COLOR)
+    #test_on_an_image(AN_IMAGE, GOAL_COLOR)
     # test_on_multiple_images_recalculate_path(MULTIPLE_IMAGES, GOAL_COLOR)
     # test_on_multiple_images_dont_recalculate_path(MULTIPLE_IMAGES, GOAL_COLOR)
     # test_on_cam_dont_recalculate_path(GOAL_COLOR)
-    # test_on_cam_recalculate_path(GOAL_COLOR)
+    test_on_cam_recalculate_path(GOAL_COLOR)

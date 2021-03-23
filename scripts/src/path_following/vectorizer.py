@@ -167,7 +167,7 @@ class Vectorizer:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
 
         if self.debug:
-            #self.path_from_robot = path_from_robot
+            self.path_from_robot = smoothed_path
             self.vectors = vectors
             self.adjusted_vectors = adjusted_vectors
 
