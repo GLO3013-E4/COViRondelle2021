@@ -2,15 +2,17 @@ import math
 
 from scripts.src.path_following.config import NODE_SIZE
 from scripts.src.util.time_it import time_it
+from scripts.src.path_following.movement_mode import MovementMode
 
 
 class Vectorizer:
-    def __init__(self, minimize=False, debug=False):
+    def __init__(self, mode, minimize=False, debug=False):
         self.robot_position = None
         self.robot_angle = None
         self.minimize = minimize
         self.path = None
         self.debug = debug
+        self.mode = mode
 
     def set_robot_position(self, position):
         self.robot_position = position
@@ -45,15 +47,15 @@ class Vectorizer:
     def minimize_vectors(self, vectors: [(float, float)]):
         minimized_vectors = []
         for i, vector in enumerate(vectors):
-            distance, angle = vector
+            distance, angle, mode = vector
             if angle != 0:
                 minimized_vectors.append(vector)
             elif angle == 0:
                 if not minimized_vectors:
                     minimized_vectors.append(vector)
                 else:
-                    last_vector_distance, last_vector_angle = minimized_vectors[-1]
-                    minimized_vectors[-1] = (last_vector_distance + distance, last_vector_angle)
+                    last_vector_distance, last_vector_angle, last_mode = minimized_vectors[-1]
+                    minimized_vectors[-1] = (last_vector_distance + distance, last_vector_angle, last_mode)
         return minimized_vectors
 
     def get_path_from_robot(self, nodes: [(int, int)]):
@@ -102,9 +104,13 @@ class Vectorizer:
         (For all vectors)
         """
         new_vectors = []
-        last_vector = (None, self.robot_angle)
+        if self.mode is MovementMode.OHMMETER:
+            last_vector = (None, self.robot_angle - math.pi/2)
+        else:
+            last_vector = (None, self.robot_angle)
         for vector in vectors:
-            new_vectors.append(self.adjust_vector_angle_from_robot_pov(last_vector, vector))
+            distance, angle = self.adjust_vector_angle_from_robot_pov(last_vector, vector)
+            new_vectors.append((distance, angle, self.mode))
             last_vector = vector
         return new_vectors
 

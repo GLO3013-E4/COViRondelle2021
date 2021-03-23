@@ -1,4 +1,3 @@
-import os
 from collections import Counter
 import cv2
 import numpy as np
@@ -19,35 +18,37 @@ class PuckDetection:
             raise AttributeError("L'image est invalide") from invalid_image
         return img
 
-    def detect_puck(self, img, color, Debug=True):
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    def detect_pucks(self, image):
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.medianBlur(gray, 5)
 
         circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 10, param1=50,
-                                   param2=30, minRadius=25,maxRadius=30)
+                                   param2=30, minRadius=23,maxRadius=30)
         detected_circles = np.uint16(np.around(circles))
 
-        puck_position = {}
+        puck_positions = {}
 
         for (x, y, radius) in detected_circles[0].astype(np.int32):
-            roi = img[y - radius: y + radius, x - radius: x + radius]
+            roi = image[y - radius: y + radius, x - radius: x + radius]
             width, height = roi.shape[:2]
             mask = np.zeros((width, height, 3), roi.dtype)
+
             cv2.circle(mask, (int(width / 2), int(height / 2)), radius,
                        (255, 255, 255), -1)
+
             dominant_color = self.get_dominant_color(roi, k=4)
 
             dominant_color_np = np.uint8([[dominant_color]])
             hsv_dominant_color = cv2.cvtColor(dominant_color_np, cv2.COLOR_BGR2HSV)
             hsv_color = self.find_hsv_color(hsv_dominant_color[0][0])
 
-            if hsv_color == color:
-                puck_position["center_position"] = (x, y)
-                puck_position["radius"] = radius
-                if Debug:
-                    print("Debug mode is on")
-                break
-        return puck_position
+            puck_positions[hsv_color] = [] if puck_positions.get(hsv_color) is None else puck_positions.get(hsv_color)
+            puck = dict()
+            puck["center_position"] = (x, y)
+            puck["radius"] = (x, y)
+            puck_positions[hsv_color].append(puck)
+
+        return puck_positions
 
     def show_image(self, output):
         cv2.imshow('output', output)

@@ -3,14 +3,9 @@ import cv2
 from scripts.src.detection.acuro_markers.AcuroMarkers import ArucoMarkers
 from scripts.src.detection.acuro_markers.marker_position import MarkerPosition
 from scripts.src.detection.acuro_markers.aruco_position import ArucoPosition
-from scripts.src.util.time_it import time_it
-import time
-
-
 
 
 class RobotDetection(ArucoMarkers):
-    @time_it
     def detect_aruco_marker_on_robot(self, image, DEBUG=False):
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()

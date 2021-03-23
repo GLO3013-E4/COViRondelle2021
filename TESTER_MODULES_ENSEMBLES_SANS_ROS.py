@@ -7,6 +7,7 @@ from scripts.src.path_following.vectorizer import Vectorizer
 from scripts.src.pathfinding.map_drawer import MapDrawer
 from scripts.src.pathfinding.pathfinding_algorithms import PathfindingAlgorithms
 from scripts.src.pathfinding.config import NODE_SIZE
+from scripts.src.path_following.movement_mode import MovementMode
 
 
 colors = {
@@ -27,9 +28,7 @@ def get_objects(obstacle_and_robot, puck_detection, image):
     obstacles = obstacle_and_robot.detect_obstacle_position(image)
     robot, grip, robot_angle = obstacle_and_robot.detect_robot(image)
 
-    pucks = {
-        color: puck_detection.detect_puck(image, color, Debug=False) for color in colors
-    }
+    pucks = puck_detection.detect_pucks(image)
 
     return obstacles, pucks, robot, grip, robot_angle
 
@@ -61,7 +60,7 @@ def visualize_map(_map, path, frame):
 def test_on_an_image(image_path: str, goal_color: str):
     obstacle_and_robot_detection = ObstacleRobotFinder()
     puck_detection = PuckDetection()
-    vectorizer = Vectorizer(debug=True)
+    vectorizer = Vectorizer(mode=MovementMode.GRIP, debug=True)
 
     ret, frame = None, cv2.imread(image_path)
     height, width, channels = frame.shape
@@ -74,36 +73,33 @@ def test_on_an_image(image_path: str, goal_color: str):
     #print(robot_angle)
 
     # transform obstacles, robot, pucks
-    pucks = {key: value for key, value in pucks.items() if value}
-    pucks = {
-        color: pucks[color]['center_position'] for color in pucks
-    }
     obstacles = [
         obstacles[index]['center_of_obstacle'] for index in range(len(obstacles))
     ]
 
-    goal = pucks[goal_color]
-    other_pucks = [val for item, val in pucks.items() if item != goal_color]
+    goal = pucks[goal_color][0]["center_position"]
+
+    all_pucks = []
+    for color in pucks:
+        all_pucks += pucks[color]
+    other_pucks = [puck["center_position"] for puck in all_pucks if puck["center_position"]!= goal]
 
     path, _map = get_path_and_map(NODE_SIZE, PathfindingAlgorithms.A_STAR, obstacles, robot_position, goal,
-                                other_pucks, width, height)
+                                  other_pucks, width, height)
 
     nodes = [node.pixel_coordinates_center for node in path]
     vectorizer.set_path(nodes)
     vectorizer.set_robot_angle(robot_angle)
 
-    #TODO: pour time_it tester temps correction
     #vectorizer.set_robot_position((393, 446))
     vectorizer.set_robot_position(robot_position)
 
     vectors = vectorizer.path_to_vectors_from_current_robot_position()
+    #vectorizer.path_to_vectors_from_initial_robot_position()
 
-    #TODO: pour time_it
-    vectorizer.path_to_vectors_from_initial_robot_position()
+    print(vectors)
 
-    #print(vectors)
-
-    #visualize_map(_map, path, frame)
+    visualize_map(_map, path, frame)
     #frame = visualize_vectors(vectorizer, frame)
 
     #cv2.imshow('bleh', frame)
@@ -333,11 +329,11 @@ if __name__ == '__main__':
 
     #AN_IMAGE = "./scripts/tests/detection/acuro_marker/robot_5x5_four.jpg"
 
-    AN_IMAGE = "./scripts/src/detection/robot_obstacles4.jpg"
+    AN_IMAGE = "./scripts/data/images/robot_obstacles4.jpg"
     MULTIPLE_IMAGES = []
 
-    for i in range(10):
-        test_on_an_image(AN_IMAGE, GOAL_COLOR)
+
+    test_on_an_image(AN_IMAGE, GOAL_COLOR)
     # test_on_multiple_images_recalculate_path(MULTIPLE_IMAGES, GOAL_COLOR)
     # test_on_multiple_images_dont_recalculate_path(MULTIPLE_IMAGES, GOAL_COLOR)
     # test_on_cam_dont_recalculate_path(GOAL_COLOR)

@@ -6,6 +6,7 @@ def time_it(f):
         ts = time.time()
         result = f(*args, **kw)
         te = time.time()
-        print(f'{f.__name__} took: {te-ts} sec')
+        #TODO:
+        #print(f'{f.__name__} took: {te-ts} sec')
         return result
     return timed
