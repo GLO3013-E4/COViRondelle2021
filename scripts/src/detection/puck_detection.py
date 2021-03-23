@@ -117,13 +117,13 @@ class PuckDetection:
 
     def find_hsv_color(self, hsv, x, y,):
         colors = self.color_boundaries.get_boundaries_dict()
+        print(x, y, hsv)
         for color, boundaries in colors.items():
             if boundaries["lower"][0] <= hsv[0] <= boundaries["upper"][0] and \
                     boundaries["lower"][1] <= hsv[1] <= \
                     boundaries["upper"][1] and boundaries["lower"][2] <= hsv[2] \
                     <= boundaries["upper"][2]:
-                print(color, hsv, x, y)
                 return color
         return "None"
 puck_detection = PuckDetection()
-puck_detection.detect_pucks("new_monde2.jpg")
+puck_detection.detect_pucks("new_monde4.jpg")
