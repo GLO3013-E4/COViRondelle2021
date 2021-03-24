@@ -60,12 +60,12 @@ class Vectorizer:
         minimum_distance = min(distance_from_robot)
         index = distance_from_robot.index(minimum_distance)
 
-        if minimum_distance < self.correct_path_threshold:
-            return nodes[index:]
-
-        elif minimum_distance >= self.correct_path_threshold:
+        if minimum_distance >= self.correct_path_threshold:
             index = distance_from_robot.index(minimum_distance)
             return [self.robot_position] + nodes[index:]
+
+        else:
+            return nodes[index:]
 
     def vectorize(self, nodes: [(int, int)]):
         vectors = []
