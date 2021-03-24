@@ -9,6 +9,7 @@ class Vectorizer:
         self.robot_position = None
         self.robot_angle = None
         self.minimize = minimize
+        self.correct_path_threshold = NODE_SIZE * 3
 
     def set_robot_position(self, position):
         self.robot_position = position
@@ -52,21 +53,17 @@ class Vectorizer:
         return minimized_vectors
 
     def correct_path(self, nodes: [(int, int)]):
-        robot_node = (
-            (self.robot_position[0]//NODE_SIZE)*NODE_SIZE,
-            (self.robot_position[1]//NODE_SIZE)*NODE_SIZE
-        )
-        if robot_node in nodes:
-            index = nodes.index(robot_node)
+        x, y = self.robot_position
+        distance_from_robot = [
+            math.sqrt(pow(x2 - x, 2) + pow(y2 - y, 2)) for (x2, y2) in nodes
+        ]
+        minimum_distance = min(distance_from_robot)
+        index = distance_from_robot.index(minimum_distance)
+
+        if minimum_distance < self.correct_path_threshold:
             return nodes[index:]
 
-        else:
-            x, y = self.robot_position
-
-            distance_from_robot = [
-                math.sqrt(pow(x2-x, 2) + pow(y2-y, 2)) for (x2, y2) in nodes
-            ]
-            minimum_distance = min(distance_from_robot)
+        elif minimum_distance >= self.correct_path_threshold:
             index = distance_from_robot.index(minimum_distance)
             return [self.robot_position] + nodes[index:]
 
