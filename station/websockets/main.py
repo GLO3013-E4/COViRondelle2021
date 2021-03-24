@@ -43,6 +43,11 @@ def handle_path(path):
     socket.emit("planned_trajectory_coordinates", json_data)
 
 
+def handle_grip(grip):
+    json_data = to_json({"puckInGrip": grip.data})
+    socket.emit("grip_state", json_data)
+
+
 def handle_resistance(resistance):
     # TODO : Make sure this works once resistance is implemented
     json_data = to_json({"resistance": resistance})
@@ -75,6 +80,7 @@ def websockets():
     rospy.Subscriber("world_camera/image_raw", Image, handle_world_camera_image_raw)
     rospy.Subscriber("robot", Pose, handle_robot)
     rospy.Subscriber("path", Path, handle_path)
+    rospy.Subscriber("grip", Bool, handle_grip)
     rospy.Subscriber("resistance", Float32, handle_resistance)
     rospy.Subscriber("puck_colors", String, handle_puck_colors)
     rospy.Subscriber("puck_corners", String, handle_puck_corners)
