@@ -3,6 +3,7 @@ Class that represents where the robot can move and where the
 different obstacles and objects laying on the table are.
 """
 import math
+import uuid
 
 from scripts.src.pathfinding.node import Node
 from scripts.src.pathfinding.tile_role import TileRole
@@ -46,12 +47,15 @@ class Map:
         self.add_table_walls()
 
     def add_top_wall(self, width):
+        top_wall_uuid = uuid.uuid4()
         start_wall_top = max(0, self.table_walls_start_y // self.node_size)
         for row in range(
                 start_wall_top,
                 ((self.table_walls_start_y + width) // self.node_size) + 1):
             for node in self.node_matrix[row]:
                 node.role = TileRole.OBSTACLE
+                node.uuid = top_wall_uuid
+                node.held_by += [top_wall_uuid]
 
     def add_bottom_wall(self, width):
         end_wall_bot = min(len(self.node_matrix), (self.table_walls_end_y // self.node_size)+1)

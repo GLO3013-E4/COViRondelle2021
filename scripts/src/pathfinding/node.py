@@ -12,4 +12,5 @@ class Node:
         self.height = height
         self.neighbors = []
         self.role = TileRole.EMPTY
-        self.held_by = 0
+        self.held_by = []
+        self.uuid = None
