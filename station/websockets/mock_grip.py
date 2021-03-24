@@ -1,5 +1,4 @@
 import rospy
-import sys
 from std_msgs.msg import Bool
 
 

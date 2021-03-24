@@ -49,8 +49,7 @@ def handle_grip(grip):
 
 
 def handle_resistance(resistance):
-    # TODO : Make sure this works once resistance is implemented
-    json_data = to_json({"resistance": resistance})
+    json_data = to_json({"resistance": resistance.data})
     socket.emit("resistance", json_data)
 
 
