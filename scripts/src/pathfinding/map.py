@@ -18,7 +18,7 @@ class Map:
     """
     def __init__(self, image_width, image_height, obstacles, pucks, start, end, node_size=25,
                  safety_cushion=0, robot_width=100, obstacle_width=40, puck_width=25,
-                 obstacle_representation=ObstacleRepresentation.RADIUS):
+                 obstacle_representation=ObstacleRepresentation.SQUARE):
         self.node_size = node_size
         self.safety_cushion = safety_cushion
         self.robot_width = robot_width
@@ -139,10 +139,10 @@ class Map:
                             Direction.RIGHT
                         ),
 
-                        # (node.center[0] - 1, node.matrix_center[1] - 1, Direction.TOP_LEFT),
-                        # (node.center[0] - 1, node.matrix_center[1] + 1, Direction.TOP_RIGHT),
-                        # (node.center[0] + 1, node.matrix_center[1] - 1, Direction.DOWN_LEFT),
-                        # (node.center[0] + 1, node.matrix_center[1] + 1, Direction.DOWN_RIGHT),
+                        (node.matrix_center[0] - 1, node.matrix_center[1] - 1, Direction.TOP_LEFT),
+                        (node.matrix_center[0] - 1, node.matrix_center[1] + 1, Direction.TOP_RIGHT),
+                        (node.matrix_center[0] + 1, node.matrix_center[1] - 1, Direction.DOWN_LEFT),
+                        (node.matrix_center[0] + 1, node.matrix_center[1] + 1, Direction.DOWN_RIGHT),
                     ]
 
                     if ((0 <= x_position < len(self.node_matrix[0])
@@ -197,10 +197,10 @@ class Map:
 
     def create_square_obstacle(self, obstacle, length, role):
         width, height = obstacle.pixel_coordinates_center
-        lower_range_column = int(max(0, ((height - length) // self.node_size)))
-        lower_range_row = int(max(0, ((width - length) // self.node_size)))
-        higher_range_column = int(min(len(self.node_matrix), ((height + length) // self.node_size)))
-        higher_range_row = int(min(len(self.node_matrix[0]), ((width + length) // self.node_size)))
+        lower_range_column = int(max(0, ((height - length) // self.node_size))) + 2
+        lower_range_row = int(max(0, ((width - length) // self.node_size))) + 2
+        higher_range_column = int(min(len(self.node_matrix), ((height + length) // self.node_size))) - 2
+        higher_range_row = int(min(len(self.node_matrix[0]), ((width + length) // self.node_size))) - 2
 
         for column in range(lower_range_column, higher_range_column):
             for row in range(lower_range_row, higher_range_row):
