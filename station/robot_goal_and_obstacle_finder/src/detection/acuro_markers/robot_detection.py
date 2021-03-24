@@ -7,7 +7,7 @@ from detection.acuro_markers.aruco_position import ArucoPosition
 
 class RobotDetection(ArucoMarkers):
 
-    def detect_aruco_marker_on_robot(self, image, DEBUG=True):
+    def detect_aruco_marker_on_robot(self, image, DEBUG=False):
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
 

@@ -1,0 +1,118 @@
+#!/usr/bin/env python
+import rospy
+import json
+from std_msgs.msg import String
+from nav_msgs.msg import Path
+from geometry_msgs.msg import PoseStamped, Pose, PoseArray
+from pathfinding.show_path import get_path as get_nodes
+
+
+class PathFinder:
+    def __init__(self):
+        self.goal = None
+        self.pucks = None
+        self.obstacles = None
+        self.robot = None
+        self.node_size = 15
+        self.algorithm = "BreadthFirstSearch"
+        self.image_width, self.image_height = (1600, 904)
+
+        self.pub = rospy.Publisher('path', Path, queue_size=10)
+        self.pub_string = rospy.Publisher('path_string', String, queue_size=10)
+        rospy.Subscriber('move_base_simple/goal', PoseStamped, self.callback_goal)
+        # rospy.Subscriber('pucks', PoseArray, self.callback_pucks)
+        # rospy.Subscriber('obstacles', PoseArray, self.callback_obstacles)
+        # rospy.Subscriber('robot', Pose, self.callback_robot)
+        rospy.Subscriber('pucks', String, self.callback_pucks)
+        rospy.Subscriber('obstacles', String, self.callback_obstacles)
+        rospy.Subscriber('robot', String, self.callback_robot)
+
+    def can_create_path(self):
+        return self.goal and self.pucks and self.obstacles and self.robot
+
+    def get_path(self):
+        if self.can_create_path():
+            pucks = [puck for puck in self.pucks if puck != self.goal]
+            nodes = get_nodes(self.node_size, self.algorithm, self.obstacles, self.robot, self.goal, pucks, self.image_width, self.image_height)
+            path = Path()
+            arr = []
+            for node in nodes:
+                arr.append(tuple(node.pixel_coordinates_center))
+                pose = PoseStamped()
+                pose.pose.position.x = node.pixel_coordinates_center[0]
+                pose.pose.position.y = node.pixel_coordinates_center[1]
+                pose.pose.position.z = 0
+                pose.header.frame_id = "/map"
+                path.poses.append(pose)
+                path.header.frame_id = "/map"
+
+            self.pub_string.publish(str(arr))
+            self.pub.publish(path)
+        else:
+            rospy.logerr("A parameter was still set to None (goal, pucks, obstacles, robot)")
+
+    def callback_goal(self, goal):
+        self.goal = (int(goal.pose.position.x), int(goal.pose.position.y))
+        print(self.goal)
+        self.get_path()
+
+    # def callback_pucks(self, pucks):
+    #     self.pucks = [(int(puck.position.x), int(puck.position.y)) for puck in pucks.poses]
+
+    # def callback_obstacles(self, obstacles):
+    #     self.obstacles = [(int(obstacle.position.x), int(obstacle.position.y)) for obstacle in obstacles.poses]
+
+    # def callback_robot(self, robot):
+    #     self.robot = (int(robot.position.x), int(robot.position.y))
+
+    def callback_pucks(self, pucks):
+        pucks_dict = json.loads(str(pucks.data))
+    
+        self.pucks = []
+        for color, value in pucks_dict.items():
+            for position in value:
+                self.pucks.append(position["center_position"])
+
+    """"{'green': [{'center_position': (1510, 274), 'radius': (1510, 274)}], 'yellow': [{'center_position':\
+  \ (887, 145), 'radius': (887, 145)}], 'brown': [{'center_position': (1473, 688),\
+  \ 'radius': (1473, 688)}], 'blue': [{'center_position': (819, 143), 'radius': (819,\
+  \ 143)}, {'center_position': (1294, 706), 'radius': (1294, 706)}], 'orange': [{'center_position':\
+  \ (314, 706), 'radius': (314, 706)}], 'None': [{'center_position': (1485, 553),\
+  \ 'radius': (1485, 553)}, {'center_position': (1372, 428), 'radius': (1372, 428)},\
+  \ {'center_position': (55, 233), 'radius': (55, 233)}], 'white': [{'center_position':\
+  \ (1235, 142), 'radius': (1235, 142)}], 'purple': [{'center_position': (1024, 143),\
+  \ 'radius': (1024, 143)}]}"""
+
+    def callback_obstacles(self, obstacles):
+        obstacle_list = json.loads(str(obstacles.data))
+        self.obstacles = []
+        for position in obstacle_list:
+            self.obstacles.append(position["center_of_obstacle"])
+
+    """[{'center_of_obstacle': (1227, 420), 'radius': 42}, {'center_of_obstacle': (240,\
+  \ 650), 'radius': 42}]""" 
+
+    def callback_robot(self, robot):
+        robot_dict = json.loads(str(robot.data))
+        self.robot = robot_dict["robot"]
+
+    """ {'robot': (763, 444), 'prehenseur': (651, 449), 'angle': 3.1930934645410183}"""
+
+
+
+def path_planner():
+    rospy.init_node('path_planning', anonymous=True)
+
+    pathfinder = PathFinder()
+
+    rate = rospy.Rate(10)  # 10hz
+
+    while not rospy.is_shutdown():
+        rate.sleep()
+
+
+if __name__ == '__main__':
+    try:
+        path_planner()
+    except rospy.ROSInterruptException:
+        pass

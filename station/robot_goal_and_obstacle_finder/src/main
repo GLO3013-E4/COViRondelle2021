@@ -2,6 +2,7 @@
 import rospy
 import numpy as np
 import cv2
+import json
 from std_msgs.msg import String
 from geometry_msgs.msg import Pose, Point, PoseArray
 from sensor_msgs.msg import Image
@@ -47,18 +48,24 @@ class RobotGoalAndObstacleFinder:
     def find_square(self, image):
         return self.corner_detection.detect_square(image)
 
+    def convert(self, o):
+        if isinstance(o, (np.int16, np.int8, np.int64, np.int32)): return int(o)  
+        raise TypeError
+
+
     def detect(self, image_data):
         cv2_array = np.frombuffer(image_data.data, dtype=np.uint8).reshape(image_data.height, image_data.width, -1)
         cv2_array = cv2.cvtColor(cv2_array, cv2.COLOR_RGB2BGR)
+        cv2.imwrite("lol.jpg", cv2_array)
         print(cv2_array.shape)
         # cv2_array = self.bridge.imgmsg_to_cv2(data, "rgb8")
 
 
 
-        #:self.robot_publisher.publish(str(self.find_robot_and_angle(cv2_array)))
-        #self.obstacles_publisher.publish(str(self.find_obstacles(cv2_array)))
-        # self.square_publisher.publish(str(self.find_square(cv2_array)))
-        self.pucks_publisher.publish(str(self.find_pucks(cv2_array)))
+        self.robot_publisher.publish(json.dumps(self.find_robot_and_angle(cv2_array), default=self.convert))
+        self.obstacles_publisher.publish(json.dumps(self.find_obstacles(cv2_array), default=self.convert))
+        self.square_publisher.publish(json.dumps(self.find_square(cv2_array), default=self.convert))
+        self.pucks_publisher.publish(json.dumps(self.find_pucks(cv2_array), default=self.convert))
         # self.robot_publisher
         # self.pucks_publisher
         # self.obstacles_publisher
