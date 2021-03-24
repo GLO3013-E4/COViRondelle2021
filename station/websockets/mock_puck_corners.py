@@ -5,9 +5,9 @@ from std_msgs.msg import String
 
 
 class Corner(Enum):
-    A = 0,
-    B = 1,
-    C = 2,
+    A = 0
+    B = 1
+    C = 2
     D = 3
 
 

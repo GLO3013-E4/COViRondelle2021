@@ -5,16 +5,16 @@ from std_msgs.msg import String
 
 
 class Color(Enum):
-    yellow = 0,
-    brown = 1,
-    red = 2,
-    pink = 3,
-    orange = 4,
-    black = 5,
-    white = 6,
-    green = 7,
-    blue = 8,
-    purple = 9,
+    yellow = 0
+    brown = 1
+    red = 2
+    pink = 3
+    orange = 4
+    black = 5
+    white = 6
+    green = 7
+    blue = 8
+    purple = 9
     grey = 10
 
 
