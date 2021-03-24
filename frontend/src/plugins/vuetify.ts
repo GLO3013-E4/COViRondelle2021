@@ -10,9 +10,8 @@ export default new Vuetify({
         dark : true,
       themes: {
         dark: {
-          primary: colors.lightBlue.accent2,//TODO: change
-          secondary: colors.red.lighten4, //TODO: change
-          accent: colors.blue, //TODO: change
+          primary: colors.lightBlue.accent2,
+          accent: colors.blue,
           base: colors.grey.darken4,
           lighten1: colors.grey.darken3,
           lighten2: colors.grey.darken2,

@@ -7,7 +7,7 @@ import { RobotConsumption } from '@/types/robotConsumption';
 export const defaultState = {
   cycleReady: false,
   cycleStarted: false,
-  tableImage: '/stub_table_image.jpg', // TODO : Table image most likely won't be a string, this is temporary
+  tableImage: '', // TODO : Table image most likely won't be a string, this is temporary
   resistance: 0,
 
   robotConsumption: {
