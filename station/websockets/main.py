@@ -54,14 +54,13 @@ def handle_resistance(resistance):
 
 
 def handle_puck_colors(puck_colors):
-    # TODO : Make sure this works once puck_colors is implemented
-    json_data = to_json({"puckColors": puck_colors.split(",")})
+    json_data = to_json({"puckColors": puck_colors.data.split(",")})
     socket.emit("puck_colors", json_data)
 
 
 def handle_puck_corners(puck_corners):
     # TODO : Make sure this works once puck_corners is implemented
-    json_data = to_json({"firstPuckCorner": puck_corners.split(",")[0]})
+    json_data = to_json({"firstPuckCorner": puck_corners.data.split(",")[0]})
     socket.emit("first_puck_corner", json_data)
 
 
