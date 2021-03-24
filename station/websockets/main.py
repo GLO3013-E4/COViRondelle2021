@@ -49,7 +49,7 @@ def handle_grip(grip):
 
 
 def handle_resistance(resistance):
-    json_data = to_json({"resistance": resistance.data})
+    json_data = to_json({"resistance": int(resistance.data)})
     socket.emit("resistance", json_data)
 
 

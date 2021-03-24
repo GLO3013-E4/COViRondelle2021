@@ -4,7 +4,7 @@ from std_msgs.msg import Float32
 
 
 def create_resistance():
-    return random.uniform(1000, 100000000)
+    return random.uniform(100, 1000000)
 
 
 # TODO : Remove this mock
