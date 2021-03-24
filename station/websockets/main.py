@@ -59,9 +59,8 @@ def handle_puck_colors(puck_colors):
 
 
 def handle_puck_corners(puck_corners):
-    # TODO : Make sure this works once puck_corners is implemented
-    json_data = to_json({"firstPuckCorner": puck_corners.data.split(",")[0]})
-    socket.emit("first_puck_corner", json_data)
+    json_data = to_json({"puckFirstCorner": puck_corners.data.split(",")[0]})
+    socket.emit("puck_first_corner", json_data)
 
 
 def handle_end(_):
