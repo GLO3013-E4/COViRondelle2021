@@ -1,17 +1,15 @@
 import math
 
 from scripts.src.path_following.config import NODE_SIZE
-from scripts.src.util.time_it import time_it
 from scripts.src.path_following.movement_mode import MovementMode
 
 
 class Vectorizer:
-    def __init__(self, mode, minimize=False, debug=False):
+    def __init__(self, mode, minimize=False):
         self.robot_position = None
         self.robot_angle = None
         self.minimize = minimize
-        self.path = None
-        self.debug = debug
+        self.path = []
         self.mode = mode
 
     def set_robot_position(self, position):
@@ -138,10 +136,8 @@ class Vectorizer:
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle
 
-    @time_it
     def path_to_vectors_from_current_robot_position(self):
-        nodes = self.path
-        smoothed_path = self.smooth_path(nodes)
+        smoothed_path = self.smooth_path(self.path)
         path_from_robot = self.get_path_from_robot(smoothed_path)
         vectors = self.vectorize(path_from_robot)
         adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
@@ -149,26 +145,14 @@ class Vectorizer:
         if self.minimize:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
 
-        if self.debug:
-            self.path_from_robot = path_from_robot
-            self.vectors = vectors
-            self.adjusted_vectors = adjusted_vectors
-
         return adjusted_vectors
 
-    @time_it
     def path_to_vectors_from_initial_robot_position(self):
-        nodes = self.path
-        smoothed_path = self.smooth_path(nodes)
+        smoothed_path = self.smooth_path(self.path)
         vectors = self.vectorize(smoothed_path)
         adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
 
         if self.minimize:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
-
-        if self.debug:
-            self.path_from_robot = smoothed_path
-            self.vectors = vectors
-            self.adjusted_vectors = adjusted_vectors
 
         return adjusted_vectors
