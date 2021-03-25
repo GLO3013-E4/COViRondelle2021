@@ -251,8 +251,9 @@ class TestVectorizer:
         nodes = [
             (15, 0), (30, 0), (45, 0)
         ]
+        vectorizer.set_path(nodes)
 
-        vectors = vectorizer.path_to_vectors(nodes)
+        vectors = vectorizer.path_to_vectors()
 
         assert vectors == [
             (105, 0, MovementMode.GRIP)
@@ -267,8 +268,9 @@ class TestVectorizer:
         nodes = [
             (15, 0), (30, 0), (45, 0)
         ]
+        vectorizer.set_path(nodes)
 
-        vectors = vectorizer.path_to_vectors(nodes)
+        vectors = vectorizer.path_to_vectors()
 
         assert vectors == [
             (15, 0, MovementMode.GRIP), (15, 0, MovementMode.GRIP)

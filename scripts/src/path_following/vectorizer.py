@@ -10,7 +10,7 @@ class Vectorizer:
         self.robot_angle = None
         self.minimize = minimize
         self.correct_path_threshold = NODE_SIZE * 3
-        self.path = None
+        self.path = []
 
     def set_robot_position(self, position):
         self.robot_position = position
