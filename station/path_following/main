@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
 import json
 
@@ -15,7 +15,7 @@ class PathFollower:
         self.robot_angle = None
         self.path = []
         self.node_size = NODE_SIZE
-        self.vectorizer = Vectorizer()
+        self.vectorizer = Vectorizer(minimize=False)
 
         self.pub = rospy.Publisher('movement_vectors_string', String, queue_size=10)
         rospy.Subscriber('robot', String, self.callback_robot)
@@ -37,6 +37,8 @@ class PathFollower:
         self.vectorizer.set_path(nodes)
 
         vectors = self.vectorizer.path_to_vectors()
+        vectors = [(distance, angle, mode.value) for distance, angle, mode in vectors]
+
         self.pub.publish(json.dumps(vectors))
 
 
