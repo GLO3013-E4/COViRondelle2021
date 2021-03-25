@@ -13,6 +13,9 @@ class Vectorizer:
         self.mode = MovementMode.GRIP
         self.correct_path_threshold = NODE_SIZE * 3
 
+    def set_mode(self, mode: MovementMode):
+        self.mode = mode
+
     def set_robot_position(self, position):
         self.robot_position = position
 
