@@ -1,12 +1,12 @@
 <template>
-  <v-card class="grey lighten-3">
-    <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
+  <v-card class="lighten2">
+    <v-card-title sm="6" class="lighten1 d-flex justify-center">
       <h5 class="white--text">{{ $t('station.gripState') }}</h5>
     </v-card-title>
     <div
-      ref="gripState"
-      class="d-flex justify-center font-weight-bold"
-      id="divChip"
+        ref="gripState"
+        class="d-flex justify-center font-weight-bold"
+        id="divChip"
     >
       <v-chip :color="puckInGrip ? 'green' : 'red'">
         <h3 class="white--text">
@@ -17,8 +17,8 @@
   </v-card>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { mapState } from 'vuex';
+import {Component, Vue} from 'vue-property-decorator';
+import {mapState} from 'vuex';
 
 @Component({
   computed: {
@@ -34,7 +34,12 @@ export default class GripState extends Vue {
 .v-card__title {
   padding: 0;
 }
+
 #divChip {
   padding: 0.3em;
+}
+
+#divChip .v-chip:hover::before {
+  opacity: 0;
 }
 </style>

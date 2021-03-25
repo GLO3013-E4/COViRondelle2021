@@ -1,6 +1,6 @@
 <template>
-  <v-card class="grey lighten-3">
-    <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
+  <v-card class="lighten2">
+    <v-card-title sm="6" class="lighten1 d-flex justify-center">
       <h5 class="white--text">{{ $t('station.resistance') }}</h5>
     </v-card-title>
     <v-container>
@@ -20,7 +20,7 @@
             v-for="(puckColor, i) in puckColors"
             :key="i"
             :color="puckColor.toString()"
-            class="grey--text text--lighten-2 font-weight-bold"
+            class="lighten3--text font-weight-bold"
           >
             {{ i + 1 }}
           </v-avatar>
