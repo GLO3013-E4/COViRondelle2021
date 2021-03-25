@@ -42,7 +42,7 @@ def create_pucks_poses():
 
 def create_goal_pose():
     pose = PoseStamped()
-    pose.pose.position.x = 1000
+    pose.pose.position.x = 500
     pose.pose.position.y = 450
     return pose
 
@@ -53,8 +53,6 @@ if __name__ == '__main__':
     goal_publisher = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=10)
 
     rospy.init_node('talker', anonymous=True)
-    rate = rospy.Rate(1)
 
-    while not rospy.is_shutdown():
-        goal_publisher.publish(create_goal_pose())
-        rate.sleep()
+    goal_publisher.publish(create_goal_pose())
+    print("sent goal")

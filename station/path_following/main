@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import rospy
 import json
+import math
 
 
 from std_msgs.msg import String
@@ -16,12 +17,14 @@ class PathFollower:
         self.path = []
         self.node_size = NODE_SIZE
         self.vectorizer = Vectorizer(minimize=False)
+        self.rate = rospy.Rate(1)
 
         self.pub = rospy.Publisher('movement_vectors_string', String, queue_size=10)
         rospy.Subscriber('robot', String, self.callback_robot)
         rospy.Subscriber('path', Path, self.callback_path)
 
     def callback_robot(self, data):
+        print("changing angle")
         robot_dict = json.loads(data.data)
 
         self.vectorizer.set_robot_position(robot_dict["robot"])
@@ -36,10 +39,19 @@ class PathFollower:
 
         self.vectorizer.set_path(nodes)
 
-        vectors = self.vectorizer.path_to_vectors()
-        vectors = [(distance, angle, mode.value) for distance, angle, mode in vectors]
+        while not rospy.is_shutdown():
+            vectors = self.vectorizer.path_to_vectors()
+            vectors = [(distance / 7.12, self.convert_angle_to_driver_angle(angle), mode.value)
+                   for distance, angle, mode in vectors]
+            self.pub.publish(json.dumps(vectors))
+            self.rate.sleep()
 
-        self.pub.publish(json.dumps(vectors))
+    def convert_angle_to_driver_angle(self, angle):
+        angle = math.degrees(angle)
+
+        if angle < 0:
+            angle += 360
+        return angle
 
 
 def path_follower():

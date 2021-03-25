@@ -14,13 +14,13 @@ from detection.square_detection import SquareDetection
 
 class RobotGoalAndObstacleFinder:
     def __init__(self):
-        self.robot_publisher = rospy.Publisher('robot', String, queue_size=10)
-        self.pucks_publisher = rospy.Publisher('pucks', String, queue_size=10)
-        self.obstacles_publisher = rospy.Publisher('obstacles', String, queue_size=10)
-        self.square_publisher = rospy.Publisher('square', String, queue_size=10)
-        self.resistance_station_publisher = rospy.Publisher('resistance_station', String, queue_size=10)
-        self.control_panel_publisher = rospy.Publisher('control_panel', String, queue_size=10)
-        rospy.Subscriber('world_cam/image_raw', Image, self.detect)
+        self.robot_publisher = rospy.Publisher('robot', String, queue_size=1)
+        self.pucks_publisher = rospy.Publisher('pucks', String, queue_size=1)
+        self.obstacles_publisher = rospy.Publisher('obstacles', String, queue_size=1)
+        self.square_publisher = rospy.Publisher('square', String, queue_size=1)
+        self.resistance_station_publisher = rospy.Publisher('resistance_station', String, queue_size=1)
+        self.control_panel_publisher = rospy.Publisher('control_panel', String, queue_size=1)
+        rospy.Subscriber('world_cam/image_raw', Image, self.detect, queue_size=1, buff_size=52428800)
         self.robot_and_obstacle_finder = ObstacleRobotFinder()
         self.puck_finder = PuckDetection()
         self.corner_detection = SquareDetection()
@@ -59,7 +59,6 @@ class RobotGoalAndObstacleFinder:
     def detect(self, image_data):
         cv2_array = np.frombuffer(image_data.data, dtype=np.uint8).reshape(image_data.height, image_data.width, -1)
         cv2_array = cv2.cvtColor(cv2_array, cv2.COLOR_RGB2BGR)
-        cv2.imwrite("lol.jpg", cv2_array)
 
         self.robot_publisher.publish(json.dumps(self.find_robot_and_angle(cv2_array), default=self.convert))
         self.obstacles_publisher.publish(json.dumps(self.find_obstacles(cv2_array), default=self.convert))

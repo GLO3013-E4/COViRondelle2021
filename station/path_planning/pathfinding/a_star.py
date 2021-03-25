@@ -3,9 +3,9 @@ import math
 from collections import defaultdict
 from functools import partial
 
-from scripts.src.pathfinding.pathfinding_algorithm import PathfindingAlgorithm
-from scripts.src.pathfinding.path_not_found_exception import PathNotFoundException
-from scripts.src.pathfinding.tile_role import TileRole
+from pathfinding.pathfinding_algorithm import PathfindingAlgorithm
+from pathfinding.path_not_found_exception import PathNotFoundException
+from pathfinding.tile_role import TileRole
 
 
 class AStar(PathfindingAlgorithm):
