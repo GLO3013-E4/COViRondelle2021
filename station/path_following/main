@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import rospy
 import json
+import math
 
 
 from std_msgs.msg import String
@@ -37,9 +38,19 @@ class PathFollower:
         self.vectorizer.set_path(nodes)
 
         vectors = self.vectorizer.path_to_vectors()
-        vectors = [(distance, angle, mode.value) for distance, angle, mode in vectors]
+        vectors = [(distance, self.convert_angle_to_driver_angle(angle), mode.value)
+                   for distance, angle, mode in vectors]
 
         self.pub.publish(json.dumps(vectors))
+
+    def convert_angle_to_driver_angle(self, angle):
+        angle = math.degrees(angle)
+
+        angle = -angle
+
+        if angle < 0:
+            angle += 360
+        return angle
 
 
 def path_follower():
