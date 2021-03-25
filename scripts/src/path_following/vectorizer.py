@@ -9,9 +9,14 @@ class Vectorizer:
         self.robot_position = None
         self.robot_angle = None
         self.minimize = minimize
+        self.correct_path_threshold = NODE_SIZE * 3
+        self.path = []
 
     def set_robot_position(self, position):
         self.robot_position = position
+
+    def set_path(self, path: [(int, int)]):
+        self.path = path
 
     @staticmethod
     def smooth_path(path: [(int, int)]):
@@ -52,23 +57,19 @@ class Vectorizer:
         return minimized_vectors
 
     def correct_path(self, nodes: [(int, int)]):
-        robot_node = (
-            (self.robot_position[0]//NODE_SIZE)*NODE_SIZE,
-            (self.robot_position[1]//NODE_SIZE)*NODE_SIZE
-        )
-        if robot_node in nodes:
-            index = nodes.index(robot_node)
-            return nodes[index:]
+        x, y = self.robot_position
+        distance_from_robot = [
+            math.sqrt(pow(x2 - x, 2) + pow(y2 - y, 2)) for (x2, y2) in nodes
+        ]
+        minimum_distance = min(distance_from_robot)
+        index = distance_from_robot.index(minimum_distance)
 
-        else:
-            x, y = self.robot_position
-
-            distance_from_robot = [
-                math.sqrt(pow(x2-x, 2) + pow(y2-y, 2)) for (x2, y2) in nodes
-            ]
-            minimum_distance = min(distance_from_robot)
+        if minimum_distance >= self.correct_path_threshold:
             index = distance_from_robot.index(minimum_distance)
             return [self.robot_position] + nodes[index:]
+
+        else:
+            return nodes[index:]
 
     def vectorize(self, nodes: [(int, int)]):
         vectors = []
@@ -128,8 +129,8 @@ class Vectorizer:
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle
 
-    def path_to_vectors(self, nodes: [(int, int)], mode=MovementMode.GRIP) -> [(float, float, int)]:
-        smoothed_path = self.smooth_path(nodes)
+    def path_to_vectors(self, mode=MovementMode.GRIP) -> [(float, float, int)]:
+        smoothed_path = self.smooth_path(self.path)
         corrected_path = self.correct_path(smoothed_path)
         vectors = self.vectorize(corrected_path)
         adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors, mode)
