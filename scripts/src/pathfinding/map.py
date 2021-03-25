@@ -8,7 +8,6 @@ from scripts.src.pathfinding.node import Node
 from scripts.src.pathfinding.tile_role import TileRole
 from scripts.src.pathfinding.direction import Direction
 from scripts.src.pathfinding.obstacle_representation import ObstacleRepresentation
-from scripts.src.util.time_it import time_it
 
 
 class Map:
@@ -139,10 +138,25 @@ class Map:
                             Direction.RIGHT
                         ),
 
-                        (node.matrix_center[0] - 1, node.matrix_center[1] - 1, Direction.TOP_LEFT),
-                        (node.matrix_center[0] - 1, node.matrix_center[1] + 1, Direction.TOP_RIGHT),
-                        (node.matrix_center[0] + 1, node.matrix_center[1] - 1, Direction.DOWN_LEFT),
-                        (node.matrix_center[0] + 1, node.matrix_center[1] + 1, Direction.DOWN_RIGHT),
+                        (
+                            node.matrix_center[0] - 1,
+                            node.matrix_center[1] - 1,
+                            Direction.TOP_LEFT
+                        ),
+                        (
+                            node.matrix_center[0] - 1,
+                            node.matrix_center[1] + 1,
+                            Direction.TOP_RIGHT
+                        ),
+                        (
+                            node.matrix_center[0] + 1,
+                            node.matrix_center[1] - 1,
+                            Direction.DOWN_LEFT),
+                        (
+                            node.matrix_center[0] + 1,
+                            node.matrix_center[1] + 1,
+                            Direction.DOWN_RIGHT
+                        ),
                     ]
 
                     if ((0 <= x_position < len(self.node_matrix[0])
@@ -184,13 +198,16 @@ class Map:
         width, height = obstacle.pixel_coordinates_center
         lower_range_column = int(max(0, ((height - radius) // self.node_size)))
         lower_range_row = int(max(0, ((width - radius) // self.node_size)))
-        higher_range_column = int(min(len(self.node_matrix), ((height + radius) // self.node_size) + 1))
-        higher_range_row = int(min(len(self.node_matrix[0]), ((width + radius) // self.node_size) + 1))
+        higher_range_column = int(min(len(self.node_matrix),
+                                      ((height + radius) // self.node_size) + 1))
+        higher_range_row = int(min(len(self.node_matrix[0]),
+                                   ((width + radius) // self.node_size) + 1))
 
         for column in range(lower_range_column, higher_range_column):
             for row in range(lower_range_row, higher_range_row):
                 node = self.get_node_from_matrix_coordinates((row, column))
-                distance = get_distance(obstacle.pixel_coordinates_center, node.pixel_coordinates_center)
+                distance = get_distance(obstacle.pixel_coordinates_center,
+                                        node.pixel_coordinates_center)
                 if distance < radius:
                     node.role = TileRole.CUSHION
         obstacle.role = role
@@ -199,8 +216,10 @@ class Map:
         width, height = obstacle.pixel_coordinates_center
         lower_range_column = int(max(0, ((height - length) // self.node_size))) + 2
         lower_range_row = int(max(0, ((width - length) // self.node_size))) + 2
-        higher_range_column = int(min(len(self.node_matrix), ((height + length) // self.node_size))) - 2
-        higher_range_row = int(min(len(self.node_matrix[0]), ((width + length) // self.node_size))) - 2
+        higher_range_column = int(min(len(self.node_matrix),
+                                      ((height + length) // self.node_size))) - 2
+        higher_range_row = int(min(len(self.node_matrix[0]),
+                                   ((width + length) // self.node_size))) - 2
 
         for column in range(lower_range_column, higher_range_column):
             for row in range(lower_range_row, higher_range_row):
@@ -226,7 +245,6 @@ class Map:
         else:
             self.create_round_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
 
-    #@time_it
     def set_puck(self, puck):
         if self.obstacle_representation is ObstacleRepresentation.RADIUS:
             self.create_round_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK)

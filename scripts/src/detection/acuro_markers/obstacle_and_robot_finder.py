@@ -8,7 +8,6 @@ from scripts.src.detection.acuro_markers.obstacle_detection import ObstacleDetec
 from scripts.src.detection.acuro_markers.robot_detection import RobotDetection
 from scripts.src.detection.acuro_markers.marker_position import MarkerPosition
 from scripts.src.detection.position_calculator import PositionCalculator
-from scripts.src.util.time_it import time_it
 
 
 class ObstacleRobotFinder:
@@ -61,7 +60,6 @@ class ObstacleRobotFinder:
         image = cv2.imread( abs_file_path )
         return image
 
-    @time_it
     def detect_obstacle_position(self, image, DEBUG=False):
         obstacles_position = self.obstacle_detection.detect_aruco_marker_on_obstacle( image )
 
@@ -116,7 +114,6 @@ class ObstacleRobotFinder:
 
         return image_copy, obstacles_bottom_position
 
-    @time_it
     def detect_robot(self, image, DEBUG=False):
         robot_position, aruco_marker_position = self.robot_detection.detect_aruco_marker_on_robot(
             image
