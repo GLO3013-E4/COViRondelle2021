@@ -5,6 +5,7 @@ from std_msgs.msg import String
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped, Pose, PoseArray
 from pathfinding.show_path import get_path as get_nodes
+from pathfinding.pathfinding_algorithm import PathfindingAlgorithms
 
 
 class PathFinder:
@@ -14,7 +15,7 @@ class PathFinder:
         self.obstacles = None
         self.robot = None
         self.node_size = 15
-        self.algorithm = "BreadthFirstSearch"
+        self.algorithm = PathfindingAlgorithms.A_STAR
         self.image_width, self.image_height = (1600, 904)
 
         self.pub = rospy.Publisher('path', Path, queue_size=1)
