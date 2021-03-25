@@ -18,12 +18,14 @@ class PuckDetection:
             raise AttributeError("L'image est invalide") from invalid_image
         return img
 
+
     def detect_pucks(self, image):
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.medianBlur(gray, 5)
+        image = self.remove_glare(image)
 
         circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 10, param1=50,
-                                   param2=30, minRadius=23,maxRadius=30)
+                                   param2=30, minRadius=23, maxRadius=30)
         detected_circles = np.uint16(np.around(circles))
 
         puck_positions = {}
@@ -45,10 +47,36 @@ class PuckDetection:
             puck_positions[hsv_color] = [] if puck_positions.get(hsv_color) is None else puck_positions.get(hsv_color)
             puck = dict()
             puck["center_position"] = (x, y)
-            puck["radius"] = (x, y)
+            puck["radius"] = radius
             puck_positions[hsv_color].append(puck)
 
         return puck_positions
+
+    def remove_glare(self, image):
+        GLARE_MIN = np.array([0, 0, 20], np.uint8)
+        GLARE_MAX = np.array([0, 0, 255], np.uint8)
+
+        hsv_img = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        frame_threshed = cv2.inRange(hsv_img, GLARE_MIN, GLARE_MAX)
+        result = cv2.inpaint(image, frame_threshed, 0.6, cv2.INPAINT_TELEA)
+
+        image_lab = cv2.cvtColor(result, cv2.COLOR_BGR2LAB)
+        image_lab_planes = cv2.split(image_lab)
+        image_clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+        image_lab_planes[0] = image_clahe.apply(image_lab_planes[0])
+        image_lab = cv2.merge(image_lab_planes)
+
+        image = cv2.cvtColor(image_lab, cv2.COLOR_LAB2BGR)
+        image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV).astype("float32")
+        (h, s, v) = cv2.split(image_hsv)
+        s = s * 2
+        s = np.clip(s, 0, 255)
+        image_hsv = cv2.merge([h, s, v])
+        image = cv2.cvtColor(image_hsv.astype("uint8"), cv2.COLOR_HSV2BGR)
+        hsvImg = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        hsvImg[..., 2] = hsvImg[..., 2] * 0.85
+        image = cv2.cvtColor(hsvImg, cv2.COLOR_HSV2BGR)
+        return image
 
     def show_image(self, output):
         cv2.imshow('output', output)
