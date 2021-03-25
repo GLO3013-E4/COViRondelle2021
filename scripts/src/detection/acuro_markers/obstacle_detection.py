@@ -26,7 +26,6 @@ class ObstacleDetection(ArucoMarkers):
                 obstacles_position.append( ArucoPosition( markerID, markerCorner ) )
         return obstacles_position
 
-
     def get_acuro_dictionnary(self):
         return cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
 

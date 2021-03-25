@@ -3,7 +3,7 @@ Helper class to facilitate debugging by drawing the generated map
 as well as the path found by the algorithm
 """
 
-from PIL import ImageDraw
+from PIL import ImageDraw, Image
 
 from scripts.src.pathfinding.tile_role import TileRole
 
@@ -14,6 +14,7 @@ class MapDrawer:
     as well as the path found by the algorithm
     """
     def __init__(self, node_identifier_width, node_size, image):
+        image = Image.fromarray(image)
         self.node_identifier_width = node_identifier_width
         self.node_size = node_size
         self.image = image
