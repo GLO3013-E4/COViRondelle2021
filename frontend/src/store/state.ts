@@ -9,7 +9,6 @@ export const defaultState = {
   cycleStarted: false,
   tableImage: '', // TODO : Table image most likely won't be a string, this is temporary
   resistance: 0,
-
   robotConsumption: {
     wheel1: 0,
     wheel2: 0,

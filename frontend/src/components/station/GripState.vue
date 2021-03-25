@@ -8,6 +8,7 @@
         class="d-flex justify-center font-weight-bold"
         id="divChip"
     >
+      <!-- TODO : Do not change color/opacity on hover -->
       <v-chip :color="puckInGrip ? 'green' : 'red'">
         <h3 class="white--text">
           {{ puckInGrip ? $t('station.puckInGrip') : $t('station.noPuck') }}

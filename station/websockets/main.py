@@ -43,22 +43,24 @@ def handle_path(path):
     socket.emit("planned_trajectory_coordinates", json_data)
 
 
+def handle_grip(grip):
+    json_data = to_json({"puckInGrip": grip.data})
+    socket.emit("grip_state", json_data)
+
+
 def handle_resistance(resistance):
-    # TODO : Make sure this works once resistance is implemented
-    json_data = to_json({"resistance": resistance})
+    json_data = to_json({"resistance": int(resistance.data)})
     socket.emit("resistance", json_data)
 
 
 def handle_puck_colors(puck_colors):
-    # TODO : Make sure this works once puck_colors is implemented
-    json_data = to_json({"puckColors": puck_colors.split(",")})
+    json_data = to_json({"puckColors": puck_colors.data.split(",")})
     socket.emit("puck_colors", json_data)
 
 
 def handle_puck_corners(puck_corners):
-    # TODO : Make sure this works once puck_corners is implemented
-    json_data = to_json({"firstPuckCorner": puck_corners.split(",")[0]})
-    socket.emit("first_puck_corner", json_data)
+    json_data = to_json({"puckFirstCorner": puck_corners.data.split(",")[0]})
+    socket.emit("puck_first_corner", json_data)
 
 
 def handle_end(_):
@@ -75,6 +77,7 @@ def websockets():
     rospy.Subscriber("world_camera/image_raw", Image, handle_world_camera_image_raw)
     rospy.Subscriber("robot", Pose, handle_robot)
     rospy.Subscriber("path", Path, handle_path)
+    rospy.Subscriber("grip", Bool, handle_grip)
     rospy.Subscriber("resistance", Float32, handle_resistance)
     rospy.Subscriber("puck_colors", String, handle_puck_colors)
     rospy.Subscriber("puck_corners", String, handle_puck_corners)
