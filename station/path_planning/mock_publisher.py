@@ -42,7 +42,7 @@ def create_pucks_poses():
 
 def create_goal_pose():
     pose = PoseStamped()
-    pose.pose.position.x = 1200
+    pose.pose.position.x = 1000
     pose.pose.position.y = 450
     return pose
 

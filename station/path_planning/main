@@ -17,9 +17,9 @@ class PathFinder:
         self.algorithm = "BreadthFirstSearch"
         self.image_width, self.image_height = (1600, 904)
 
-        self.pub = rospy.Publisher('path', Path, queue_size=10)
-        self.pub_string = rospy.Publisher('path_string', String, queue_size=10)
-        rospy.Subscriber('move_base_simple/goal', PoseStamped, self.callback_goal)
+        self.pub = rospy.Publisher('path', Path, queue_size=1)
+        self.pub_string = rospy.Publisher('path_string', String, queue_size=1)
+        rospy.Subscriber('move_base_simple/goal', PoseStamped, self.callback_goal, queue_size=1)
         # rospy.Subscriber('pucks', PoseArray, self.callback_pucks)
         # rospy.Subscriber('obstacles', PoseArray, self.callback_obstacles)
         # rospy.Subscriber('robot', Pose, self.callback_robot)

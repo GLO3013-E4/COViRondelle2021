@@ -1,0 +1,5 @@
+<launch>
+    <include file="$(find robot_goal_and_obstacle_finder)/launch/finder.launch" />
+    <include file="$(find path_planning)/launch/planning.launch" />
+    <include file="$(find debug_vision_planning)/launch/debug.launch" />
+</launch>
