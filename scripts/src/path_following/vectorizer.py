@@ -5,12 +5,13 @@ from scripts.src.path_following.movement_mode import MovementMode
 
 
 class Vectorizer:
-    def __init__(self, mode, minimize=False):
+    def __init__(self, minimize=False):
         self.robot_position = None
         self.robot_angle = None
         self.minimize = minimize
         self.path = []
-        self.mode = mode
+        self.mode = MovementMode.GRIP
+        self.correct_path_threshold = NODE_SIZE * 3
 
     def set_robot_position(self, position):
         self.robot_position = position
@@ -57,26 +58,17 @@ class Vectorizer:
         return minimized_vectors
 
     def get_path_from_robot(self, nodes: [(int, int)]):
-        robot_node = (
-            (self.robot_position[0]//NODE_SIZE)*NODE_SIZE,
-            (self.robot_position[1]//NODE_SIZE)*NODE_SIZE
-        )
-        if robot_node in nodes:
-            index = nodes.index(robot_node)
-            return nodes[index:]
-
-        else:
-            return self.correct_path(nodes)
-
-    def correct_path(self, nodes):
         x, y = self.robot_position
-
         distance_from_robot = [
             math.sqrt(pow(x2 - x, 2) + pow(y2 - y, 2)) for (x2, y2) in nodes
         ]
         minimum_distance = min(distance_from_robot)
         index = distance_from_robot.index(minimum_distance)
-        return [self.robot_position] + nodes[index:]
+
+        if minimum_distance >= self.correct_path_threshold:
+            return [self.robot_position] + nodes[index:]
+        else:
+            return nodes[index:]
 
     def vectorize(self, nodes: [(int, int)]):
         vectors = []
@@ -136,7 +128,7 @@ class Vectorizer:
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle
 
-    def path_to_vectors_from_current_robot_position(self):
+    def path_to_vectors(self):
         smoothed_path = self.smooth_path(self.path)
         path_from_robot = self.get_path_from_robot(smoothed_path)
         vectors = self.vectorize(path_from_robot)
