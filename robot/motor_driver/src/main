@@ -1,0 +1,78 @@
+#! /usr/bin/env python3
+import serial
+import rospy
+import json
+import time
+from std_msgs.msg import String
+from math import pi
+
+
+class MotorDriver:
+    def __init__(self):
+
+        self.ser = serial.Serial('/dev/ttyACM0',115200, timeout=0.01)
+        self.ser.flush()
+        print("init: " + self.ser.name)
+        time.sleep(1)
+        while not self.ser.isOpen():
+            pass
+
+        rospy.Subscriber("movement_vectors_string", String, self.callback, queue_size=1)
+
+    def callback(self, data):
+        movement_list = json.loads(data.data)
+        for movement in movement_list:
+            distance, angle, mode = movement
+            self.move_robot(distance, angle, mode)
+            break
+
+    def move_robot(self, module, angle, mode):
+        prehenseur = 0
+        if angle >= 2:
+            time.sleep(0.2)
+            if angle <= 180:
+                self.writeStringWithAck("4:" + str(angle))
+            else:
+                self.writeStringWithAck("5:" + str(360 - angle))
+        
+        if module > 0:
+            self.writeStringWithAck("0:" + str(module))
+
+        if prehenseur == 1:
+            self.writeStringWithAck("7:")
+            
+        if prehenseur == 2:
+            self.writeStringWithAck("8:")
+
+
+        
+        
+    def writeStringWithAck(self, data):
+        self.ser.flush()
+        writeStart = time.time()
+        self.ser.write(str.encode(data))
+        ackReceived = False
+        
+        while not ackReceived:
+            while self.ser.in_waiting == 0:
+                if time.time() - writeStart >= 1000:  #a enlevé si superflue
+                    print("ACK EXPIRED")
+                    ackReceived = True
+                    return
+            
+            line = self.ser.readline().decode('utf-8')
+
+            if 'ack' in line:
+                ackReceived = True
+                print("ACK RECEIVED")
+            print("Réponse===" + line)
+
+
+if __name__ == "__main__":
+    try:
+        rospy.init_node("motor_driver", anonymous=True)
+        MotorDriver()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass
+
