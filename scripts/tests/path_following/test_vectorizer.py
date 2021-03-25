@@ -283,8 +283,9 @@ class TestVectorizer:
         nodes = [
             (15, 0), (30, 0), (45, 0)
         ]
+        vectorizer.set_path(nodes)
 
-        vectors = vectorizer.path_to_vectors(nodes, MovementMode.OHMMETER)
+        vectors = vectorizer.path_to_vectors(MovementMode.OHMMETER)
 
         assert vectors == [
             (15, math.pi/2, MovementMode.OHMMETER), (15, 0, MovementMode.OHMMETER)
@@ -299,8 +300,9 @@ class TestVectorizer:
         nodes = [
             (15, 0), (30, 0), (45, 0)
         ]
+        vectorizer.set_path(nodes)
 
-        vectors = vectorizer.path_to_vectors(nodes, MovementMode.GRIP)
+        vectors = vectorizer.path_to_vectors(MovementMode.GRIP)
 
         assert all(vector[2] is MovementMode.GRIP for vector in vectors)
 
@@ -313,8 +315,9 @@ class TestVectorizer:
         nodes = [
             (15, 0), (30, 0), (45, 0)
         ]
+        vectorizer.set_path(nodes)
 
-        vectors = vectorizer.path_to_vectors(nodes, MovementMode.OHMMETER)
+        vectors = vectorizer.path_to_vectors(MovementMode.OHMMETER)
 
         assert all(vector[2] is MovementMode.OHMMETER for vector in vectors)
 
