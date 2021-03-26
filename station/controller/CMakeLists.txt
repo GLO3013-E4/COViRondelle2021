@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(controller)
+project(debug_vision_planning)
 
 find_package(catkin REQUIRED COMPONENTS
   rospy
