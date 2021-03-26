@@ -1,10 +1,5 @@
 <template>
-  <v-card
-    class="d-flex justify-center mb-10"
-    color="#ededed"
-    :height="this.rescaledHeight + 200"
-    :width="this.rescaledWidth + 50"
-  >
+  <v-card class="d-flex justify-center mb-10" color="base">
     <v-container>
       <v-row>
         <v-col sm="12">
@@ -14,116 +9,53 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        <v-col
-          class="path"
-          v-bind:style="{
-            background: `url('${tableImage}')`,
-            backgroundSize: `${this.rescaledWidth}px ${this.rescaledHeight}px`,
-            backgroundRepeat: 'no-repeat',
-          }"
-        >
-          <svg
-            :height="this.rescaledHeight"
-            :width="this.rescaledWidth"
-            id="svg"
+        <v-spacer>
+          <div
+            class="path"
+            v-bind:style="{
+              background: `url('${tableImage}')`,
+              backgroundSize: `${this.rescaledWidth}px ${this.rescaledHeight}px`,
+              backgroundRepeat: 'no-repeat',
+            }"
           >
-            <polyline
-              id="planned_path"
-              :points="this.plannedTrajectoryPoints"
-              style="fill: none; stroke: blue; stroke-width: 2"
-            />
-            <polyline
-              id="real_path"
-              :points="this.realTrajectoryPoints"
-              style="fill: none; stroke: red; stroke-width: 2"
-            />
-            <circle
-              class="start"
-              :cx="this.startPointX"
-              :cy="this.startPointY"
-              r="2"
-              stroke="red"
-              stroke-width="2"
-              fill="none"
-            />
-            <circle
-              class="destination"
-              :cx="this.destinationPointX"
-              :cy="this.destinationPointY"
-              r="2"
-              stroke="green"
-              stroke-width="2"
-              fill="none"
-            />
-          </svg>
-        </v-col>
-        <v-col sm="12">
-          <v-card-actions class="d-flex left">
             <svg
-              :height="this.rescaledHeight / 2"
+              :height="this.rescaledHeight"
               :width="this.rescaledWidth"
-              id="legend"
+              id="svg"
             >
-              <text
-                :x="this.rescaledWidth / 2"
-                :y="this.rescaledHeight / 20"
-                fill="blue"
-              >
-                {{ `${$t('trajectories.plannedTrajectory')} :` }}
-              </text>
-              <line
-                :x1="this.rescaledWidth - this.rescaledWidth / 6"
-                :y1="this.rescaledHeight / 20 - 5"
-                :x2="this.rescaledWidth - this.rescaledWidth / 12"
-                :y2="this.rescaledHeight / 20 - 5"
-                style="stroke: blue; stroke-width: 2"
+              <polyline
+                id="planned_path"
+                :points="this.plannedTrajectoryPoints"
+                style="fill: none; stroke: blue; stroke-width: 2"
               />
-              <text
-                :x="this.rescaledWidth / 2"
-                :y="this.rescaledHeight / 8"
-                fill="red"
-              >
-                {{ `${$t('trajectories.realTrajectory')} :` }}
-              </text>
-              <line
-                :x1="this.rescaledWidth - this.rescaledWidth / 6"
-                :y1="this.rescaledHeight / 8 - 5"
-                :x2="this.rescaledWidth - this.rescaledWidth / 12"
-                :y2="this.rescaledHeight / 8 - 5"
-                style="stroke: red; stroke-width: 2"
+              <polyline
+                id="real_path"
+                :points="this.realTrajectoryPoints"
+                style="fill: none; stroke: red; stroke-width: 2"
               />
-              <text
-                :x="this.rescaledWidth / 2"
-                :y="this.rescaledHeight / 5"
-                fill="red"
-              >
-                {{ `${$t('trajectories.startingPoint')} :` }}
-              </text>
               <circle
-                :cx="this.rescaledWidth - this.rescaledWidth / 6"
-                :cy="this.rescaledHeight / 5 - 5"
+                class="start"
+                :cx="this.startPointX"
+                :cy="this.startPointY"
                 r="2"
                 stroke="red"
                 stroke-width="2"
                 fill="none"
               />
-              <text
-                :x="this.rescaledWidth / 2"
-                :y="(13 * this.rescaledHeight) / 48"
-                fill="green"
-              >
-                {{ `${$t('trajectories.destinationPoint')} :` }}
-              </text>
               <circle
-                :cx="this.rescaledWidth - this.rescaledWidth / 6"
-                :cy="(13 * this.rescaledHeight) / 48 - 5"
+                class="destination"
+                :cx="this.destinationPointX"
+                :cy="this.destinationPointY"
                 r="2"
                 stroke="green"
                 stroke-width="2"
                 fill="none"
               />
             </svg>
-          </v-card-actions>
+          </div>
+        </v-spacer>
+        <v-col sm="4">
+          <Legend />
         </v-col>
       </v-row>
     </v-container>
@@ -134,8 +66,12 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Coordinate } from '@/types/coordinate';
 import { mapState } from 'vuex';
+import Legend from './Legend.vue';
 
 @Component({
+  components: {
+    Legend: Legend,
+  },
   computed: mapState([
     'tableImage',
     'plannedTrajectory',
@@ -150,8 +86,8 @@ export default class Trajectories extends Vue {
   private realTrajectory!: Array<Coordinate>;
   private readonly width = 1600;
   private readonly height = 904;
-  private readonly ratioX = 0.5;
-  private readonly ratioY = 0.5;
+  private readonly ratioX = 0.45;
+  private readonly ratioY = 0.45;
 
   private get rescaledWidth() {
     return this.width * this.ratioX;

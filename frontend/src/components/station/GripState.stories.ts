@@ -14,7 +14,7 @@ const Template = (args: any) => ({
   store: new Vuex.Store({
     state: args,
   }),
-  template: '<PuckInGrip />',
+  template: '<GripState />',
 });
 
 export const WithPuckInGrip = Template.bind({}) as any;

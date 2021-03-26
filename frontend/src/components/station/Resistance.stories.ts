@@ -31,8 +31,8 @@ WhiteAndBlackPuck.args = {
   puckColors: [Color.White, Color.Black, Color.Grey],
 };
 
-export const YellowPuck = Template.bind({}) as any;
-YellowPuck.args = {
+export const YellowPuckAndBrown = Template.bind({}) as any;
+YellowPuckAndBrown.args = {
   resistance: 100000,
-  puckColors: [Color.Yellow, ColorFactory.get(), ColorFactory.get()],
+  puckColors: [Color.Yellow, Color.Brown, ColorFactory.get()],
 };
