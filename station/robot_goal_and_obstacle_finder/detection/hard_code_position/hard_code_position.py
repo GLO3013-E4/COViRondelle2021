@@ -1,6 +1,3 @@
-import cv2
-
-
 def position_of_resistance_panel():
     position_x_of_resistance_panel = 150
     position_y_of_resistance_panel = 830

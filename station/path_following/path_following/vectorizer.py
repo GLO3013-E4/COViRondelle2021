@@ -1,7 +1,7 @@
 import math
 
-from path_following.config import NODE_SIZE
-from path_following.movement_mode import MovementMode
+from config import NODE_SIZE
+from movement_mode import MovementMode
 
 
 class Vectorizer:

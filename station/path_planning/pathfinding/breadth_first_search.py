@@ -13,7 +13,7 @@ class BreadthFirstSearch(PathfindingAlgorithm):
     """
     Algorithm that finds a path from a starting node to the first node met with a TileRole.END role.
     """
-    def find_path(self, start, end):
+    def find_path(self, start, _end):
         queue = deque()
         visited = {start}
 
