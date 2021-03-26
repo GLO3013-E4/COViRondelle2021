@@ -18,6 +18,7 @@ class ObstacleDetection(ArucoMarkers):
 
         (corners, ids, rejected) = cv2.aruco.detectMarkers(image, aruco_dict,
                                        parameters=aruco_params)
+
         obstacles_position = []
 
         if len(corners) > 0:

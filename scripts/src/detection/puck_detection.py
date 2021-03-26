@@ -42,14 +42,16 @@ class PuckDetection:
 
             dominant_color_np = np.uint8([[dominant_color]])
             hsv_dominant_color = cv2.cvtColor(dominant_color_np, cv2.COLOR_BGR2HSV)
-            hsv_color = self.find_hsv_color(hsv_dominant_color[0][0])
+            hsv_color = self.find_hsv_color(hsv_dominant_color[0][0], x, y)
 
             puck_positions[hsv_color] = [] if puck_positions.get(hsv_color) is None else puck_positions.get(hsv_color)
             puck = dict()
             puck["center_position"] = (x, y)
             puck["radius"] = radius
             puck_positions[hsv_color].append(puck)
+            self.draw_on_image(hsv_color, image, radius, x, y)
 
+        self.show_image(image)
         return puck_positions
 
     def remove_glare(self, image):
@@ -105,12 +107,18 @@ class PuckDetection:
         dominant_color = clt.cluster_centers_[label_counts.most_common(1)[0][0]]
         return list(dominant_color)
 
-    def find_hsv_color(self, hsv):
+    def find_hsv_color(self, hsv, x, y):
         colors = self.color_boundaries.get_boundaries_dict()
         for color, boundaries in colors.items():
             if boundaries["lower"][0] <= hsv[0] <= boundaries["upper"][0] and \
                     boundaries["lower"][1] <= hsv[1] <= \
                     boundaries["upper"][1] and boundaries["lower"][2] <= hsv[2] \
                     <= boundaries["upper"][2]:
+                print(x, y, hsv)
                 return color
         return "None"
+
+#puck_detection = PuckDetection()
+#image = cv2.imread("frame133.jpg")
+#pucks = puck_detection.detect_pucks(image)
+#print(pucks)
