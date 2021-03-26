@@ -10,6 +10,6 @@ def capture_image_from_embed_camera():
     _, frame = capture.read()
 
     capture.release()
-    cv2.destroyAllWindows() #remove it or not ?
+    cv2.destroyAllWindows()  # TODO : Remove it or not ?
 
     return frame

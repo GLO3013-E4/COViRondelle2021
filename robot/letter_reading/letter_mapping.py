@@ -1,12 +1,11 @@
-import argparse
 import RPi.GPIO as GPIO
 
 from capture_image_from_embed_camera import capture_image_from_embed_camera
 from map_letters import map_letters
 from process_image_to_grayscale import process_image_to_grayscale
 
-def letter_mapping():
 
+def letter_mapping():
     GPIO.setmode(GPIO.BOARD)
 
     GPIO.setup(12, GPIO.OUT)
@@ -20,7 +19,6 @@ def letter_mapping():
     y_position = 6
     servo2.ChangeDutyCycle(x_position)
     servo1.ChangeDutyCycle(y_position)
-
 
     image = capture_image_from_embed_camera()
 
