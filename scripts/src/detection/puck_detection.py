@@ -49,9 +49,7 @@ class PuckDetection:
             puck["center_position"] = (x, y)
             puck["radius"] = radius
             puck_positions[hsv_color].append(puck)
-            self.draw_on_image(hsv_color, image, radius, x, y)
 
-        self.show_image(image)
         return puck_positions
 
     def remove_glare(self, image):
@@ -116,8 +114,3 @@ class PuckDetection:
                     <= boundaries["upper"][2]:
                 return color
         return "None"
-
-#puck_detection = PuckDetection()
-#image = cv2.imread("frame133.jpg")
-#pucks = puck_detection.detect_pucks(image)
-#print(pucks)
