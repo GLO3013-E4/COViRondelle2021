@@ -7,10 +7,10 @@ from scripts.src.mapping.color import Color
 
 GPIO.setmode(GPIO.BOARD)
 
+GPIO.setup(11, GPIO.OUT)
+servo1 = GPIO.PWM(11, 50)
 GPIO.setup(12, GPIO.OUT)
-servo1 = GPIO.PWM(12, 50)
-GPIO.setup(13, GPIO.OUT)
-servo2 = GPIO.PWM(13, 50)
+servo2 = GPIO.PWM(12, 50)
 
 servo1.start(0)
 servo2.start(0)
