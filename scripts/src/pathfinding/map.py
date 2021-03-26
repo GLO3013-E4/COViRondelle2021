@@ -178,10 +178,10 @@ class Map:
                     neighbor.held_by.add(obstacle_uuid)
                     self.add_cushion_in_direction(neighbor, distance - 1, role, direction)
 
-    def delete_object(self, puck_position: (int, int)):
+    def delete_object(self, object_position: (int, int)):
         #TODO: pourrait chercher dans un carré autour de l'emplacement de la puck
         # au lieu de toute la matrix
-        puck = self.get_node_from_pixel(puck_position)
+        puck = self.get_node_from_pixel(object_position)
         _uuid = puck.uuid
 
         if _uuid is not None:
