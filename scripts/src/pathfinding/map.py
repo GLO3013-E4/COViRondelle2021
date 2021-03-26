@@ -178,25 +178,24 @@ class Map:
                     neighbor.held_by.add(obstacle_uuid)
                     self.add_cushion_in_direction(neighbor, distance - 1, role, direction)
 
-    def delete_puck(self, puck_position: (int, int)):
+    def delete_object(self, puck_position: (int, int)):
         #TODO: pourrait chercher dans un carré autour de l'emplacement de la puck
         # au lieu de toute la matrix
         puck = self.get_node_from_pixel(puck_position)
+        _uuid = puck.uuid
 
-        for row in self.node_matrix:
-            for node in row:
-                if node.uuid == puck.uuid:
-                    if node.uuid == puck.uuid and puck.uuid not in node.held_by:
-                        print('AYYY LMAO')
-                        print(node)
-                        print(puck)
-                        break
-                    node.held_by.remove(puck.uuid)
-                    if node.held_by:
-                        node.uuid = next(iter(node.held_by))
-                    else:
-                        node.uuid = None
-                        node.role = TileRole.EMPTY
+        if _uuid is not None:
+            for row in self.node_matrix:
+                for node in row:
+                    if _uuid in node.held_by:
+                        node.held_by.remove(node.uuid)
+                        if len(node.held_by) == 0:
+                            node.uuid = None
+                            node.role = TileRole.EMPTY
+                        else:
+                            node.uuid = list(node.held_by)[0]
+        elif _uuid is None:
+            raise Exception("t'essaies de delete une case vide")
 
     def create_round_obstacle(self, obstacle: (int, int), radius, role, obstacle_uuid):
         width, height = obstacle
