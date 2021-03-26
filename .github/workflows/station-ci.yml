@@ -9,6 +9,7 @@ on:
   pull_request:
     branches:
       - develop
+      - feature/detection-ros-package # TODO : Remove this
     paths:
       - 'station/**'
 
