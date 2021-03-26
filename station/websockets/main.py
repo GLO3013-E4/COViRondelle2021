@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
+import base64
 import json
 import threading
+from io import BytesIO
 import rospy
+from PIL import Image
 from flask import Flask
 from flask_socketio import SocketIO
 from std_msgs.msg import Bool, Float32, String
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image as ROSImage
 from geometry_msgs.msg import Pose
 from nav_msgs.msg import Path
 
@@ -17,14 +20,20 @@ def to_json(data):
     return json.dumps(data)
 
 
+def to_base64(data):
+    image = Image.fromarray(data)
+    buffered = BytesIO()
+    image.save(buffered, format="JPEG")
+    return base64.b64encode(buffered.getvalue())
+
+
 def handle_robot_consumption(robot_consumption):
     socket.emit("robot_consumption", robot_consumption.data)
 
 
 def handle_world_camera_image_raw(image):
-    # TODO : Only send once
-    # TODO : Make sure this works once world_camera/image_row is implemented (most likely not this way)
-    json_data = to_json({"tableImage": image})
+    img_base64 = to_base64(image.data)
+    json_data = to_json({"tableImage": img_base64})
     socket.emit("table_image", json_data)
 
 
@@ -74,7 +83,7 @@ def websockets():
     rate = rospy.Rate(1)
 
     rospy.Subscriber("robot_consumption", String, handle_robot_consumption)
-    rospy.Subscriber("world_camera/image_raw", Image, handle_world_camera_image_raw)
+    rospy.Subscriber("world_camera/image_raw", ROSImage, handle_world_camera_image_raw)
     rospy.Subscriber("robot", Pose, handle_robot)
     rospy.Subscriber("path", Path, handle_path)
     rospy.Subscriber("grip", Bool, handle_grip)
