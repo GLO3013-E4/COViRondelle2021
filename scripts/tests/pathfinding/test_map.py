@@ -190,14 +190,15 @@ class TestMap:
         width = 2*self.map.node_size
         role = TileRole.OBSTACLE
         _uuid = uuid.uuid4()
+        x, y = node.pixel_coordinates_center
 
-        self.map.create_round_obstacle(node.pixel_coordinates_center, width, role, _uuid)
+        self.map.create_round_obstacle((int(x), int(y)), width, role, _uuid)
 
         expected_obstacle_positions = {
             (5, 5),
             (4, 4), (6, 4), (4, 6), (6, 6),
-            (4, 5),
-            (6, 5),
+            (4, 5), (3, 5),
+            (6, 5), (5, 3),
             (5, 4), (5, 6)
         }
         found_obstacle_positions = set()
@@ -215,8 +216,9 @@ class TestMap:
         width = 2*self.map.node_size
         role = TileRole.OBSTACLE
         _uuid = uuid.uuid4()
+        x, y = node.pixel_coordinates_center
 
-        self.map.create_square_obstacle(node.pixel_coordinates_center, width, role, _uuid)
+        self.map.create_square_obstacle((int(x), int(y)), width, role, _uuid)
 
         expected_obstacle_positions = {
             (5, 5), (6, 3), (3, 6), (4, 3),
@@ -237,8 +239,9 @@ class TestMap:
         self.map.create_nodes()
         self.map.connect_nodes()
         node = self.map.get_node_from_pixel((30, 30))
+        x, y = node.pixel_coordinates_center
 
-        self.map.set_obstacle(node.pixel_coordinates_center)
+        self.map.set_obstacle((int(x), int(y)))
 
         assert node.role is TileRole.OBSTACLE
 
@@ -246,8 +249,9 @@ class TestMap:
         self.map.create_nodes()
         self.map.connect_nodes()
         node = self.map.get_node_from_pixel((30, 30))
+        x, y = node.pixel_coordinates_center
 
-        self.map.set_puck(node.pixel_coordinates_center)
+        self.map.set_puck((int(x), int(y)))
 
         assert node.role is TileRole.PUCK
 
