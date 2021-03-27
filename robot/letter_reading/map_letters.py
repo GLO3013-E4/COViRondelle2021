@@ -3,6 +3,7 @@ import pytesseract
 CUSTOM_CONFIG = r'--oem 3 --psm 11 -c tessedit_char_whitelist=ABCD'
 CORRECT_AMOUNT_OF_LETTERS = 9
 
+
 def map_letters(image):
     found_letters = pytesseract.image_to_string(image, config=CUSTOM_CONFIG)
 

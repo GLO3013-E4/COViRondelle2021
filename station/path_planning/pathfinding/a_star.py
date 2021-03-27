@@ -9,9 +9,13 @@ from pathfinding.tile_role import TileRole
 
 
 class AStar(PathfindingAlgorithm):
+    """
+    https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
+    """
+
     def __init__(self):
         self.distance_between_grip_and_robot_center = 112
-    """https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode"""
+
     def find_path(self, start, end):
         heuristic = partial(distance, point2=end.pixel_coordinates_center)
         openSet = {start}
@@ -58,12 +62,12 @@ class AStar(PathfindingAlgorithm):
 def distance(point1, point2):
     x1, y1 = point1
     x2, y2 = point2
-    return math.sqrt(pow(x2-x1, 2) + pow(y2-y1, 2))
+    return math.sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2))
 
 
-def reconstruct_path(cameFrom, current):
+def reconstruct_path(came_from, current):
     total_path = [current]
-    while current in cameFrom.keys():
-        current = cameFrom[current]
+    while current in came_from.keys():
+        current = came_from[current]
         total_path.append(current)
     return total_path[::-1]
