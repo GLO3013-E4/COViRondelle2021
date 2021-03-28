@@ -1,6 +1,7 @@
 import math
 
 from scripts.src.path_following.movement_mode import MovementMode
+from scripts.src.path_following.config import NODE_SIZE
 
 
 # TODO: devrait savoir le goal + est-ce que le goal est une puck ou une destination. Ou, est-ce que c'est path_plannning.PathFinder qui devrait le savoir ou a_star.
@@ -16,14 +17,19 @@ class Vectorizer:
         self.distance_correction_threshold = 3*self.cm_to_pixel
         self.length_correction_threshold = 0
         self.angle_correction_threshold = 0
+        self.checkpoint_trigger_threshold = 3
+        self.last_checkpoint = None
         self.goal = None
-        self.checkpoint = 0
+        self.checkpoint = None
 
     def set_mode(self, mode: MovementMode):
         self.mode = mode
 
     def set_robot_position(self, position: (int, int)):
         self.robot_position = position
+
+        # update checkpoint
+        #TODO:
 
     def set_path(self, path: [(float, float)]):
         self.path = path
@@ -46,24 +52,41 @@ class Vectorizer:
                     minimized_vectors[-1] = [last_vector_distance + length, last_vector_angle, last_mode]
         return minimized_vectors
 
+
+    # TODO: if self.checkpoint is None
     def get_path_from_robot(self, nodes: [(float, float)]):
+        if self.checkpoint is None:
+            # va au debut du chemin
+            return [self.robot_position] + nodes
+            # va au point le plus pret meme si t'as jamais ete dans le chemin par avant
+            #node_distances = [
+            #    distance(self.robot_position, node)
+            #    for node in nodes
+            #]
+            #minimum_distance = min(node_distances)
+            #min_index_no_checkpoint = node_distances.index(minimum_distance)
+            # return [self.robot_position] + nodes[min_index_no_checkpoint:]
+
         node_distances = [
             distance(self.robot_position, node)
-            for node in nodes
+            for node in nodes[self.checkpoint+1:]
         ]
         minimum_distance = min(node_distances)
+        index = node_distances.index(minimum_distance)
 
-        if minimum_distance <= self.distance_correction_threshold:
-            #if close
-            path = [self.robot_position] + nodes[self.checkpoint:] #checkpoint+1?
-            self.checkpoint += 1
-            return path
+        if self.robot_is_close_to_path(minimum_distance):
+            if self.checkpoint_was_updated_recently():
+                return [self.robot_position] + nodes[self.checkpoint+1:]
+            else:
+                return [self.robot_position] + nodes[index:]
         else:
-            #if far
-            index = node_distances.index(minimum_distance)
-            path = [self.robot_position] + nodes[index:]
-            self.checkpoint = index + 1
-            return path
+            return [self.robot_position] + nodes[index:]
+
+    def checkpoint_was_updated_recently(self):
+        return distance(self.robot_position, self.path[self.checkpoint]) <= NODE_SIZE
+
+    def robot_is_close_to_path(self, minimum_distance_from_path):
+        return minimum_distance_from_path <= self.distance_correction_threshold
 
     def vectorize(self, nodes: [(float, float)]):
         vectors = []

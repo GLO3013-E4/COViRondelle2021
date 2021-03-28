@@ -152,8 +152,8 @@ class TestVectorizer:
         assert minimized_vectors == [
             [1, 0, MovementMode.GRIP], [2, -math.pi/4, MovementMode.GRIP], [2, -math.pi/2, MovementMode.GRIP], [2, math.pi/4, MovementMode.GRIP]
         ]
-"""
-    def test_given_robot_not_in_path_at_start_when_get_path_from_robot_then_return_correct_path(self):
+
+    def test_if_checkpoint_is_None(self):
         robot_position = (-100, -100)
         self.vectorizer.set_robot_position(robot_position)
         nodes = [
@@ -164,72 +164,25 @@ class TestVectorizer:
 
         assert corrected_path == [(-100, -100), (0, 0), (15, 0), (30, 0)]
 
-    def test_given_robot_not_in_path_in_middle_when_get_path_from_robot_then_return_correct_path(self):
-        robot_position = (35, -5*NODE_SIZE)
-        self.vectorizer.set_robot_position(robot_position)
-        nodes = [
-            (0, 0), (15, 0), (30, 0), (45, 0)
-        ]
+    def test_if_robot_is_close_to_path_and_was_updated_recently(self):
+        pass
 
-        corrected_path = self.vectorizer.get_path_from_robot(nodes)
+    def test_if_robot_is_close_to_path_but_wasnt_updated_recently(self):
+        pass
 
-        assert corrected_path == [(35, -5*NODE_SIZE), (30, 0), (45, 0)]
+    def test_if_robot_is_not_close_to_path(self):
+        pass
 
-    def test_given_robot_in_path_at_start_when_get_path_from_robot_then_return_correct_path(self):
-        robot_position = (5, 5)
-        self.vectorizer.set_robot_position(robot_position)
-        nodes = [
-            (0, 0), (15, 0), (30, 0)
-        ]
-        self.vectorizer.set_path(nodes)
-        self.vectorizer.set_goal(self.vectorizer.path[-1])
+    def test_when_set_goal_if_robot_is_close_to_a_checkpoint_and_last_checkpoint_is_further_then_dont_update_checkpoint(self):
+        pass
 
-        corrected_path = self.vectorizer.get_path_from_robot(nodes)
+    def test_when_set_goal_if_robot_is_close_to_a_checkpoint_and_last_checkpoint_is_past_then_update_checkpoint(self):
+        pass
 
-        assert corrected_path == [(5, 5), (15, 0), (30, 0)]
+    def test_when_set_goal_if_robot_is_far_from_all_checkpoints_then_dont_update(self):
+        pass
 
-    def test_given_robot_in_path_at_start_when_get_path_from_robot_then_return_correct_path_____(self):
-        robot_position = (5, 0)
-
-        self.vectorizer.set_robot_position(robot_position)
-        nodes = [
-            (0, 0), (15, 0), (30, 0)
-        ]
-        self.vectorizer.set_path(nodes)
-        self.vectorizer.set_goal(self.vectorizer.path[-1])
-
-        corrected_path = self.vectorizer.get_path_from_robot(nodes)
-        assert corrected_path == [(5, 0), (15, 0), (30, 0)]
-
-
-    def test_given_robot_in_path_in_middle_get_path_from_robot_then_return_correct_path(self):
-        robot_position = (35, 5)
-        self.vectorizer.set_robot_position(robot_position)
-        nodes = [
-            (0, 0), (15, 0), (30, 0), (45, 0)
-        ]
-
-        corrected_path = self.vectorizer.get_path_from_robot(nodes)
-
-        assert corrected_path == [(35, 5), (45, 0)]
-
-    def test_given_to_min_is_true_when_path_to_vectors_then_call_right_methods(self):
-        robot_position = (-4*NODE_SIZE, 0)
-        robot_angle = 0
-        vectorizer = Vectorizer(minimize=True)
-        vectorizer.set_robot_position(robot_position)
-        vectorizer.set_robot_angle(robot_angle)
-        nodes = [
-            (15, 0), (30, 0), (45, 0)
-        ]
-        vectorizer.set_path(nodes)
-
-        vectors = vectorizer.path_to_vectors()
-
-        assert vectors == [
-            [105, 0, MovementMode.GRIP]
-        ]
-
+"""
     def test_given_to_min_is_false_when_path_to_vectors_then_call_right_methods(self):
         robot_position = (15, 0)
         robot_angle = 0
@@ -326,5 +279,5 @@ class TestVectorizer:
         #assert adjusted_angles == [-math.pi/4, 0, 0, -math.pi/4]
         assert True
 """
-
+#update on set path
 # Checker quand path a seulement une node et que c'est exactement le goal ou mettons quand c'est une node mais que t'es a 112 pixels et que t'as le bon angle est-ce que ca sort [(0,0,0)] ?
