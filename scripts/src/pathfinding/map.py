@@ -3,6 +3,7 @@ Class that represents where the robot can move and where the
 different obstacles and objects laying on the table are.
 """
 import math
+import uuid
 
 from scripts.src.pathfinding.node import Node
 from scripts.src.pathfinding.tile_role import TileRole
@@ -15,7 +16,7 @@ class Map:
     Class that represents where the robot can move and where the
     different obstacles and objects laying on the table are.
     """
-    def __init__(self, image_width, image_height, obstacles, pucks, start, end, node_size=25,
+    def __init__(self, image_width, image_height, node_size=25,
                  safety_cushion=0, robot_width=100, obstacle_width=40, puck_width=25,
                  obstacle_representation=ObstacleRepresentation.SQUARE):
         self.node_size = node_size
@@ -29,10 +30,8 @@ class Map:
 
         self.width, self.height = image_width, image_height
 
-        self.obstacles = obstacles
-        self.pucks = pucks
-        self.start_node_location = start
-        self.end_node_location = end
+        self.obstacles = []
+        self.pucks = []
 
         self.node_matrix = []
 
@@ -46,28 +45,31 @@ class Map:
         self.create_nodes()
         self.connect_nodes()
         self.add_table_walls()
-        self.create_obstacles()
-        self.create_pucks()
-        self.create_start_node()
-        self.create_end_node()
 
     def add_top_wall(self, width):
+        top_wall_uuid = uuid.uuid4()
         start_wall_top = max(0, self.table_walls_start_y // self.node_size)
         for row in range(
                 start_wall_top,
                 ((self.table_walls_start_y + width) // self.node_size) + 1):
             for node in self.node_matrix[row]:
                 node.role = TileRole.OBSTACLE
+                node.uuid = top_wall_uuid
+                node.held_by.add(top_wall_uuid)
 
     def add_bottom_wall(self, width):
+        bot_wall_uuid = uuid.uuid4()
         end_wall_bot = min(len(self.node_matrix), (self.table_walls_end_y // self.node_size)+1)
         for row in range(
                 (self.table_walls_end_y - width) // self.node_size,
                 end_wall_bot):
             for node in self.node_matrix[row]:
                 node.role = TileRole.OBSTACLE
+                node.uuid = bot_wall_uuid
+                node.held_by.add(bot_wall_uuid)
 
     def add_right_wall(self, width):
+        right_wall_uuid = uuid.uuid4()
         end_wall_right = min(len(self.node_matrix[0]), (self.table_walls_end_x//self.node_size)+1)
         for column in range(
                 (self.table_walls_end_x - width) // self.node_size,
@@ -75,8 +77,11 @@ class Map:
             for row in range(len(self.node_matrix)):
                 node = self.get_node_from_matrix_coordinates((column, row))
                 node.role = TileRole.OBSTACLE
+                node.uuid = right_wall_uuid
+                node.held_by.add(right_wall_uuid)
 
     def add_left_wall(self, width):
+        left_wall_uuid = uuid.uuid4()
         start_wall_left = max(0, (self.table_walls_start_x // self.node_size))
         for column in range(
                 start_wall_left,
@@ -84,6 +89,8 @@ class Map:
             for row in range(len(self.node_matrix)):
                 node = self.get_node_from_matrix_coordinates((column, row))
                 node.role = TileRole.OBSTACLE
+                node.uuid = left_wall_uuid
+                node.held_by.add(left_wall_uuid)
 
     def add_table_walls(self):
         width = self.robot_width + self.safety_cushion
@@ -167,35 +174,27 @@ class Map:
                 for (y_position, x_position, direction) in possible_neighbors:
                     node.neighbors.append((self.node_matrix[y_position][x_position], direction))
 
-    def add_cushion(self, node, distance, role):
-        """This method is used to add padding to the obstacles"""
-        if distance > 0:
-            for neighbor, _ in node.neighbors:
-                if neighbor.role is TileRole.EMPTY:
-                    neighbor.role = role
-                self.add_cushion(neighbor, distance - 1, role)
+    def delete_object(self, object_position: (int, int)):
+        #TODO: pourrait chercher dans un carré autour de l'emplacement de la puck
+        # au lieu de toute la matrix
+        puck = self.get_node_from_pixel(object_position)
+        _uuid = puck.uuid
 
-    def add_cushion_in_direction(self, node, distance, role, direction):
-        if distance > 0:
-            for neighbor, neighbor_direction in node.neighbors:
-                if neighbor.role is TileRole.EMPTY and neighbor_direction is direction:
-                    neighbor.role = role
-                    self.add_cushion_in_direction(neighbor, distance - 1, role, direction)
+        if _uuid is not None:
+            for row in self.node_matrix:
+                for node in row:
+                    if _uuid in node.held_by:
+                        node.held_by.remove(node.uuid)
+                        if len(node.held_by) == 0:
+                            node.uuid = None
+                            node.role = TileRole.EMPTY
+                        else:
+                            node.uuid = list(node.held_by)[0]
+        elif _uuid is None:
+            raise Exception("t'essaies de delete une case vide")
 
-    def create_obstacles(self):
-        """Specifies which nodes should be considered as obstacles and then adds their padding."""
-        for pixel_position in self.obstacles:
-            node = self.get_node_from_pixel(pixel_position)
-            self.set_obstacle(node)
-
-    def create_pucks(self):
-        """Specifies which nodes should be considered as pucks and then adds their padding."""
-        for pixel_position in self.pucks:
-            node = self.get_node_from_pixel(pixel_position)
-            self.set_puck(node)
-
-    def create_round_obstacle(self, obstacle, radius, role):
-        width, height = obstacle.pixel_coordinates_center
+    def create_round_obstacle(self, obstacle: (int, int), radius, role, obstacle_uuid):
+        width, height = obstacle
         lower_range_column = int(max(0, ((height - radius) // self.node_size)))
         lower_range_row = int(max(0, ((width - radius) // self.node_size)))
         higher_range_column = int(min(len(self.node_matrix),
@@ -206,85 +205,56 @@ class Map:
         for column in range(lower_range_column, higher_range_column):
             for row in range(lower_range_row, higher_range_row):
                 node = self.get_node_from_matrix_coordinates((row, column))
-                distance = get_distance(obstacle.pixel_coordinates_center,
-                                        node.pixel_coordinates_center)
+
+                distance = get_distance(obstacle, node.pixel_coordinates_center)
+
                 if distance < radius:
                     node.role = TileRole.CUSHION
-        obstacle.role = role
+                    node.uuid = obstacle_uuid
+                    node.held_by.add(obstacle_uuid)
 
-    def create_square_obstacle(self, obstacle, length, role):
-        width, height = obstacle.pixel_coordinates_center
-        lower_range_column = int(max(0, ((height - length) // self.node_size))) + 2
-        lower_range_row = int(max(0, ((width - length) // self.node_size))) + 2
-        higher_range_column = int(min(len(self.node_matrix),
-                                      ((height + length) // self.node_size))) - 2
-        higher_range_row = int(min(len(self.node_matrix[0]),
-                                   ((width + length) // self.node_size))) - 2
+        obstacle_node = self.get_node_from_pixel(obstacle)
+        obstacle_node.role = role
+        obstacle_node.uuid = obstacle_uuid
+        obstacle_node.held_by.add(obstacle_uuid)
+
+    def create_square_obstacle(self, obstacle: (int, int), length, role, obstacle_uuid):
+        width, height = obstacle
+        lower_range_column = int(max(0, ((height - length) // self.node_size)))
+        lower_range_row = int(max(0, ((width - length) // self.node_size)))
+        higher_range_column = int(min(len(self.node_matrix), ((height + length) // self.node_size)))
+        higher_range_row = int(min(len(self.node_matrix[0]), ((width + length) // self.node_size)))
+
 
         for column in range(lower_range_column, higher_range_column):
             for row in range(lower_range_row, higher_range_row):
                 node = self.get_node_from_matrix_coordinates((row, column))
                 node.role = TileRole.CUSHION
-        obstacle.role = role
+                node.uuid = obstacle_uuid
+                node.held_by.add(obstacle_uuid)
 
-    def create_diagonal_obstacle(self, obstacle, cushion, role):
-        obstacle.role = role
-
-        distance = (cushion // self.node_size) + 1
-        self.add_cushion(obstacle, distance, TileRole.CUSHION)
+        obstacle_node = self.get_node_from_pixel(obstacle)
+        obstacle_node.role = role
+        obstacle_node.uuid = obstacle_uuid
+        obstacle_node.held_by.add(obstacle_uuid)
 
     def set_obstacle(self, obstacle):
+        obstacle_uuid = uuid.uuid4()
         if self.obstacle_representation is ObstacleRepresentation.RADIUS:
-            self.create_round_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
-
-        elif self.obstacle_representation is ObstacleRepresentation.DIAGONAL:
-            self.create_diagonal_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
-
+            self.create_round_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE, obstacle_uuid)
         elif self.obstacle_representation is ObstacleRepresentation.SQUARE:
-            self.create_square_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
+            self.create_square_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE, obstacle_uuid)
         else:
-            self.create_round_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE)
+            self.create_round_obstacle(obstacle, self.obstacle_cushion_width, TileRole.OBSTACLE, obstacle_uuid)
 
     def set_puck(self, puck):
+        obstacle_uuid = uuid.uuid4()
         if self.obstacle_representation is ObstacleRepresentation.RADIUS:
-            self.create_round_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK)
-        elif self.obstacle_representation is ObstacleRepresentation.DIAGONAL:
-            self.create_diagonal_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK)
+            self.create_round_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK, obstacle_uuid)
         elif self.obstacle_representation is ObstacleRepresentation.SQUARE:
-            self.create_square_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK)
+            self.create_square_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK, obstacle_uuid)
         else:
-            self.create_round_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK)
-
-    def create_start_node(self):
-        """Specifies which node should be considered as the starting node."""
-        start = self.get_start_node()
-        start.role = TileRole.START
-
-    def create_end_node(self):
-        """Specifies which node should be considered as the end node and then
-        adds padding to it. The padding part is there because in some configurations
-        where the pucks were close to each other, sometimes their cushions were overlapping
-        which was putting the end node out of reach when in reality it should be able to be
-        picked up by the robot. Thus, the end node has the same padding as the obstacles,
-        which should put the robot next to the end node at the end of its path
-        (instead of blindly running into the puck to get to where we identified
-        the center of the puck was)."""
-        end = self.get_end_node()
-        end.role = TileRole.END
-
-        # distance = (self.obstacle_puck_width // self.node_size) + 1
-        # self.add_cushion_in_direction(end, distance, TileRole.END, Direction.DOWN)
-        # self.add_cushion_in_direction(end, distance, TileRole.END, Direction.LEFT)
-        # self.add_cushion_in_direction(end, distance, TileRole.END, Direction.UP)
-        # self.add_cushion_in_direction(end, distance, TileRole.END, Direction.RIGHT)
-
-    def get_start_node(self):
-        """Gets the starting node"""
-        return self.get_node_from_pixel(self.start_node_location)
-
-    def get_end_node(self):
-        """Gets the end node"""
-        return self.get_node_from_pixel(self.end_node_location)
+            self.create_round_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK, obstacle_uuid)
 
     def get_node_matrix(self):
         """Gets the node matrix"""

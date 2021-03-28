@@ -30,9 +30,10 @@ class AStar(PathfindingAlgorithm):
 
             current = min(openSet_fScores.items(), key=lambda x: x[1])[0]
 
-            if current.role is TileRole.END or distance(
-                    current.pixel_coordinates_center,
-                    end.pixel_coordinates_center) < self.distance_between_grip_and_robot_center:
+            if distance(current.pixel_coordinates_center,
+                        end.pixel_coordinates_center) \
+                    < self.distance_between_grip_and_robot_center:
+
                 return reconstruct_path(cameFrom, current)
 
             openSet.remove(current)
