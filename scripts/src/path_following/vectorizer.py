@@ -12,7 +12,7 @@ class Vectorizer:
         self.minimize = minimize
         self.path = []
         self.mode = MovementMode.GRIP
-        self.cm_to_pixel = 6.8
+        self.cm_to_pixel = 6.882391855
         self.distance_correction_threshold = 3*self.cm_to_pixel
         self.length_correction_threshold = 0
         self.angle_correction_threshold = 0
