@@ -2,6 +2,7 @@ import math
 
 from scripts.src.path_following.movement_mode import MovementMode
 from scripts.src.path_following.config import NODE_SIZE
+from scripts.src.path_following.destination import Destination
 
 
 class Vectorizer:
@@ -20,8 +21,13 @@ class Vectorizer:
         self.goal = None
         self.checkpoint = None
 
+        self.destination = Destination.OTHER
+
     def set_mode(self, mode: MovementMode):
         self.mode = mode
+
+    def set_destination_mode(self, destination: Destination):
+        self.destination = destination
 
     def set_robot_position(self, position: (int, int)):
         self.robot_position = position
@@ -165,13 +171,22 @@ class Vectorizer:
         adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
 
         length, angle, mode = adjusted_vectors[-1]
-        if [length, angle] == [0, 0]:
+        if [length, angle] == [0, 0] or self.robot_is_on_goal():
             adjusted_vectors.pop()
 
         if self.minimize:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
 
         return adjusted_vectors
+
+    def robot_is_on_goal(self):
+        """
+        # TODO:
+        We don't do a final angle correction if robot_is_on_goal because it will always want to correct the
+        angle to 0 degrees. We can actually try to toggle this on/off in the lab to see the robot's
+        actual behavior.
+        """
+        return distance(self.robot_position, self.goal) <= NODE_SIZE/2
 
 
 def distance(point1, point2):

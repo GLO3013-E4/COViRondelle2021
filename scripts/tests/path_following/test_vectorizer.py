@@ -309,6 +309,32 @@ class TestVectorizer:
 
         assert vectors == [[30, 0, MovementMode.GRIP], [0, -math.pi/2, MovementMode.GRIP]]
 
+    def test_given_robot_is_on_last_node_and_last_node_is_goal_when_path_to_vectors_then_return_empty_vectors(self):
+        nodes = [
+            (30, 0)
+        ]
+        self.vectorizer.set_goal((30, 0))
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.set_robot_position((30, 0))
+        self.vectorizer.set_robot_angle(math.pi)
+
+        vectors = self.vectorizer.path_to_vectors()
+
+        assert vectors == []
+
+    def test_given_robot_is_on_last_node_and_last_node_is_goal_2_when_path_to_vectors_then_return_empty_vectors(self):
+        nodes = [
+            (30, 0)
+        ]
+        self.vectorizer.set_goal((30, 0))
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.set_robot_position((30, 0))
+        self.vectorizer.set_robot_angle(0)
+
+        vectors = self.vectorizer.path_to_vectors()
+
+        assert vectors == []
+
     def test_given_minimize_is_true_when_path_to_vectors_then_vectors_are_minimal(self):
         nodes = [
             (0, 0), (15, 0), (30, 0)
