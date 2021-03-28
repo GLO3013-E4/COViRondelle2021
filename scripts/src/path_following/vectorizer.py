@@ -4,8 +4,6 @@ from scripts.src.path_following.movement_mode import MovementMode
 from scripts.src.path_following.config import NODE_SIZE
 
 
-# TODO: devrait savoir le goal + est-ce que le goal est une puck ou une destination. Ou, est-ce que c'est path_plannning.PathFinder qui devrait le savoir ou a_star.
-
 class Vectorizer:
     def __init__(self, minimize=False):
         self.robot_position = None
@@ -33,7 +31,7 @@ class Vectorizer:
             i for i, node in enumerate(self.path) if distance(self.robot_position, node) <= NODE_SIZE/2
         ]
         if node_distances:
-            if node_distances[-1] > self.checkpoint:
+            if self.checkpoint is None or node_distances[-1] > self.checkpoint:
                 self.checkpoint = node_distances[-1]
 
     def set_path(self, path: [(float, float)]):
@@ -74,6 +72,10 @@ class Vectorizer:
             distance(self.robot_position, node)
             for node in nodes[self.checkpoint+1:]
         ]
+
+        if not node_distances:
+            return [self.robot_position]
+
         minimum_distance = min(node_distances)
         index = node_distances.index(minimum_distance) + self.checkpoint + 1
 
@@ -96,7 +98,7 @@ class Vectorizer:
         for i in range(len(nodes)-1):
             x1, y1 = nodes[i]
             x2, y2 = nodes[i+1]
-            distance = math.sqrt(pow(x2-x1, 2) + pow(y2-y1, 2))
+            length = math.sqrt(pow(x2-x1, 2) + pow(y2-y1, 2))
             angle = -math.atan2(y2-y1, x2-x1)
 
             if angle == -0:
@@ -104,7 +106,7 @@ class Vectorizer:
             elif angle == -math.pi:
                 angle = math.pi
 
-            vector = [distance, angle]
+            vector = [length, angle]
             vectors.append(vector)
         return vectors
 
@@ -161,7 +163,9 @@ class Vectorizer:
         vectors[-1][0] = 0
 
         adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
-        if adjusted_vectors[-1] == [0, 0]:
+
+        length, angle, mode = adjusted_vectors[-1]
+        if [length, angle] == [0, 0]:
             adjusted_vectors.pop()
 
         if self.minimize:

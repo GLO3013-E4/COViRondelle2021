@@ -3,7 +3,6 @@ import math
 
 from scripts.src.path_following.vectorizer import Vectorizer
 from scripts.src.path_following.movement_mode import MovementMode
-from scripts.src.path_following.config import NODE_SIZE
 
 
 class TestVectorizer:
@@ -258,72 +257,85 @@ class TestVectorizer:
         self.vectorizer.set_path([])
 
         assert self.vectorizer.checkpoint is None
-"""
-    def test_given_to_min_is_false_when_path_to_vectors_then_call_right_methods(self):
-        robot_position = (15, 0)
-        robot_angle = 0
-        vectorizer = Vectorizer(minimize=False)
-        vectorizer.set_robot_position(robot_position)
-        vectorizer.set_robot_angle(robot_angle)
+
+    def test_given_robot_is_at_last_checkpoint_when_get_path_from_from_robot_then_return_robot(self):
+        robot_position = [30, 0]
         nodes = [
-            (15, 0), (30, 0), (45, 0)
+            (-100, -100), (15, 0), (30, 0)
         ]
-        vectorizer.set_path(nodes)
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.set_robot_position(robot_position)
 
-        vectors = vectorizer.path_to_vectors()
+        corrected_path = self.vectorizer.get_path_from_robot(nodes)
 
-        assert vectors == [
-            [15, 0, MovementMode.GRIP], [15, 0, MovementMode.GRIP]
-        ]
+        assert corrected_path == [[30, 0]]
 
-    def test_given_mode_ohmmeter_when_path_to_vectors_then_angles_are_adjusted(self):
-        robot_position = (15, 0)
-        robot_angle = 0
-        vectorizer = Vectorizer(minimize=False)
-        vectorizer.set_robot_position(robot_position)
-        vectorizer.set_robot_angle(robot_angle)
+    def test_given_path_has_one_node_and_robot_is_near_node_and_angle_is_off_when_path_to_vectors_then_return_correction_angle(self):
         nodes = [
-            (15, 0), (30, 0), (45, 0)
+            (0, 0), (15, 0), (30, 0)
         ]
-        vectorizer.set_path(nodes)
-        vectorizer.set_mode(MovementMode.OHMMETER)
+        self.vectorizer.set_goal((30, 30))
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.set_robot_position((30, 0))
+        self.vectorizer.set_robot_angle(0)
 
-        vectors = vectorizer.path_to_vectors()
+        vectors = self.vectorizer.path_to_vectors()
 
-        assert vectors == [
-            [15, math.pi/2, MovementMode.OHMMETER], [15, 0, MovementMode.OHMMETER]
-        ]
+        assert vectors == [[0, -math.pi/2, MovementMode.GRIP]]
 
-    def test_given_mode_grip_when_path_to_vectors_then_return_grip_mode(self):
-        robot_position = (0, 0)
-        robot_angle = 0
-        vectorizer = Vectorizer(minimize=False)
-        vectorizer.set_robot_position(robot_position)
-        vectorizer.set_robot_angle(robot_angle)
+    def test_given_path_has_one_node_and_robot_is_near_node_and_angle_is_good_when_path_to_vectors_then_return_empty_vectors(self):
         nodes = [
-            (15, 0), (30, 0), (45, 0)
+            (0, 0), (15, 0), (30, 0)
         ]
-        vectorizer.set_path(nodes)
+        self.vectorizer.set_goal((30, 30))
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.set_robot_position((30, 0))
+        self.vectorizer.set_robot_angle(-math.pi/2)
 
-        vectors = vectorizer.path_to_vectors()
+        vectors = self.vectorizer.path_to_vectors()
 
-        assert all(vector[2] is MovementMode.GRIP for vector in vectors)
+        assert vectors == []
 
-    def test_given_ohmmeter_grip_when_path_to_vectors_then_return_ohmmeter_mode(self):
-        robot_position = (0, 0)
-        robot_angle = 0
-        vectorizer = Vectorizer(minimize=False)
-        vectorizer.set_robot_position(robot_position)
-        vectorizer.set_robot_angle(robot_angle)
+    def test_given_robot_is_not_on_correct_path_and_off_final_angle_from_goal_when_path_to_vectors_then_return_two_vectors(self):
         nodes = [
-            (15, 0), (30, 0), (45, 0)
+            (30, 0)
         ]
-        vectorizer.set_path(nodes)
-        vectorizer.set_mode(MovementMode.OHMMETER)
+        self.vectorizer.set_goal((30, 30))
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.set_robot_position((0, 0))
+        self.vectorizer.set_robot_angle(0)
 
-        vectors = vectorizer.path_to_vectors()
+        vectors = self.vectorizer.path_to_vectors()
 
-        assert all(vector[2] is MovementMode.OHMMETER for vector in vectors)
+        assert vectors == [[30, 0, MovementMode.GRIP], [0, -math.pi/2, MovementMode.GRIP]]
+
+    def test_given_minimize_is_true_when_path_to_vectors_then_vectors_are_minimal(self):
+        nodes = [
+            (0, 0), (15, 0), (30, 0)
+        ]
+        self.vectorizer.set_goal((30, 30))
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.set_robot_position((0, 0))
+        self.vectorizer.set_robot_angle(0)
+        self.vectorizer.minimize = True
+
+        vectors = self.vectorizer.path_to_vectors()
+
+        assert vectors == [[30, 0, MovementMode.GRIP], [0, -math.pi/2, MovementMode.GRIP]]
+
+    def test_given_ohmmeter_mode_when_path_to_vectors_then_ohmmeter_mode_is_on_and_angles_are_adjusted(self):
+        nodes = [
+            (0, 0), (15, 0), (30, 0)
+        ]
+        self.vectorizer.set_goal((30, 30))
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.set_robot_position((0, 0))
+        self.vectorizer.set_robot_angle(0)
+        self.vectorizer.set_mode(MovementMode.OHMMETER)
+
+        vectors = self.vectorizer.path_to_vectors()
+
+        assert vectors == [[15, math.pi/2, MovementMode.OHMMETER], [15, 0, MovementMode.OHMMETER], [0, -math.pi/2, MovementMode.OHMMETER]]
 
     def test_given_mode_ohmmeter_when_adjust_vectors_angle_from_robot_pov_then_angles_are_adjusted(self):
         robot_angle = math.pi*(3/4)
@@ -338,21 +350,3 @@ class TestVectorizer:
 
         adjusted_angles = [vector[1] for vector in adjusted_vectors]
         assert adjusted_angles == [-math.pi/2, -math.pi/4, 0, -math.pi/2, 0, math.pi/4, 0]
-
-    def test_given_path_when_adjust_vector_angles_from_robot_pov_then_the_angle_between_the_robot_and_its_goal_is_zero(self):
-        robot_angle = 0
-        self.vectorizer.set_robot_angle(robot_angle)
-        self.vectorizer.set_goal((3, 4))
-        self.vectorizer.set_path([(0, 0), (3, 3)])
-        vectors = [
-            (1, -math.pi/4), (1, -math.pi/4), (1, -math.pi/4)
-        ]
-        self.vectorizer.set_mode(MovementMode.OHMMETER)
-
-        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
-
-        adjusted_angles = [vector[1] for vector in adjusted_vectors]
-        #assert adjusted_angles == [-math.pi/4, 0, 0, -math.pi/4]
-        assert True
-"""
-# Checker quand path a seulement une node et que c'est exactement le goal ou mettons quand c'est une node mais que t'es a 112 pixels et que t'as le bon angle est-ce que ca sort [(0,0,0)] ?
