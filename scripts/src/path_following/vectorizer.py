@@ -29,11 +29,16 @@ class Vectorizer:
         self.robot_position = position
 
         # update checkpoint
-        #TODO:
+        node_distances = [
+            i for i, node in enumerate(self.path) if distance(self.robot_position, node) <= NODE_SIZE/2
+        ]
+        if node_distances:
+            if node_distances[-1] > self.checkpoint:
+                self.checkpoint = node_distances[-1]
 
     def set_path(self, path: [(float, float)]):
         self.path = path
-        #self.checkpoint = 0
+        self.checkpoint = None
 
     def set_goal(self, goal: (int, int)):
         self.goal = goal
@@ -52,8 +57,6 @@ class Vectorizer:
                     minimized_vectors[-1] = [last_vector_distance + length, last_vector_angle, last_mode]
         return minimized_vectors
 
-
-    # TODO: if self.checkpoint is None
     def get_path_from_robot(self, nodes: [(float, float)]):
         if self.checkpoint is None:
             # va au debut du chemin
@@ -72,7 +75,7 @@ class Vectorizer:
             for node in nodes[self.checkpoint+1:]
         ]
         minimum_distance = min(node_distances)
-        index = node_distances.index(minimum_distance)
+        index = node_distances.index(minimum_distance) + self.checkpoint + 1
 
         if self.robot_is_close_to_path(minimum_distance):
             if self.checkpoint_was_updated_recently():

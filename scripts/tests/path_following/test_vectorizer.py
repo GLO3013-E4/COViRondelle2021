@@ -153,35 +153,111 @@ class TestVectorizer:
             [1, 0, MovementMode.GRIP], [2, -math.pi/4, MovementMode.GRIP], [2, -math.pi/2, MovementMode.GRIP], [2, math.pi/4, MovementMode.GRIP]
         ]
 
-    def test_if_checkpoint_is_None(self):
+    def test_given_checkpoint_is_none_when_get_path_from_robot_then_give_path_from_start(self):
         robot_position = (-100, -100)
         self.vectorizer.set_robot_position(robot_position)
         nodes = [
             (0, 0), (15, 0), (30, 0)
         ]
+        self.vectorizer.checkpoint = None
 
         corrected_path = self.vectorizer.get_path_from_robot(nodes)
 
         assert corrected_path == [(-100, -100), (0, 0), (15, 0), (30, 0)]
 
-    def test_if_robot_is_close_to_path_and_was_updated_recently(self):
-        pass
+    def test_given_robot_is_close_to_path_and_was_updated_recently_when_get_path_from_robot_then_give_path_to_next_checkpoint(self):
+        robot_position = (5, 0)
+        self.vectorizer.set_robot_position(robot_position)
+        nodes = [
+            (0, 0), (15, 0), (30, 0)
+        ]
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.checkpoint = 0
 
-    def test_if_robot_is_close_to_path_but_wasnt_updated_recently(self):
-        pass
+        corrected_path = self.vectorizer.get_path_from_robot(nodes)
 
-    def test_if_robot_is_not_close_to_path(self):
-        pass
+        assert corrected_path == [(5, 0), (15, 0), (30, 0)]
 
-    def test_when_set_goal_if_robot_is_close_to_a_checkpoint_and_last_checkpoint_is_further_then_dont_update_checkpoint(self):
-        pass
+    def test_when_robot_is_close_to_path_but_wasnt_updated_recently_when_get_path_from_robot_then_give_path_to_closest_non_visited_checkpoint(self):
+        robot_position = (5, 0)
+        self.vectorizer.set_robot_position(robot_position)
+        nodes = [
+            (-100, -100), (15, 0), (30, 0)
+        ]
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.checkpoint = 0
 
-    def test_when_set_goal_if_robot_is_close_to_a_checkpoint_and_last_checkpoint_is_past_then_update_checkpoint(self):
-        pass
+        corrected_path = self.vectorizer.get_path_from_robot(nodes)
 
-    def test_when_set_goal_if_robot_is_far_from_all_checkpoints_then_dont_update(self):
-        pass
+        assert corrected_path == [(5, 0), (15, 0), (30, 0)]
 
+    def test_given_robot_is_close_to_path_but_wasnt_updated_recently_when_get_path_from_robot_then_give_path_to_closest_non_visited_checkpoint_2(self):
+        robot_position = (25, 0)
+        self.vectorizer.set_robot_position(robot_position)
+        nodes = [
+            (-100, -100), (15, 0), (30, 0)
+        ]
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.checkpoint = 0
+
+        corrected_path = self.vectorizer.get_path_from_robot(nodes)
+
+        assert corrected_path == [(25, 0), (30, 0)]
+
+    def test_given_robot_is_not_close_to_path_when_get_path_from_robot_then_give_path_to_closest_non_visited_checkpoint(self):
+        robot_position = (70, 70)
+        self.vectorizer.set_robot_position(robot_position)
+        nodes = [
+            (-100, -100), (15, 0), (30, 0)
+        ]
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.checkpoint = 0
+
+        corrected_path = self.vectorizer.get_path_from_robot(nodes)
+
+        assert corrected_path == [(70, 70), (30, 0)]
+
+    def test_given_robot_is_close_to_a_checkpoint_and_last_checkpoint_is_further_when_set_robot_position_then_dont_update_checkpoint(self):
+        robot_position = (3, 0)
+        nodes = [
+            (0, 0), (15, 0), (30, 0)
+        ]
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.checkpoint = 1
+
+        self.vectorizer.set_robot_position(robot_position)
+
+        assert self.vectorizer.checkpoint == 1
+
+    def test_given_robot_is_close_to_a_checkpoint_and_last_checkpoint_is_past_when_set_robot_position_then_update_checkpoint(self):
+        robot_position = (10, 0)
+        nodes = [
+            (0, 0), (15, 0), (30, 0)
+        ]
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.checkpoint = 0
+
+        self.vectorizer.set_robot_position(robot_position)
+
+        assert self.vectorizer.checkpoint == 1
+
+    def test_given_robot_is_far_from_all_checkpoints_when_set_goal_then_dont_update(self):
+        robot_position = (100, 100)
+        nodes = [
+            (0, 0), (15, 0), (30, 0)
+        ]
+        self.vectorizer.set_path(nodes)
+
+        self.vectorizer.set_robot_position(robot_position)
+
+        assert self.vectorizer.checkpoint is None
+
+    def test_when_set_path_then_checkpoint_is_none(self):
+        self.vectorizer.checkpoint = 0
+
+        self.vectorizer.set_path([])
+
+        assert self.vectorizer.checkpoint is None
 """
     def test_given_to_min_is_false_when_path_to_vectors_then_call_right_methods(self):
         robot_position = (15, 0)
@@ -279,5 +355,4 @@ class TestVectorizer:
         #assert adjusted_angles == [-math.pi/4, 0, 0, -math.pi/4]
         assert True
 """
-#update on set path
 # Checker quand path a seulement une node et que c'est exactement le goal ou mettons quand c'est une node mais que t'es a 112 pixels et que t'as le bon angle est-ce que ca sort [(0,0,0)] ?
