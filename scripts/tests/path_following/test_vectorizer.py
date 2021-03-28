@@ -3,6 +3,7 @@ import math
 
 from scripts.src.path_following.vectorizer import Vectorizer
 from scripts.src.path_following.movement_mode import MovementMode
+from scripts.src.path_following.config import NODE_SIZE
 
 
 class TestVectorizer:
@@ -137,7 +138,7 @@ class TestVectorizer:
             (1, 0), (1, 0), (1, 0)
         ]
 
-        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors, MovementMode.GRIP)
+        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
 
         adjusted_angles = [vector[1] for vector in adjusted_vectors]
         assert adjusted_angles == [0, 0, 0]
@@ -149,7 +150,7 @@ class TestVectorizer:
             (1, 0), (1, 0), (1, 0)
         ]
 
-        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors, MovementMode.GRIP)
+        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
 
         adjusted_angles = [vector[1] for vector in adjusted_vectors]
         assert adjusted_angles == [-math.pi/2, 0, 0]
@@ -162,7 +163,7 @@ class TestVectorizer:
             (1, -math.pi*(3/4)), (1, -math.pi*(3/4))
         ]
 
-        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors, MovementMode.GRIP)
+        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
 
         adjusted_angles = [vector[1] for vector in adjusted_vectors]
         assert adjusted_angles == [math.pi, -math.pi/4, 0, -math.pi/2, 0, math.pi/4, 0]
@@ -174,7 +175,7 @@ class TestVectorizer:
             (1, -math.pi / 4), (1, -math.pi / 2), (1, -math.pi / 2), (1, math.pi), (1, math.pi),
             (1, -math.pi * (3 / 4)), (1, -math.pi * (3 / 4))
         ]
-        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors, MovementMode.GRIP)
+        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
 
         minimized_vectors = self.vectorizer.minimize_vectors(adjusted_vectors)
 
@@ -189,7 +190,7 @@ class TestVectorizer:
             (1, -math.pi / 4), (1, -math.pi / 2), (1, -math.pi / 2), (1, math.pi), (1, math.pi),
             (1, -math.pi * (3 / 4)), (1, -math.pi * (3 / 4))
         ]
-        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors, MovementMode.GRIP)
+        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
 
         minimized_vectors = self.vectorizer.minimize_vectors(adjusted_vectors)
 
@@ -197,52 +198,52 @@ class TestVectorizer:
             (1, 0, MovementMode.GRIP), (2, -math.pi/4, MovementMode.GRIP), (2, -math.pi/2, MovementMode.GRIP), (2, math.pi/4, MovementMode.GRIP)
         ]
 
-    def test_given_robot_not_in_path_at_start_when_correct_path_then_return_correct_path(self):
+    def test_given_robot_not_in_path_at_start_when_get_path_from_robot_then_return_correct_path(self):
         robot_position = (-100, -100)
         self.vectorizer.set_robot_position(robot_position)
         nodes = [
             (0, 0), (15, 0), (30, 0)
         ]
 
-        corrected_path = self.vectorizer.correct_path(nodes)
+        corrected_path = self.vectorizer.get_path_from_robot(nodes)
 
         assert corrected_path == [(-100, -100), (0, 0), (15, 0), (30, 0)]
 
-    def test_given_robot_not_in_path_in_middle_when_correct_path_then_return_correct_path(self):
-        robot_position = (35, -40)
+    def test_given_robot_not_in_path_in_middle_when_get_path_from_robot_then_return_correct_path(self):
+        robot_position = (35, -5*NODE_SIZE)
         self.vectorizer.set_robot_position(robot_position)
         nodes = [
             (0, 0), (15, 0), (30, 0), (45, 0)
         ]
 
-        corrected_path = self.vectorizer.correct_path(nodes)
+        corrected_path = self.vectorizer.get_path_from_robot(nodes)
 
-        assert corrected_path == [(35,-40), (30, 0), (45, 0)]
+        assert corrected_path == [(35, -5*NODE_SIZE), (30, 0), (45, 0)]
 
-    def test_given_robot_in_path_at_start_when_correct_path_then_return_correct_path(self):
+    def test_given_robot_in_path_at_start_when_get_path_from_robot_then_return_correct_path(self):
         robot_position = (5, 5)
         self.vectorizer.set_robot_position(robot_position)
         nodes = [
             (0, 0), (15, 0), (30, 0)
         ]
 
-        corrected_path = self.vectorizer.correct_path(nodes)
+        corrected_path = self.vectorizer.get_path_from_robot(nodes)
 
         assert corrected_path == [(0, 0), (15, 0), (30, 0)]
 
-    def test_given_robot_in_path_in_middle_when_correct_path_then_return_correct_path(self):
+    def test_given_robot_in_path_in_middle_get_path_from_robot_then_return_correct_path(self):
         robot_position = (35, 5)
         self.vectorizer.set_robot_position(robot_position)
         nodes = [
             (0, 0), (15, 0), (30, 0), (45, 0)
         ]
 
-        corrected_path = self.vectorizer.correct_path(nodes)
+        corrected_path = self.vectorizer.get_path_from_robot(nodes)
 
         assert corrected_path == [(30, 0), (45, 0)]
 
     def test_given_to_min_is_true_when_path_to_vectors_then_call_right_methods(self):
-        robot_position = (0, 0)
+        robot_position = (-4*NODE_SIZE, 0)
         robot_angle = 0
         vectorizer = Vectorizer(minimize=True)
         vectorizer.set_robot_position(robot_position)
@@ -250,15 +251,16 @@ class TestVectorizer:
         nodes = [
             (15, 0), (30, 0), (45, 0)
         ]
+        vectorizer.set_path(nodes)
 
-        vectors = vectorizer.path_to_vectors(nodes)
+        vectors = vectorizer.path_to_vectors()
 
         assert vectors == [
-            (45, 0, MovementMode.GRIP)
+            (105, 0, MovementMode.GRIP)
         ]
 
     def test_given_to_min_is_false_when_path_to_vectors_then_call_right_methods(self):
-        robot_position = (0, 0)
+        robot_position = (15, 0)
         robot_angle = 0
         vectorizer = Vectorizer(minimize=False)
         vectorizer.set_robot_position(robot_position)
@@ -266,15 +268,16 @@ class TestVectorizer:
         nodes = [
             (15, 0), (30, 0), (45, 0)
         ]
+        vectorizer.set_path(nodes)
 
-        vectors = vectorizer.path_to_vectors(nodes)
+        vectors = vectorizer.path_to_vectors()
 
         assert vectors == [
-            (15, 0, MovementMode.GRIP), (15, 0, MovementMode.GRIP), (15, 0, MovementMode.GRIP)
+            (15, 0, MovementMode.GRIP), (15, 0, MovementMode.GRIP)
         ]
 
     def test_given_mode_ohmmeter_when_path_to_vectors_then_angles_are_adjusted(self):
-        robot_position = (0, 0)
+        robot_position = (15, 0)
         robot_angle = 0
         vectorizer = Vectorizer(minimize=False)
         vectorizer.set_robot_position(robot_position)
@@ -282,11 +285,13 @@ class TestVectorizer:
         nodes = [
             (15, 0), (30, 0), (45, 0)
         ]
+        vectorizer.set_path(nodes)
+        vectorizer.set_mode(MovementMode.OHMMETER)
 
-        vectors = vectorizer.path_to_vectors(nodes, MovementMode.OHMMETER)
+        vectors = vectorizer.path_to_vectors()
 
         assert vectors == [
-            (15, math.pi/2, MovementMode.OHMMETER), (15, 0, MovementMode.OHMMETER), (15, 0, MovementMode.OHMMETER)
+            (15, math.pi/2, MovementMode.OHMMETER), (15, 0, MovementMode.OHMMETER)
         ]
 
     def test_given_mode_grip_when_path_to_vectors_then_return_grip_mode(self):
@@ -298,8 +303,9 @@ class TestVectorizer:
         nodes = [
             (15, 0), (30, 0), (45, 0)
         ]
+        vectorizer.set_path(nodes)
 
-        vectors = vectorizer.path_to_vectors(nodes, MovementMode.GRIP)
+        vectors = vectorizer.path_to_vectors()
 
         assert all(vector[2] is MovementMode.GRIP for vector in vectors)
 
@@ -312,8 +318,10 @@ class TestVectorizer:
         nodes = [
             (15, 0), (30, 0), (45, 0)
         ]
+        vectorizer.set_path(nodes)
+        vectorizer.set_mode(MovementMode.OHMMETER)
 
-        vectors = vectorizer.path_to_vectors(nodes, MovementMode.OHMMETER)
+        vectors = vectorizer.path_to_vectors()
 
         assert all(vector[2] is MovementMode.OHMMETER for vector in vectors)
 
@@ -324,8 +332,9 @@ class TestVectorizer:
             (1, -math.pi/4), (1, -math.pi/2), (1, -math.pi/2), (1, math.pi), (1, math.pi),
             (1, -math.pi*(3/4)), (1, -math.pi*(3/4))
         ]
+        self.vectorizer.set_mode(MovementMode.OHMMETER)
 
-        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors, MovementMode.OHMMETER)
+        adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
 
         adjusted_angles = [vector[1] for vector in adjusted_vectors]
         assert adjusted_angles == [-math.pi/2, -math.pi/4, 0, -math.pi/2, 0, math.pi/4, 0]

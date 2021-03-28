@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+import rospy
+import json
+import math
+
+
+from std_msgs.msg import String
+from nav_msgs.msg import Path
+from path_following.config import NODE_SIZE
+from path_following.vectorizer import Vectorizer
+
+
+class PathFollower:
+    def __init__(self):
+        self.robot = None
+        self.robot_angle = None
+        self.path = []
+        self.node_size = NODE_SIZE
+        self.vectorizer = Vectorizer(minimize=False)
+        self.rate = rospy.Rate(1)
+
+        self.pub = rospy.Publisher('movement_vectors_string', String, queue_size=10)
+        rospy.Subscriber('robot', String, self.callback_robot)
+        rospy.Subscriber('path', Path, self.callback_path)
+
+    def callback_robot(self, data):
+        print("changing angle")
+        robot_dict = json.loads(data.data)
+
+        self.vectorizer.set_robot_position(robot_dict["robot"])
+        self.vectorizer.set_robot_angle(robot_dict["angle"])
+
+    def callback_path(self, data):
+        nodes = []
+        for coordinate in data.poses:
+            x = coordinate.pose.position.x
+            y = coordinate.pose.position.y
+            nodes.append((x, y))
+
+        self.vectorizer.set_path(nodes)
+
+        while not rospy.is_shutdown():
+            vectors = self.vectorizer.path_to_vectors()
+            vectors = [(distance / 7.12, self.convert_angle_to_driver_angle(angle), mode.value)
+                   for distance, angle, mode in vectors]
+            self.pub.publish(json.dumps(vectors))
+            self.rate.sleep()
+
+    def convert_angle_to_driver_angle(self, angle):
+        angle = math.degrees(angle)
+
+        if angle < 0:
+            angle += 360
+        return angle
+
+
+def path_follower():
+    rospy.init_node('path_following', anonymous=True)
+
+    pathfollower = PathFollower()
+
+    rate = rospy.Rate(10)  # 10hz
+
+    rospy.spin()
+
+
+if __name__ == '__main__':
+    try:
+        path_follower()
+    except rospy.ROSInterruptException:
+        pass

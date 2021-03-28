@@ -50,4 +50,8 @@ export default class Mode extends Vue {
 #mode-chip {
   width: 100%;
 }
+
+#mode-chip:hover::before {
+  opacity: 0;
+}
 </style>

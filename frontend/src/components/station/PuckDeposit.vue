@@ -1,6 +1,6 @@
 <template>
-  <v-card class="grey lighten-3" height="100%">
-    <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
+  <v-card class="lighten2" height="100%">
+    <v-card-title sm="6" class="lighten1 d-flex justify-center">
       <h5 class="white--text">{{ $t('station.puckDeposit') }}</h5>
     </v-card-title>
     <v-container height="100%">
@@ -13,7 +13,7 @@
               v-for="(puck, i) in depositedPucks"
               :key="i"
               :color="puck.toString()"
-              class="grey--text text--lighten-2 font-weight-bold"
+              class="lighten3--text font-weight-bold"
             >
               {{ i + 1 }}
             </v-avatar>

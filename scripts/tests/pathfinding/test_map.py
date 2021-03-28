@@ -36,7 +36,9 @@ class TestMap:
         cls.EXPECTED_NUMBER_OF_COLUMNS = 13
         cls.EXPECTED_NUMBER_OF_NODES_PER_ROW = 13
         cls.EXPECTED_NUMBER_OF_TOTAL_NODES = 169
+
         cls.EXPECTED_NUMBER_OF_NEIGHBORS = {2, 3, 4, 5, 6, 7, 8, 9}
+
         cls.EXPECTED_NEIGHBOR_DISTANCE = {1, 2}
         cls.EXPECTED_MATRIX_POSITION = (6, 8)
 
@@ -195,11 +197,12 @@ class TestMap:
         self.map.create_round_obstacle((int(x), int(y)), width, role, _uuid)
 
         expected_obstacle_positions = {
-            (5, 5),
+            (5, 5), (4, 4), (5, 5),
             (4, 4), (6, 4), (4, 6), (6, 6),
             (4, 5), (3, 5),
             (6, 5), (5, 3),
             (5, 4), (5, 6)
+
         }
         found_obstacle_positions = set()
         for i in range(len(self.map.node_matrix)):

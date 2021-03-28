@@ -4,9 +4,9 @@ from typing import List
 import numpy as np
 import cv2
 
-from obstacle_detection import ObstacleDetection
-from robot_detection import RobotDetection
-from marker_position import MarkerPosition
+from scripts.src.detection.acuro_markers.obstacle_detection import ObstacleDetection
+from scripts.src.detection.acuro_markers.robot_detection import RobotDetection
+from scripts.src.detection.acuro_markers.marker_position import MarkerPosition
 from scripts.src.detection.position_calculator import PositionCalculator
 
 
@@ -19,9 +19,9 @@ class ObstacleRobotFinder:
         self.image_width = 1600
         self.image_height = 904
         self.obstacle_height = 412
-        self.robot_height = 240
-        self.aruco_marker_width = 100
-        self.aruco_robot_marker_width = 160
+        self.robot_height = 254
+        self.aruco_marker_width = 80
+        self.aruco_robot_marker_width = 143
         #pixel
         self.obstacle_radius = 42
         self.distance_between_center_and_prehenseur = 112
@@ -88,7 +88,6 @@ class ObstacleRobotFinder:
 
         return obstacles_bottom_position
 
-
     def detect_bottom_of_obstacle(self, markers_position: List[MarkerPosition], image):
         if image is None:
             return []
@@ -114,7 +113,6 @@ class ObstacleRobotFinder:
             image_copy = cv2.circle(image_copy, center_of_bottom_obstacle, self.obstacle_radius, (0, 255, 255), 2)
 
         return image_copy, obstacles_bottom_position
-
 
     def detect_robot(self, image, DEBUG=False):
         robot_position, aruco_marker_position = self.robot_detection.detect_aruco_marker_on_robot(
@@ -186,8 +184,9 @@ class ObstacleRobotFinder:
         return image_copy, center_of_bottom_of_robot, prehenseur_position
 
 
-#AN_IMAGE = "robot_obstacles6.jpg"
+#AN_IMAGE = "testing7.jpg"
+#image = cv2.imread(AN_IMAGE)
 #obstacle_robot_finder = ObstacleRobotFinder()
-#obstacle_position = obstacle_robot_finder.detect_obstacle_position(image=AN_IMAGE, DEBUG=True)
+#obstacle_position = obstacle_robot_finder.detect_obstacle_position(image=image, DEBUG=False)
 
-#x, y, angle = obstacle_robot_finder.detect_robot(AN_IMAGE, True)
+#x, y, angle = obstacle_robot_finder.detect_robot(image, False)

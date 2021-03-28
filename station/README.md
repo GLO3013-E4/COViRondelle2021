@@ -92,14 +92,14 @@ Terminal 3
 ```shell
 docker exec -it covirondelle2021_station_1 /bin/bash
 cd src/websockets
-python3 main.py
+python3 main
 ```
 
 Terminal 4
 ```shell
 docker exec -it covirondelle2021_station_1 /bin/bash
 cd src/controller
-python main.py
+python main
 ```
 
 Terminal 5

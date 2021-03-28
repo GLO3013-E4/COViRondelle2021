@@ -6,8 +6,7 @@ from scripts.src.detection.acuro_markers.aruco_position import ArucoPosition
 
 
 class RobotDetection(ArucoMarkers):
-
-    def detect_aruco_marker_on_robot(self, image, DEBUG=True):
+    def detect_aruco_marker_on_robot(self, image, DEBUG=False):
         aruco_dict = self.get_acuro_dictionnary()
         aruco_params = self.get_acuro_params()
 
@@ -33,6 +32,7 @@ class RobotDetection(ArucoMarkers):
                     bottom_left_position, bottom_right_position, top_left_position,
                     top_right_position)
 
+
                 center_x, center_y = self.generate_center_position(
                     bottom_right_position=bottom_right_position,
                     top_left_position=top_left_position)
@@ -56,7 +56,6 @@ class RobotDetection(ArucoMarkers):
                     cv2.putText(image, str(markerID),
                             (top_left_position[0], top_left_position[1] - 15),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-                print("[INFO] ArUco marker ID: {}".format(markerID))
             if DEBUG:
                 self.show_image(image)
 
