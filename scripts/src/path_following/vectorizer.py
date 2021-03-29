@@ -1,8 +1,8 @@
 import math
 
-from scripts.src.path_following.movement_mode import MovementMode
 from scripts.src.path_following.config import NODE_SIZE
 from scripts.src.path_following.destination import Destination
+from scripts.src.path_following.movement_mode import MovementMode
 
 
 class Vectorizer:
@@ -41,11 +41,26 @@ class Vectorizer:
                 self.checkpoint = node_distances[-1]
 
     def set_path(self, path: [(float, float)]):
-        self.path = path
+        if self.destination is Destination.PUCK:
+            self.path = self.shorten_path_to_grab_puck(path)
+        else:
+            self.path = path
         self.checkpoint = None
+
+    def shorten_path_to_grab_puck(self, path: [(float, float)]):
+        distances = [distance(node, path[-1]) for node in path]
+        new_path = []
+        for i, distance_from_goal in enumerate(distances):
+            new_path.append(path[i])
+            if distance_from_goal <= 112:
+                break
+        return new_path
 
     def set_goal(self, goal: (int, int)):
         self.goal = goal
+
+    def set_destination(self, destination: Destination):
+        self.destination = destination
 
     def minimize_vectors(self, vectors: [[float, float]]):
         minimized_vectors = []
@@ -193,3 +208,6 @@ def distance(point1, point2):
     x1, y1 = point1
     x2, y2 = point2
     return math.sqrt(pow(x2-x1, 2) + pow(y2-y1, 2))
+
+
+#in(vector, current_mode) -> out(new_vector with new angle and new mode TODO:

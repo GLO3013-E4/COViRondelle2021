@@ -1,6 +1,6 @@
 import math
 
-
+from scripts.src.path_following.destination import Destination
 from scripts.src.path_following.vectorizer import Vectorizer
 from scripts.src.path_following.movement_mode import MovementMode
 
@@ -376,3 +376,15 @@ class TestVectorizer:
 
         adjusted_angles = [vector[1] for vector in adjusted_vectors]
         assert adjusted_angles == [-math.pi/2, -math.pi/4, 0, -math.pi/2, 0, math.pi/4, 0]
+
+    def test_given_destination_puck_mode_when_set_path_then_shorten_path_accordingly(self):
+        goal = [200, 0]
+        nodes = [
+            [0, 0], [50, 0], [75, 0], [90, 0], [100, 0], [200, 0]
+        ]
+        self.vectorizer.set_goal(goal)
+        self.vectorizer.set_destination(Destination.PUCK)
+
+        self.vectorizer.set_path(nodes)
+
+        assert self.vectorizer.path == [[0, 0], [50, 0], [75, 0], [90, 0]]
