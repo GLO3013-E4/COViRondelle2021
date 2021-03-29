@@ -71,6 +71,8 @@ class Vectorizer:
                     last_vector_distance, last_vector_angle, last_mode = minimized_vectors[-1]
                     if mode is last_mode:
                         minimized_vectors[-1] = [last_vector_distance + length, last_vector_angle, last_mode]
+                    else:
+                        minimized_vectors.append(vector)
         return minimized_vectors
 
     def get_path_from_robot(self, nodes: [(float, float)]):

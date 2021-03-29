@@ -86,7 +86,7 @@ class TestVectorizer:
         adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
 
         minimized_vectors = self.vectorizer.minimize_vectors(adjusted_vectors)
-
+        print(minimized_vectors)
         assert minimized_vectors == [
             [1, 0, RobotCommand.BACKWARDS], [2, 0, RobotCommand.BACKWARDS_LEFT],
             [2, 0, RobotCommand.FORWARD_LEFT], [2, 0, RobotCommand.LEFT],
