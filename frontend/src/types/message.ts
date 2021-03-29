@@ -6,7 +6,7 @@ import { RobotConsumption } from './robotConsumption';
 
 export interface Message {
   resistance?: number;
-  tableImage?: string; // TODO : Table image most likely won't be a string, this is temporary
+  tableImage?: string;
   robotConsumption?: RobotConsumption;
   puckColors?: Array<Color>;
   puckFirstCorner?: Corner;
