@@ -3,6 +3,8 @@ import math
 from scripts.src.path_following.config import NODE_SIZE
 from scripts.src.path_following.destination import Destination
 from scripts.src.path_following.movement_mode import MovementMode
+from scripts.src.path_following.grip_functions import GripFunctions
+from scripts.src.path_following.robot_command import RobotCommand
 
 
 class Vectorizer:
@@ -138,22 +140,52 @@ class Vectorizer:
         (For all vectors)
         """
         new_vectors = []
-        if self.mode is MovementMode.OHMMETER:
-            last_vector = [None, self.robot_angle - math.pi/2]
-        else:
-            last_vector = [None, self.robot_angle]
 
-        for vector in vectors:
-            length, angle = self.adjust_vector_angle_from_robot_pov(last_vector, vector)
-            if abs(angle) <= self.angle_correction_threshold:
-                angle = 0
-            if abs(length) <= self.length_correction_threshold:
-                length = 0
-            new_vectors.append([length, angle, self.mode])
-            last_vector = vector
+        robot_angle = self.robot_angle
+
+        for length, angle in vectors:
+            # reset towards what angle the directions of the robot are facing
+            # calculate their sins and cosines
+            # calculate sin and cosine of vector angle
+            # check with which direction the difference is smallest
+            # set mode to that direction
+            # calculate the degree difference between that direction and the vector angle
+            # set angle to the vector angle
+
+            sins_and_cosines = {
+                mode: (math.sin(mode.value + robot_angle), math.cos(mode.value + robot_angle))
+                for mode in RobotCommand
+            }
+
+            sin = math.sin(angle)
+            cos = math.cos(angle)
+
+            differences = {
+                mode: abs(val[0]-sin) + abs(val[1]-cos)
+                for mode, val in sins_and_cosines.items()
+            }
+
+            min_mode = min(differences, key=differences.get)
+            min_mode_angle = min_mode.value
+
+            if min_mode_angle < 0:
+                min_mode_angle = 2 * math.pi + min_mode_angle
+            if angle < 0:
+                angle = 2 * math.pi + angle
+
+            angle_correction = min_mode_angle - angle
+
+            if angle_correction > math.pi:
+                angle_correction -= 2 * math.pi
+            elif angle_correction < -math.pi:
+                angle_correction += 2 * math.pi
+
+            robot_angle = angle
+
+            new_vectors.append([length, angle_correction, min_mode])
         return new_vectors
 
-    def adjust_vector_angle_from_robot_pov(self, last_vector, current_vector):
+    def adjust_vector_angle_from_robot_pov(self, last_vector, current_vector) -> [int, int, RobotCommand]:
         """
         Changes the vector orientation from the absolute value from the top camera
         to the angle the robot will need to use to align itself with the vector.
@@ -205,15 +237,6 @@ class Vectorizer:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
 
         return adjusted_vectors
-
-    def robot_is_on_goal(self):
-        """
-        # TODO:
-        We don't do a final angle correction if robot_is_on_goal because it will always want to correct the
-        angle to 0 degrees. We can actually try to toggle this on/off in the lab to see the robot's
-        actual behavior.
-        """
-        return distance(self.robot_position, self.goal) <= NODE_SIZE/2
 
 
 def distance(point1, point2):

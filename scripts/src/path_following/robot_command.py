@@ -12,5 +12,3 @@ class RobotCommand(Enum):
     BACKWARDS_LEFT = 3*math.pi/4
     LEFT = math.pi/2
     FORWARD_LEFT = math.pi/4
-    #GRAB
-    #RELEASE
