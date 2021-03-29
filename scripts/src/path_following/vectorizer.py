@@ -184,29 +184,36 @@ class Vectorizer:
         adjusted_vectors, robot_angle = self.adjust_vector_angles_from_robot_pov(vectors)
 
         if self.destination is Destination.PUCK or self.destination is Destination.CORNER:
-            # grip face goal
+            # grip faces goal
             if not adjusted_vectors:
-                #TODO: test
                 angle_between_robot_position_and_goal = math.atan2(self.goal[1]-self.robot_position[1], self.goal[0]-self.robot_position[0])
-                adjusted_vectors += [0, 0, get_angle_correction(self.robot_angle, angle_between_robot_position_and_goal)]
+                angle_correction = -get_angle_correction(self.robot_angle, angle_between_robot_position_and_goal)
+                if angle_correction != 0:
+                    adjusted_vectors += [[0, angle_correction, RobotCommand.FORWARD]]
             else:
-                #TODO: test
                 angle_between_last_node_and_goal = math.atan2(self.goal[1]-self.path[-1][1], self.goal[0]-self.path[-1][0])
-                adjusted_vectors += [[0, 0, get_angle_correction(robot_angle, angle_between_last_node_and_goal)]]
+                angle_correction = -get_angle_correction(robot_angle, angle_between_last_node_and_goal)
+                if angle_correction != 0:
+                    adjusted_vectors += [[0, angle_correction, RobotCommand.FORWARD]]
 
         elif self.destination is Destination.RESISTANCE_STATION:
             #grip to the right
             if not adjusted_vectors:
-                #TODO: test
-                adjusted_vectors += [[0, 0, get_angle_correction(0, self.robot_angle)]]
+                angle_correction = get_angle_correction(0, self.robot_angle)
+                if angle_correction != 0:
+                    adjusted_vectors += [[0, angle_correction, RobotCommand.FORWARD]]
             else:
-                #TODO: test
-                adjusted_vectors += [[0, 0, get_angle_correction(0, robot_angle)]]
+                angle_correction = get_angle_correction(0, robot_angle)
+                if angle_correction != 0:
+                    adjusted_vectors += [[0, angle_correction, RobotCommand.FORWARD]]
 
         if self.minimize:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
 
         """
+        # TODO: add grab puck, release puck and some adjustments to the end of the movements
+        # argh, jpense pas que je peux le faire là vu qu'il ne peux pas se rappeller s'il l'a déjà
+        # demandé ou non......... à méditer.
         if self.destination is Destination.PUCK:
             adjusted_vectors += [0, 0, GripFunctions.GRAB]
         elif self.destination is Destination.CORNER:
@@ -214,6 +221,11 @@ class Vectorizer:
         elif self.destination is Destination.RESISTANCE_STATION:
             #go down a bit to 'hit' the wall, probably
             pass
+        """
+
+        """
+        # map les RobotCommand aux vrais modes du pi
+        adjusted_vectors = [(length, angle, RobotCommand.get_mode_mapping()[mode]) for (length, angle, mode) in adjusted_vectors]
         """
         return adjusted_vectors
 

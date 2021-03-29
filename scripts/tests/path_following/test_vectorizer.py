@@ -330,23 +330,40 @@ class TestVectorizer:
         vectors = self.vectorizer.path_to_vectors()
 
         assert vectors[-1][:2] == [0, -math.pi/2]
-"""
+
     def test_given_destination_resistance_station_when_path_to_vectors_then_the_last_vector_is_an_angle_correction(self):
         nodes = [
-            (0, 0), (15, 0), (30, 0)
+            (0, 0), (0, 15), (0, 30)
         ]
         self.vectorizer.set_destination(Destination.RESISTANCE_STATION)
-        self.vectorizer.set_goal((30, 0))
+        self.vectorizer.set_goal((0, 30))
         self.vectorizer.set_path(nodes)
         self.vectorizer.set_robot_position((0, 0))
         self.vectorizer.set_robot_angle(0)
-        self.vectorizer.set_mode(MovementMode.GRIP)
 
         vectors = self.vectorizer.path_to_vectors()
 
-        assert vectors == [[15, 0, MovementMode.GRIP], [15, 0, MovementMode.GRIP],
-                           [0, -math.pi / 2, MovementMode.GRIP]]
-"""
+        assert vectors == [[15, 0, RobotCommand.RIGHT], [15, 0, RobotCommand.RIGHT]]
 
+    def test_given_destination_puck_and_robot_is_at_the_last_checkpoint_when_path_to_vectors_then_correct_angle(self):
+        nodes = []
+        self.vectorizer.set_destination(Destination.PUCK)
+        self.vectorizer.set_goal((0, 30))
+        self.vectorizer.set_robot_position((0, 0))
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.set_robot_angle(0)
 
+        vectors = self.vectorizer.path_to_vectors()
 
+        assert vectors[-1][:2] == [0, -math.pi/2]
+
+    def test_given_destination_resistance_station_and_robot_is_at_the_last_checkpoint_when_path_to_vectors_then_correct_angle(self):
+        nodes = []
+        self.vectorizer.set_destination(Destination.RESISTANCE_STATION)
+        self.vectorizer.set_goal((0, 30))
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.set_robot_angle(math.pi)
+
+        vectors = self.vectorizer.path_to_vectors()
+
+        assert vectors[-1][:2] == [0, math.pi]
