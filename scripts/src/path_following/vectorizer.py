@@ -41,14 +41,14 @@ class Vectorizer:
                 self.checkpoint = node_distances[-1]
 
     def set_path(self, path: [(float, float)]):
-        if self.destination is Destination.PUCK:
+        if self.destination is Destination.PUCK or self.destination is Destination.CORNER:
             self.path = self.shorten_path_to_grab_puck(path)
         else:
             self.path = path
         self.checkpoint = None
 
     def shorten_path_to_grab_puck(self, path: [(float, float)]):
-        distances = [distance(node, path[-1]) for node in path]
+        distances = [distance(node, self.goal) for node in path]
         new_path = []
         for i, distance_from_goal in enumerate(distances):
             new_path.append(path[i])
@@ -179,15 +179,27 @@ class Vectorizer:
 
     def path_to_vectors(self):
         path_from_robot = self.get_path_from_robot(self.path)
-        vectors = self.vectorize(path_from_robot + [self.goal])
 
-        vectors[-1][0] = 0
+        if self.destination is Destination.PUCK or self.destination is Destination.CORNER:
+            vectors = self.vectorize(path_from_robot + [self.goal])
 
-        adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
+            vectors[-1][0] = 0
 
-        length, angle, mode = adjusted_vectors[-1]
-        if [length, angle] == [0, 0] or self.robot_is_on_goal():
-            adjusted_vectors.pop()
+            adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
+
+            length, angle, mode = adjusted_vectors[-1]
+            if [length, angle] == [0, 0]:
+                adjusted_vectors.pop()
+
+        elif self.destination is Destination.RESISTANCE_STATION:
+            vectors = self.vectorize(path_from_robot) + [[0, -math.pi/2]]
+            adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
+            length, angle, mode = adjusted_vectors[-1]
+            if [length, angle] == [0, 0]:
+                adjusted_vectors.pop()
+        else:
+            vectors = self.vectorize(path_from_robot)
+            adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
 
         if self.minimize:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
@@ -208,6 +220,3 @@ def distance(point1, point2):
     x1, y1 = point1
     x2, y2 = point2
     return math.sqrt(pow(x2-x1, 2) + pow(y2-y1, 2))
-
-
-#in(vector, current_mode) -> out(new_vector with new angle and new mode TODO:

@@ -270,7 +270,7 @@ class TestVectorizer:
 
         assert corrected_path == [[30, 0]]
 
-    def test_given_path_has_one_node_and_robot_is_near_node_and_angle_is_off_when_path_to_vectors_then_return_correction_angle(self):
+    def test_given_path_has_one_node_and_robot_is_near_node_and_destination_other_when_path_to_vectors_then_return_correction_angle(self):
         nodes = [
             (0, 0), (15, 0), (30, 0)
         ]
@@ -281,7 +281,7 @@ class TestVectorizer:
 
         vectors = self.vectorizer.path_to_vectors()
 
-        assert vectors == [[0, -math.pi/2, MovementMode.GRIP]]
+        assert vectors == []
 
     def test_given_path_has_one_node_and_robot_is_near_node_and_angle_is_good_when_path_to_vectors_then_return_empty_vectors(self):
         nodes = [
@@ -307,7 +307,7 @@ class TestVectorizer:
 
         vectors = self.vectorizer.path_to_vectors()
 
-        assert vectors == [[30, 0, MovementMode.GRIP], [0, -math.pi/2, MovementMode.GRIP]]
+        assert vectors == [[30, 0, MovementMode.GRIP]]
 
     def test_given_robot_is_on_last_node_and_last_node_is_goal_when_path_to_vectors_then_return_empty_vectors(self):
         nodes = [
@@ -347,12 +347,13 @@ class TestVectorizer:
 
         vectors = self.vectorizer.path_to_vectors()
 
-        assert vectors == [[30, 0, MovementMode.GRIP], [0, -math.pi/2, MovementMode.GRIP]]
+        assert vectors == [[30, 0, MovementMode.GRIP]]
 
     def test_given_ohmmeter_mode_when_path_to_vectors_then_ohmmeter_mode_is_on_and_angles_are_adjusted(self):
         nodes = [
             (0, 0), (15, 0), (30, 0)
         ]
+        self.vectorizer.set_destination(Destination.RESISTANCE_STATION)
         self.vectorizer.set_goal((30, 30))
         self.vectorizer.set_path(nodes)
         self.vectorizer.set_robot_position((0, 0))
@@ -388,3 +389,35 @@ class TestVectorizer:
         self.vectorizer.set_path(nodes)
 
         assert self.vectorizer.path == [[0, 0], [50, 0], [75, 0], [90, 0]]
+
+    def test_given_destination_puck_when_path_to_vectors_then_the_last_vector_is_an_angle_correction(self):
+        nodes = [
+            (0, 0), (15, 0), (30, 0)
+        ]
+        self.vectorizer.set_destination(Destination.PUCK)
+        self.vectorizer.set_goal((30, 140))
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.set_robot_position((0, 0))
+        self.vectorizer.set_robot_angle(0)
+        self.vectorizer.set_mode(MovementMode.OHMMETER)
+
+        vectors = self.vectorizer.path_to_vectors()
+
+        assert vectors == [[15, math.pi / 2, MovementMode.OHMMETER], [15, 0, MovementMode.OHMMETER],
+                           [0, -math.pi / 2, MovementMode.OHMMETER]]
+
+    def test_given_destination_resistance_station_when_path_to_vectors_then_the_last_vector_is_an_angle_correction(self):
+        nodes = [
+            (0, 0), (15, 0), (30, 0)
+        ]
+        self.vectorizer.set_destination(Destination.RESISTANCE_STATION)
+        self.vectorizer.set_goal((30, 0))
+        self.vectorizer.set_path(nodes)
+        self.vectorizer.set_robot_position((0, 0))
+        self.vectorizer.set_robot_angle(0)
+        self.vectorizer.set_mode(MovementMode.GRIP)
+
+        vectors = self.vectorizer.path_to_vectors()
+
+        assert vectors == [[15, 0, MovementMode.GRIP], [15, 0, MovementMode.GRIP],
+                           [0, -math.pi / 2, MovementMode.GRIP]]
