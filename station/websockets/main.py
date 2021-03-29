@@ -20,8 +20,11 @@ def to_json(data):
     return json.dumps(data)
 
 
-def to_base64(data):
-    img_base64 = base64.b64encode(data).decode('utf-8')
+def to_base64(image):
+    image_array = np.frombuffer(image.data, dtype=np.uint8).reshape(image.height, image.width, -1)
+    image_array = cv2.cvtColor(image_array, cv2.COLOR_RGB2BGR)
+    _, buffer = cv2.imencode('.jpg', image_array)
+    img_base64 = base64.b64encode(buffer).decode('utf-8')
     return f'data:image/jpeg;base64, {img_base64}'
 
 
@@ -30,9 +33,7 @@ def handle_robot_consumption(robot_consumption):
 
 
 def handle_world_cam_image_raw(image):
-    image_array = np.frombuffer(image.data, dtype=np.uint8).reshape(image.height, image.width, -1)
-    image_array = cv2.cvtColor(image_array, cv2.COLOR_RGB2BGR)
-    image_base64 = to_base64(image_array)
+    image_base64 = to_base64(image)
     json_data = to_json({"tableImage": image_base64})
     socket.emit("table_image", json_data)
 
