@@ -36,6 +36,7 @@ def handle_world_cam_image_raw(image):
     image_base64 = to_base64(image)
     json_data = to_json({"tableImage": image_base64})
     socket.emit("table_image", json_data)
+    rospy.sleep(1)
 
 
 def handle_robot(pose):
