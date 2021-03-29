@@ -6,6 +6,7 @@ from functools import partial
 from scripts.src.pathfinding.pathfinding_algorithm import PathfindingAlgorithm
 from scripts.src.pathfinding.path_not_found_exception import PathNotFoundException
 from scripts.src.pathfinding.tile_role import TileRole
+from scripts.src.pathfinding.config import NODE_SIZE
 
 
 class AStar(PathfindingAlgorithm):
@@ -27,7 +28,9 @@ class AStar(PathfindingAlgorithm):
 
             current = min(openSet_fScores.items(), key=lambda x: x[1])[0]
 
-            if current.pixel_coordinates_center == end.pixel_coordinates_center:
+            if distance(current.pixel_coordinates_center,
+                        end.pixel_coordinates_center) \
+                    < NODE_SIZE:
                 return reconstruct_path(cameFrom, current)
 
             openSet.remove(current)
