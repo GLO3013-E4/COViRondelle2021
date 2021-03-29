@@ -6,13 +6,11 @@ from functools import partial
 from scripts.src.pathfinding.pathfinding_algorithm import PathfindingAlgorithm
 from scripts.src.pathfinding.path_not_found_exception import PathNotFoundException
 from scripts.src.pathfinding.tile_role import TileRole
+from scripts.src.pathfinding.config import NODE_SIZE
 
 
 class AStar(PathfindingAlgorithm):
     """https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode"""
-    def __init__(self):
-        self.distance_between_grip_and_robot_center = 112
-
     def find_path(self, start, end):
         heuristic = partial(distance, point2=end.pixel_coordinates_center)
         openSet = {start}
@@ -32,8 +30,7 @@ class AStar(PathfindingAlgorithm):
 
             if distance(current.pixel_coordinates_center,
                         end.pixel_coordinates_center) \
-                    < self.distance_between_grip_and_robot_center:
-
+                    < NODE_SIZE:
                 return reconstruct_path(cameFrom, current)
 
             openSet.remove(current)

@@ -1,8 +1,8 @@
 import math
 
-from scripts.src.path_following.movement_mode import MovementMode
 from scripts.src.path_following.config import NODE_SIZE
 from scripts.src.path_following.destination import Destination
+from scripts.src.path_following.movement_mode import MovementMode
 
 
 class Vectorizer:
@@ -41,11 +41,26 @@ class Vectorizer:
                 self.checkpoint = node_distances[-1]
 
     def set_path(self, path: [(float, float)]):
-        self.path = path
+        if self.destination is Destination.PUCK or self.destination is Destination.CORNER:
+            self.path = self.shorten_path_to_grab_puck(path)
+        else:
+            self.path = path
         self.checkpoint = None
+
+    def shorten_path_to_grab_puck(self, path: [(float, float)]):
+        distances = [distance(node, self.goal) for node in path]
+        new_path = []
+        for i, distance_from_goal in enumerate(distances):
+            new_path.append(path[i])
+            if distance_from_goal <= 112:
+                break
+        return new_path
 
     def set_goal(self, goal: (int, int)):
         self.goal = goal
+
+    def set_destination(self, destination: Destination):
+        self.destination = destination
 
     def minimize_vectors(self, vectors: [[float, float]]):
         minimized_vectors = []
@@ -164,15 +179,27 @@ class Vectorizer:
 
     def path_to_vectors(self):
         path_from_robot = self.get_path_from_robot(self.path)
-        vectors = self.vectorize(path_from_robot + [self.goal])
 
-        vectors[-1][0] = 0
+        if self.destination is Destination.PUCK or self.destination is Destination.CORNER:
+            vectors = self.vectorize(path_from_robot + [self.goal])
 
-        adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
+            vectors[-1][0] = 0
 
-        length, angle, mode = adjusted_vectors[-1]
-        if [length, angle] == [0, 0] or self.robot_is_on_goal():
-            adjusted_vectors.pop()
+            adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
+
+            length, angle, mode = adjusted_vectors[-1]
+            if [length, angle] == [0, 0]:
+                adjusted_vectors.pop()
+
+        elif self.destination is Destination.RESISTANCE_STATION:
+            vectors = self.vectorize(path_from_robot) + [[0, -math.pi/2]]
+            adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
+            length, angle, mode = adjusted_vectors[-1]
+            if [length, angle] == [0, 0]:
+                adjusted_vectors.pop()
+        else:
+            vectors = self.vectorize(path_from_robot)
+            adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
 
         if self.minimize:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
