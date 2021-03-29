@@ -2,7 +2,6 @@ import math
 
 from scripts.src.path_following.config import NODE_SIZE
 from scripts.src.path_following.destination import Destination
-from scripts.src.path_following.movement_mode import MovementMode
 from scripts.src.path_following.grip_functions import GripFunctions
 from scripts.src.path_following.robot_command import RobotCommand
 
@@ -13,7 +12,6 @@ class Vectorizer:
         self.robot_angle = None
         self.minimize = minimize
         self.path = []
-        self.mode = MovementMode.GRIP
         self.cm_to_pixel = 6.882391855
         self.distance_correction_threshold = 3*self.cm_to_pixel
         self.length_correction_threshold = 0
@@ -22,11 +20,7 @@ class Vectorizer:
         self.last_checkpoint = None
         self.goal = None
         self.checkpoint = None
-
         self.destination = Destination.OTHER
-
-    def set_mode(self, mode: MovementMode):
-        self.mode = mode
 
     def set_destination_mode(self, destination: Destination):
         self.destination = destination
@@ -75,7 +69,8 @@ class Vectorizer:
                     minimized_vectors.append(vector)
                 else:
                     last_vector_distance, last_vector_angle, last_mode = minimized_vectors[-1]
-                    minimized_vectors[-1] = [last_vector_distance + length, last_vector_angle, last_mode]
+                    if mode is last_mode:
+                        minimized_vectors[-1] = [last_vector_distance + length, last_vector_angle, last_mode]
         return minimized_vectors
 
     def get_path_from_robot(self, nodes: [(float, float)]):
@@ -166,7 +161,7 @@ class Vectorizer:
             }
 
             min_mode = min(differences, key=differences.get)
-            min_mode_angle = min_mode.value
+            min_mode_angle = min_mode.value + robot_angle
 
             if min_mode_angle < 0:
                 min_mode_angle = 2 * math.pi + min_mode_angle
@@ -180,31 +175,10 @@ class Vectorizer:
             elif angle_correction < -math.pi:
                 angle_correction += 2 * math.pi
 
-            robot_angle = angle
+            robot_angle = robot_angle + angle_correction
 
             new_vectors.append([length, angle_correction, min_mode])
         return new_vectors
-
-    def adjust_vector_angle_from_robot_pov(self, last_vector, current_vector) -> [int, int, RobotCommand]:
-        """
-        Changes the vector orientation from the absolute value from the top camera
-        to the angle the robot will need to use to align itself with the vector.
-        (For one vector)
-        """
-        distance1, angle1 = last_vector
-        distance2, angle2 = current_vector
-        if angle2 < 0:
-            angle2 = 2 * math.pi + angle2
-        if angle1 < 0:
-            angle1 = 2 * math.pi + angle1
-
-        angle_correction = angle2 - angle1
-
-        if angle_correction > math.pi:
-            angle_correction -= 2 * math.pi
-        elif angle_correction < -math.pi:
-            angle_correction += 2 * math.pi
-        return [distance2, angle_correction]
 
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle

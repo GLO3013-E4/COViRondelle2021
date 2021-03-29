@@ -2,7 +2,7 @@ import math
 
 from scripts.src.path_following.destination import Destination
 from scripts.src.path_following.vectorizer import Vectorizer
-from scripts.src.path_following.movement_mode import MovementMode
+from scripts.src.path_following.robot_command import RobotCommand
 
 
 class TestVectorizer:
@@ -37,54 +37,6 @@ class TestVectorizer:
         vector = vectors[0]
         assert vector[0] == 5
 
-    def test_given_diagonal_vectors_1_when_adjust_first_vector_angle_from_robot_pov_then_return_correct_angle(self):
-        last_vector = (None, math.pi*(3/4))
-        vector = (1, -math.pi/2)
-
-        corrected_vector = self.vectorizer.adjust_vector_angle_from_robot_pov(last_vector, vector)
-
-        assert corrected_vector == [1, math.pi*(3/4)]
-
-    def test_given_diagonal_vectors_2_when_adjust_vector_angle_from_robot_pov_then_return_correct_angle(self):
-        last_vector = (None, math.pi*(1/4))
-        vector = (1, -math.pi*(1/4))
-
-        corrected_vector = self.vectorizer.adjust_vector_angle_from_robot_pov(last_vector, vector)
-
-        assert corrected_vector == [1, -math.pi*(1/2)]
-
-    def test_given_two_negative_vectors_when_adjust_vector_angle_from_robot_pov_then_return_correct_angle(self):
-        last_vector = (None, -math.pi/2)
-        vector = (1, -math.pi*(3/4))
-
-        corrected_vector = self.vectorizer.adjust_vector_angle_from_robot_pov(last_vector, vector)
-
-        assert corrected_vector == [1, -math.pi/4]
-
-    def test_given_two_positive_vectors_when_adjust_vector_angle_from_robot_pov_then_return_correct_angle(self):
-        last_vector = (None, 0)
-        vector = (1, math.pi/2)
-
-        corrected_vector = self.vectorizer.adjust_vector_angle_from_robot_pov(last_vector, vector)
-
-        assert corrected_vector == [1, math.pi/2]
-
-    def test_given_two_equal_vectors_when_adjust_vector_angle_from_robot_pov_then_return_correct_angle(self):
-        last_vector = (None, math.pi)
-        vector = (1, math.pi)
-
-        corrected_vector = self.vectorizer.adjust_vector_angle_from_robot_pov(last_vector, vector)
-
-        assert corrected_vector == [1, 0]
-
-    def test_given_two_positive_vectors_where_difference_is_bigger_than_pi_when_adjust_vector_angle_from_robot_pov_then_correction_angle_is_negative(self):
-        last_vector = (None, 0)
-        vector = (1, math.pi*(3/2))
-
-        corrected_vector = self.vectorizer.adjust_vector_angle_from_robot_pov(last_vector, vector)
-
-        assert corrected_vector == [1, -math.pi/2]
-
     def test_given_everything_aligned_when_adjust_vector_angles_from_robot_pov_then_return_correct_vectors(self):
         robot_angle = 0
         self.vectorizer.set_robot_angle(robot_angle)
@@ -106,8 +58,7 @@ class TestVectorizer:
 
         adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
 
-        adjusted_angles = [vector[1] for vector in adjusted_vectors]
-        assert adjusted_angles == [-math.pi/2, 0, 0]
+        assert adjusted_vectors == [[1, 0, RobotCommand.RIGHT], [1, 0, RobotCommand.RIGHT], [1, 0, RobotCommand.RIGHT]]
 
     def test_given_complex_alignment_when_adjust_vector_angles_from_robot_pov_then_return_correct_vectors(self):
         robot_angle = math.pi*(3/4)
@@ -119,8 +70,11 @@ class TestVectorizer:
 
         adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
 
-        adjusted_angles = [vector[1] for vector in adjusted_vectors]
-        assert adjusted_angles == [math.pi, -math.pi/4, 0, -math.pi/2, 0, math.pi/4, 0]
+        assert adjusted_vectors == [
+            [1, 0, RobotCommand.BACKWARDS], [1, 0, RobotCommand.BACKWARDS_LEFT], [1, 0, RobotCommand.BACKWARDS_LEFT],
+            [1, 0, RobotCommand.FORWARD_LEFT], [1, 0, RobotCommand.FORWARD_LEFT], [1, 0, RobotCommand.LEFT],
+            [1, 0, RobotCommand.LEFT]
+        ]
 
     def test_when_minimize_vectors_then_return_correct_vectors(self):
         robot_angle = math.pi*(3/4)
@@ -132,11 +86,12 @@ class TestVectorizer:
         adjusted_vectors = self.vectorizer.adjust_vector_angles_from_robot_pov(vectors)
 
         minimized_vectors = self.vectorizer.minimize_vectors(adjusted_vectors)
-        print(minimized_vectors)
-        assert minimized_vectors == [
-            [1, math.pi, MovementMode.GRIP], [2, -math.pi/4, MovementMode.GRIP], [2, -math.pi/2, MovementMode.GRIP], [2, math.pi/4, MovementMode.GRIP]
-        ]
 
+        assert minimized_vectors == [
+            [1, 0, RobotCommand.BACKWARDS], [2, 0, RobotCommand.BACKWARDS_LEFT],
+            [2, 0, RobotCommand.FORWARD_LEFT], [2, 0, RobotCommand.LEFT],
+        ]
+"""
     def test_given_first_vector_is_aligned_when_minimize_vectors_then_return_correct_vectors(self):
         robot_angle = -math.pi/4
         self.vectorizer.set_robot_angle(robot_angle)
@@ -421,3 +376,7 @@ class TestVectorizer:
 
         assert vectors == [[15, 0, MovementMode.GRIP], [15, 0, MovementMode.GRIP],
                            [0, -math.pi / 2, MovementMode.GRIP]]
+"""
+
+
+
