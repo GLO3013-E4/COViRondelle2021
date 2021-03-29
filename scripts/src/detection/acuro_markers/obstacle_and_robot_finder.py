@@ -4,9 +4,9 @@ from typing import List
 import numpy as np
 import cv2
 
-from obstacle_detection import ObstacleDetection
-from robot_detection import RobotDetection
-from marker_position import MarkerPosition
+from scripts.src.detection.acuro_markers.obstacle_detection import ObstacleDetection
+from scripts.src.detection.acuro_markers.robot_detection import RobotDetection
+from scripts.src.detection.acuro_markers.marker_position import MarkerPosition
 from scripts.src.detection.position_calculator import PositionCalculator
 
 
@@ -88,7 +88,6 @@ class ObstacleRobotFinder:
 
         return obstacles_bottom_position
 
-
     def detect_bottom_of_obstacle(self, markers_position: List[MarkerPosition], image):
         if image is None:
             return []
@@ -114,7 +113,6 @@ class ObstacleRobotFinder:
             image_copy = cv2.circle(image_copy, center_of_bottom_obstacle, self.obstacle_radius, (0, 255, 255), 2)
 
         return image_copy, obstacles_bottom_position
-
 
     def detect_robot(self, image, DEBUG=False):
         robot_position, aruco_marker_position = self.robot_detection.detect_aruco_marker_on_robot(
