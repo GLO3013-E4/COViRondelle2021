@@ -188,11 +188,13 @@ class Vectorizer:
             if not adjusted_vectors:
                 angle_between_robot_position_and_goal = math.atan2(self.goal[1]-self.robot_position[1], self.goal[0]-self.robot_position[0])
                 angle_correction = -get_angle_correction(self.robot_angle, angle_between_robot_position_and_goal)
+                # TODO: add angle threshold
                 if angle_correction != 0:
                     adjusted_vectors += [[0, angle_correction, RobotCommand.FORWARD]]
             else:
                 angle_between_last_node_and_goal = math.atan2(self.goal[1]-self.path[-1][1], self.goal[0]-self.path[-1][0])
                 angle_correction = -get_angle_correction(robot_angle, angle_between_last_node_and_goal)
+                # TODO: add angle threshold
                 if angle_correction != 0:
                     adjusted_vectors += [[0, angle_correction, RobotCommand.FORWARD]]
 
@@ -200,10 +202,12 @@ class Vectorizer:
             #grip to the right
             if not adjusted_vectors:
                 angle_correction = get_angle_correction(0, self.robot_angle)
+                # TODO: add angle threshold
                 if angle_correction != 0:
                     adjusted_vectors += [[0, angle_correction, RobotCommand.FORWARD]]
             else:
                 angle_correction = get_angle_correction(0, robot_angle)
+                # TODO: add angle threshold
                 if angle_correction != 0:
                     adjusted_vectors += [[0, angle_correction, RobotCommand.FORWARD]]
 
