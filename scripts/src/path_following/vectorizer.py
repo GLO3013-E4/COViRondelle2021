@@ -165,22 +165,14 @@ class Vectorizer:
             min_mode = min(differences, key=differences.get)
             min_mode_angle = min_mode.value + robot_angle
 
-            if min_mode_angle < 0:
-                min_mode_angle = 2 * math.pi + min_mode_angle
-            if angle < 0:
-                angle = 2 * math.pi + angle
-
-            angle_correction = min_mode_angle - angle
-
-            if angle_correction > math.pi:
-                angle_correction -= 2 * math.pi
-            elif angle_correction < -math.pi:
-                angle_correction += 2 * math.pi
+            angle_correction = get_angle_correction(min_mode_angle, angle)
 
             robot_angle = robot_angle + angle_correction
 
             new_vectors.append([length, angle_correction, min_mode])
-        return new_vectors
+
+        final_robot_angle = robot_angle
+        return new_vectors, final_robot_angle
 
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle
@@ -188,31 +180,57 @@ class Vectorizer:
     def path_to_vectors(self):
         path_from_robot = self.get_path_from_robot(self.path)
 
+        vectors = self.vectorize(path_from_robot)
+        adjusted_vectors, robot_angle = self.adjust_vector_angles_from_robot_pov(vectors)
+
         if self.destination is Destination.PUCK or self.destination is Destination.CORNER:
-            vectors = self.vectorize(path_from_robot + [self.goal])
-
-            vectors[-1][0] = 0
-
-            adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
-
-            length, angle, mode = adjusted_vectors[-1]
-            if [length, angle] == [0, 0]:
-                adjusted_vectors.pop()
+            # grip face goal
+            if not adjusted_vectors:
+                #TODO: test
+                angle_between_robot_position_and_goal = math.atan2(self.goal[1]-self.robot_position[1], self.goal[0]-self.robot_position[0])
+                adjusted_vectors += [0, 0, get_angle_correction(self.robot_angle, angle_between_robot_position_and_goal)]
+            else:
+                #TODO: test
+                angle_between_last_node_and_goal = math.atan2(self.goal[1]-self.path[-1][1], self.goal[0]-self.path[-1][0])
+                adjusted_vectors += [[0, 0, get_angle_correction(robot_angle, angle_between_last_node_and_goal)]]
 
         elif self.destination is Destination.RESISTANCE_STATION:
-            vectors = self.vectorize(path_from_robot) + [[0, -math.pi/2]]
-            adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
-            length, angle, mode = adjusted_vectors[-1]
-            if [length, angle] == [0, 0]:
-                adjusted_vectors.pop()
-        else:
-            vectors = self.vectorize(path_from_robot)
-            adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
+            #grip to the right
+            if not adjusted_vectors:
+                #TODO: test
+                adjusted_vectors += [[0, 0, get_angle_correction(0, self.robot_angle)]]
+            else:
+                #TODO: test
+                adjusted_vectors += [[0, 0, get_angle_correction(0, robot_angle)]]
 
         if self.minimize:
             adjusted_vectors = self.minimize_vectors(adjusted_vectors)
 
+        """
+        if self.destination is Destination.PUCK:
+            adjusted_vectors += [0, 0, GripFunctions.GRAB]
+        elif self.destination is Destination.CORNER:
+            adjusted_vectors += [0, 0, GripFunctions.RELEASE]
+        elif self.destination is Destination.RESISTANCE_STATION:
+            #go down a bit to 'hit' the wall, probably
+            pass
+        """
         return adjusted_vectors
+
+
+def get_angle_correction(angle1, angle2):
+    if angle1 < 0:
+        angle1 = 2 * math.pi + angle1
+    if angle2 < 0:
+        angle2 = 2 * math.pi + angle2
+
+    angle_correction = angle2 - angle1
+
+    if angle_correction > math.pi:
+        angle_correction -= 2 * math.pi
+    elif angle_correction < -math.pi:
+        angle_correction += 2 * math.pi
+    return angle_correction
 
 
 def distance(point1, point2):
