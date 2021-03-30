@@ -1,5 +1,7 @@
 import rospy
+import json
 from geometry_msgs.msg import PoseStamped, Pose, PoseArray
+from std_msgs.msg import String
 
 
 def create_robot_pose():
@@ -42,17 +44,39 @@ def create_pucks_poses():
 
 def create_goal_pose():
     pose = PoseStamped()
-    pose.pose.position.x = 500
-    pose.pose.position.y = 450
+    pose.pose.position.x = 1250
+    pose.pose.position.y = 400
     return pose
 
+def create_pose(position):
+    pose = PoseStamped()
+    pose.pose.position.x = position[0]
+    pose.pose.position.y = position[1]
+    return pose
+
+
+
+class Publisher:
+    def __init__(self):
+        self.puck = None
+        rospy.Subscriber('pucks', String, self.callback_pucks)
+        self.sauce = True
+        self.goal_publisher = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=10)
+
+    def callback_pucks(self, pucks):
+        if self.sauce:
+            pucks_dict = json.loads(str(pucks.data))
+            self.puck = pucks_dict["green"][0]["center_position"]
+            print(self.puck)
+            self.goal_publisher.publish(create_pose(self.puck))
+            print("sent goal")
+            self.sauce = False
 
 # TODO : Remove this mock (and usage)
 if __name__ == '__main__':
 
-    goal_publisher = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=10)
 
     rospy.init_node('talker', anonymous=True)
+    Publisher()
+    rospy.spin()
 
-    goal_publisher.publish(create_goal_pose())
-    print("sent goal")

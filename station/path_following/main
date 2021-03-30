@@ -5,9 +5,11 @@ import math
 
 
 from std_msgs.msg import String
+from geometry_msgs.msg import PoseStamped
 from nav_msgs.msg import Path
 from path_following.config import NODE_SIZE
 from path_following.vectorizer import Vectorizer
+from path_following.destination import Destination
 
 
 class PathFollower:
@@ -16,19 +18,24 @@ class PathFollower:
         self.robot_angle = None
         self.path = []
         self.node_size = NODE_SIZE
-        self.vectorizer = Vectorizer(minimize=False)
+        self.vectorizer = Vectorizer(minimize=True)
+        self.vectorizer.set_destination(Destination.PUCK)
         self.rate = rospy.Rate(1)
+        self.cm_to_pixel = self.vectorizer.cm_to_pixel
 
         self.pub = rospy.Publisher('movement_vectors_string', String, queue_size=10)
         rospy.Subscriber('robot', String, self.callback_robot)
+        rospy.Subscriber('move_base_simple/goal', PoseStamped, self.callback_goal)
         rospy.Subscriber('path', Path, self.callback_path)
 
     def callback_robot(self, data):
-        print("changing angle")
         robot_dict = json.loads(data.data)
 
         self.vectorizer.set_robot_position(robot_dict["robot"])
         self.vectorizer.set_robot_angle(robot_dict["angle"])
+
+    def callback_goal(self, data):
+        self.vectorizer.set_goal((data.pose.position.x, data.pose.position.y))
 
     def callback_path(self, data):
         nodes = []
@@ -39,11 +46,19 @@ class PathFollower:
 
         self.vectorizer.set_path(nodes)
 
-        while not rospy.is_shutdown():
+        vectors = self.vectorizer.path_to_vectors()
+
+        while vectors != []:
+            try:
+                distance, angle, mode = vectors[0]
+                # vectors = [(distance/self.cm_to_pixel, self.convert_angle_to_driver_angle(angle), mode.value) for distance, angle, mode in vectors]
+                published_vector = (distance/self.cm_to_pixel, self.convert_angle_to_driver_angle(angle), mode.value)
+            except IndexError:
+                rospy.logerr("Could not follow path")
+                break
+
+            self.pub.publish(json.dumps(published_vector))
             vectors = self.vectorizer.path_to_vectors()
-            vectors = [(distance / 7.12, self.convert_angle_to_driver_angle(angle), mode.value)
-                   for distance, angle, mode in vectors]
-            self.pub.publish(json.dumps(vectors))
             self.rate.sleep()
 
     def convert_angle_to_driver_angle(self, angle):

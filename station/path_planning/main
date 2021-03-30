@@ -33,7 +33,7 @@ class PathFinder:
 
     def get_path(self):
         if self.can_create_path():
-            pucks = [puck for puck in self.pucks if puck != self.goal]
+            pucks = [puck for puck in self.pucks if puck[0] != self.goal[0] and puck[1] != self.goal[1]]
             nodes = get_nodes(self.node_size, self.algorithm, self.obstacles, self.robot, self.goal, pucks, self.image_width, self.image_height)
             path = Path()
             arr = []
