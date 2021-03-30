@@ -19,14 +19,14 @@ class PathFollower:
         self.path = []
         self.node_size = NODE_SIZE
         self.vectorizer = Vectorizer(minimize=True)
-        self.vectorizer.set_destination(Destination.PUCK)
+        self.vectorizer.set_destination(Destination.OTHER)
         self.rate = rospy.Rate(1)
         self.cm_to_pixel = self.vectorizer.cm_to_pixel
 
         self.pub = rospy.Publisher('movement_vectors_string', String, queue_size=10)
-        rospy.Subscriber('robot', String, self.callback_robot)
-        rospy.Subscriber('move_base_simple/goal', PoseStamped, self.callback_goal)
-        rospy.Subscriber('path', Path, self.callback_path)
+        rospy.Subscriber('robot', String, self.callback_robot, queue_size=1)
+        rospy.Subscriber('move_base_simple/goal', PoseStamped, self.callback_goal, queue_size=1)
+        rospy.Subscriber('path', Path, self.callback_path,queue_size=1)
 
     def callback_robot(self, data):
         robot_dict = json.loads(data.data)
@@ -46,11 +46,14 @@ class PathFollower:
 
         self.vectorizer.set_path(nodes)
 
-        vectors = self.vectorizer.path_to_vectors()
 
-        while vectors != []:
+        sauce = True
+        while sauce:
+            vectors = self.vectorizer.path_to_vectors()
+            sauce = vectors != []
             try:
                 distance, angle, mode = vectors[0]
+                distance = min(70, distance)
                 # vectors = [(distance/self.cm_to_pixel, self.convert_angle_to_driver_angle(angle), mode.value) for distance, angle, mode in vectors]
                 published_vector = (distance/self.cm_to_pixel, self.convert_angle_to_driver_angle(angle), mode.value)
             except IndexError:
@@ -58,7 +61,6 @@ class PathFollower:
                 break
 
             self.pub.publish(json.dumps(published_vector))
-            vectors = self.vectorizer.path_to_vectors()
             self.rate.sleep()
 
     def convert_angle_to_driver_angle(self, angle):

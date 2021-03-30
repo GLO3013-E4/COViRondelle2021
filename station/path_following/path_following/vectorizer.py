@@ -1,4 +1,7 @@
 import math
+import json
+import rospy
+from std_msgs.msg import String
 
 from path_following.config import NODE_SIZE
 from path_following.destination import Destination
@@ -23,6 +26,11 @@ class Vectorizer:
 
         self.destination = Destination.OTHER
 
+        self.objective = None
+
+        self.node_pub  = rospy.Publisher("node_pub",String,queue_size=10)
+        self.vector_pub  = rospy.Publisher("vector_pub",String, queue_size=10)
+
     def set_mode(self, mode: MovementMode):
         self.mode = mode
 
@@ -34,18 +42,23 @@ class Vectorizer:
 
         # update checkpoint
         node_distances = [
-            i for i, node in enumerate(self.path) if distance(self.robot_position, node) <= NODE_SIZE/2
+            i for i, node in enumerate(self.path) if distance(self.robot_position, node) <= 50
         ]
+        # node_distances = [
+        #     i for i, node in enumerate(self.path) if self.robot_position[0] >= node[0] or distance(self.robot_position, node) <= 50
+        # ]
         if node_distances:
             if self.checkpoint is None or node_distances[-1] > self.checkpoint:
                 self.checkpoint = node_distances[-1]
 
     def set_path(self, path: [(float, float)]):
+        # if self.destination is Destination.PUCK:
+        path = self.shorten_path_to_grab_puck(path)
         self.path = self.minimize_path(path)
         # # if self.destination is Destination.PUCK or self.destination is Destination.CORNER:
-        # #     self.path = self.shorten_path_to_grab_puck(path)
         # # else:
         # #     self.path = path
+        self.objective = None
         self.checkpoint = None
 
     def minimize_path(self, path: [[float, float]]):
@@ -101,6 +114,7 @@ class Vectorizer:
     def get_path_from_robot(self, nodes: [(float, float)]):
         if self.checkpoint is None:
             # va au debut du chemin
+            self.objective = nodes[0]
             return nodes
             # va au point le plus pret meme si t'as jamais ete dans le chemin par avant
             #node_distances = [
@@ -122,6 +136,7 @@ class Vectorizer:
         minimum_distance = min(node_distances)
         index = node_distances.index(minimum_distance) + self.checkpoint + 1
 
+        self.objective = nodes[index]
         if self.robot_is_close_to_path(minimum_distance):
             if self.checkpoint_was_updated_recently():
                 return nodes[self.checkpoint+1:]
@@ -141,7 +156,7 @@ class Vectorizer:
         for i in range(len(nodes)-1):
             x1, y1 = nodes[i]
             x2, y2 = nodes[i+1]
-            length = 69
+            length = ((x2-x1)**2 + (y2-y1)**2)**0.5
             angle = -math.atan2(y2-y1, x2-x1)
 
             if angle == -0:
@@ -151,6 +166,7 @@ class Vectorizer:
 
             vector = [length, angle]
             vectors.append(vector)
+        # raise Exception(f"nodes: {nodes}, vectors: {vectors}")
         return vectors
 
     def adjust_vector_angles_from_robot_pov(self, vectors: [[float, float]]):
@@ -175,58 +191,77 @@ class Vectorizer:
             last_vector = vector
         return new_vectors
 
-    def adjust_vector_angle_from_robot_pov(self, last_vector, current_vector):
+    def adjust_vector_angle_from_robot_pov(self, robot_angle, vector_angle):
         """
         Changes the vector orientation from the absolute value from the top camera
         to the angle the robot will need to use to align itself with the vector.
         (For one vector)
         """
-        distance1, angle1 = last_vector
-        distance2, angle2 = current_vector
-        if angle2 < 0:
-            angle2 = 2 * math.pi + angle2
-        if angle1 < 0:
-            angle1 = 2 * math.pi + angle1
+        if vector_angle< 0:
+            vector_angle = 2 * math.pi +vector_angle
+        if robot_angle< 0:
+            robot_angle = 2 * math.pi + robot_angle
 
-        angle_correction = angle2 - angle1
+        angle_correction = vector_angle - robot_angle
 
         if angle_correction > math.pi:
             angle_correction -= 2 * math.pi
         elif angle_correction < -math.pi:
             angle_correction += 2 * math.pi
-        return [distance2, angle_correction]
+        return angle_correction
 
     def set_robot_angle(self, robot_angle):
         self.robot_angle = robot_angle
 
     def path_to_vectors(self):
-        vectors = self.get_path_from_robot(self.path)
+        path_from_robot = self.get_path_from_robot(self.path)
+        self.node_pub.publish(json.dumps(path_from_robot))
+        path_from_robot = [self.robot_position] + path_from_robot
 
         if self.destination is Destination.PUCK or self.destination is Destination.CORNER:
-            # vectors = self.vectorize(path_from_robot + [self.goal])
-            # vectors = self.minimize_vectors(vectors)
-
-            # vectors[-1][0] = 0
-
-            adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
-
-            length, angle, mode = adjusted_vectors[-1]
-            if [length, angle] == [0, 0]:
-                adjusted_vectors.pop()
+            tuple_length_angle = self.calculate_distance_and_angle()
+            return [(tuple_length_angle[0], tuple_length_angle[1], MovementMode.GRIP)]
 
         elif self.destination is Destination.RESISTANCE_STATION:
-            # vectors = self.vectorize(path_from_robot) + [[0, -math.pi/2]]
-            # vectors = self.minimize_vectors(vectors)
-            adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
-            length, angle, mode = adjusted_vectors[-1]
-            if [length, angle] == [0, 0]:
-                adjusted_vectors.pop()
+            tuple_length_angle = self.calculate_distance_and_angle()
+            return [(tuple_length_angle[0], tuple_length_angle[1], MovementMode.GRIP)]
         else:
-            # vectors = self.vectorize(path_from_robot)
-            # vectors = self.minimize_vectors(vectors)
-            adjusted_vectors = self.adjust_vector_angles_from_robot_pov(vectors)
+            tuple_length_angle = self.calculate_distance_and_angle()
+            if tuple_length_angle[0] <= 20 and len(path_from_robot) <= 2:
+                return []
+            return [(tuple_length_angle[0], tuple_length_angle[1], MovementMode.GRIP)]
 
-        return adjusted_vectors
+        raise Exception("pas supposé être là grrrrrrrrrrrr")
+
+    def calculate_distance_and_angle(self):
+        if self.objective is not None:
+            xp, yp = self.robot_position
+            xg, yg = self.objective
+
+            length = ((xg-xp)**2 + (yg-yp)**2)**0.5
+
+            angle = -math.atan2(yg-yp, xg-xp)
+            if angle == -0:
+                angle = 0
+            elif angle == -math.pi:
+                angle = math.pi
+
+            if angle < 0:
+                angle = 2 * math.pi + angle
+            if self.robot_angle < 0:
+                self.robot_angle = 2 * math.pi + self.robot_angle
+
+            angle_correction = angle - self.robot_angle
+
+            if angle_correction > math.pi:
+                angle_correction -= 2 * math.pi
+            elif angle_correction < -math.pi:
+                angle_correction += 2 * math.pi
+
+            return (length, angle_correction)
+
+            
+        raise Exception
 
     def robot_is_on_goal(self):
         """
