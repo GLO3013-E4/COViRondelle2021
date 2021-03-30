@@ -1,10 +1,8 @@
-import argparse
 import RPi.GPIO as GPIO
 
 from capture_image_from_embed_camera import capture_image_from_embed_camera
-from scripts.src.capture.capture_image_from_path import capture_image_from_path
-from scripts.src.mapping.map_letters import map_letters
-from scripts.src.processing.process_image_to_grayscale import process_image_to_grayscale
+from process_image_to_grayscale import process_image_to_grayscale
+from map_letters import map_letters
 
 
 GPIO.setmode(GPIO.BOARD)
@@ -16,22 +14,28 @@ servo2 = GPIO.PWM(12, 50)
 
 servo1.start(0)
 servo2.start(0)
-x_position = 7
-y_position = 6
-servo2.ChangeDutyCycle(x_position)
-servo1.ChangeDutyCycle(y_position)
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--image", type=str, help="path to input image")
-ap.add_argument("-e", "--embed-camera", type=bool,
-                help="use embed camera to get image", default=False)
-ap.add_argument("-p", "--path", type=str, help="path to tesseract.exe")
-args = vars(ap.parse_args())
+def letter_mapping():
+    letters = []
+    letters = camera_panning(7.3)
+    if letters.len() == 9:
+        return letters
+    letters = camera_panning(4)
+    if letters.len() == 9:
+        return letters
+    letters = camera_panning(10)
+    if letters.len() == 9:
+        return letters
+    return []
 
-image = capture_image_from_embed_camera() \
-    if args["embed-camera"] \
-    else capture_image_from_path(args["image"])
+def camera_panning(x_position):
+    servo2.ChangeDutyCycle(x_position)
+    servo1.ChangeDutyCycle(7.5)
 
-grayscale = process_image_to_grayscale(image)
+    image = capture_image_from_embed_camera()
 
-letters = map_letters(grayscale)
+    grayscale = process_image_to_grayscale(image)
+
+    letters = map_letters(grayscale)
+
+    return letters
