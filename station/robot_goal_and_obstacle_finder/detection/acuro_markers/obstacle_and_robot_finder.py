@@ -19,9 +19,9 @@ class ObstacleRobotFinder:
         self.image_width = 1600
         self.image_height = 904
         self.obstacle_height = 412
-        self.robot_height = 240
-        self.aruco_marker_width = 100
-        self.aruco_robot_marker_width = 160
+        self.robot_height = 254
+        self.aruco_marker_width = 80
+        self.aruco_robot_marker_width = 143
         #pixel
         self.obstacle_radius = 42
         self.distance_between_center_and_prehenseur = 112
