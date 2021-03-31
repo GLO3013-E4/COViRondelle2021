@@ -42,7 +42,7 @@ class Vectorizer:
 
         # update checkpoint
         node_distances = [
-            i for i, node in enumerate(self.path) if distance(self.robot_position, node) <= 50
+            i for i, node in enumerate(self.path) if distance(self.robot_position, node) <= 65
         ]
         # node_distances = [
         #     i for i, node in enumerate(self.path) if self.robot_position[0] >= node[0] or distance(self.robot_position, node) <= 50
@@ -114,8 +114,7 @@ class Vectorizer:
     def get_path_from_robot(self, nodes: [(float, float)]):
         if self.checkpoint is None:
             # va au debut du chemin
-            self.objective = nodes[0]
-            return nodes
+            self.checkpoint = 0 
             # va au point le plus pret meme si t'as jamais ete dans le chemin par avant
             #node_distances = [
             #    distance(self.robot_position, node)
@@ -216,7 +215,6 @@ class Vectorizer:
     def path_to_vectors(self):
         path_from_robot = self.get_path_from_robot(self.path)
         self.node_pub.publish(json.dumps(path_from_robot))
-        path_from_robot = [self.robot_position] + path_from_robot
 
         if self.destination is Destination.PUCK or self.destination is Destination.CORNER:
             tuple_length_angle = self.calculate_distance_and_angle()
@@ -227,8 +225,6 @@ class Vectorizer:
             return [(tuple_length_angle[0], tuple_length_angle[1], MovementMode.GRIP)]
         else:
             tuple_length_angle = self.calculate_distance_and_angle()
-            if tuple_length_angle[0] <= 20 and len(path_from_robot) <= 2:
-                return []
             return [(tuple_length_angle[0], tuple_length_angle[1], MovementMode.GRIP)]
 
         raise Exception("pas supposé être là grrrrrrrrrrrr")
@@ -240,7 +236,15 @@ class Vectorizer:
 
             length = ((xg-xp)**2 + (yg-yp)**2)**0.5
 
-            angle = -math.atan2(yg-yp, xg-xp)
+            angle_correction = self.find_goal_angle(yg - yp, xg- xp)
+
+            return (length, angle_correction)
+
+            
+        raise Exception
+
+    def find_goal_angle(self, diff_y, diff_x):
+            angle = -math.atan2(diff_y, diff_x)
             if angle == -0:
                 angle = 0
             elif angle == -math.pi:
@@ -258,10 +262,7 @@ class Vectorizer:
             elif angle_correction < -math.pi:
                 angle_correction += 2 * math.pi
 
-            return (length, angle_correction)
-
-            
-        raise Exception
+            return angle_correction
 
     def robot_is_on_goal(self):
         """

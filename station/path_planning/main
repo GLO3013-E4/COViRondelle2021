@@ -15,7 +15,7 @@ class PathFinder:
         self.obstacles = None
         self.robot = None
         self.node_size = 15
-        self.algorithm = PathfindingAlgorithms.A_STAR
+        self.algorithm = PathfindingAlgorithms.BREADTH_FIRST_SEARCH
         self.image_width, self.image_height = (1600, 904)
 
         self.pub = rospy.Publisher('path', Path, queue_size=1)

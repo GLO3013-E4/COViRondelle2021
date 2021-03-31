@@ -1,10 +1,12 @@
+import os
+
 import cv2
 import numpy as np
 
 
 class SquareDetection:
 
-    def detect_square(self, image):
+    def detect_square(self, image, Debug=False):
         image_copy = image.copy()
 
         image_canny = self.get_image_canny(image)
@@ -12,6 +14,9 @@ class SquareDetection:
         kernel = np.ones((5,5))
         image_dilate = cv2.dilate(image_canny, kernel, iterations=1)
         square_corners = self.get_contours(image_dilate, image_copy)
+
+        if Debug:
+            self.show_image(image_copy)
 
         return square_corners
 
@@ -21,6 +26,10 @@ class SquareDetection:
         image_canny = cv2.Canny(image_gray, 90, 90)
         return image_canny
 
+    def show_image(self, image_output):
+        cv2.imshow('square detection', image_output)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     @staticmethod
     def generate_four_corners(x_position, y_position, width, height):

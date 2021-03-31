@@ -66,7 +66,7 @@ class Publisher:
     def callback_pucks(self, pucks):
         if self.sauce:
             pucks_dict = json.loads(str(pucks.data))
-            self.puck = pucks_dict["green"][0]["center_position"]
+            self.puck = pucks_dict["black"][0]["center_position"]
             print(self.puck)
             self.goal_publisher.publish(create_pose(self.puck))
             print("sent goal")

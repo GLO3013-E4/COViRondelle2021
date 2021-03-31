@@ -17,8 +17,8 @@ def stackImages(scale, image_array):
                     image_array[x][y] = cv2.resize(image_array[x][y],
                                                    (image_array[0][0].shape[1], image_array[0][0].shape[0]),
                                                    None, scale, scale)
-                if len(image_array[x][y].shape) == 2:
-                    image_array[x][y] = cv2.cvtColor(image_array[x][y], cv2.COLOR_GRAY2BGR)
+                if len(image_array[x][y].shape) == 2: image_array[x][y] = cv2.cvtColor(image_array[x][y],
+                                                                                       cv2.COLOR_GRAY2BGR)
         images_blank = np.zeros((height, width, 3), np.uint8)
         hor = [images_blank] * rows
         for x in range(0, rows):
@@ -31,8 +31,7 @@ def stackImages(scale, image_array):
             else:
                 image_array[x] = cv2.resize(image_array[x], (image_array[0].shape[1], image_array[0].shape[0]), None,
                                             scale, scale)
-            if len(image_array[x].shape) == 2:
-                image_array[x] = cv2.cvtColor(image_array[x], cv2.COLOR_GRAY2BGR)
+            if len(image_array[x].shape) == 2: image_array[x] = cv2.cvtColor(image_array[x], cv2.COLOR_GRAY2BGR)
         hor = np.hstack(image_array)
         ver = hor
     return ver
