@@ -13,9 +13,9 @@
           <div
             class="path"
             v-bind:style="{
-              background: `url('${tableImage}')`,
               backgroundSize: `${this.rescaledWidth}px ${this.rescaledHeight}px`,
               backgroundRepeat: 'no-repeat',
+              backgroundImage: `url('${this.tableImage}')`,
             }"
           >
             <svg
