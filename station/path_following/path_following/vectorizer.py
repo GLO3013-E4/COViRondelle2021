@@ -225,7 +225,7 @@ class Vectorizer:
 
             angle_correction = self.find_goal_angle(yg - yp, xg- xp)
 
-            return (length, angle_correction)
+            return length, angle_correction
         else:
             raise Exception("wtf, objective is none")
 
