@@ -1,5 +1,5 @@
-import rospy
 import json
+import rospy
 from geometry_msgs.msg import PoseStamped, Pose, PoseArray
 from std_msgs.msg import String
 
@@ -72,11 +72,9 @@ class Publisher:
             print("sent goal")
             self.sauce = False
 
+
 # TODO : Remove this mock (and usage)
 if __name__ == '__main__':
-
-
     rospy.init_node('talker', anonymous=True)
     Publisher()
     rospy.spin()
-

@@ -62,10 +62,9 @@ class Vectorizer:
         self.checkpoint = None
 
     def minimize_path(self, path: [[float, float]]):
-        if path and len(path)>1:
+        if path and len(path) > 1:
             minimized_path = [path[0]]
-        current_angle = math.atan2(path[1][1] - path[0][1], path[1][0]- path[0][0])
-        
+        current_angle = math.atan2(path[1][1] - path[0][1], path[1][0] - path[0][0])
         for i, node in enumerate(path[2:-1]):
             x, y = node
 
@@ -75,13 +74,13 @@ class Vectorizer:
             if angle_between_last_one == current_angle:
                 current_angle = angle_between_last_one
                 continue
-            else:
-                current_angle = angle_between_last_one
-                minimized_path.append((x2, y2))
+            current_angle = angle_between_last_one
+            minimized_path.append((x2, y2))
 
         if path[-1] != minimized_path[-1]:
             minimized_path.append(path[-1])
         return minimized_path
+
     def shorten_path_to_grab_puck(self, path: [(float, float)]):
         distances = [distance(node, self.goal) for node in path]
         new_path = []
@@ -113,16 +112,7 @@ class Vectorizer:
 
     def get_path_from_robot(self, nodes: [(float, float)]):
         if self.checkpoint is None:
-            # va au debut du chemin
-            self.checkpoint = 0 
-            # va au point le plus pret meme si t'as jamais ete dans le chemin par avant
-            #node_distances = [
-            #    distance(self.robot_position, node)
-            #    for node in nodes
-            #]
-            #minimum_distance = min(node_distances)
-            #min_index_no_checkpoint = node_distances.index(minimum_distance)
-            # return [self.robot_position] + nodes[min_index_no_checkpoint:]
+            self.checkpoint = 0
 
         node_distances = [
             distance(self.robot_position, node)
@@ -165,7 +155,6 @@ class Vectorizer:
 
             vector = [length, angle]
             vectors.append(vector)
-        # raise Exception(f"nodes: {nodes}, vectors: {vectors}")
         return vectors
 
     def adjust_vector_angles_from_robot_pov(self, vectors: [[float, float]]):
@@ -227,8 +216,6 @@ class Vectorizer:
             tuple_length_angle = self.calculate_distance_and_angle()
             return [(tuple_length_angle[0], tuple_length_angle[1], MovementMode.GRIP)]
 
-        raise Exception("pas supposé être là grrrrrrrrrrrr")
-
     def calculate_distance_and_angle(self):
         if self.objective is not None:
             xp, yp = self.robot_position
@@ -239,30 +226,29 @@ class Vectorizer:
             angle_correction = self.find_goal_angle(yg - yp, xg- xp)
 
             return (length, angle_correction)
-
-            
-        raise Exception
+        else:
+            raise Exception("wtf, objective is none")
 
     def find_goal_angle(self, diff_y, diff_x):
-            angle = -math.atan2(diff_y, diff_x)
-            if angle == -0:
-                angle = 0
-            elif angle == -math.pi:
-                angle = math.pi
+        angle = -math.atan2(diff_y, diff_x)
+        if angle == -0:
+            angle = 0
+        elif angle == -math.pi:
+            angle = math.pi
 
-            if angle < 0:
-                angle = 2 * math.pi + angle
-            if self.robot_angle < 0:
-                self.robot_angle = 2 * math.pi + self.robot_angle
+        if angle < 0:
+            angle = 2 * math.pi + angle
+        if self.robot_angle < 0:
+            self.robot_angle = 2 * math.pi + self.robot_angle
 
-            angle_correction = angle - self.robot_angle
+        angle_correction = angle - self.robot_angle
 
-            if angle_correction > math.pi:
-                angle_correction -= 2 * math.pi
-            elif angle_correction < -math.pi:
-                angle_correction += 2 * math.pi
+        if angle_correction > math.pi:
+            angle_correction -= 2 * math.pi
+        elif angle_correction < -math.pi:
+            angle_correction += 2 * math.pi
 
-            return angle_correction
+        return angle_correction
 
     def robot_is_on_goal(self):
         """
