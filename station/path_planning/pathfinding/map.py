@@ -16,7 +16,7 @@ class Map:
     different obstacles and objects laying on the table are.
     """
     def __init__(self, image_width, image_height, obstacles, pucks, start, end, node_size=25,
-                 safety_cushion=0, robot_width=100, obstacle_width=40, puck_width=25,
+                 safety_cushion=10, robot_width=80, obstacle_width=100, puck_width=2,
                  obstacle_representation=ObstacleRepresentation.SQUARE):
         self.node_size = node_size
         self.safety_cushion = safety_cushion
@@ -36,10 +36,10 @@ class Map:
 
         self.node_matrix = []
 
-        self.table_walls_start_y = 40
-        self.table_walls_end_y = 810
+        self.table_walls_start_y = 30
+        self.table_walls_end_y = 830
         self.table_walls_start_x = 0
-        self.table_walls_end_x = 1600
+        self.table_walls_end_x = 1580
 
     def render_map(self):
         """Creates the nodes and generates the obstacles, pucks, start and end node."""

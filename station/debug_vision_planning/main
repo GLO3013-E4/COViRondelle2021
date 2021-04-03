@@ -18,7 +18,7 @@ class DebugVisionPlanning:
         self.obstacles_publisher_debug = rospy.Publisher('obstacles_debug', PoseArray, queue_size=10)
         self.square_publisher_debug = rospy.Publisher('square_debug', PoseArray, queue_size=10)
         self.path_publisher_debug = rospy.Publisher('path_debug',Path, queue_size=10)
-        self.converting_factor = 712
+        self.converting_factor = 400
         sauce = tf.transformations.quaternion_from_euler(0, 3*np.pi/2, 0, 'szyx')
         self.upwards = Quaternion(*sauce) 
         rospy.Subscriber('pucks', String, self.callback_pucks)

@@ -1,4 +1,4 @@
-from math import atan2, pi
+from math import atan2, pi, hypot
 
 
 class PositionCalculator:
@@ -19,3 +19,6 @@ class PositionCalculator:
         if angle < 0:
             angle += 2*pi
         return angle
+
+    def calculate_distance_between_two_points(self, point_1, point_2):
+        return hypot(point_2[0] - point_1[0], point_2[1] - point_1[1])

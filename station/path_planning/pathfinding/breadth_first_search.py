@@ -23,7 +23,7 @@ class BreadthFirstSearch(PathfindingAlgorithm):
             path = queue.popleft()
             node = path[-1]
 
-            if node.role is TileRole.END:
+            if node is _end:
                 return path
 
             for neighbor, _ in node.neighbors:
