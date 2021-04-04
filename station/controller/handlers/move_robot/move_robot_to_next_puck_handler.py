@@ -14,6 +14,7 @@ class MoveRobotToNextPuckHandler(Handler):
         move_robot_handler = MoveRobotHandler()
         current_puck = handled_data['current_puck']
         handled_data['goal'] = handled_data[current_puck]['position']
+        handled_data['destination'] = 'puck'
 
         is_finished = False
         while not is_finished:

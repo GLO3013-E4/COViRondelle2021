@@ -8,6 +8,7 @@ class MoveRobotToCommandPanelHandler(Handler):
         move_robot_handler = MoveRobotHandler()
 
         handled_data['goal'] = COMMAND_PANEL_POSITION
+        handled_data['destination'] = 'command_panel'
 
         is_finished = False
         while not is_finished:
