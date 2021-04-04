@@ -9,7 +9,7 @@ class ReadResistanceHandler(Handler):
     def handle(self, handled_data=None):
 
         self.is_finished = False
-        rospy.Subscriber('resistance', String, self.read_resistance)
+        rospy.Subscriber('resistance', String, self.read_resistance) # TODO: checker le nom du topic
 
         while not self.is_finished:
             pass
