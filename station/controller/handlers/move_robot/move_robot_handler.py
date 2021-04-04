@@ -1,28 +1,37 @@
 import json
-import rospy
 
-from std_msgs.msg import String
+import rospy
 from geometry_msgs.msg import PoseStamped
 from handlers.handler import Handler
+from std_msgs.msg import String
 
 
 class MoveRobotHandler(Handler):
-    def handle(self, handled_data=None):
-        destination = handled_data['destination']
-        # TODO: publish a quelque part pour set la destination de path_following (pour bouger par en avant pour les pucks ou pour bouger de cote pour la station de resistance (et pour donner de la flexibilite mais quand meme dire on va ou a path_following si on veut optimiser les rotations))
-
-
-        pub = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=10)
-        pub.publish(handled_data['goal'])
-
+    def __init__(self):
+        self.initialized = False
         self.is_finished = False
-        rospy.Subscriber('movement_vectors_string', String, self.is_vector_at_destination)
+
+    def initialize(self):
+        self.pub = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=10)
+        self.sub = rospy.Subscriber('movement_vectors_string', String, self.is_vector_at_destination)
+        self.initialized = True
+
+    def handle(self, handled_data=None):
+
+        if not self.initialized:
+            self.initialize()
+
+        self.pub.publish(handled_data['goal'])
 
         while not self.is_finished:
             pass
 
-        return handled_data, True
+        return handled_data
 
     def is_vector_at_destination(self, vector_json):
         vector = json.loads(str(vector_json.data))
         self.is_finished = vector == (0, 0, 0)
+
+    def unregister(self):
+        self.pub.unregister()
+        self.sub.unregister()

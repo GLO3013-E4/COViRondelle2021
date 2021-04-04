@@ -1,24 +1,35 @@
 import json
-import rospy
 
-from std_msgs.msg import String
+import rospy
 from handlers.handler import Handler
 from handlers.move_robot.move_robot_handler import MoveRobotHandler
+from std_msgs.msg import String
 
 
 class MoveRobotToNextCornerHandler(Handler):
+    def __init__(self):
+        self.initialized = False
+
+    def initialize(self):
+        self.pub = rospy.Publisher('movement_vectors_string', String, queue_size=1)
+        self.move_robot_handler = MoveRobotHandler()
+        self.initialized = True
+
     def handle(self, handled_data=None):
-        move_robot_handler = MoveRobotHandler()
+        if not self.initialized:
+            self.initialize()
+
         current_puck = handled_data['current_puck']
         handled_data['goal'] = handled_data[current_puck]['corner_position']
         handled_data['destination'] = 'corner'
 
-        is_finished = False
-        while not is_finished:
-            handled_data, is_finished = move_robot_handler.handle(handled_data)
+        handled_data = self.move_robot_handler.handle(handled_data)
 
-        # TODO: avancer un peu pour coller le corner
-        pub = rospy.Publisher('movement_vectors_string', String, queue_size=1)
-        pub.publish(json.dumps("(5, 0, 0)"))
+        self.pub.publish(json.dumps("(5, 0, 0)"))
+        # sleep?
 
-        return handled_data, True
+        return handled_data
+
+    def unregister(self):
+        self.pub.unregister()
+        self.move_robot_handler.unregister()

@@ -6,10 +6,8 @@ class Command:
 
     def execute(self, handled_data=None):
         for handler in self.handlers:
-            is_finished = False
 
-            while not is_finished:
-                handled_data, is_finished = handler.handle(handled_data)
+            handled_data, _ = handler.handle(handled_data)
 
             handler.unregister()
 

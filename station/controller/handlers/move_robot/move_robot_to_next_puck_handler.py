@@ -1,13 +1,25 @@
 import json
-import rospy
 
-from std_msgs.msg import String
+import rospy
 from handlers.handler import Handler
 from handlers.move_robot.move_robot_handler import MoveRobotHandler
+from std_msgs.msg import String
 
 
 class MoveRobotToNextPuckHandler(Handler):
+    def __init__(self):
+        self.initialized = False
+
+    def initialize(self):
+        self.pub = rospy.Publisher('movement_vectors_string', String, queue_size=1)
+        self.move_robot_handler = MoveRobotHandler()
+        self.initialized = True
+
+
     def handle(self, handled_data=None):
+        if not self.initialized:
+            self.initialize()
+
         if handled_data['current_puck'] == 'first_puck':
             handled_data['current_puck'] = 'second_puck'
         elif handled_data['current_puck'] == 'second_puck':
@@ -15,17 +27,17 @@ class MoveRobotToNextPuckHandler(Handler):
         else:
             handled_data['current_puck'] = 'first_puck'
 
-        move_robot_handler = MoveRobotHandler()
         current_puck = handled_data['current_puck']
         handled_data['goal'] = handled_data[current_puck]['position']
         handled_data['destination'] = 'puck'
 
-        is_finished = False
-        while not is_finished:
-            handled_data, is_finished = move_robot_handler.handle(handled_data)
+        handled_data = move_robot_handler.handle(handled_data)
 
-        # TODO: avancer un peu pour coller la puck
-        pub = rospy.Publisher('movement_vectors_string', String, queue_size=1)
-        pub.publish(json.dumps("(5, 0, 0)"))
+        #sleep ou on devrait enlever ça
+        self.pub.publish(json.dumps("(5, 0, 0)"))
 
-        return handled_data, True
+        return handled_data
+
+    def unregister(self):
+        self.pub.unregister()
+        self.move_robot_handler.unregister()
