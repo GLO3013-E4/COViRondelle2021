@@ -4,4 +4,5 @@
     <include file="$(find path_planning)/launch/planning.launch" />
     <include file="$(find debug_vision_planning)/launch/debug.launch" />
     <include file="$(find path_following)/launch/following.launch" />
+    <node name="controller" pkg="controller" type="main" output="screen"/>
 </launch>

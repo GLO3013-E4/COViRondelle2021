@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
-import rospy
-import numpy as np
-import cv2
 import json
-from std_msgs.msg import String
+
+import cv2
+import numpy as np
+import rospy
 from sensor_msgs.msg import Image
-from detection.acuro_markers.obstacle_and_robot_finder import ObstacleRobotFinder
+from std_msgs.msg import String
+
+from detection.acuro_markers.obstacle_and_robot_finder import \
+    ObstacleRobotFinder
+from detection.hard_code_position.hard_code_position import (
+    position_of_control_panel, position_of_resistance_panel)
 from detection.puck_detection import PuckDetection
-from detection.hard_code_position.hard_code_position import position_of_resistance_panel, position_of_control_panel
 from detection.square_detection import SquareDetection
+
 
 class RobotGoalAndObstacleFinder:
     def __init__(self):
@@ -20,7 +25,7 @@ class RobotGoalAndObstacleFinder:
         self.control_panel_publisher = rospy.Publisher('control_panel', String, queue_size=1)
         rospy.Subscriber('world_cam/image_raw', Image, self.detect, queue_size=1, buff_size=52428800)
         self.pucks = ""
-        self.square= ""
+        self.square = ""
         self.robot_and_obstacle_finder = ObstacleRobotFinder()
         self.puck_finder = PuckDetection()
         self.corner_detection = SquareDetection()

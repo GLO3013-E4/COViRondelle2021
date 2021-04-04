@@ -1,5 +1,6 @@
-import math
 import json
+import math
+
 import rospy
 from std_msgs.msg import String
 
@@ -27,9 +28,6 @@ class Vectorizer:
         self.destination = Destination.OTHER
 
         self.objective = None
-
-        self.node_pub  = rospy.Publisher("node_pub",String,queue_size=10)
-        self.vector_pub  = rospy.Publisher("vector_pub",String, queue_size=10)
 
     def set_mode(self, mode: MovementMode):
         self.mode = mode
@@ -203,7 +201,6 @@ class Vectorizer:
 
     def path_to_vectors(self):
         path_from_robot = self.get_path_from_robot(self.path)
-        self.node_pub.publish(json.dumps(path_from_robot))
 
         if self.destination is Destination.PUCK or self.destination is Destination.CORNER:
             tuple_length_angle = self.calculate_distance_and_angle()

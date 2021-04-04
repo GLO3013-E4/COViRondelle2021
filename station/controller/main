@@ -9,30 +9,25 @@ from commands.step import Step
 
 def create_chain_of_commands():
     steps = [Step.MOVE_ROBOT_TO_NEXT_PUCK, Step.GRIP_PUCK, Step.MOVE_ROBOT_TO_NEXT_CORNER, Step.RELEASE_PUCK, Step.MOVE_ROBOT_TO_NEXT_PUCK, Step.GRIP_PUCK, Step.MOVE_ROBOT_TO_NEXT_CORNER, Step.RELEASE_PUCK, Step.MOVE_ROBOT_TO_NEXT_PUCK, Step.GRIP_PUCK, Step.MOVE_ROBOT_TO_NEXT_CORNER, Step.RELEASE_PUCK]
+
     command_builder = CommandBuilder()
     chain_of_commands_factory = ChainOfCommandsFactory(command_builder)
 
-    return chain_of_commands_factory.create()
+    return chain_of_commands_factory.create(steps)
 
+def initialize_handled_data():
+    return {"puck_colors": ["red", "blue", "green"], "corners": ["A", "B", "C"]}
 
 def controller():
-    rospy.init_node('controller', anonymous=True)
-
-    rate = rospy.Rate(10)
-
-    is_started = False
-
-    while not rospy.is_shutdown():
-        if not is_started:
-            first_command = create_chain_of_commands()
-            first_command.execute()
-            is_started = True
-
-        rate.sleep()
+    commands = create_chain_of_commands()
+    handled_data = initialize_handled_data()
+    for command in commands:
+        handled_data = command.execute(handled_data)
 
 
 if __name__ == '__main__':
     try:
+        rospy.init_node('controller', anonymous=True)
         controller()
     except rospy.ROSInterruptException:
         pass

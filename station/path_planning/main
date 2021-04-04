@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-import rospy
 import json
-from std_msgs.msg import String
+
+import rospy
+from geometry_msgs.msg import Pose, PoseArray, PoseStamped
 from nav_msgs.msg import Path
-from geometry_msgs.msg import PoseStamped, Pose, PoseArray
-from pathfinding.show_path import get_path as get_nodes
+from std_msgs.msg import String
+
 from pathfinding.pathfinding_algorithms import PathfindingAlgorithms
+from pathfinding.show_path import get_path as get_nodes
 
 
 class PathFinder:
@@ -21,9 +23,6 @@ class PathFinder:
         self.pub = rospy.Publisher('path', Path, queue_size=1)
         self.pub_string = rospy.Publisher('path_string', String, queue_size=1)
         rospy.Subscriber('move_base_simple/goal', PoseStamped, self.callback_goal)
-        # rospy.Subscriber('pucks', PoseArray, self.callback_pucks)
-        # rospy.Subscriber('obstacles', PoseArray, self.callback_obstacles)
-        # rospy.Subscriber('robot', Pose, self.callback_robot)
         rospy.Subscriber('pucks', String, self.callback_pucks)
         rospy.Subscriber('obstacles', String, self.callback_obstacles)
         rospy.Subscriber('robot', String, self.callback_robot)

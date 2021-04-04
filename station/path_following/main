@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-import rospy
 import json
 import math
 
-
-from std_msgs.msg import String
+import rospy
 from geometry_msgs.msg import PoseStamped
 from nav_msgs.msg import Path
+from std_msgs.msg import String
+
 from path_following.config import NODE_SIZE
-from path_following.vectorizer import Vectorizer
 from path_following.destination import Destination
 from path_following.movement_mode import MovementMode
+from path_following.vectorizer import Vectorizer
 
 
 class PathFollower:
@@ -66,14 +66,17 @@ class PathFollower:
             self.rate.sleep()
 
         angle = self.vectorizer.find_goal_angle(self.goal[1] - self.robot_dict["robot"][1], self.goal[0] - self.robot_dict["robot"][0])
-        self.pub_angle.publish(str(angle))
+
         while not(angle<=0.05 and angle >=-0.05):
             angle = self.vectorizer.find_goal_angle(self.goal[1] - self.robot_dict["robot"][1] , self.goal[0] - self.robot_dict["robot"][0])
-            self.pub_angle.publish(str(angle))
             published_vector = (0, self.convert_angle_to_driver_angle(angle), MovementMode.GRIP.value)
             self.pub.publish(json.dumps(published_vector))
             self.angle_rate.sleep()
 
+        final_distance = self.distance(self.robot_dict["prehenseur"], self.goal) - 20 
+        self.pub.publish(json.dumps((final_distance, 0, 0)))
+        self.angle_rate.sleep()
+            
 
 
     def convert_angle_to_driver_angle(self, angle):
@@ -92,9 +95,8 @@ class PathFollower:
 def path_follower():
     rospy.init_node('path_following', anonymous=True)
 
-    pathfollower = PathFollower()
+    PathFollower()
 
-    rate = rospy.Rate(10)  # 10hz
 
     rospy.spin()
 
