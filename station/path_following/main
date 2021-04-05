@@ -56,7 +56,8 @@ class PathFollower:
             vectors = self.vectorizer.path_to_vectors()
             try:
                 distance, angle, mode = vectors[0]
-                distance = min(70, distance)
+                #distance = min(70, distance)
+                distance = max(min(self.distance(self.robot_dict['prehenseur'], self.goal) - 200, 70, distance), 0)
                 published_vector = (distance/self.cm_to_pixel, self.convert_angle_to_driver_angle(angle), mode.value)
             except IndexError:
                 rospy.logerr("Could not follow path")
