@@ -47,6 +47,8 @@ class PathFinder:
                 min_index = puck_distances.index(min(puck_distances))
                 pucks = [puck for i, puck in enumerate(pucks) if i != min_index]
 
+            rospy.logerr("sauce")
+            rospy.logerr(pucks)
             nodes = get_nodes(self.node_size, self.algorithm, self.obstacles, self.robot, self.goal, pucks, self.image_width, self.image_height)
             path = Path()
             arr = []
@@ -67,6 +69,7 @@ class PathFinder:
 
     def callback_goal(self, goal):
         self.goal = (int(goal.pose.position.x), int(goal.pose.position.y))
+        rospy.logerr("sauce")
         print(self.goal)
         self.get_path()
 
@@ -116,7 +119,7 @@ class PathFinder:
     def calculate_if_puck_is_in_grip(self):
         return_value = False
         for i in self.pucks:
-            if self.distance(self.grip, i) <= 60:
+            if self.distance(self.grip, i) <= 100:
                 return_value = True
                 break
 

@@ -20,7 +20,7 @@ class Vectorizer:
         self.distance_correction_threshold = 3*self.cm_to_pixel
         self.length_correction_threshold = 0
         self.angle_correction_threshold = 0
-        self.checkpoint_trigger_threshold = 30
+        self.checkpoint_trigger_threshold = 55
         self.last_checkpoint = None
         self.goal = None
         self.checkpoint = None
@@ -40,7 +40,7 @@ class Vectorizer:
 
         # update checkpoint
         node_distances = [
-            i for i, node in enumerate(self.path) if distance(self.robot_position, node) <= 65
+            i for i, node in enumerate(self.path) if distance(self.robot_position, node) <= self.checkpoint_trigger_threshold
         ]
         # node_distances = [
         #     i for i, node in enumerate(self.path) if self.robot_position[0] >= node[0] or distance(self.robot_position, node) <= 50

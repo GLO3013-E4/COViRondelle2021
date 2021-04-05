@@ -26,10 +26,11 @@ class MoveRobotToNextPuckHandler(Handler):
         self.sub.unregister()
 
     def handle(self, handled_data=None):
+        handled_data["calculate_pucks_pub"].publish(True)
         if not self.initialized:
             self.initialize()
 
-        self.current_puck_color = handled_data['puck_colors'].pop()
+        self.current_puck_color = handled_data['puck_colors'].pop(0)
 
         while self.goal_tuple is None or self.current_puck_color is None:
             pass

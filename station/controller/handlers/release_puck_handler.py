@@ -9,25 +9,27 @@ from handlers.handler import Handler
 class ReleasePuckHandler(Handler):
     def __init__(self):
         self.initialized = False
-        self.rate = rospy.Rate(1)
-        self.RELEASE = 8
+        self.rate = rospy.Rate(0.5)
+        self.DROP = 8
+        self.UP = 9
         self.LOWER = 10
 
-    def initialize(self):
-        self.pub = rospy.Publisher('movement_vectors_string', String, queue_size=1)
-        self.initialized = True
 
     def handle(self, handled_data=None):
-        if not self.initialized:
-            self.initialize()
-
-        self.pub.publish(json.dumps((0, 0 ,self.LOWER)))
+        self.rate.sleep()
+        handled_data["movement_vectors_string_pub"].publish(json.dumps((10, 0 , 0)))
         self.rate.sleep()
 
-        self.pub.publish(json.dumps((0, 0, self.RELEASE)))
+        handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0 ,self.DROP)))
+        self.rate.sleep()
+
+        handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0 ,self.UP)))
+        self.rate.sleep()
+
+        handled_data["movement_vectors_string_pub"].publish(json.dumps((10, 0 , 1)))
         self.rate.sleep()
 
         return handled_data
 
     def unregister(self):
-        self.pub.unregister()
+        pass

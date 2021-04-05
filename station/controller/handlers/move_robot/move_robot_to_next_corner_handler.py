@@ -29,7 +29,7 @@ class MoveRobotToNextCornerHandler(Handler):
         if not self.initialized:
             self.initialize()
 
-        self.current_corner = handled_data['corners'].pop()
+        self.current_corner = handled_data['corners'].pop(0)
 
         while self.goal_tuple is None or self.current_corner is None:
             pass
@@ -41,6 +41,5 @@ class MoveRobotToNextCornerHandler(Handler):
         return handled_data
 
     def unregister(self):
-        self.pub.unregister()
         self.sub.unregister()
         self.move_robot_handler.unregister()

@@ -17,16 +17,17 @@ class GripPuckHandler(Handler):
 
     def handle(self, handled_data=None):
 
+        self.rate.sleep()
         handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0 ,self.DROP)))
         self.rate.sleep()
 
-        handled_data["movement_vectors_string_pub"].publish(json.dumps((10, 0 , 0)))
+        handled_data["movement_vectors_string_pub"].publish(json.dumps((15, 0 , 0)))
         self.rate.sleep()
 
         handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0 ,self.GRAB)))
         self.rate.sleep()
 
-        handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0, self.RAISE)))
+        handled_data["movement_vectors_string_pub"].publish(json.dumps((20, 0 , 1)))
         self.rate.sleep()
         return handled_data
 

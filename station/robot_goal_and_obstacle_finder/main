@@ -26,8 +26,8 @@ class RobotGoalAndObstacleFinder:
         rospy.Subscriber('world_cam/image_raw', Image, self.detect, queue_size=1, buff_size=52428800)
         rospy.Subscriber('calculate_pucks', Bool, self.callback_calculate_puck, queue_size=1)
         self.calculate_pucks = True
-        self.pucks = ""
         self.square = ""
+        self.obstacles = ""
         self.robot_and_obstacle_finder = ObstacleRobotFinder()
         self.puck_finder = PuckDetection()
         self.corner_detection = SquareDetection()
@@ -49,8 +49,8 @@ class RobotGoalAndObstacleFinder:
     def find_obstacles(self, image):
         return self.robot_and_obstacle_finder.detect_obstacle_position(image)
 
-    def find_square(self, image):
-        return self.corner_detection.detect_square(image)
+    def find_square(self):
+        return {"corner_A": [609, 220], "corner_B": [608, 645], "corner_C": [185, 646], "corner_D": [181, 226]}
 
     def find_resistance_station(self):
         x = {}
@@ -71,9 +71,10 @@ class RobotGoalAndObstacleFinder:
         cv2_array = cv2.cvtColor(cv2_array, cv2.COLOR_RGB2BGR)
 
         self.robot_publisher.publish(json.dumps(self.find_robot_and_angle(cv2_array), default=self.convert))
-        self.obstacles_publisher.publish(json.dumps(self.find_obstacles(cv2_array), default=self.convert))
-        if self.square == "":
-            self.square = json.dumps(self.find_square(cv2_array), default=self.convert)
+        if self.obstacles == "":
+            self.obstacles = json.dumps(self.find_obstacles(cv2_array), default=self.convert)
+            self.obstacles_publisher.publish(self.obstacles)
+        self.square = json.dumps(self.find_square(), default=self.convert)
         self.square_publisher.publish(self.square)
         if self.calculate_pucks:
             self.pucks = json.dumps(self.find_pucks(cv2_array), default=self.convert)

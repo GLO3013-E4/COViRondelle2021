@@ -19,7 +19,7 @@ def create_chain_of_commands():
 
 def initialize_handled_data():
     return {"puck_colors": ["red", "blue", "green"],
-     "corners": ["A", "B", "C"],
+     "corners": ["C", "B", "A"],
       "movement_vectors_string_pub": rospy.Publisher('movement_vectors_string', String, queue_size=1),
       "goal_pub":rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=1),
       "calculate_pucks_pub": rospy.Publisher("calculate_pucks", Bool, queue_size=1)  }
