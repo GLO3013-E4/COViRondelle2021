@@ -29,11 +29,6 @@ class PathFinder:
         rospy.Subscriber('pucks', String, self.callback_pucks)
         rospy.Subscriber('obstacles', String, self.callback_obstacles)
         rospy.Subscriber('robot', String, self.callback_robot)
-        rospy.Subscriber('FSR', Bool, self.callback_fsr)
-
-    def callback_fsr(self, data):
-        fsr_value = bool(str(data.data))
-        self.fsr = fsr_value
 
     def can_create_path(self):
         return self.goal and self.pucks and self.obstacles and self.robot
@@ -47,7 +42,7 @@ class PathFinder:
         if self.can_create_path():
             pucks = [puck for puck in self.pucks if puck[0] != self.goal[0] and puck[1] != self.goal[1]]
 
-            if self.fsr:
+            if self.calculate_if_puck_is_in_grip():
                 puck_distances = [self.distance(puck, self.grip) for puck in pucks]
                 min_index = puck_distances.index(min(puck_distances))
                 pucks = [puck for i, puck in enumerate(pucks) if i != min_index]
@@ -117,6 +112,17 @@ class PathFinder:
         self.grip = robot_dict['prehenseur']
 
     """ {'robot': (763, 444), 'prehenseur': (651, 449), 'angle': 3.1930934645410183}"""
+
+    def calculate_if_puck_is_in_grip(self):
+        return_value = False
+        for i in self.pucks:
+            if self.distance(self.grip, i) <= 60:
+                return_value = True
+                break
+
+        return return_value
+
+
 
 
 
