@@ -21,12 +21,14 @@ class MoveRobotToNextPuckHandler(Handler):
         self.initialized = True
 
     def pucks_callback(self, data):
+        self.handled_data["calculate_pucks_pub"].publish(True)
         pucks_dict = json.loads(data.data)
         self.goal_tuple = pucks_dict[self.current_puck_color][0]["center_position"]
         self.sub.unregister()
 
     def handle(self, handled_data=None):
         handled_data["calculate_pucks_pub"].publish(True)
+        self.handled_data = handled_data
         if not self.initialized:
             self.initialize()
 

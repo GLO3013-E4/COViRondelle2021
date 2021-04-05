@@ -50,7 +50,7 @@ class RobotGoalAndObstacleFinder:
         return self.robot_and_obstacle_finder.detect_obstacle_position(image)
 
     def find_square(self):
-        return {"corner_A": [609, 220], "corner_B": [608, 645], "corner_C": [185, 646], "corner_D": [181, 226]}
+        return {"corner_A": [600, 226], "corner_B": [608, 645], "corner_C": [185, 636], "corner_D": [181, 226], "center": [397, 430]}
 
     def find_resistance_station(self):
         x = {}
