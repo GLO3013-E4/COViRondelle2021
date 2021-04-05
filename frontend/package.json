@@ -24,7 +24,7 @@
   "devDependencies": {
     "@storybook/addon-essentials": "^6.1.21",
     "@storybook/addon-controls": "6.1.21",
-    "@storybook/vue": "^6.1.21",
+    "@storybook/vue": "^6.2.2",
     "@types/jest": "^26.0.22",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
