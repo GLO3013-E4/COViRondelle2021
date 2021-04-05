@@ -41,8 +41,9 @@ class PathFinder:
     def get_path(self):
         if self.can_create_path():
             pucks = [puck for puck in self.pucks if puck[0] != self.goal[0] and puck[1] != self.goal[1]]
-
-            if self.calculate_if_puck_is_in_grip():
+            is_puck_in_grip = self.calculate_if_puck_is_in_grip()
+            print(is_puck_in_grip)
+            if is_puck_in_grip:
                 puck_distances = [self.distance(puck, self.grip) for puck in pucks]
                 min_index = puck_distances.index(min(puck_distances))
                 pucks = [puck for i, puck in enumerate(pucks) if i != min_index]
@@ -119,7 +120,7 @@ class PathFinder:
     def calculate_if_puck_is_in_grip(self):
         return_value = False
         for i in self.pucks:
-            if self.distance(self.grip, i) <= 100:
+            if self.distance(self.grip, i) <= 70:
                 return_value = True
                 break
 
