@@ -11,11 +11,16 @@ class GripPuckHandler(Handler):
         self.initialized = False
         self.rate = rospy.Rate(0.5)
         self.GRAB = 7
+        self.DROP = 8
         self.RAISE = 9
+        self.LOWER = 10
 
     def handle(self, handled_data=None):
 
-        handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0 ,self.GRAB)))
+        handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0 ,self.DROP)))
+        self.rate.sleep()
+
+        handled_data["movement_vectors_string_pub"].publish(json.dumps((10, 0 , 0)))
         self.rate.sleep()
 
         handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0 ,self.GRAB)))

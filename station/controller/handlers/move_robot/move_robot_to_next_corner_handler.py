@@ -15,7 +15,6 @@ class MoveRobotToNextCornerHandler(Handler):
         self.goal_tuple = None
 
     def initialize(self):
-        self.pub = rospy.Publisher('movement_vectors_string', String, queue_size=1)
         self.sub = rospy.Subscriber('square', String, self.square_callback, queue_size=1)
         self.move_robot_handler = MoveRobotHandler()
         self.initialized = True
@@ -26,6 +25,7 @@ class MoveRobotToNextCornerHandler(Handler):
         self.sub.unregister()
 
     def handle(self, handled_data=None):
+        handled_data["calculate_pucks_pub"].publish(True)
         if not self.initialized:
             self.initialize()
 

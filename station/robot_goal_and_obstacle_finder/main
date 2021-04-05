@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 import rospy
 from sensor_msgs.msg import Image
-from std_msgs.msg import String
+from std_msgs.msg import String, Bool
 
 from detection.acuro_markers.obstacle_and_robot_finder import \
     ObstacleRobotFinder
@@ -24,6 +24,8 @@ class RobotGoalAndObstacleFinder:
         self.resistance_station_publisher = rospy.Publisher('resistance_station', String, queue_size=1)
         self.control_panel_publisher = rospy.Publisher('control_panel', String, queue_size=1)
         rospy.Subscriber('world_cam/image_raw', Image, self.detect, queue_size=1, buff_size=52428800)
+        rospy.Subscriber('calculate_pucks', Bool, self.callback_calculate_puck, queue_size=1)
+        self.calculate_pucks = True
         self.pucks = ""
         self.square = ""
         self.robot_and_obstacle_finder = ObstacleRobotFinder()
@@ -32,6 +34,9 @@ class RobotGoalAndObstacleFinder:
 
     def find_pucks(self, image):
         return self.puck_finder.detect_pucks(image)
+
+    def callback_calculate_puck(self, data):
+        self.calculate_pucks = True
 
     def find_robot_and_angle(self, image):
         center_of_bottom_robot, prehenseur_position, angle_robot = self.robot_and_obstacle_finder.detect_robot(image)
@@ -70,8 +75,9 @@ class RobotGoalAndObstacleFinder:
         if self.square == "":
             self.square = json.dumps(self.find_square(cv2_array), default=self.convert)
         self.square_publisher.publish(self.square)
-        if self.pucks == "":
+        if self.calculate_pucks:
             self.pucks = json.dumps(self.find_pucks(cv2_array), default=self.convert)
+            self.calculate_pucks = False
         self.pucks_publisher.publish(self.pucks)
         self.resistance_station_publisher.publish(json.dumps(self.find_resistance_station()))
         self.control_panel_publisher.publish(json.dumps(self.find_control_panel()))

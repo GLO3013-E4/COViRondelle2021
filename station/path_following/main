@@ -73,10 +73,9 @@ class PathFollower:
             self.pub.publish(json.dumps(published_vector))
             self.angle_rate.sleep()
 
-        final_distance = self.distance(self.robot_dict["prehenseur"], self.goal) - 30 
-        self.pub.publish(json.dumps((final_distance/self.cm_to_pixel, 0, 0)))
-        self.angle_rate.sleep()
-
+        # final_distance = self.distance(self.robot_dict["prehenseur"], self.goal) - 50 
+        # self.pub.publish(json.dumps((final_distance/self.cm_to_pixel, 0, 0)))
+        # self.angle_rate.sleep()
         self.pub.publish("FINISHED")
             
 
