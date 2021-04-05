@@ -4,7 +4,7 @@ import rospy
 from std_msgs.msg import String
 from handlers.handler import Handler
 from handlers.move_robot.move_robot_handler import MoveRobotHandler
-from hard_coded_positons import RESISTANCE_STATION_POSITION
+from hard_coded_positions import RESISTANCE_STATION_POSITION
 
 
 class MoveRobotToResistanceStationHandler(Handler):

@@ -21,10 +21,10 @@ class ReleasePuckHandler(Handler):
         if not self.initialized:
             self.initialize()
 
-        self.pub(json.dumps((0, 0 ,self.LOWER)))
+        self.pub.publish(json.dumps((0, 0 ,self.LOWER)))
         self.rate.sleep()
 
-        self.pub(json.dumps((0, 0, self.RELEASE)))
+        self.pub.publish(json.dumps((0, 0, self.RELEASE)))
         self.rate.sleep()
 
         return handled_data

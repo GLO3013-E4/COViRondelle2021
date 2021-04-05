@@ -12,6 +12,7 @@ class MoveRobotToNextCornerHandler(Handler):
         self.initialized = False
         self.goal = None
         self.current_corner= None
+        self.goal_tuple = None
 
     def initialize(self):
         self.pub = rospy.Publisher('movement_vectors_string', String, queue_size=1)
@@ -30,7 +31,7 @@ class MoveRobotToNextCornerHandler(Handler):
 
         self.current_corner = handled_data['corners'].pop()
 
-        while self.goal_tuple is None and self.current_corner is None:
+        while self.goal_tuple is None or self.current_corner is None:
             pass
 
         handled_data["goal"] = create_pose(self.goal_tuple)

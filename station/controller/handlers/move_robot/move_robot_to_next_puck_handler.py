@@ -12,6 +12,7 @@ class MoveRobotToNextPuckHandler(Handler):
         self.initialized = False
         self.goal = None
         self.current_puck_color= None
+        self.goal_tuple = None
 
     def initialize(self):
         self.pub = rospy.Publisher('movement_vectors_string', String, queue_size=1)
@@ -28,9 +29,9 @@ class MoveRobotToNextPuckHandler(Handler):
         if not self.initialized:
             self.initialize()
 
-        self.current_puck_color = handled_data['pucks'].pop()
+        self.current_puck_color = handled_data['puck_colors'].pop()
 
-        while self.goal_tuple is None and self.current_puck_color is None:
+        while self.goal_tuple is None or self.current_puck_color is None:
             pass
 
         handled_data["goal"] = create_pose(self.goal_tuple)

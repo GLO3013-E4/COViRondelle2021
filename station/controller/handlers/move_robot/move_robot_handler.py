@@ -14,7 +14,6 @@ class MoveRobotHandler(Handler):
         self.vector = None
 
     def initialize(self):
-        self.pub = rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=10)
         self.sub = rospy.Subscriber('movement_vectors_string', String, self.is_vector_at_destination)
         self.initialized = True
 
@@ -24,7 +23,7 @@ class MoveRobotHandler(Handler):
             self.initialize()
 
         while self.vector is None:
-            self.pub.publish(handled_data['goal'])
+            handled_data["goal_pub"].publish(handled_data['goal'])
             self.rate.sleep()
 
         while not self.is_finished:
@@ -33,9 +32,13 @@ class MoveRobotHandler(Handler):
         return handled_data
 
     def is_vector_at_destination(self, vector_json):
-        self.vector = json.loads(str(vector_json.data))
-        self.is_finished = self.vector == (0, 0, 0)
+        rospy.logerr(vector_json.data)
+        if vector_json.data == "FINISHED":
+            self.vector = "FINISHED"
+        else:
+            self.vector = json.loads(str(vector_json.data))
+
+        self.is_finished = self.vector == "FINISHED"
 
     def unregister(self):
-        self.pub.unregister()
         self.sub.unregister()

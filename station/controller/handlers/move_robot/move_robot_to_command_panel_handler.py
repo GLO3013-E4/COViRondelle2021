@@ -1,6 +1,6 @@
 from handlers.handler import Handler
 from handlers.move_robot.move_robot_handler import MoveRobotHandler
-from hard_coded_positons import COMMAND_PANEL_POSITION
+from hard_coded_positions import COMMAND_PANEL_POSITION
 
 
 class MoveRobotToCommandPanelHandler(Handler):
