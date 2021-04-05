@@ -10,21 +10,21 @@
     "storybook": "start-storybook -p 9001 -c .storybook -s public"
   },
   "dependencies": {
-    "core-js": "^3.9.1",
-    "socket.io-client": "^4.0.0",
+    "core-js": "^3.10.0",
+    "socket.io-client": "^4.0.1",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-i18n": "^8.24.2",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.5.1",
     "vue-socket.io-extended": "^4.1.0",
-    "vuetify": "^2.4.8",
+    "vuetify": "^2.4.9",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^6.1.21",
-    "@storybook/addon-controls": "6.1.21",
-    "@storybook/vue": "^6.1.21",
+    "@storybook/addon-controls": "6.2.2",
+    "@storybook/vue": "^6.2.2",
     "@types/jest": "^26.0.22",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
