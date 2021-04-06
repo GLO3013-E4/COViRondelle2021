@@ -33,6 +33,7 @@
                 :points="this.realTrajectoryPoints"
                 style="fill: none; stroke: red; stroke-width: 2"
               />
+              <font-awesome-icon class="depart" :icon="['fas', 'map-marker-alt']" :height="30" :width="30" x="0" y="200"/>
               <circle
                 class="start"
                 :cx="this.startPointX"
@@ -147,3 +148,13 @@ export default class Trajectories extends Vue {
   }
 }
 </script>
+<style scoped>
+.depart{
+  size: auto;
+  color: green;
+  padding-left: 200px;
+  margin-left: 100px;
+  font-size: 30px;
+    vertical-align: middle;
+}
+</style>
