@@ -11,6 +11,7 @@ class ReadResistanceHandler(Handler):
     def initialize(self):
         self.sub = rospy.Subscriber('resistance', String, self.read_resistance) # TODO: checker le nom du topic
         self.is_finished = False
+
     def handle(self, handled_data=None):
         self.initialize()
 
