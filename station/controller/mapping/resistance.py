@@ -4,6 +4,9 @@ import math
 class Resistance:
     """Class used to encapsulate resistances and then allow us to be able to
     extract useful information for the resistance color code sheet"""
+
+    # ELSE:
+    # logerror, take closest
     def __init__(self, resistance):
         self.resistance = resistance
 
