@@ -29,6 +29,7 @@ def create_chain_of_commands():
         Step.RELEASE_PUCK,
         Step.MOVE_ROBOT_TO_SQUARE_CENTER
         ]
+    # steps = [Step.MOVE_ROBOT_TO_COMMAND_PANEL, Step.MOVE_ROBOT_TO_SQUARE_CENTER, Step.MOVE_ROBOT_TO_RESISTANCE_STATION]
 
     command_builder = CommandBuilder()
     chain_of_commands_factory = ChainOfCommandsFactory(command_builder)
@@ -42,14 +43,16 @@ def initialize_handled_data():
       "goal_pub":rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=1),
       "calculate_pucks_pub": rospy.Publisher("calculate_pucks", Bool, queue_size=1),
       "read_letters_pub": rospy.Publisher("read_letters", Bool, queue_size=1),
-      "path_following_mode_pub": rospy.Publisher("calculate_pucks", String, queue_size=1),
-      "RESISTANCE_STATION": (150, 830),
-      "COMMAND_PANEL": (1300, 430)
+      "path_following_mode_pub": rospy.Publisher("following_mode", String, queue_size=1),
+      "RESISTANCE_STATION": (170, 755),
+      "COMMAND_PANEL": (1300, 430),
+      "convertion_to_cm": 6.882391855
       }
 
 def controller():
     commands = create_chain_of_commands()
     handled_data = initialize_handled_data()
+    rospy.Rate(0.2).sleep()
     for command in commands:
         handled_data = command.execute(handled_data)
 

@@ -15,6 +15,7 @@ class ReadLettersHandler(Handler):
         command_panel = CommandPanel()
         command_panel.set_resistance(handled_data['resistance'])
 
+        self.handled_data = handled_data
         handled_data["read_letters_pub"].publish(True)
 
         while not self.is_finished:
@@ -34,8 +35,10 @@ class ReadLettersHandler(Handler):
     def read_letters(self, data):
         letters = json.loads(data.data)
         self.letters = letters
-        rospy.logerr("READ LETTERS " + self.letters)
+        rospy.logerr("READ LETTERS " + str(self.letters))
         self.is_finished = len(letters) == 9
+        if not self.is_finished:
+            self.handled_data["read_letters_pub"].publish(True)
 
     def unregister(self):
         self.sub.unregister()

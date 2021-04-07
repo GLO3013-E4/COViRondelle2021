@@ -36,8 +36,6 @@ class MoveRobotToSquareCenterHandler(Handler):
 
         handled_data = self.move_robot_handler.handle(handled_data)
 
-        handled_data["movement_vectors_string_pub"].publish(json.dumps((20, 0, 0)))
-
         return handled_data
 
     def unregister(self):
