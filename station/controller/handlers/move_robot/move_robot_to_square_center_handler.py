@@ -33,6 +33,7 @@ class MoveRobotToSquareCenterHandler(Handler):
 
         handled_data["goal"] = create_pose(self.goal_tuple)
         handled_data["path_following_mode_pub"].publish("CENTER")
+        rospy.Rate(0.5).sleep()
 
         handled_data = self.move_robot_handler.handle(handled_data)
 
