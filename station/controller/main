@@ -29,25 +29,26 @@ steps = [
         ]
     
 def create_chain_of_commands():
-    steps = [
-            Step.MOVE_ROBOT_TO_RESISTANCE_STATION,
-            Step.READ_RESISTANCE,
-            Step.MOVE_ROBOT_TO_COMMAND_PANEL,
-            Step.READ_LETTERS,
-            Step.MOVE_ROBOT_TO_NEXT_PUCK,
-            Step.GRIP_PUCK, 
-            Step.MOVE_ROBOT_TO_NEXT_CORNER,
-            Step.RELEASE_PUCK,
-            Step.MOVE_ROBOT_TO_NEXT_PUCK,
-            Step.GRIP_PUCK,
-            Step.MOVE_ROBOT_TO_NEXT_CORNER,
-            Step.RELEASE_PUCK,
-            Step.MOVE_ROBOT_TO_NEXT_PUCK,
-            Step.GRIP_PUCK,
-            Step.MOVE_ROBOT_TO_NEXT_CORNER,
-            Step.RELEASE_PUCK,
-            Step.MOVE_ROBOT_TO_SQUARE_CENTER
-            ]
+    # steps = [
+    #         Step.MOVE_ROBOT_TO_RESISTANCE_STATION,
+    #         Step.READ_RESISTANCE,
+    #         Step.MOVE_ROBOT_TO_COMMAND_PANEL,
+    #         Step.READ_LETTERS,
+    #         Step.MOVE_ROBOT_TO_NEXT_PUCK,
+    #         Step.GRIP_PUCK, 
+    #         Step.MOVE_ROBOT_TO_NEXT_CORNER,
+    #         Step.RELEASE_PUCK,
+    #         Step.MOVE_ROBOT_TO_NEXT_PUCK,
+    #         Step.GRIP_PUCK,
+    #         Step.MOVE_ROBOT_TO_NEXT_CORNER,
+    #         Step.RELEASE_PUCK,
+    #         Step.MOVE_ROBOT_TO_NEXT_PUCK,
+    #         Step.GRIP_PUCK,
+    #         Step.MOVE_ROBOT_TO_NEXT_CORNER,
+    #         Step.RELEASE_PUCK,
+    #         Step.MOVE_ROBOT_TO_SQUARE_CENTER
+    #         ]
+    steps = [Step.MOVE_ROBOT_TO_RESISTANCE_STATION, Step.READ_RESISTANCE]
 
     command_builder = CommandBuilder()
     chain_of_commands_factory = ChainOfCommandsFactory(command_builder)
@@ -64,7 +65,9 @@ def initialize_handled_data():
       "path_following_mode_pub": rospy.Publisher("following_mode", String, queue_size=1),
       "RESISTANCE_STATION": (170, 755),
       "COMMAND_PANEL": (1200, 430),
-      "convertion_to_cm": 6.882391855
+      "convertion_to_cm": 6.882391855,
+      "resistance_y_dist": 15,
+      "resistance_x_dist": 15
       }
 
 def controller():

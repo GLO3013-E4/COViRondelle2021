@@ -25,6 +25,7 @@ class ReadResistanceHandler(Handler):
         
         handled_data["puck_colors"] = ResistanceMapper().find_colors(Resistance(self.resistance))
 
+        self.rate.sleep()
         handled_data["movement_vectors_string_pub"].publish(json.dumps((handled_data["resistance_y_dist"], 0, 3)))
         self.rate.sleep()
         handled_data["movement_vectors_string_pub"].publish(json.dumps((handled_data["resistance_x_dist"], 0, 0)))
