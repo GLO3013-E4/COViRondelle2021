@@ -41,13 +41,13 @@
           >
             {{ `${$t('trajectories.startingPoint')} :` }}
           </text>
-          <circle
-            :cx="x1StrokeInitialPlacement"
-            :cy="yInitialPlacement + deltaStartingPoint - 5"
-            r="2"
-            stroke="red"
-            stroke-width="2"
-            fill="none"
+          <font-awesome-icon
+            :icon="['fas', 'map-marker-alt']"
+            :height="20"
+            :width="20"
+            :x="x1StrokeInitialPlacement-11"
+            :y="yInitialPlacement + deltaStartingPoint - 20"
+            style="color: blue"
           />
           <text
             :x="xInitialPlacement"
@@ -56,13 +56,13 @@
           >
             {{ `${$t('trajectories.destinationPoint')} :` }}
           </text>
-          <circle
-            :cx="x1StrokeInitialPlacement"
-            :cy="yInitialPlacement + deltaEndingPoint - 5"
-            r="2"
-            stroke="green"
-            stroke-width="2"
-            fill="none"
+          <font-awesome-icon
+            :icon="['fas', 'map-marker-alt']"
+            :height="20"
+            :width="20"
+            :x="x1StrokeInitialPlacement"
+            :y="yInitialPlacement + deltaEndingPoint - 15 "
+            style="color: red "
           />
         </svg>
       </v-row>

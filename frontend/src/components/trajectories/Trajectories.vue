@@ -34,38 +34,22 @@
                 style="fill: none; stroke: red; stroke-width: 2"
               />
               <font-awesome-icon
-                class="depart"
                 :icon="['fas', 'map-marker-alt']"
                 :height="40"
                 :width="40"
                 :x="this.startPointX"
                 :y="this.startPointY"
+                :viewBox="`200 ${this.rescaledWidth} ${this.rescaledWidth} ${this.rescaledHeight}`"
+                style="color: blue"
               />
               <font-awesome-icon
-                class="destinatione"
                 :icon="['fas', 'map-marker-alt']"
                 :height="40"
                 :width="40"
                 :x="this.destinationPointX"
                 :y="this.destinationPointY"
-              />
-              <circle
-                class="start"
-                :cx="this.startPointX"
-                :cy="this.startPointY"
-                r="2"
-                stroke="red"
-                stroke-width="2"
-                fill="none"
-              />
-              <circle
-                class="destination"
-                :cx="this.destinationPointX"
-                :cy="this.destinationPointY"
-                r="2"
-                stroke="green"
-                stroke-width="2"
-                fill="none"
+                :viewBox="`200 ${this.rescaledWidth} ${this.rescaledWidth} ${this.rescaledHeight}`"
+                style="color: red"
               />
             </svg>
           </div>
@@ -163,11 +147,3 @@ export default class Trajectories extends Vue {
   }
 }
 </script>
-<style scoped>
-.depart {
-  color: blue;
-}
-.destinatione {
-  color: red;
-}
-</style>
