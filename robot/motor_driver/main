@@ -10,7 +10,7 @@ from std_msgs.msg import String
 class MotorDriver:
     def __init__(self):
             
-        self.min_angle_rotation = 3
+        self.min_angle_rotation = 0
         self.min_angle_rotation_correction = 2 
         self.ser = serial.Serial('/dev/ttyACM0',115200, timeout=0.01)
         self.ser.flush()
@@ -30,7 +30,7 @@ class MotorDriver:
             self.move_robot(distance, angle, mode)
 
     def move_robot(self, module, angle, mode):
-        if angle >= self.min_angle_rotation and angle <= 360 - self.min_angle_rotation:
+        if angle > self.min_angle_rotation and angle < 360 - self.min_angle_rotation:
        	    if angle <= 180:
                 self.writeStringWithAck("4:" + str(angle))
             else:

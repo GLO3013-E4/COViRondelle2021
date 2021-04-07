@@ -17,21 +17,27 @@ class Mapping:
         self.servo1.start(0)
         self.servo2.start(0)
 
+    def stop_servos(self):
+        self.servo1.stop()
+        self.servo2.stop()
 
     def letter_mapping(self):
         letters = []
         letters = self.camera_panning(7.3)
         if len(letters) == 9:
+            self.stop_servos()
             return letters
         letters = self.camera_panning(4)
         if len(letters) == 9:
+            self.stop_servos()
             return letters
         letters = self.camera_panning(10)
         if len(letters) == 9:
+            self.stop_servos()
             return letters
 
         if letters == []:
-            raise Exception
+            return letters
 
         image = capture_image_from_embed_camera()
 
