@@ -3,22 +3,31 @@ import rospy
 
 from std_msgs.msg import String
 from handlers.handler import Handler
+from mapping.resistance import Resistance
+from mapping.resistance_mapper import ResistanceMapper
 
 
 class ReadResistanceHandler(Handler):
-    def handle(self, handled_data=None):
-
+    def initialize(self):
+        self.sub = rospy.Subscriber('resistance', String, self.read_resistance) # TODO: checker le nom du topic
         self.is_finished = False
-        rospy.Subscriber('resistance', String, self.read_resistance) # TODO: checker le nom du topic
+    def handle(self, handled_data=None):
+        self.initialize()
 
         while not self.is_finished:
             pass
 
         handled_data['resistance'] = self.resistance
+        
+        handled_data["puck_colors"] = ResistanceMapper().find_colors(Resistance(self.resistance))
 
-        return handled_data, True
+        return handled_data
 
     def read_resistance(self, data):
         resistance = json.loads(data.data)
         self.resistance = resistance
-        self.is_finished = True
+        rospy.logerr("READ RESISTANCE " + self.resistance)
+        self.is_finished = resistance != 0
+
+    def unregister(self):
+        self.sub.unregister()

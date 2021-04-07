@@ -1,7 +1,7 @@
-from scripts.src.mapping.corner import Corner
-from scripts.src.mapping.letter import Letter
-from scripts.src.mapping.resistance import Resistance
-from scripts.src.mapping.resistance_mapper import ResistanceMapper
+from mapping.corner import Corner
+from mapping.letter import Letter
+from mapping.resistance import Resistance
+from mapping.resistance_mapper import ResistanceMapper
 
 
 class CommandPanel:

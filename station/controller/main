@@ -10,7 +10,25 @@ from commands.step import Step
 
 
 def create_chain_of_commands():
-    steps = [Step.MOVE_ROBOT_TO_NEXT_PUCK, Step.GRIP_PUCK, Step.MOVE_ROBOT_TO_NEXT_CORNER, Step.RELEASE_PUCK, Step.MOVE_ROBOT_TO_NEXT_PUCK, Step.GRIP_PUCK, Step.MOVE_ROBOT_TO_NEXT_CORNER, Step.RELEASE_PUCK, Step.MOVE_ROBOT_TO_NEXT_PUCK, Step.GRIP_PUCK, Step.MOVE_ROBOT_TO_NEXT_CORNER, Step.RELEASE_PUCK, Step.MOVE_ROBOT_TO_SQUARE_CENTER]
+    steps = [
+        Step.MOVE_ROBOT_TO_RESISTANCE_STATION,
+        Step.READ_RESISTANCE,
+        Step.MOVE_ROBOT_TO_COMMAND_PANEL,
+        Step.READ_LETTERS,
+        Step.MOVE_ROBOT_TO_NEXT_PUCK,
+        Step.GRIP_PUCK, 
+        Step.MOVE_ROBOT_TO_NEXT_CORNER,
+        Step.RELEASE_PUCK,
+        Step.MOVE_ROBOT_TO_NEXT_PUCK,
+        Step.GRIP_PUCK,
+        Step.MOVE_ROBOT_TO_NEXT_CORNER,
+        Step.RELEASE_PUCK,
+        Step.MOVE_ROBOT_TO_NEXT_PUCK,
+        Step.GRIP_PUCK,
+        Step.MOVE_ROBOT_TO_NEXT_CORNER,
+        Step.RELEASE_PUCK,
+        Step.MOVE_ROBOT_TO_SQUARE_CENTER
+        ]
 
     command_builder = CommandBuilder()
     chain_of_commands_factory = ChainOfCommandsFactory(command_builder)
@@ -22,7 +40,12 @@ def initialize_handled_data():
      "corners": ["D", "C", "A"],
       "movement_vectors_string_pub": rospy.Publisher('movement_vectors_string', String, queue_size=1),
       "goal_pub":rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=1),
-      "calculate_pucks_pub": rospy.Publisher("calculate_pucks", Bool, queue_size=1)  }
+      "calculate_pucks_pub": rospy.Publisher("calculate_pucks", Bool, queue_size=1),
+      "read_letters_pub": rospy.Publisher("read_letters", Bool, queue_size=1),
+      "path_following_mode_pub": rospy.Publisher("calculate_pucks", String, queue_size=1),
+      "RESISTANCE_STATION": (150, 830),
+      "COMMAND_PANEL": (1300, 430)
+      }
 
 def controller():
     commands = create_chain_of_commands()

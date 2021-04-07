@@ -1,31 +1,30 @@
 import json
-import rospy
 
-from std_msgs.msg import String
+import rospy
 from handlers.handler import Handler
 from handlers.move_robot.move_robot_handler import MoveRobotHandler
-from hard_coded_positions import RESISTANCE_STATION_POSITION
+from std_msgs.msg import String
+from utils import create_pose
 
 
 class MoveRobotToResistanceStationHandler(Handler):
+    def __init__(self):
+        self.initialized = False
+
+    def initialize(self):
+        self.move_robot_handler = MoveRobotHandler()
+        self.initialized = True
+
     def handle(self, handled_data=None):
-        # TODO : Implement MoveRobotToResistanceStationHandler
-        return handled_data, True
+        if not self.initialized:
+            self.initialize()
 
+        handled_data["goal"] = create_pose(handled_data["RESISTANCE_STATION"])
+        handled_data["path_following_mode_pub"].publish("RESISTANCE")
 
-class MoveRobotToCommandPanelHandler(Handler):
-    def handle(self, handled_data=None):
-        move_robot_handler = MoveRobotHandler()
+        handled_data = self.move_robot_handler.handle(handled_data)
 
-        handled_data['goal'] = RESISTANCE_STATION_POSITION
-        handled_data['destination'] = 'resistance_station'
+        return handled_data
 
-        is_finished = False
-        while not is_finished:
-            handled_data, is_finished = move_robot_handler.handle(handled_data)
-
-        # TODO: avancer un peu pour coller la station
-        pub = rospy.Publisher('movement_vectors_string', String, queue_size=1)
-        pub.publish(json.dumps("(5, 0, 1)"))
-
-        return handled_data, True
+    def unregister(self):
+        self.move_robot_handler.unregister()

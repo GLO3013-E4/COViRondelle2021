@@ -21,8 +21,6 @@ class RobotGoalAndObstacleFinder:
         self.pucks_publisher = rospy.Publisher('pucks', String, queue_size=1)
         self.obstacles_publisher = rospy.Publisher('obstacles', String, queue_size=1)
         self.square_publisher = rospy.Publisher('square', String, queue_size=1)
-        self.resistance_station_publisher = rospy.Publisher('resistance_station', String, queue_size=1)
-        self.control_panel_publisher = rospy.Publisher('control_panel', String, queue_size=1)
         rospy.Subscriber('world_cam/image_raw', Image, self.detect, queue_size=1, buff_size=52428800)
         rospy.Subscriber('calculate_pucks', Bool, self.callback_calculate_puck, queue_size=1)
         self.calculate_pucks = True
@@ -52,16 +50,6 @@ class RobotGoalAndObstacleFinder:
     def find_square(self):
         return {"corner_A": [600, 226], "corner_B": [608, 645], "corner_C": [185, 636], "corner_D": [181, 226], "center": [397, 430]}
 
-    def find_resistance_station(self):
-        x = {}
-        x["position"] = position_of_resistance_panel()
-        return x
-
-    def find_control_panel(self):
-        x = {}
-        x["position"] = position_of_control_panel()
-        return x
-
     def convert(self, o):
         if isinstance(o, (np.int16, np.int8, np.int64, np.int32)): return int(o)  
         raise TypeError
@@ -80,8 +68,6 @@ class RobotGoalAndObstacleFinder:
             self.pucks = json.dumps(self.find_pucks(cv2_array), default=self.convert)
             self.calculate_pucks = False
         self.pucks_publisher.publish(self.pucks)
-        self.resistance_station_publisher.publish(json.dumps(self.find_resistance_station()))
-        self.control_panel_publisher.publish(json.dumps(self.find_control_panel()))
 
 if __name__ == '__main__':
     try:

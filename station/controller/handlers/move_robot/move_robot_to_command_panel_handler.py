@@ -1,17 +1,26 @@
 from handlers.handler import Handler
 from handlers.move_robot.move_robot_handler import MoveRobotHandler
-from hard_coded_positions import COMMAND_PANEL_POSITION
+from utils import create_pose
 
 
 class MoveRobotToCommandPanelHandler(Handler):
+    def __init__(self):
+        self.initialized = False
+
+    def initialize(self):
+        self.move_robot_handler = MoveRobotHandler()
+        self.initialized = True
+
     def handle(self, handled_data=None):
-        move_robot_handler = MoveRobotHandler()
+        if not self.initialized:
+            self.initialize()
 
-        handled_data['goal'] = COMMAND_PANEL_POSITION
-        handled_data['destination'] = 'command_panel'
+        handled_data["goal"] = create_pose(handled_data["COMMAND_PANEL"])
+        handled_data["path_following_mode_pub"].publish("CENTER")
 
-        is_finished = False
-        while not is_finished:
-            handled_data, is_finished = move_robot_handler.handle(handled_data)
+        handled_data = self.move_robot_handler.handle(handled_data)
 
-        return handled_data, True
+        return handled_data
+
+    def unregister(self):
+        self.move_robot_handler.unregister()

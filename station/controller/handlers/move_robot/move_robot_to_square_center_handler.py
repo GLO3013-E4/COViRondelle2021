@@ -32,6 +32,7 @@ class MoveRobotToSquareCenterHandler(Handler):
             pass
 
         handled_data["goal"] = create_pose(self.goal_tuple)
+        handled_data["path_following_mode_pub"].publish("CENTER")
 
         handled_data = self.move_robot_handler.handle(handled_data)
 

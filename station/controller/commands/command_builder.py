@@ -10,8 +10,6 @@ from handlers.move_robot.move_robot_to_resistance_station_handler import \
     MoveRobotToResistanceStationHandler
 from handlers.move_robot.move_robot_to_square_center_handler import \
     MoveRobotToSquareCenterHandler
-from handlers.move_robot.wait_for_robot_arrival_handler import \
-    WaitForRobotArrivalHandler
 from handlers.read_letters_handler import ReadLettersHandler
 from handlers.read_resistance_handler import ReadResistanceHandler
 from handlers.release_puck_handler import ReleasePuckHandler
