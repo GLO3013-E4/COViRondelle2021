@@ -16,9 +16,6 @@ class Mapping:
         GPIO.setup(12, GPIO.OUT)
         self.servo2 = GPIO.PWM(12, 50)
 
-        self.servo1.start(0)
-        self.servo2.start(0)
-
 
     def letter_mapping(self):
         letters = []
@@ -50,6 +47,8 @@ class Mapping:
 
 
     def camera_panning(self, x_position):
+        self.servo1.start(0)
+        self.servo2.start(0)
         self.servo2.ChangeDutyCycle(x_position)
         self.servo1.ChangeDutyCycle(7.5)
         
