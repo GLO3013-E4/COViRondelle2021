@@ -63,7 +63,7 @@ def initialize_handled_data():
       "read_letters_pub": rospy.Publisher("read_letters", Bool, queue_size=1),
       "path_following_mode_pub": rospy.Publisher("following_mode", String, queue_size=1),
       "RESISTANCE_STATION": (170, 755),
-      "COMMAND_PANEL": (1300, 430),
+      "COMMAND_PANEL": (1200, 430),
       "convertion_to_cm": 6.882391855
       }
 
