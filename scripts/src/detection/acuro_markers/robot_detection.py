@@ -32,6 +32,7 @@ class RobotDetection(ArucoMarkers):
                     bottom_left_position, bottom_right_position, top_left_position,
                     top_right_position)
 
+
                 center_x, center_y = self.generate_center_position(
                     bottom_right_position=bottom_right_position,
                     top_left_position=top_left_position)

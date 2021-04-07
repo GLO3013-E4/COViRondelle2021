@@ -1,0 +1,80 @@
+#!/usr/bin/env python3
+import rospy
+import numpy as np
+import cv2
+import json
+from std_msgs.msg import String
+from sensor_msgs.msg import Image
+from detection.acuro_markers.obstacle_and_robot_finder import ObstacleRobotFinder
+from detection.puck_detection import PuckDetection
+from detection.hard_code_position.hard_code_position import position_of_resistance_panel, position_of_control_panel
+from detection.square_detection import SquareDetection
+
+class RobotGoalAndObstacleFinder:
+    def __init__(self):
+        self.robot_publisher = rospy.Publisher('robot', String, queue_size=1)
+        self.pucks_publisher = rospy.Publisher('pucks', String, queue_size=1)
+        self.obstacles_publisher = rospy.Publisher('obstacles', String, queue_size=1)
+        self.square_publisher = rospy.Publisher('square', String, queue_size=1)
+        self.resistance_station_publisher = rospy.Publisher('resistance_station', String, queue_size=1)
+        self.control_panel_publisher = rospy.Publisher('control_panel', String, queue_size=1)
+        rospy.Subscriber('world_cam/image_raw', Image, self.detect, queue_size=1, buff_size=52428800)
+        self.pucks = ""
+        self.square= ""
+        self.robot_and_obstacle_finder = ObstacleRobotFinder()
+        self.puck_finder = PuckDetection()
+        self.corner_detection = SquareDetection()
+
+    def find_pucks(self, image):
+        return self.puck_finder.detect_pucks(image)
+
+    def find_robot_and_angle(self, image):
+        center_of_bottom_robot, prehenseur_position, angle_robot = self.robot_and_obstacle_finder.detect_robot(image)
+        sauce = {}
+        sauce["robot"] = center_of_bottom_robot
+        sauce["prehenseur"] = prehenseur_position
+        sauce["angle"] = angle_robot
+        return sauce
+
+    def find_obstacles(self, image):
+        return self.robot_and_obstacle_finder.detect_obstacle_position(image)
+
+    def find_square(self, image):
+        return self.corner_detection.detect_square(image)
+
+    def find_resistance_station(self):
+        x = {}
+        x["position"] = position_of_resistance_panel()
+        return x
+
+    def find_control_panel(self):
+        x = {}
+        x["position"] = position_of_control_panel()
+        return x
+
+    def convert(self, o):
+        if isinstance(o, (np.int16, np.int8, np.int64, np.int32)): return int(o)  
+        raise TypeError
+
+    def detect(self, image_data):
+        cv2_array = np.frombuffer(image_data.data, dtype=np.uint8).reshape(image_data.height, image_data.width, -1)
+        cv2_array = cv2.cvtColor(cv2_array, cv2.COLOR_RGB2BGR)
+
+        self.robot_publisher.publish(json.dumps(self.find_robot_and_angle(cv2_array), default=self.convert))
+        self.obstacles_publisher.publish(json.dumps(self.find_obstacles(cv2_array), default=self.convert))
+        if self.square == "":
+            self.square = json.dumps(self.find_square(cv2_array), default=self.convert)
+        self.square_publisher.publish(self.square)
+        if self.pucks == "":
+            self.pucks = json.dumps(self.find_pucks(cv2_array), default=self.convert)
+        self.pucks_publisher.publish(self.pucks)
+        self.resistance_station_publisher.publish(json.dumps(self.find_resistance_station()))
+        self.control_panel_publisher.publish(json.dumps(self.find_control_panel()))
+
+if __name__ == '__main__':
+    try:
+        rospy.init_node('robot_goal_and_obstacle_finder', anonymous=True)
+        RobotGoalAndObstacleFinder()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass

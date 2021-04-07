@@ -1,6 +1,6 @@
 <template>
-  <v-card class="grey lighten-3" height="100%">
-    <v-card-title sm="6" class="grey darken-1 d-flex justify-center">
+  <v-card class="lighten2" height="100%">
+    <v-card-title sm="6" class="lighten1 d-flex justify-center">
       <h5 class="white--text">{{ $t('station.firstCorner') }}</h5>
     </v-card-title>
     <v-container height="100%">

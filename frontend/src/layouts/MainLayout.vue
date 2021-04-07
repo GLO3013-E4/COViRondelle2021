@@ -1,21 +1,16 @@
 <template>
   <v-card width="100%" height="100%">
     <v-row>
-      <v-col>
+      <v-col sm="6">
         <!-- TODO : Layout should have components injected. The main view should add these components -->
         <cycle-information />
       </v-col>
-      <v-col>
+      <v-col sm="6">
         <station-information />
         <consumption-information />
       </v-col>
-    </v-row>
-    <v-row>
-      <v-col> </v-col>
       <v-col>
-        <div class="d-flex flex-column">
-          <trajectories />
-        </div>
+        <trajectories />
       </v-col>
     </v-row>
   </v-card>

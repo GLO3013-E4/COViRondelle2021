@@ -1,4 +1,4 @@
-import math
+import uuid
 
 from scripts.src.pathfinding.map import Map
 from scripts.src.pathfinding.tile_role import TileRole
@@ -36,7 +36,9 @@ class TestMap:
         cls.EXPECTED_NUMBER_OF_COLUMNS = 13
         cls.EXPECTED_NUMBER_OF_NODES_PER_ROW = 13
         cls.EXPECTED_NUMBER_OF_TOTAL_NODES = 169
-        cls.EXPECTED_NUMBER_OF_NEIGHBORS = {2, 3, 4, 5, 6, 7, 8}
+
+        cls.EXPECTED_NUMBER_OF_NEIGHBORS = {2, 3, 4, 5, 6, 7, 8, 9}
+
         cls.EXPECTED_NEIGHBOR_DISTANCE = {1, 2}
         cls.EXPECTED_MATRIX_POSITION = (6, 8)
 
@@ -59,10 +61,6 @@ class TestMap:
         self.map = Map(
             self.AN_IMAGE_WIDTH,
             self.AN_IMAGE_HEIGHT,
-            self.SOME_OBSTACLES,
-            self.SOME_PUCKS,
-            self.A_STARTING_POSITION,
-            self.AN_ENDING_POSITION,
             self.A_NODE_SIZE,
             self.A_SAFETY_CUSHION,
             self.A_ROBOT_WIDTH,
@@ -113,132 +111,6 @@ class TestMap:
                     distance = abs(second_node_x-first_node_x) + abs(second_node_y-first_node_y)
 
                     assert distance in self.EXPECTED_NEIGHBOR_DISTANCE
-    """
-    def test_when_add_cushion_then_expected_nodes_are_seen_as_cushions(self):
-        self.map.create_nodes()
-        self.map.connect_nodes()
-        start_node = self.map.get_node_from_matrix_coordinates(self.A_NODE_POSITION)
-        obstacles_seen = 0
-
-        self.map.add_cushion(start_node, self.A_DISTANCE, self.A_CUSHION_ROLE)
-
-        for line in self.map.node_matrix:
-            for node in line:
-                if node.role is TileRole.CUSHION:
-                    obstacles_seen += 1
-                    assert node.matrix_center in self.expected_cushion_nodes_position
-                    self.expected_cushion_nodes_position[node.matrix_center] += 1
-        assert all(seen for seen in self.expected_cushion_nodes_position.values())
-        assert sum(self.expected_cushion_nodes_position.values()) == obstacles_seen
-    """
-    def test_given_zero_distance_when_add_cushion_then_zero_nodes_are_seen_as_cushions(self):
-        self.map.create_nodes()
-        self.map.connect_nodes()
-        node = self.map.get_node_from_matrix_coordinates(self.A_NODE_POSITION)
-        obstacles_seen = 0
-
-        self.map.add_cushion(node, self.AN_EMPTY_DISTANCE, self.A_CUSHION_ROLE)
-
-        for line in self.map.node_matrix:
-            for node in line:
-                if node.role is TileRole.CUSHION:
-                    obstacles_seen += 1
-        assert not obstacles_seen
-
-    def test_given_negative_distance_when_add_cushion_then_zero_nodes_are_seen_as_cushions(self):
-        self.map.create_nodes()
-        self.map.connect_nodes()
-        node = self.map.get_node_from_matrix_coordinates(self.A_NODE_POSITION)
-        obstacles_seen = 0
-
-        self.map.add_cushion(node, self.A_NEGATIVE_DISTANCE, self.A_CUSHION_ROLE)
-
-        for line in self.map.node_matrix:
-            for node in line:
-                if node.role is TileRole.CUSHION:
-                    obstacles_seen += 1
-        assert not obstacles_seen
-
-    def test_when_create_obstacles_then_add_obstacle_role_to_expected_nodes(self):
-        self.map.create_nodes()
-        self.map.connect_nodes()
-
-        self.map.create_obstacles()
-
-        for obstacle_pixel_position in self.SOME_OBSTACLES:
-            node = self.map.get_node_from_pixel(obstacle_pixel_position)
-            assert node.role is TileRole.OBSTACLE
-
-    def test_when_create_obstacles_without_obstacles_then_there_is_no_obstacle_node(self):
-        self.map.create_nodes()
-        self.map.connect_nodes()
-        self.map.obstacles = []
-
-        self.map.create_obstacles()
-
-        assert not [
-            node
-            for line in self.map.node_matrix for node in line
-            if node.role is TileRole.OBSTACLE
-        ]
-
-    def test_when_create_pucks_then_add_puck_role_to_expected_nodes(self):
-        self.map.create_nodes()
-        self.map.connect_nodes()
-
-        self.map.create_pucks()
-
-        for puck_pixel_position in self.SOME_PUCKS:
-            node = self.map.get_node_from_pixel(puck_pixel_position)
-            assert node.role is TileRole.PUCK
-
-    def test_when_create_pucks_without_pucks_then_there_is_no_obstacle_node(self):
-        self.map.create_nodes()
-        self.map.connect_nodes()
-        self.map.pucks = []
-
-        self.map.create_pucks()
-
-        assert not [
-            node
-            for line in self.map.node_matrix for node in line
-            if node.role is TileRole.PUCK
-        ]
-
-    def test_when_create_start_node_then_expected_node_has_start_role(self):
-        self.map.create_nodes()
-        self.map.connect_nodes()
-
-        self.map.create_start_node()
-
-        assert self.map.get_node_from_pixel(self.A_STARTING_POSITION).role is TileRole.START
-
-    def test_when_create_end_node_then_expected_node_has_end_role(self):
-        self.map.create_nodes()
-        self.map.connect_nodes()
-
-        self.map.create_end_node()
-
-        assert self.map.get_node_from_pixel(self.AN_ENDING_POSITION).role is TileRole.END
-
-    def test_when_get_start_node_then_return_starting_node(self):
-        self.map.create_nodes()
-        self.map.create_start_node()
-
-        node = self.map.get_start_node()
-
-        assert node.role is TileRole.START
-        assert self.map.get_node_from_pixel(self.A_STARTING_POSITION) is node
-
-    def test_when_get_end_node_then_return_end_node(self):
-        self.map.create_nodes()
-        self.map.connect_nodes()
-        self.map.create_end_node()
-
-        node = self.map.get_end_node()
-
-        assert node.role is TileRole.END
-        assert self.map.get_node_from_pixel(self.AN_ENDING_POSITION) is node
 
     def test_when_render_map_then_node_matrix_is_not_empty(self):
         self.map.render_map()
@@ -319,15 +191,18 @@ class TestMap:
         node = self.map.get_node_from_matrix_coordinates((5, 5))
         width = 2*self.map.node_size
         role = TileRole.OBSTACLE
+        _uuid = uuid.uuid4()
+        x, y = node.pixel_coordinates_center
 
-        self.map.create_round_obstacle(node, width, role)
+        self.map.create_round_obstacle((int(x), int(y)), width, role, _uuid)
 
         expected_obstacle_positions = {
             (5, 5), (4, 4), (5, 5),
             (4, 4), (6, 4), (4, 6), (6, 6),
-            (4, 5), (4, 5),
-            (6, 5), (4, 6), (5, 4), (5, 4),
-            (5, 4), (5, 6),
+            (4, 5), (3, 5),
+            (6, 5), (5, 3),
+            (5, 4), (5, 6)
+
         }
         found_obstacle_positions = set()
         for i in range(len(self.map.node_matrix)):
@@ -343,38 +218,17 @@ class TestMap:
         node = self.map.get_node_from_matrix_coordinates((5, 5))
         width = 2*self.map.node_size
         role = TileRole.OBSTACLE
+        _uuid = uuid.uuid4()
+        x, y = node.pixel_coordinates_center
 
-        self.map.create_square_obstacle(node, width, role)
-
-        expected_obstacle_positions = {
-            (5, 5)
-        }
-        found_obstacle_positions = set()
-        for i in range(len(self.map.node_matrix)):
-            for j in range(len(self.map.node_matrix[0])):
-                node = self.map.node_matrix[i][j]
-                if node.role is TileRole.OBSTACLE or node.role is TileRole.CUSHION:
-                    found_obstacle_positions.add(node.matrix_center)
-        assert expected_obstacle_positions == found_obstacle_positions
-
-    """
-    def test_when_create_diagonal_obstacle_then_the_obstacle_is_a_diamond(self):
-        self.map.create_nodes()
-        self.map.connect_nodes()
-        node = self.map.get_node_from_matrix_coordinates((5, 5))
-        width = 2*self.map.node_size
-        role = TileRole.OBSTACLE
-
-        self.map.create_diagonal_obstacle(node, width, role)
+        self.map.create_square_obstacle((int(x), int(y)), width, role, _uuid)
 
         expected_obstacle_positions = {
             (5, 5), (6, 3), (3, 6), (4, 3),
             (4, 4), (6, 4), (4, 6), (6, 6),
-            (4, 5), (3, 4), (4, 7), (6, 7),
-            (6, 5), (3, 5), (5, 3), (7, 6),
-            (5, 4), (5, 6), (5, 7), (5, 2),
-            (7, 4), (7, 5), (2, 5), (8, 5),
-            (5, 8)
+            (4, 5), (3, 3), (3, 4),
+            (6, 5), (3, 5), (5, 3),
+            (5, 4), (5, 6)
         }
         found_obstacle_positions = set()
         for i in range(len(self.map.node_matrix)):
@@ -383,13 +237,14 @@ class TestMap:
                 if node.role is TileRole.OBSTACLE or node.role is TileRole.CUSHION:
                     found_obstacle_positions.add(node.matrix_center)
         assert expected_obstacle_positions == found_obstacle_positions
-    """
+
     def test_when_set_obstacle_then_an_obstacle_is_set(self):
         self.map.create_nodes()
         self.map.connect_nodes()
         node = self.map.get_node_from_pixel((30, 30))
+        x, y = node.pixel_coordinates_center
 
-        self.map.set_obstacle(node)
+        self.map.set_obstacle((int(x), int(y)))
 
         assert node.role is TileRole.OBSTACLE
 
@@ -397,8 +252,9 @@ class TestMap:
         self.map.create_nodes()
         self.map.connect_nodes()
         node = self.map.get_node_from_pixel((30, 30))
+        x, y = node.pixel_coordinates_center
 
-        self.map.set_puck(node)
+        self.map.set_puck((int(x), int(y)))
 
         assert node.role is TileRole.PUCK
 

@@ -1,5 +1,5 @@
 <template>
-  <h2 class="light-blue--text" ref="time">
+  <h2 class="primary--text" ref="time">
     {{ formatedTime }}
   </h2>
 </template>

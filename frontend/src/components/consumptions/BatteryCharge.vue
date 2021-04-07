@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-card class="grey lighten-3">
-      <v-card-title class="grey darken-1 d-flex justify-center">
+    <v-card class="lighten2">
+      <v-card-title class="lighten1 d-flex justify-center">
         <h5 class="white--text">
           {{ $t(`consumptions.currentBatteryCharge`) }}
         </h5>
@@ -14,7 +14,7 @@
               :size="100"
               :width="15"
               :value="this.pourcentageBatteryLeft"
-              color="light-blue"
+              color="primary"
             >
               <h4 ref="batteryCharge">{{ currentBatteryCharge }} Ah</h4>
             </v-progress-circular>
