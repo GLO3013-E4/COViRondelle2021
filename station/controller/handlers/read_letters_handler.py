@@ -4,6 +4,8 @@ import rospy
 from std_msgs.msg import String
 from handlers.handler import Handler
 from mapping.command_panel import CommandPanel
+from mapping.resistance import Resistance
+
 
 class ReadLettersHandler(Handler):
     def initialize(self):
@@ -19,9 +21,12 @@ class ReadLettersHandler(Handler):
 
         while not self.is_finished:
             pass
-        
+
+        rounded_resistance, colors = Resistance(handled_data["resistance"]).get_resistance_and_colors()
         handled_data["letters"] = self.letters
+        handled_data["puck_colors"] = colors
         command_panel.set_mapped_letters(self.letters)
+        command_panel.set_resistance(rounded_resistance)
 
         first_corner = command_panel.find_first_corner_letter()
         second_corner = first_corner.get_next_letter()
