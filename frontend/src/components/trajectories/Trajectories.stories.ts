@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { CoordinateFactory } from '@/factories/CoordinateFactory';
 import { library } from '@fortawesome/fontawesome-svg-core';
- import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 
