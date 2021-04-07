@@ -18,7 +18,7 @@ export const defaultState = {
     remainingTime: 0,
     batteryCharge: 0,
   } as RobotConsumption,
-  puckColors: [] as Array<Color>,
+  puckColors: ['red','blue','green'] as Array<Color>,
   puckFirstCorner: null as Corner | unknown,
   plannedTrajectory: [] as Array<Coordinate>,
   currentPlannedTrajectory: [] as Array<Coordinate>,

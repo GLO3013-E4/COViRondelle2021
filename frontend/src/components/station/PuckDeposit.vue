@@ -5,7 +5,7 @@
     </v-card-title>
     <v-container height="100%">
       <v-row align="center">
-        <v-col sm="12">
+        <v-col sm="6">
           <div ref="corner" class="d-flex justify-center font-weight-bold">
             <v-avatar
               ref="puckDeposited"
@@ -19,6 +19,12 @@
             </v-avatar>
           </div>
         </v-col>
+        <v-col sm=3>
+          <v-btn color="primary" @click="testChangeStep">+step</v-btn>
+        </v-col>
+        <v-col sm=3> 
+          <v-btn color="accent" @click="testChangeGrip">changeGrip</v-btn>
+        </v-col>
       </v-row>
     </v-container>
   </v-card>
@@ -26,7 +32,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import { Color } from '@/types/color';
 import { Step } from '@/types/step';
 
@@ -34,12 +40,25 @@ import { Step } from '@/types/step';
   computed: {
     ...mapState(['puckColors', 'puckInGrip', 'currentStep', 'depositedPuck']),
   },
+  methods: {
+    ...mapMutations(['changeStep', 'changeGrip'])
+  }
 })
 export default class PuckDeposit extends Vue {
   public puckColors!: Array<Color>;
   public puckInGrip!: boolean;
   public currentStep!: Step;
   public deposited: Array<Color> = [];
+  public changeStep!: () => void;
+  public changeGrip!: () => void;
+
+  public testChangeStep(){
+    this.changeStep()
+  }
+
+  public testChangeGrip(){
+    this.changeGrip()
+  }
 
   get noPuckYet(): boolean {
     return (
