@@ -45,7 +45,7 @@
             :icon="['fas', 'map-marker-alt']"
             :height="20"
             :width="20"
-            :x="x1StrokeInitialPlacement-11"
+            :x="x1StrokeInitialPlacement - 11"
             :y="yInitialPlacement + deltaStartingPoint - 20"
             style="color: blue"
           />
@@ -60,9 +60,9 @@
             :icon="['fas', 'map-marker-alt']"
             :height="20"
             :width="20"
-            :x="x1StrokeInitialPlacement"
-            :y="yInitialPlacement + deltaEndingPoint - 15 "
-            style="color: red "
+            :x="x1StrokeInitialPlacement - 11"
+            :y="yInitialPlacement + deltaEndingPoint - 15"
+            style="color: red"
           />
         </svg>
       </v-row>
