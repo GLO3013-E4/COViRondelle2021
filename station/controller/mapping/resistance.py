@@ -10,22 +10,17 @@ class Resistance:
     def __init__(self, resistance):
         self.resistance = resistance
 
-    def round(self):
-        log10 = math.floor(math.log10(self.resistance))
-        resistance_values = [resistance[0]*(pow(10, log10)) for resistance in ResistanceValue().RESISTANCE_VALUES()]
-
-        distances = [(i, abs(self.resistance - model_resistance)) for i, model_resistance in enumerate(resistance_values)]
+    def get_resistance_and_colors(self):
+        log10 = max(0, math.floor(math.log10(self.resistance)-1))
+        resistance_values = [resistance[0]*(pow(10, log10)) for resistance in ResistanceValue().RESISTANCE_VALUES] + [resistance[0]*(pow(10, log10+1)) for resistance in ResistanceValue().RESISTANCE_VALUES]
+        distances = [(i, abs(self.resistance - model_resistance[0]), model_resistance[1]) for i, model_resistance in enumerate(resistance_values)]
 
         closest_index = min(distances, key=lambda x: x[1])[0]
-        closest_resistance = resistance_values[closest_index]
-        return closest_resistance
-
-    def get_exponent(self):
-        resistance = self.round()
-        return math.floor(math.log10(resistance) - 1)
+        closest_resistance, colors = resistance_values[closest_index]
+        return closest_resistance, colors
 
     def find_first_digits(self):
-        resistance = self.round()
+        resistance, _ = self.get_resistance_and_colors()
         resistance = resistance * 100
         return [int(digit) for digit in str(resistance)[:2]]
 
