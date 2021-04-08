@@ -25,20 +25,21 @@ export type Mutations<S = State> = {
   [SOCKET_REAL_TRAJECTORY_COORDINATE](state: S, data: string): void;
   [SOCKET_GRIP_STATE](state: S, data: string): void;
   [SOCKET_CURRENT_STEP](state: S, data: string): void;
-  changeStep(State:S):void;
-  changeGrip(State:S):void;
+  changeStep(State: S): void;
+  changeGrip(State: S): void;
 };
 
 const toMessage = (data: string): Message => JSON.parse(data);
 
 // TODO : Remove console logs, it's to test communication
 export const mutations: MutationTree<State> & Mutations = {
-
-  changeStep(state: State){
-    state.currentStep = state.currentStep+1;
+  // TODO : Remove this
+  changeStep(state: State) {
+    state.currentStep++;
   },
 
-  changeGrip(state:State){
+  // TODO : Remove this
+  changeGrip(state: State) {
     state.puckInGrip = !state.puckInGrip;
   },
 
@@ -74,9 +75,11 @@ export const mutations: MutationTree<State> & Mutations = {
     const message = toMessage(data);
     console.log('PUCK_COLORS : Received!');
     console.log(message);
-    state.puckColors = message.puckColors || defaultState.puckColors;
+    const puckColors = message.puckColors || defaultState.puckColors;
+    state.puckList.setPuckColors(puckColors);
     console.log(state);
   },
+  // TODO : Change puck first corner mutation
   [SOCKET_PUCK_FIRST_CORNER](state: State, data: string) {
     const message = toMessage(data);
     console.log('PUCK_FIRST_CORNER : Received!');
@@ -105,6 +108,7 @@ export const mutations: MutationTree<State> & Mutations = {
       state.realTrajectory.push(message.realTrajectoryCoordinate);
     console.log(state);
   },
+  // TODO : Change puck first corner mutation
   [SOCKET_GRIP_STATE](state: State, data: string) {
     const message = toMessage(data);
     console.log('GRIP_STATE : Received!');

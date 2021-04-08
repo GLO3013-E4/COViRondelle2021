@@ -19,10 +19,10 @@
             </v-avatar>
           </div>
         </v-col>
-        <v-col sm=3>
+        <v-col sm="3">
           <v-btn color="primary" @click="testChangeStep">+step</v-btn>
         </v-col>
-        <v-col sm=3> 
+        <v-col sm="3">
           <v-btn color="accent" @click="testChangeGrip">changeGrip</v-btn>
         </v-col>
       </v-row>
@@ -41,8 +41,8 @@ import { Step } from '@/types/step';
     ...mapState(['puckColors', 'puckInGrip', 'currentStep', 'depositedPuck']),
   },
   methods: {
-    ...mapMutations(['changeStep', 'changeGrip'])
-  }
+    ...mapMutations(['changeStep', 'changeGrip']),
+  },
 })
 export default class PuckDeposit extends Vue {
   public puckColors!: Array<Color>;
@@ -52,12 +52,12 @@ export default class PuckDeposit extends Vue {
   public changeStep!: () => void;
   public changeGrip!: () => void;
 
-  public testChangeStep(){
-    this.changeStep()
+  public testChangeStep() {
+    this.changeStep();
   }
 
-  public testChangeGrip(){
-    this.changeGrip()
+  public testChangeGrip() {
+    this.changeGrip();
   }
 
   get noPuckYet(): boolean {
