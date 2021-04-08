@@ -23,7 +23,6 @@ describe('Given state', () => {
       const letterCorner = wrapper.findComponent({ ref: 'corner' });
 
       expect(letterCorner.exists()).toBe(true);
-      // TODO : Fix this test
       expect(letterCorner.text()).toBe(state.puckList.first.corner);
     });
   });

@@ -52,6 +52,7 @@ export default class FirstCorner extends Vue {
     return this.puckList.first ? this.puckList.first.color : '';
   }
 
+  // TODO : Weirdly isn't displayed anymore?
   private get firstPuckCorner(): string {
     return this.puckList.first ? this.puckList.first.corner : '';
   }
