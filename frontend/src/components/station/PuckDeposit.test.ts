@@ -6,13 +6,8 @@ import { PuckListFactory } from '@/factories/PuckListFactory';
 import { PuckState } from '@/types/puckState';
 
 const mockState = (puckStates: Array<PuckState>): State => {
-  if (puckStates.length != PuckList.PUCKS_COUNT) return {} as State;
-  const puckList = PuckListFactory.make();
-
-  puckStates.forEach((state, index) => (puckList.get(index).state = state));
-
   return {
-    puckList,
+    puckList: PuckListFactory.makeWithStates(puckStates),
   } as State;
 };
 

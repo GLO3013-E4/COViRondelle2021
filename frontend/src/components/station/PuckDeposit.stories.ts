@@ -1,8 +1,8 @@
 import PuckDeposit from '@/components/station/PuckDeposit.vue';
-import { ColorFactory } from '@/factories/ColorFactory';
-import { Step } from '@/types/step';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { PuckListFactory } from '@/factories/PuckListFactory';
+import { PuckState } from '@/types/puckState';
 
 Vue.use(Vuex);
 
@@ -21,56 +21,68 @@ const Template = (args: any) => ({
 
 export const Default = Template.bind({}) as any;
 Default.args = {
-  puckColors: ColorFactory.get(3),
-  puckInGrip: false,
-  currentStep: Step.CycleNotStarted,
+  puckList: PuckListFactory.make(),
+};
+
+export const NothingDeposited = Template.bind({}) as any;
+NothingDeposited.args = {
+  puckList: PuckListFactory.makeWithStates([
+    PuckState.UNTOUCHED,
+    PuckState.UNTOUCHED,
+    PuckState.UNTOUCHED,
+  ]),
+};
+
+export const FirstPuckGripped = Template.bind({}) as any;
+FirstPuckGripped.args = {
+  puckList: PuckListFactory.makeWithStates([
+    PuckState.GRIPPED,
+    PuckState.UNTOUCHED,
+    PuckState.UNTOUCHED,
+  ]),
 };
 
 export const FirstPuckReleased = Template.bind({}) as any;
 FirstPuckReleased.args = {
-  puckColors: ColorFactory.get(3),
-  puckInGrip: false,
-  currentStep: Step.ToFirstCornerAndReleaseFirstPuck,
+  puckList: PuckListFactory.makeWithStates([
+    PuckState.RELEASED,
+    PuckState.UNTOUCHED,
+    PuckState.UNTOUCHED,
+  ]),
 };
 
-export const FirstPuckNotReleasedYet = Template.bind({}) as any;
-FirstPuckNotReleasedYet.args = {
-  puckColors: ColorFactory.get(3),
-  puckInGrip: true,
-  currentStep: Step.ToFirstCornerAndReleaseFirstPuck,
+export const SecondPuckGripped = Template.bind({}) as any;
+SecondPuckGripped.args = {
+  puckList: PuckListFactory.makeWithStates([
+    PuckState.RELEASED,
+    PuckState.GRIPPED,
+    PuckState.UNTOUCHED,
+  ]),
 };
 
 export const SecondPuckReleased = Template.bind({}) as any;
 SecondPuckReleased.args = {
-  puckColors: ColorFactory.get(3),
-  puckInGrip: false,
-  currentStep: Step.ToSecondCornerAndReleaseSecondPuck,
+  puckList: PuckListFactory.makeWithStates([
+    PuckState.RELEASED,
+    PuckState.RELEASED,
+    PuckState.UNTOUCHED,
+  ]),
 };
 
-export const SecondPuckNotReleasedYet = Template.bind({}) as any;
-SecondPuckNotReleasedYet.args = {
-  puckColors: ColorFactory.get(3),
-  puckInGrip: true,
-  currentStep: Step.ToSecondCornerAndReleaseSecondPuck,
+export const ThirdPuckGripped = Template.bind({}) as any;
+ThirdPuckGripped.args = {
+  puckList: PuckListFactory.makeWithStates([
+    PuckState.RELEASED,
+    PuckState.GRIPPED,
+    PuckState.GRIPPED,
+  ]),
 };
 
 export const ThirdPuckReleased = Template.bind({}) as any;
 ThirdPuckReleased.args = {
-  puckColors: ColorFactory.get(3),
-  puckInGrip: false,
-  currentStep: Step.ToThirdCornerAndReleaseThirdPuck,
-};
-
-export const ThirdPuckNotReleasedYet = Template.bind({}) as any;
-ThirdPuckNotReleasedYet.args = {
-  puckColors: ColorFactory.get(3),
-  puckInGrip: true,
-  currentStep: Step.ToThirdCornerAndReleaseThirdPuck,
-};
-
-export const StepAfterLastRelease = Template.bind({}) as any;
-StepAfterLastRelease.args = {
-  puckColors: ColorFactory.get(3),
-  puckInGrip: false,
-  currentStep: Step.CycleEndedAndRedLedOn,
+  puckList: PuckListFactory.makeWithStates([
+    PuckState.RELEASED,
+    PuckState.GRIPPED,
+    PuckState.RELEASED,
+  ]),
 };
