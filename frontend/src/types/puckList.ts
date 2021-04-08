@@ -4,8 +4,8 @@ import { Corner, getNextCorner } from '@/types/corner';
 import { PuckState } from '@/types/puckState';
 
 export class PuckList {
-  private readonly PUCKS_COUNT = 3;
-  private pucks: Array<Puck> = Array(this.PUCKS_COUNT).fill(new Puck());
+  static readonly PUCKS_COUNT = 3;
+  pucks: Array<Puck> = Array(PuckList.PUCKS_COUNT).fill(new Puck());
 
   get first(): Puck {
     return this.pucks[0];
@@ -44,7 +44,7 @@ export class PuckList {
   }
 
   set colors(colors: Array<Color>) {
-    if (colors.length == this.PUCKS_COUNT) {
+    if (colors.length == PuckList.PUCKS_COUNT) {
       this.pucks.forEach((puck, index) => (puck.color = colors[index]));
     }
   }
@@ -53,7 +53,7 @@ export class PuckList {
     this.first.corner = corner;
     let nextCorner = corner;
 
-    for (let i = 1; i < this.PUCKS_COUNT; i++) {
+    for (let i = 1; i < PuckList.PUCKS_COUNT; i++) {
       nextCorner = getNextCorner(nextCorner);
       this.get(i).corner = nextCorner;
     }

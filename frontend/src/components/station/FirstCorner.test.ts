@@ -1,8 +1,7 @@
 import FirstCorner from '@/components/station/FirstCorner.vue';
-import { ColorFactory } from '@/factories/ColorFactory';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
-import { CornerFactory } from '@/factories/CornerFactory';
 import { State } from '@/store/state';
+import { PuckListFactory } from '@/factories/PuckListFactory';
 
 describe('When mounting FirstCorner component', () => {
   const wrapper = wrapWithVuetifyAndStore(FirstCorner);
@@ -14,8 +13,7 @@ describe('When mounting FirstCorner component', () => {
 
 describe('Given state', () => {
   const state = {
-    puckFirstCorner: CornerFactory.get(),
-    puckColors: ColorFactory.get(1),
+    puckList: PuckListFactory.get(),
   } as State;
 
   describe('When mounting FirstCorner', () => {
@@ -25,7 +23,7 @@ describe('Given state', () => {
       const letterCorner = wrapper.findComponent({ ref: 'corner' });
 
       expect(letterCorner.exists()).toBe(true);
-      expect(letterCorner.text()).toBe(state.puckFirstCorner);
+      expect(letterCorner.text()).toBe(state.puckList.firstCorner);
     });
   });
 });
