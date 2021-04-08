@@ -5,7 +5,7 @@
     </v-card-title>
     <v-container height="100%">
       <v-row align="center">
-        <v-col sm="6">
+        <v-col sm="12">
           <div ref="corner" class="d-flex justify-center font-weight-bold">
             <v-avatar
               ref="puckDeposited"
