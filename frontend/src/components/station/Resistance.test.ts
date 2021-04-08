@@ -1,7 +1,8 @@
 import Resistance from '@/components/station/Resistance.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
-import { Color } from '@/types/color';
 import { State } from '@/store/state';
+import { PuckListFactory } from '@/factories/PuckListFactory';
+import { ColorFactory } from '@/factories/ColorFactory';
 
 describe('When mounting Resistance component', () => {
   const wrapper = wrapWithVuetifyAndStore(Resistance);
@@ -12,9 +13,12 @@ describe('When mounting Resistance component', () => {
 });
 
 describe('Given state', () => {
+  const puckList = PuckListFactory.get();
+  puckList.colors = ColorFactory.get(3);
+
   const state = {
     resistance: 100000,
-    puckColors: [Color.Red, Color.Blue, Color.Yellow],
+    puckList,
   } as State;
 
   describe('When mounting Resistance', () => {
@@ -24,14 +28,14 @@ describe('Given state', () => {
       const resistanceValue = wrapper.findComponent({ ref: 'resistanceValue' });
 
       expect(resistanceValue.exists()).toBe(true);
-      expect(resistanceValue.text()).toBe('100000 Ω');
+      expect(resistanceValue.text()).toBe(`${state.resistance} Ω`);
     });
 
     it('Should contains the right number of pucks', () => {
       const pucks = wrapper.findAllComponents({ ref: 'pucks' });
 
       expect(pucks.exists()).toBe(true);
-      expect(pucks).toHaveLength(3);
+      expect(pucks).toHaveLength(state.puckList.pucks.length);
     });
   });
 });

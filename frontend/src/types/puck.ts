@@ -16,6 +16,6 @@ export class Puck {
   }
 
   get isDeposited(): boolean {
-    return this.state == PuckState.DEPOSITED;
+    return this.state == PuckState.RELEASED;
   }
 }

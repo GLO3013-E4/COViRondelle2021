@@ -34,12 +34,11 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { mapMutations, mapState } from 'vuex';
 import { Color } from '@/types/color';
-import { Step } from '@/types/step';
 import { PuckList } from '@/types/puckList';
 
 @Component({
   computed: {
-    ...mapState(['puckList', 'currentStep']),
+    ...mapState(['puckList']),
   },
   methods: {
     ...mapMutations(['changeStep', 'changeGrip']),
@@ -47,7 +46,6 @@ import { PuckList } from '@/types/puckList';
 })
 export default class PuckDeposit extends Vue {
   public puckList!: PuckList;
-  public currentStep!: Step;
   public deposited: Array<Color> = [];
   public changeStep!: () => void;
   public changeGrip!: (hasOneGripped: boolean) => void;
@@ -62,22 +60,6 @@ export default class PuckDeposit extends Vue {
   public testChangeGrip() {
     this.changeGrip(this.hasOneGripped);
     this.hasOneGripped = !this.hasOneGripped;
-  }
-
-  get noPuckYet(): boolean {
-    return !this.puckList.hasOneGripped;
-  }
-
-  get firstPuckDeposited(): boolean {
-    return this.puckList.first.isDeposited;
-  }
-
-  get secondPuckDeposited(): boolean {
-    return this.puckList.get(1).isDeposited;
-  }
-
-  get thirdPuckDeposited(): boolean {
-    return this.puckList.get(2).isDeposited;
   }
 
   get depositedPuckColors(): Array<Color> {

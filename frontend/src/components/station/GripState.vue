@@ -20,14 +20,19 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
+import { PuckList } from '@/types/puckList';
 
 @Component({
   computed: {
-    ...mapState(['puckInGrip']),
+    ...mapState(['puckList']),
   },
 })
 export default class GripState extends Vue {
-  public puckInGrip!: boolean;
+  public puckList!: PuckList;
+
+  get puckInGrip() {
+    return this.puckList.hasOneGripped;
+  }
 }
 </script>
 

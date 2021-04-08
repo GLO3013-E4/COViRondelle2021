@@ -27,7 +27,7 @@ export class PuckList {
     if (hasOneGripped) {
       this.setPuckState(PuckState.UNTOUCHED, PuckState.GRIPPED);
     } else {
-      this.setPuckState(PuckState.GRIPPED, PuckState.DEPOSITED);
+      this.setPuckState(PuckState.GRIPPED, PuckState.RELEASED);
     }
   }
 

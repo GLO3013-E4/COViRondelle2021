@@ -1,16 +1,20 @@
 import PuckDeposit from '@/components/station/PuckDeposit.vue';
-import { Step } from '@/types/step';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
-import * as faker from 'faker';
-import { ColorFactory } from '@/factories/ColorFactory';
 import { State } from '@/store/state';
+import { PuckList } from '@/types/puckList';
+import { PuckListFactory } from '@/factories/PuckListFactory';
+import { PuckState } from '@/types/puckState';
 
-const mockState = (puckInGrip: boolean, currentStep: Step) =>
-  ({
-    puckColors: ColorFactory.get(3),
-    puckInGrip,
-    currentStep,
-  } as State);
+const mockState = (puckStates: Array<PuckState>): State => {
+  if (puckStates.length != PuckList.PUCKS_COUNT) return {} as State;
+  const puckList = PuckListFactory.get();
+
+  puckStates.forEach((state, index) => (puckList.get(index).state = state));
+
+  return {
+    puckList,
+  } as State;
+};
 
 describe('When mounting PuckDeposit component', () => {
   const wrapper = wrapWithVuetifyAndStore(PuckDeposit);
@@ -20,8 +24,10 @@ describe('When mounting PuckDeposit component', () => {
   });
 });
 
-describe('Given no puck released yet', () => {
-  const state = mockState(false, Step.CycleNotStarted);
+describe('Given all pucks untouched yet', () => {
+  const state = mockState(
+    Array(PuckList.PUCKS_COUNT).fill(PuckState.UNTOUCHED)
+  );
 
   describe('When mounting PuckDeposit', () => {
     const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
@@ -34,8 +40,12 @@ describe('Given no puck released yet', () => {
   });
 });
 
-describe('Given first puck ready to get released', () => {
-  const state = mockState(true, Step.ToFirstCornerAndReleaseFirstPuck);
+describe('Given first puck gripped', () => {
+  const state = mockState([
+    PuckState.GRIPPED,
+    PuckState.UNTOUCHED,
+    PuckState.UNTOUCHED,
+  ]);
 
   describe('When mounting PuckDeposit', () => {
     const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
@@ -49,8 +59,12 @@ describe('Given first puck ready to get released', () => {
   });
 });
 
-describe('Given first puck just got released', () => {
-  const state = mockState(false, Step.ToFirstCornerAndReleaseFirstPuck);
+describe('Given first puck released', () => {
+  const state = mockState([
+    PuckState.RELEASED,
+    PuckState.UNTOUCHED,
+    PuckState.UNTOUCHED,
+  ]);
 
   describe('When mounting PuckDeposit', () => {
     const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
@@ -64,11 +78,12 @@ describe('Given first puck just got released', () => {
   });
 });
 
-describe('Given in between first puck and second puck released', () => {
-  const state = mockState(
-    faker.random.boolean(),
-    Step.ToSecondPuckAndGrabSecondPuck
-  );
+describe('Given second puck gripped', () => {
+  const state = mockState([
+    PuckState.RELEASED,
+    PuckState.GRIPPED,
+    PuckState.UNTOUCHED,
+  ]);
 
   describe('When mounting PuckDeposit', () => {
     const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
@@ -82,8 +97,12 @@ describe('Given in between first puck and second puck released', () => {
   });
 });
 
-describe('Given second puck just released', () => {
-  const state = mockState(false, Step.ToSecondCornerAndReleaseSecondPuck);
+describe('Given second puck released', () => {
+  const state = mockState([
+    PuckState.RELEASED,
+    PuckState.RELEASED,
+    PuckState.UNTOUCHED,
+  ]);
 
   describe('When mounting PuckDeposit', () => {
     const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
@@ -97,8 +116,12 @@ describe('Given second puck just released', () => {
   });
 });
 
-describe('Given before third puck release', () => {
-  const state = mockState(false, Step.ToThirdPuckAndGrabThirdPuck);
+describe('Given third puck gripped', () => {
+  const state = mockState([
+    PuckState.RELEASED,
+    PuckState.RELEASED,
+    PuckState.GRIPPED,
+  ]);
 
   describe('When mounting PuckDeposit', () => {
     const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
@@ -112,23 +135,12 @@ describe('Given before third puck release', () => {
   });
 });
 
-describe('Given third puck just released', () => {
-  const state = mockState(false, Step.ToThirdCornerAndReleaseThirdPuck);
-
-  describe('When mounting PuckDeposit', () => {
-    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
-
-    it('Should have all puck released', () => {
-      const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
-
-      expect(pucks.exists()).toBe(true);
-      expect(pucks).toHaveLength(3);
-    });
-  });
-});
-
-describe('Given all puck released after thirdReleased step', () => {
-  const state = mockState(faker.random.boolean(), Step.ToSquareCenter);
+describe('Given third puck released', () => {
+  const state = mockState([
+    PuckState.RELEASED,
+    PuckState.RELEASED,
+    PuckState.RELEASED,
+  ]);
 
   describe('When mounting PuckDeposit', () => {
     const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
