@@ -3,9 +3,19 @@ import { PuckState } from '@/types/puckState';
 import { Corner } from '@/types/corner';
 
 export class Puck {
-  color = Color.White;
-  corner = Corner.A;
-  state = PuckState.UNTOUCHED;
+  color: Color;
+  corner: Corner;
+  state: PuckState;
+
+  constructor(
+    color: Color = Color.White,
+    corner: Corner = Corner.A,
+    state: PuckState = PuckState.UNTOUCHED
+  ) {
+    this.color = color;
+    this.corner = corner;
+    this.state = state;
+  }
 
   get isUntouched(): boolean {
     return this.state == PuckState.UNTOUCHED;

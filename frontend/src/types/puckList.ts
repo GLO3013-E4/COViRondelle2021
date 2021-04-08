@@ -5,7 +5,13 @@ import { PuckState } from '@/types/puckState';
 
 export class PuckList {
   static readonly PUCKS_COUNT = 3;
-  pucks: Array<Puck> = Array(PuckList.PUCKS_COUNT).fill(new Puck());
+  private pucks: Array<Puck>;
+
+  constructor(
+    pucks: Array<Puck> = Array(PuckList.PUCKS_COUNT).fill(new Puck())
+  ) {
+    this.pucks = pucks;
+  }
 
   get first(): Puck {
     return this.pucks[0];

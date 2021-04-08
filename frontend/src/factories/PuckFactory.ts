@@ -5,9 +5,9 @@ import { PuckStateFactory } from '@/factories/PuckStateFactory';
 import { Puck } from '@/types/puck';
 
 export const PuckFactory = factory<Puck>(() => {
-  return {
-    color: ColorFactory.get(),
-    corner: CornerFactory.get(),
-    state: PuckStateFactory.get(),
-  } as Puck;
+  return new Puck(
+    ColorFactory.get(),
+    CornerFactory.get(),
+    PuckStateFactory.get()
+  );
 });
