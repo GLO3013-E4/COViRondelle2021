@@ -8,6 +8,7 @@ export class PuckList {
   pucks: Array<Puck>;
 
   constructor(pucks: Array<Puck> = []) {
+    pucks.forEach((puck, index) => (puck.number = index + 1));
     this.pucks = pucks;
   }
 

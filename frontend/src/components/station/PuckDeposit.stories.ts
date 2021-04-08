@@ -73,7 +73,7 @@ export const ThirdPuckGripped = Template.bind({}) as any;
 ThirdPuckGripped.args = {
   puckList: PuckListFactory.makeWithStates([
     PuckState.RELEASED,
-    PuckState.GRIPPED,
+    PuckState.RELEASED,
     PuckState.GRIPPED,
   ]),
 };
@@ -82,7 +82,7 @@ export const ThirdPuckReleased = Template.bind({}) as any;
 ThirdPuckReleased.args = {
   puckList: PuckListFactory.makeWithStates([
     PuckState.RELEASED,
-    PuckState.GRIPPED,
+    PuckState.RELEASED,
     PuckState.RELEASED,
   ]),
 };

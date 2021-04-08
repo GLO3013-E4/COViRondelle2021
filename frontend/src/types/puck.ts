@@ -6,6 +6,7 @@ export class Puck {
   color: Color;
   corner: Corner;
   state: PuckState;
+  number = 0;
 
   constructor(
     color: Color = Color.White,

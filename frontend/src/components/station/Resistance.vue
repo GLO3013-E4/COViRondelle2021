@@ -17,12 +17,12 @@
           <v-avatar
             ref="pucks"
             size="30"
-            v-for="(puckColor, i) in puckColors"
+            v-for="(puck, i) in pucks"
             :key="i"
-            :color="puckColor.toString()"
+            :color="puck.color.toString()"
             class="lighten3--text font-weight-bold"
           >
-            {{ i + 1 }}
+            {{ puck.number }}
           </v-avatar>
         </v-col>
       </v-row>
@@ -44,8 +44,8 @@ export default class Resistance extends Vue {
   public resistance!: number;
   public puckList!: PuckList;
 
-  get puckColors() {
-    return this.puckList.pucks.map((puck) => puck.color);
+  get pucks() {
+    return this.puckList.pucks;
   }
 }
 </script>
