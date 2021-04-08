@@ -17,4 +17,4 @@ export const getNextCorner = (corner: Corner): Corner => {
     case Corner.D:
       return Corner.A;
   }
-}
+};

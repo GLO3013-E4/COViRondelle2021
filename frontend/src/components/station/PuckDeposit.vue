@@ -10,7 +10,7 @@
             <v-avatar
               ref="puckDeposited"
               size="30"
-              v-for="(puck, i) in depositedPucks"
+              v-for="(puck, i) in depositedPuckColors"
               :key="i"
               :color="puck.toString()"
               class="lighten3--text font-weight-bold"
@@ -35,11 +35,11 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapMutations, mapState } from 'vuex';
 import { Color } from '@/types/color';
 import { Step } from '@/types/step';
-import {PuckList} from "@/types/puckList";
+import { PuckList } from '@/types/puckList';
 
 @Component({
   computed: {
-    ...mapState(['puckList', 'currentStep', 'depositedPuck']),
+    ...mapState(['puckList', 'currentStep']),
   },
   methods: {
     ...mapMutations(['changeStep', 'changeGrip']),
@@ -52,65 +52,34 @@ export default class PuckDeposit extends Vue {
   public changeStep!: () => void;
   public changeGrip!: () => void;
 
+  // TODO : Remove this
   public testChangeStep() {
     this.changeStep();
   }
 
+  // TODO : Remove this
   public testChangeGrip() {
     this.changeGrip();
   }
 
   get noPuckYet(): boolean {
-    return (
-      this.currentStep < Step.ToFirstCornerAndReleaseFirstPuck ||
-      (this.currentStep == Step.ToFirstCornerAndReleaseFirstPuck &&
-        this.puckInGrip)
-    );
+    return !this.puckList.hasOneGripped;
   }
 
   get firstPuckDeposited(): boolean {
-    return (
-      (this.currentStep == Step.ToFirstCornerAndReleaseFirstPuck &&
-        !this.puckInGrip) ||
-      (this.currentStep > Step.ToFirstCornerAndReleaseFirstPuck &&
-        this.currentStep < Step.ToSecondCornerAndReleaseSecondPuck) ||
-      (this.currentStep == Step.ToSecondCornerAndReleaseSecondPuck &&
-        this.puckInGrip)
-    );
+    return this.puckList.first.isDeposited;
   }
 
   get secondPuckDeposited(): boolean {
-    return (
-      (this.currentStep == Step.ToSecondCornerAndReleaseSecondPuck &&
-        !this.puckInGrip) ||
-      (this.currentStep > Step.ToSecondCornerAndReleaseSecondPuck &&
-        this.currentStep < Step.ToThirdCornerAndReleaseThirdPuck) ||
-      (this.currentStep == Step.ToThirdCornerAndReleaseThirdPuck &&
-        this.puckInGrip)
-    );
+    return this.puckList.get(1).isDeposited;
   }
 
   get thirdPuckDeposited(): boolean {
-    return (
-      (this.currentStep == Step.ToThirdCornerAndReleaseThirdPuck &&
-        !this.puckInGrip) ||
-      this.currentStep > Step.ToThirdCornerAndReleaseThirdPuck
-    );
+    return this.puckList.get(2).isDeposited;
   }
 
-  get depositedPucks(): Array<Color> {
-    if (this.noPuckYet) {
-      return this.deposited;
-    } else if (this.firstPuckDeposited) {
-      this.deposited.push(this.puckColors[0]);
-      return this.deposited;
-    } else if (this.secondPuckDeposited) {
-      this.deposited.push(this.puckColors[0], this.puckColors[1]);
-      return this.deposited;
-    } else if (this.thirdPuckDeposited) {
-      return this.puckColors;
-    }
-    return this.puckColors;
+  get depositedPuckColors(): Array<Color> {
+    return this.puckList.depositedPucks.map((puck) => puck.color);
   }
 }
 </script>

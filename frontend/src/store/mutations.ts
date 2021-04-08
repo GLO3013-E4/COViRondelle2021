@@ -111,7 +111,8 @@ export const mutations: MutationTree<State> & Mutations = {
     const message = toMessage(data);
     console.log('GRIP_STATE : Received!');
     console.log(message);
-    state.puckList.hasOneGripped = message.puckInGrip || defaultState.puckList.hasOneGripped;
+    state.puckList.hasOneGripped =
+      message.puckInGrip || defaultState.puckList.hasOneGripped;
     console.log(state);
   },
   [SOCKET_CURRENT_STEP](state: State, data: string) {

@@ -1,37 +1,46 @@
-import {Puck} from '@/types/puck';
-import {Color} from '@/types/color';
-import {Corner, getNextCorner} from "@/types/corner";
-import {PuckState} from "@/types/puckState";
+import { Puck } from '@/types/puck';
+import { Color } from '@/types/color';
+import { Corner, getNextCorner } from '@/types/corner';
+import { PuckState } from '@/types/puckState';
 
 export class PuckList {
   private readonly PUCKS_COUNT = 3;
   private pucks: Array<Puck> = Array(this.PUCKS_COUNT).fill(new Puck());
 
+  get first(): Puck {
+    return this.pucks[0];
+  }
+
+  get(index: number): Puck {
+    return this.pucks[index];
+  }
+
+  get depositedPucks(): Array<Puck> {
+    return this.pucks.filter((puck) => puck.isDeposited);
+  }
+
   get hasOneGripped(): boolean {
-    return this.pucks.some((puck) => puck.isGripped());
+    return this.pucks.some((puck) => puck.isGripped);
   }
 
   set hasOneGripped(hasOneGripped: boolean) {
     if (hasOneGripped) {
-      this.setPuckState(Puck.prototype.isUntouched, PuckState.GRIPPED);
+      this.setPuckState(PuckState.UNTOUCHED, PuckState.GRIPPED);
     } else {
-      this.setPuckState(Puck.prototype.isGripped, PuckState.DEPOSITED);
+      this.setPuckState(PuckState.GRIPPED, PuckState.DEPOSITED);
     }
   }
 
-  private setPuckState(puckFunction: () => boolean, newState: PuckState) {
-    const puck = this.pucks.find(puck => puckFunction.call(puck))
+  // TODO : Using Puck getters would be nice
+  private setPuckState(oldState: PuckState, newState: PuckState) {
+    const puck = this.pucks.find((puck) => puck.state == oldState);
     if (puck) {
       puck.state = newState;
     }
   }
 
-  get first(): Puck {
-    return this.pucks[0];
-  }
-
   get colors(): Array<Color> {
-    return this.pucks.map(puck => puck.color);
+    return this.pucks.map((puck) => puck.color);
   }
 
   set colors(colors: Array<Color>) {
@@ -46,7 +55,7 @@ export class PuckList {
 
     for (let i = 1; i < this.PUCKS_COUNT; i++) {
       nextCorner = getNextCorner(nextCorner);
-      this.pucks[i].corner = nextCorner;
+      this.get(i).corner = nextCorner;
     }
   }
 }

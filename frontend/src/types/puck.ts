@@ -7,7 +7,15 @@ export class Puck {
   corner = Corner.A;
   state = PuckState.UNTOUCHED;
 
-  isUntouched = (): boolean => this.state == PuckState.UNTOUCHED;
+  get isUntouched(): boolean {
+    return this.state == PuckState.UNTOUCHED;
+  }
 
-  isGripped = (): boolean => this.state == PuckState.GRIPPED;
+  get isGripped(): boolean {
+    return this.state == PuckState.GRIPPED;
+  }
+
+  get isDeposited(): boolean {
+    return this.state == PuckState.DEPOSITED;
+  }
 }
