@@ -50,7 +50,8 @@ export default class PuckDeposit extends Vue {
   public currentStep!: Step;
   public deposited: Array<Color> = [];
   public changeStep!: () => void;
-  public changeGrip!: () => void;
+  public changeGrip!: (hasOneGripped: boolean) => void;
+  private hasOneGripped = false;
 
   // TODO : Remove this
   public testChangeStep() {
@@ -59,7 +60,8 @@ export default class PuckDeposit extends Vue {
 
   // TODO : Remove this
   public testChangeGrip() {
-    this.changeGrip();
+    this.changeGrip(this.hasOneGripped);
+    this.hasOneGripped = !this.hasOneGripped;
   }
 
   get noPuckYet(): boolean {

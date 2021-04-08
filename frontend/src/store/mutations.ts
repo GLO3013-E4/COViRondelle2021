@@ -25,8 +25,8 @@ export type Mutations<S = State> = {
   [SOCKET_REAL_TRAJECTORY_COORDINATE](state: S, data: string): void;
   [SOCKET_GRIP_STATE](state: S, data: string): void;
   [SOCKET_CURRENT_STEP](state: S, data: string): void;
-  changeStep(State: S): void;
-  changeGrip(State: S): void;
+  changeStep(state: S): void;
+  changeGrip(state: S, hasOneGripped: boolean): void;
 };
 
 const toMessage = (data: string): Message => JSON.parse(data);
@@ -38,9 +38,9 @@ export const mutations: MutationTree<State> & Mutations = {
     state.currentStep++;
   },
 
-  // TODO : Remove this (plus, it won't work!)
-  changeGrip(state: State) {
-    state.puckList.hasOneGripped = !state.puckList.hasOneGripped;
+  // TODO : Remove this
+  changeGrip(state: State, hasOneGripped: boolean) {
+    state.puckList.hasOneGripped = hasOneGripped;
   },
 
   [START_CYCLE](state: State) {
