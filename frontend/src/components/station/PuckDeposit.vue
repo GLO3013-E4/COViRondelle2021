@@ -35,18 +35,18 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapMutations, mapState } from 'vuex';
 import { Color } from '@/types/color';
 import { Step } from '@/types/step';
+import {PuckList} from "@/types/puckList";
 
 @Component({
   computed: {
-    ...mapState(['puckColors', 'puckInGrip', 'currentStep', 'depositedPuck']),
+    ...mapState(['puckList', 'currentStep', 'depositedPuck']),
   },
   methods: {
     ...mapMutations(['changeStep', 'changeGrip']),
   },
 })
 export default class PuckDeposit extends Vue {
-  public puckColors!: Array<Color>;
-  public puckInGrip!: boolean;
+  public puckList!: PuckList;
   public currentStep!: Step;
   public deposited: Array<Color> = [];
   public changeStep!: () => void;

@@ -1,15 +1,15 @@
 import { MutationTree } from 'vuex/types';
 import {
-  START_CYCLE,
-  SOCKET_ROBOT_CONSUMPTION,
-  SOCKET_TABLE_IMAGE,
-  SOCKET_RESISTANCE,
+  SOCKET_CURRENT_STEP,
+  SOCKET_GRIP_STATE,
+  SOCKET_PLANNED_TRAJECTORY_COORDINATES,
   SOCKET_PUCK_COLORS,
   SOCKET_PUCK_FIRST_CORNER,
-  SOCKET_PLANNED_TRAJECTORY_COORDINATES,
   SOCKET_REAL_TRAJECTORY_COORDINATE,
-  SOCKET_GRIP_STATE,
-  SOCKET_CURRENT_STEP,
+  SOCKET_RESISTANCE,
+  SOCKET_ROBOT_CONSUMPTION,
+  SOCKET_TABLE_IMAGE,
+  START_CYCLE,
 } from './mutation-types';
 import { defaultState, State } from './state';
 import { Message } from '@/types/message';
@@ -38,9 +38,9 @@ export const mutations: MutationTree<State> & Mutations = {
     state.currentStep++;
   },
 
-  // TODO : Remove this
+  // TODO : Remove this (plus, it won't work!)
   changeGrip(state: State) {
-    state.puckInGrip = !state.puckInGrip;
+    state.puckList.hasOneGripped = !state.puckList.hasOneGripped;
   },
 
   [START_CYCLE](state: State) {
@@ -75,17 +75,15 @@ export const mutations: MutationTree<State> & Mutations = {
     const message = toMessage(data);
     console.log('PUCK_COLORS : Received!');
     console.log(message);
-    const puckColors = message.puckColors || defaultState.puckColors;
-    state.puckList.setPuckColors(puckColors);
+    state.puckList.colors = message.puckColors || defaultState.puckList.colors;
     console.log(state);
   },
-  // TODO : Change puck first corner mutation
   [SOCKET_PUCK_FIRST_CORNER](state: State, data: string) {
     const message = toMessage(data);
     console.log('PUCK_FIRST_CORNER : Received!');
     console.log(message);
-    state.puckFirstCorner =
-      message.puckFirstCorner || defaultState.puckFirstCorner;
+    state.puckList.firstCorner =
+      message.puckFirstCorner || defaultState.puckList.first.corner;
     console.log(state);
   },
   [SOCKET_PLANNED_TRAJECTORY_COORDINATES](state: State, data: string) {
@@ -113,7 +111,7 @@ export const mutations: MutationTree<State> & Mutations = {
     const message = toMessage(data);
     console.log('GRIP_STATE : Received!');
     console.log(message);
-    state.puckInGrip = message.puckInGrip || defaultState.puckInGrip;
+    state.puckList.hasOneGripped = message.puckInGrip || defaultState.puckList.hasOneGripped;
     console.log(state);
   },
   [SOCKET_CURRENT_STEP](state: State, data: string) {

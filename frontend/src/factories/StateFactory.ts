@@ -25,7 +25,7 @@ export const StateFactory = factory<State>((fake) => {
 
   const fakePuckColors = ColorFactory.get(3);
   const fakePuckList: PuckList = defaultState.puckList;
-  fakePuckList.setPuckColors(fakePuckColors);
+  fakePuckList.colors = fakePuckColors;
 
   return {
     // TODO : Fake what isn't faked when implementing
