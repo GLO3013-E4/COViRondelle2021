@@ -25,24 +25,12 @@ export type Mutations<S = State> = {
   [SOCKET_REAL_TRAJECTORY_COORDINATE](state: S, data: string): void;
   [SOCKET_GRIP_STATE](state: S, data: string): void;
   [SOCKET_CURRENT_STEP](state: S, data: string): void;
-  changeStep(state: S): void;
-  changeGrip(state: S, hasOneGripped: boolean): void;
 };
 
 const toMessage = (data: string): Message => JSON.parse(data);
 
 // TODO : Remove console logs, it's to test communication
 export const mutations: MutationTree<State> & Mutations = {
-  // TODO : Remove this
-  changeStep(state: State) {
-    state.currentStep++;
-  },
-
-  // TODO : Remove this
-  changeGrip(state: State, hasOneGripped: boolean) {
-    state.puckList.hasOneGripped = hasOneGripped;
-  },
-
   [START_CYCLE](state: State) {
     console.log('START_CYCLE : Sent!');
     state.currentStep = Step.CycleStarted;
