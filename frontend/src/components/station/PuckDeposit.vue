@@ -10,9 +10,9 @@
             <v-avatar
               ref="puckDeposited"
               size="30"
-              v-for="(puck, i) in depositedPuckColors"
+              v-for="(puckColor, i) in releasedPuckColors"
               :key="i"
-              :color="puck.toString()"
+              :color="puckColor.toString()"
               class="lighten3--text font-weight-bold"
             >
               {{ i + 1 }}
@@ -62,8 +62,8 @@ export default class PuckDeposit extends Vue {
     this.hasOneGripped = !this.hasOneGripped;
   }
 
-  get depositedPuckColors(): Array<Color> {
-    return this.puckList.depositedPucks.map((puck) => puck.color);
+  get releasedPuckColors(): Array<Color> {
+    return this.puckList.releasedPucks.map((puck) => puck.color);
   }
 }
 </script>

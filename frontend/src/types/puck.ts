@@ -18,14 +18,14 @@ export class Puck {
   }
 
   get isUntouched(): boolean {
-    return this.state == PuckState.UNTOUCHED;
+    return this.state === PuckState.UNTOUCHED;
   }
 
   get isGripped(): boolean {
-    return this.state == PuckState.GRIPPED;
+    return this.state === PuckState.GRIPPED;
   }
 
-  get isDeposited(): boolean {
-    return this.state == PuckState.RELEASED;
+  get isReleased(): boolean {
+    return this.state === PuckState.RELEASED;
   }
 }

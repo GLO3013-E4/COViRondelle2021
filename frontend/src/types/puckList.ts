@@ -21,8 +21,8 @@ export class PuckList {
     return this.pucks[index];
   }
 
-  get depositedPucks(): Array<Puck> {
-    return this.pucks.filter((puck) => puck.isDeposited);
+  get releasedPucks(): Array<Puck> {
+    return this.pucks.filter((puck) => puck.isReleased);
   }
 
   get hasOneGripped(): boolean {
@@ -39,7 +39,7 @@ export class PuckList {
 
   // TODO : Using Puck getters would be nice
   private setPuckState(oldState: PuckState, newState: PuckState) {
-    const puck = this.pucks.find((puck) => puck.state == oldState);
+    const puck = this.pucks.find((puck) => puck.state === oldState);
     if (puck) {
       puck.state = newState;
     }
