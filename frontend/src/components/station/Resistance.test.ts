@@ -2,7 +2,6 @@ import Resistance from '@/components/station/Resistance.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import { State } from '@/store/state';
 import { PuckListFactory } from '@/factories/PuckListFactory';
-import { ColorFactory } from '@/factories/ColorFactory';
 
 describe('When mounting Resistance component', () => {
   const wrapper = wrapWithVuetifyAndStore(Resistance);
@@ -13,12 +12,9 @@ describe('When mounting Resistance component', () => {
 });
 
 describe('Given state', () => {
-  const puckList = PuckListFactory.make();
-  puckList.colors = ColorFactory.get(3);
-
   const state = {
     resistance: 100000,
-    puckList,
+    puckList: PuckListFactory.make(),
   } as State;
 
   describe('When mounting Resistance', () => {

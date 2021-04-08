@@ -1,10 +1,8 @@
 import { factory } from 'node-factory';
 import { defaultState, State } from '@/store/state';
-import { ColorFactory } from '@/factories/ColorFactory';
-import { CornerFactory } from '@/factories/CornerFactory';
 import { CoordinateFactory } from '@/factories/CoordinateFactory';
 import { Coordinate } from '@/types/coordinate';
-import { PuckList } from '@/types/puckList';
+import { PuckListFactory } from '@/factories/PuckListFactory';
 
 const TRAJECTORY_POINTS = 20;
 const CURRENT_TRAJECTORY_POINTS = TRAJECTORY_POINTS / 2;
@@ -23,10 +21,6 @@ export const StateFactory = factory<State>((fake) => {
     });
   };
 
-  const fakePuckColors = ColorFactory.get(3);
-  const fakePuckList: PuckList = defaultState.puckList;
-  fakePuckList.colors = fakePuckColors;
-
   return {
     // TODO : Fake what isn't faked when implementing
     cycleReady: defaultState.cycleReady,
@@ -35,16 +29,13 @@ export const StateFactory = factory<State>((fake) => {
     // TODO : Find a way to implement ResistanceFactory
     resistance: fake.random.number(10000),
     robotConsumption: defaultState.robotConsumption,
-    puckColors: fakePuckColors,
-    puckFirstCorner: CornerFactory.get(),
     plannedTrajectory,
     currentPlannedTrajectory: plannedTrajectory.slice(
       0,
       CURRENT_TRAJECTORY_POINTS
     ),
     realTrajectory: fakeRealPoints(plannedTrajectory),
-    puckInGrip: fake.random.boolean(),
     currentStep: defaultState.currentStep,
-    puckList: fakePuckList,
+    puckList: PuckListFactory.make(),
   };
 });

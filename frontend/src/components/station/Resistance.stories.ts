@@ -1,8 +1,7 @@
 import Resistance from '@/components/station/Resistance.vue';
-import { ColorFactory } from '@/factories/ColorFactory';
-import { Color } from '@/types/color';
 import Vuex from 'vuex';
 import Vue from 'vue';
+import { PuckListFactory } from '@/factories/PuckListFactory';
 
 Vue.use(Vuex);
 
@@ -22,17 +21,5 @@ const Template = (args: any) => ({
 export const Default = Template.bind({}) as any;
 Default.args = {
   resistance: 100000,
-  puckColors: ColorFactory.get(3),
-};
-
-export const WhiteAndBlackPuck = Template.bind({}) as any;
-WhiteAndBlackPuck.args = {
-  resistance: 100000,
-  puckColors: [Color.White, Color.Black, Color.Grey],
-};
-
-export const YellowPuckAndBrown = Template.bind({}) as any;
-YellowPuckAndBrown.args = {
-  resistance: 100000,
-  puckColors: [Color.Yellow, Color.Brown, ColorFactory.get()],
+  puckList: PuckListFactory.make(),
 };
