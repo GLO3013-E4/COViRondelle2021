@@ -33,16 +33,20 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-import { Color } from '@/types/color';
+import { PuckList } from '@/types/puckList';
 
 @Component({
   computed: {
-    ...mapState(['resistance', 'puckColors']),
+    ...mapState(['resistance', 'puckList']),
   },
 })
 export default class Resistance extends Vue {
   public resistance!: number;
-  public puckColors!: Array<Color>;
+  public puckList!: PuckList;
+
+  get puckColors() {
+    return this.puckList.pucks.map((puck) => puck.color);
+  }
 }
 </script>
 

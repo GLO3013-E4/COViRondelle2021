@@ -13,7 +13,7 @@ describe('When mounting FirstCorner component', () => {
 
 describe('Given state', () => {
   const state = {
-    puckList: PuckListFactory.get(),
+    puckList: PuckListFactory.make(),
   } as State;
 
   describe('When mounting FirstCorner', () => {
@@ -23,7 +23,8 @@ describe('Given state', () => {
       const letterCorner = wrapper.findComponent({ ref: 'corner' });
 
       expect(letterCorner.exists()).toBe(true);
-      expect(letterCorner.text()).toBe(state.puckList.firstCorner);
+      // TODO : Fix this test
+      expect(letterCorner.text()).toBe(state.puckList.first.corner);
     });
   });
 });

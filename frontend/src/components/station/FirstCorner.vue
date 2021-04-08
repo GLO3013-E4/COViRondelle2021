@@ -11,7 +11,7 @@
               dot
               :bottom="this.placementBottom"
               :left="this.placementLeft"
-              :color="firstPuckColor"
+              :color="this.firstPuckColor"
             >
               {{ this.puckFirstCorner }}
             </v-badge>
@@ -37,19 +37,23 @@ export default class FirstCorner extends Vue {
   private puckList!: PuckList;
 
   private get placementLeft(): boolean {
-    return this.firstPuckCorner == Corner.A || this.firstPuckCorner == Corner.D;
+    return (
+      this.firstPuckCorner === Corner.A || this.firstPuckCorner === Corner.D
+    );
   }
 
   private get placementBottom(): boolean {
-    return this.firstPuckCorner == Corner.C || this.firstPuckCorner == Corner.D;
+    return (
+      this.firstPuckCorner === Corner.C || this.firstPuckCorner === Corner.D
+    );
   }
 
   private get firstPuckColor(): string {
-    return this.puckList.first.color;
+    return this.puckList.first ? this.puckList.first.color : '';
   }
 
   private get firstPuckCorner(): string {
-    return this.puckList.first.corner;
+    return this.puckList.first ? this.puckList.first.corner : '';
   }
 }
 </script>
