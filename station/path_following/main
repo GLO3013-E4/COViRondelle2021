@@ -129,12 +129,8 @@ class PathFollower:
 
             self.pub.publish("FINISHED")
 
-
     def convert_angle_to_driver_angle(self, angle):
         angle = math.degrees(angle)
-
-        if angle < 0:
-            angle += 360
         return angle
 
     def distance(self, point1, point2):
