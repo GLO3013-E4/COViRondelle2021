@@ -226,7 +226,7 @@ class Vectorizer:
         else:
             raise Exception("wtf, objective is none")
 
-    def find_goal_angle(self, diff_y, diff_x):
+    def find_goal_angle(self, diff_y, diff_x, destination):
         angle = -math.atan2(diff_y, diff_x)
         if angle == -0:
             angle = 0
@@ -244,6 +244,13 @@ class Vectorizer:
             angle_correction -= 2 * math.pi
         elif angle_correction < -math.pi:
             angle_correction += 2 * math.pi
+
+        if destination == "RESISTANCE":
+            angle_correction -= math.pi/2
+        elif destination == "CENTER":
+            pass
+        else:
+            pass
 
         return angle_correction
 
