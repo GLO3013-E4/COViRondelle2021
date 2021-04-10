@@ -1,19 +1,19 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import rospy
+import json
 from std_msgs.msg import String, Bool
+from letter_mapping import Mapping
 
 
 class LetterReading:
     def __init__(self):
         rospy.init_node('letter_reading', anonymous=True)
-        self.pub = rospy.Publisher('letters', String, queue_size=10)
-        self.sub = rospy.Subscriber('read_letters', Bool, self.callback)
-
+        self.pub = rospy.Publisher('letters', String, queue_size=1)
+        self.sub = rospy.Subscriber('read_letters',Bool ,self.callback, queue_size=1)
+        self.mapping = Mapping()
     def callback(self, data):
-        if data.data:
-            # TODO : Callback of letter_reading
-            # self.pub.publish(var)
-            raise Exception
+        if(data.data):
+            self.pub.publish(json.dumps(self.mapping.letter_mapping()))
 
 
 if __name__ == '__main__':
