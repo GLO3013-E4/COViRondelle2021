@@ -47,7 +47,7 @@ export const en = {
   consumptions: {
     consumptionInformation: 'Consumption information',
     currentBatteryCharge: 'Current battery charge',
-    robotConsumption: 'Robot coonsumption',
+    robotConsumption: 'Robot consumption',
     wheel1: 'Wheel 1',
     wheel2: 'Wheel 2',
     wheel3: 'Wheel 3',
