@@ -95,8 +95,6 @@ class PathFollower:
             self.pub.publish(json.dumps(published_vector))
             self.angle_rate.sleep()
 
-        self.pub.publish("FINISHED")
-
     def callback_path(self, data):
         nodes = []
         for coordinate in data.poses:
@@ -128,10 +126,7 @@ class PathFollower:
 
 def path_follower():
     rospy.init_node('path_following', anonymous=True)
-
     PathFollower()
-
-
     rospy.spin()
 
 
