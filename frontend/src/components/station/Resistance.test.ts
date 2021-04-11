@@ -1,7 +1,7 @@
 import Resistance from '@/components/station/Resistance.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
-import { Color } from '@/types/color';
 import { State } from '@/store/state';
+import { PuckListFactory } from '@/factories/PuckListFactory';
 
 describe('When mounting Resistance component', () => {
   const wrapper = wrapWithVuetifyAndStore(Resistance);
@@ -14,7 +14,7 @@ describe('When mounting Resistance component', () => {
 describe('Given state', () => {
   const state = {
     resistance: 100000,
-    puckColors: [Color.Red, Color.Blue, Color.Yellow],
+    puckList: PuckListFactory.make(),
   } as State;
 
   describe('When mounting Resistance', () => {
@@ -24,14 +24,14 @@ describe('Given state', () => {
       const resistanceValue = wrapper.findComponent({ ref: 'resistanceValue' });
 
       expect(resistanceValue.exists()).toBe(true);
-      expect(resistanceValue.text()).toBe('100000 Ω');
+      expect(resistanceValue.text()).toBe(`${state.resistance} Ω`);
     });
 
     it('Should contains the right number of pucks', () => {
       const pucks = wrapper.findAllComponents({ ref: 'pucks' });
 
       expect(pucks.exists()).toBe(true);
-      expect(pucks).toHaveLength(3);
+      expect(pucks).toHaveLength(state.puckList.pucks.length);
     });
   });
 });
@@ -44,7 +44,7 @@ describe('Given no state', () => {
       const resistanceValue = wrapper.findComponent({ ref: 'resistanceValue' });
 
       expect(resistanceValue.exists()).toBe(true);
-      expect(resistanceValue.text()).toBe('Ω');
+      expect(resistanceValue.text()).toBe('0 Ω');
     });
 
     it('Should not contain pucks', () => {

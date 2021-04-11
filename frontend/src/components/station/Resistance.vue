@@ -17,12 +17,12 @@
           <v-avatar
             ref="pucks"
             size="30"
-            v-for="(puckColor, i) in puckColors"
+            v-for="(puck, i) in pucks"
             :key="i"
-            :color="puckColor.toString()"
+            :color="puck.color.toString()"
             class="lighten3--text font-weight-bold"
           >
-            {{ i + 1 }}
+            {{ puck.number }}
           </v-avatar>
         </v-col>
       </v-row>
@@ -33,16 +33,20 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-import { Color } from '@/types/color';
+import { PuckList } from '@/types/puckList';
 
 @Component({
   computed: {
-    ...mapState(['resistance', 'puckColors']),
+    ...mapState(['resistance', 'puckList']),
   },
 })
 export default class Resistance extends Vue {
   public resistance!: number;
-  public puckColors!: Array<Color>;
+  public puckList!: PuckList;
+
+  get pucks() {
+    return this.puckList.pucks;
+  }
 }
 </script>
 

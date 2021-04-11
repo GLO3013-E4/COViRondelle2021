@@ -4,9 +4,9 @@
       <h5 class="white--text">{{ $t('station.gripState') }}</h5>
     </v-card-title>
     <div
-        ref="gripState"
-        class="d-flex justify-center font-weight-bold"
-        id="divChip"
+      ref="gripState"
+      class="d-flex justify-center font-weight-bold"
+      id="divChip"
     >
       <!-- TODO : Do not change color/opacity on hover -->
       <v-chip :color="puckInGrip ? 'green' : 'red'">
@@ -18,16 +18,21 @@
   </v-card>
 </template>
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
-import {mapState} from 'vuex';
+import { Component, Vue } from 'vue-property-decorator';
+import { mapState } from 'vuex';
+import { PuckList } from '@/types/puckList';
 
 @Component({
   computed: {
-    ...mapState(['puckInGrip']),
+    ...mapState(['puckList']),
   },
 })
 export default class GripState extends Vue {
-  public puckInGrip!: boolean;
+  public puckList!: PuckList;
+
+  get puckInGrip() {
+    return this.puckList.hasOneGripped;
+  }
 }
 </script>
 
