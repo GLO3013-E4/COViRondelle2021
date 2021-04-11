@@ -16,7 +16,7 @@ class Map:
     different obstacles and objects laying on the table are.
     """
     def __init__(self, image_width, image_height, obstacles, pucks, start, end, node_size=25,
-                 safety_cushion=10, robot_width=80, obstacle_width=100, puck_width=2,
+                 safety_cushion=10, robot_width=80, obstacle_width=100, puck_width=15,
                  obstacle_representation=ObstacleRepresentation.SQUARE):
         self.node_size = node_size
         self.safety_cushion = safety_cushion

@@ -1,7 +1,4 @@
 import math
-import json
-import rospy
-from std_msgs.msg import String
 
 from path_following.config import NODE_SIZE
 from path_following.destination import Destination
@@ -19,7 +16,7 @@ class Vectorizer:
         self.distance_correction_threshold = 3*self.cm_to_pixel
         self.length_correction_threshold = 0
         self.angle_correction_threshold = 0
-        self.checkpoint_trigger_threshold = 30
+        self.checkpoint_trigger_threshold = 55
         self.last_checkpoint = None
         self.goal = None
         self.checkpoint = None
@@ -27,9 +24,6 @@ class Vectorizer:
         self.destination = Destination.OTHER
 
         self.objective = None
-
-        self.node_pub  = rospy.Publisher("node_pub",String,queue_size=10)
-        self.vector_pub  = rospy.Publisher("vector_pub",String, queue_size=10)
 
     def set_mode(self, mode: MovementMode):
         self.mode = mode
@@ -42,7 +36,7 @@ class Vectorizer:
 
         # update checkpoint
         node_distances = [
-            i for i, node in enumerate(self.path) if distance(self.robot_position, node) <= 65
+            i for i, node in enumerate(self.path) if distance(self.robot_position, node) <= self.checkpoint_trigger_threshold
         ]
         # node_distances = [
         #     i for i, node in enumerate(self.path) if self.robot_position[0] >= node[0] or distance(self.robot_position, node) <= 50
@@ -64,6 +58,8 @@ class Vectorizer:
     def minimize_path(self, path: [[float, float]]):
         if path and len(path) > 1:
             minimized_path = [path[0]]
+        elif len(path) == 1:
+            path = [self.robot_position, path[0]]
         current_angle = math.atan2(path[1][1] - path[0][1], path[1][0] - path[0][0])
         for i, node in enumerate(path[2:-1]):
             x, y = node
@@ -203,7 +199,6 @@ class Vectorizer:
 
     def path_to_vectors(self):
         path_from_robot = self.get_path_from_robot(self.path)
-        self.node_pub.publish(json.dumps(path_from_robot))
 
         if self.destination is Destination.PUCK or self.destination is Destination.CORNER:
             tuple_length_angle = self.calculate_distance_and_angle()

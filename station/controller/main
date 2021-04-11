@@ -1,35 +1,86 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
-from commands.command_builder import CommandBuilder
+from std_msgs.msg import String, Bool
+from geometry_msgs.msg import PoseStamped
+
 from commands.chain_of_commands_factory import ChainOfCommandsFactory
+from commands.command_builder import CommandBuilder
+from commands.step import Step
 
-
+steps = [
+        Step.MOVE_ROBOT_TO_RESISTANCE_STATION,
+        Step.READ_RESISTANCE,
+        Step.MOVE_ROBOT_TO_COMMAND_PANEL,
+        Step.READ_LETTERS,
+        Step.MOVE_ROBOT_TO_NEXT_PUCK,
+        Step.GRIP_PUCK, 
+        Step.MOVE_ROBOT_TO_NEXT_CORNER,
+        Step.RELEASE_PUCK,
+        Step.MOVE_ROBOT_TO_NEXT_PUCK,
+        Step.GRIP_PUCK,
+        Step.MOVE_ROBOT_TO_NEXT_CORNER,
+        Step.RELEASE_PUCK,
+        Step.MOVE_ROBOT_TO_NEXT_PUCK,
+        Step.GRIP_PUCK,
+        Step.MOVE_ROBOT_TO_NEXT_CORNER,
+        Step.RELEASE_PUCK,
+        Step.MOVE_ROBOT_TO_SQUARE_CENTER
+        ]
+    
 def create_chain_of_commands():
+    # steps = [
+    #         Step.MOVE_ROBOT_TO_RESISTANCE_STATION,
+    #         Step.READ_RESISTANCE,
+    #         Step.MOVE_ROBOT_TO_COMMAND_PANEL,
+    #         Step.READ_LETTERS,
+    #         Step.MOVE_ROBOT_TO_NEXT_PUCK,
+    #         Step.GRIP_PUCK, 
+    #         Step.MOVE_ROBOT_TO_NEXT_CORNER,
+    #         Step.RELEASE_PUCK,
+    #         Step.MOVE_ROBOT_TO_NEXT_PUCK,
+    #         Step.GRIP_PUCK,
+    #         Step.MOVE_ROBOT_TO_NEXT_CORNER,
+    #         Step.RELEASE_PUCK,
+    #         Step.MOVE_ROBOT_TO_NEXT_PUCK,
+    #         Step.GRIP_PUCK,
+    #         Step.MOVE_ROBOT_TO_NEXT_CORNER,
+    #         Step.RELEASE_PUCK,
+    #         Step.MOVE_ROBOT_TO_SQUARE_CENTER
+    #         ]
+    steps = [Step.MOVE_ROBOT_TO_RESISTANCE_STATION, Step.READ_RESISTANCE]
+
     command_builder = CommandBuilder()
     chain_of_commands_factory = ChainOfCommandsFactory(command_builder)
 
-    return chain_of_commands_factory.create()
+    return chain_of_commands_factory.create(steps)
 
+def initialize_handled_data():
+    return {"puck_colors": ["purple", "orange", "yellow"],
+     "corners": ["D", "C", "A"],
+      "movement_vectors_string_pub": rospy.Publisher('movement_vectors_string', String, queue_size=1),
+      "goal_pub":rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=1),
+      "calculate_pucks_pub": rospy.Publisher("calculate_pucks", Bool, queue_size=1),
+      "read_letters_pub": rospy.Publisher("read_letters", Bool, queue_size=1),
+      "path_following_mode_pub": rospy.Publisher("following_mode", String, queue_size=1),
+      "RESISTANCE_STATION": (170, 755),
+      "COMMAND_PANEL": (1200, 430),
+      "convertion_to_cm": 6.882391855,
+      "resistance_y_dist": 15,
+      "resistance_x_dist": 15
+      }
 
 def controller():
-    rospy.init_node('controller', anonymous=True)
-
-    rate = rospy.Rate(10)
-
-    is_started = False
-
-    while not rospy.is_shutdown():
-        if not is_started:
-            first_command = create_chain_of_commands()
-            first_command.execute()
-            is_started = True
-
-        rate.sleep()
+    commands = create_chain_of_commands()
+    handled_data = initialize_handled_data()
+    rospy.Rate(0.2).sleep()
+    for command in commands:
+        handled_data = command.execute(handled_data)
 
 
 if __name__ == '__main__':
     try:
+        rospy.init_node('controller', anonymous=True)
         controller()
     except rospy.ROSInterruptException:
         pass

@@ -1,6 +1,6 @@
 import math
 
-from scripts.src.mapping.resistance_value import ResistanceValue
+from mapping.resistance_value import ResistanceValue
 
 
 class Resistance:

@@ -12,6 +12,7 @@ disable=
     R0904, # too-many-public-methods
     R0913, # too-many-arguments
     R0903, # too-few-public-methods
+    R0915, # too-many-statements
     W0511, # fixme
     W0201, # attribute-defined-outside-init
     R0201, # no-self-use

@@ -3,4 +3,4 @@ from enum import Enum
 
 class MovementMode(Enum):
     GRIP = 0
-    OHMMETER = 1
+    OHMMETER = 2
