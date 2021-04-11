@@ -15,7 +15,7 @@ class StubHandler(Handler):
     def handle(self, handled_data):
         self.on_handle(handled_data)
 
-        return ONCE_HANDLED_DATA, True
+        return ONCE_HANDLED_DATA
 
     def unregister(self):
         self.on_unregister()
@@ -49,10 +49,12 @@ def test_given_multiple_handlers_when_executing_then_handle(mocker):
 def test_given_next_command_when_executing_then_pass_handled_data(mocker):
     on_handle_stub = mocker.stub(name='on_handle_stub')
     on_unregister_stub = mocker.stub(name='on_unregister_stub')
-    command = Command([StubHandler(on_handle_stub, on_unregister_stub)])
-    command.next_command = Command([StubHandler(on_handle_stub, on_unregister_stub)])
 
-    command.execute(HANDLED_DATA)
+    commands = [Command([StubHandler(on_handle_stub, on_unregister_stub)]), Command([StubHandler(on_handle_stub, on_unregister_stub)])]
+
+    handled_data = HANDLED_DATA
+    for command in commands:
+        handled_data = command.execute(handled_data)
 
     on_handle_stub.assert_has_calls([call(None), call(ONCE_HANDLED_DATA)])
     assert on_unregister_stub.call_count == 2
