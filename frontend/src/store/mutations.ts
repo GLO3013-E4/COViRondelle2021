@@ -29,7 +29,6 @@ export type Mutations<S = State> = {
 
 const toMessage = (data: string): Message => JSON.parse(data);
 
-// TODO : Remove console logs, it's to test communication
 export const mutations: MutationTree<State> & Mutations = {
   [START_CYCLE](state: State) {
     state.currentStep = Step.CycleStarted;
