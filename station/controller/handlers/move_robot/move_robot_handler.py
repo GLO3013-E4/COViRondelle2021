@@ -1,7 +1,6 @@
 import json
 
 import rospy
-from geometry_msgs.msg import PoseStamped
 from handlers.handler import Handler
 from std_msgs.msg import String
 

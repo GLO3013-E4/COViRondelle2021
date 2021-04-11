@@ -20,10 +20,8 @@ class ReadResistanceHandler(Handler):
             handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0, 6)))
             rospy.logerr("grrrrrrrrrrrrrr")
             self.rate.sleep()
-            pass
 
         handled_data['resistance'] = self.resistance
-        
         handled_data["puck_colors"] = ResistanceMapper().find_colors(Resistance(self.resistance))
 
         self.rate.sleep()

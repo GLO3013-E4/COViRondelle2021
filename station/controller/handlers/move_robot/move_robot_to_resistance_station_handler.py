@@ -2,9 +2,7 @@ import json
 
 import rospy
 from handlers.handler import Handler
-from handlers.move_robot.move_robot_handler import MoveRobotHandler
 from std_msgs.msg import String
-from utils import create_pose
 
 
 class MoveRobotToResistanceStationHandler(Handler):
@@ -26,7 +24,6 @@ class MoveRobotToResistanceStationHandler(Handler):
     def handle(self, handled_data=None):
         if not self.initialized:
             self.initialize()
-        
         while self.robot_pose is None:
             pass
 

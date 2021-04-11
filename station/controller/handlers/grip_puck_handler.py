@@ -1,7 +1,6 @@
 import json
 
 import rospy
-from std_msgs.msg import String
 
 from handlers.handler import Handler
 

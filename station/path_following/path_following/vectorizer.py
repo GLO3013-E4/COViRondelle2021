@@ -1,8 +1,4 @@
-import json
 import math
-
-import rospy
-from std_msgs.msg import String
 
 from path_following.config import NODE_SIZE
 from path_following.destination import Destination

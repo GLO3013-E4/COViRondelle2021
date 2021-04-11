@@ -20,7 +20,6 @@ class ReleasePuckHandler(Handler):
     def initialize(self):
         self.sub = rospy.Subscriber("robot", String, self.callback, queue_size=1)
         self.initialized = True
-    
     def callback(self, data):
         robot_dict = json.loads(data.data)
         self.position_tuple = robot_dict["prehenseur"]
