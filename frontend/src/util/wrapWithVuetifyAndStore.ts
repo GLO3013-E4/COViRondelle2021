@@ -3,9 +3,12 @@ import { createLocalVue, shallowMount, VueClass } from '@vue/test-utils';
 import Vuex from 'vuex';
 import VueI18n from 'vue-i18n';
 import { defaultLocale, messages } from '@/i18n';
-import { State } from '@/store/state';
+import { defaultState, State } from '@/store/state';
 
-const wrapWithVuetifyAndStore = (component: VueClass<any>, state?: State) => {
+const wrapWithVuetifyAndStore = (
+  component: VueClass<any>,
+  state: State = defaultState
+) => {
   const vuetify = new Vuetify();
   const localVue = createLocalVue();
 

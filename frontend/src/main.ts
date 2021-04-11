@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import VueI18n from 'vue-i18n';
 import App from './App.vue';
 import vuetify from '@/plugins/vuetify';
+import '@/plugins/font-awesome';
 import store from './store';
 import { io } from 'socket.io-client';
 import VueSocketIOExt from 'vue-socket.io-extended';

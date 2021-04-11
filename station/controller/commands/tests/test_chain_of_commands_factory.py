@@ -37,21 +37,13 @@ class MockCommandBuilder(CommandBuilder):
 chain_of_commands_factory = ChainOfCommandsFactory(MockCommandBuilder())
 
 
-def test_when_creating_then_return_first_command():
-    command = chain_of_commands_factory.create()
+def test_when_creating_then_return_all_commands():
+    commands = chain_of_commands_factory.create()
 
-    assert command is first_command
-
-
-def test_when_creating_then_return_correct_next_commands():
-    command = chain_of_commands_factory.create()
-
-    assert command.next_command is second_command
-    assert command.next_command.next_command is third_command
-    assert command.next_command.next_command.next_command is None
+    assert commands == [first_command, second_command, third_command]
 
 
 def test_given_steps_when_creating_then_return_command_for_sent_steps():
-    command = chain_of_commands_factory.create(sent_steps)
+    commands = chain_of_commands_factory.create(sent_steps)
 
-    assert command is command_for_sent_steps
+    assert commands == [command_for_sent_steps]

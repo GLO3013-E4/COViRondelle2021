@@ -1,9 +1,8 @@
 import { factory } from 'node-factory';
 import { defaultState, State } from '@/store/state';
-import { ColorFactory } from '@/factories/ColorFactory';
-import { CornerFactory } from '@/factories/CornerFactory';
 import { CoordinateFactory } from '@/factories/CoordinateFactory';
 import { Coordinate } from '@/types/coordinate';
+import { PuckListFactory } from '@/factories/PuckListFactory';
 
 const TRAJECTORY_POINTS = 20;
 const CURRENT_TRAJECTORY_POINTS = TRAJECTORY_POINTS / 2;
@@ -30,15 +29,13 @@ export const StateFactory = factory<State>((fake) => {
     // TODO : Find a way to implement ResistanceFactory
     resistance: fake.random.number(10000),
     robotConsumption: defaultState.robotConsumption,
-    puckColors: ColorFactory.get(3),
-    puckFirstCorner: CornerFactory.get(),
     plannedTrajectory,
     currentPlannedTrajectory: plannedTrajectory.slice(
       0,
       CURRENT_TRAJECTORY_POINTS
     ),
     realTrajectory: fakeRealPoints(plannedTrajectory),
-    puckInGrip: fake.random.boolean(),
     currentStep: defaultState.currentStep,
+    puckList: PuckListFactory.make(),
   };
 });
