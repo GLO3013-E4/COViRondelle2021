@@ -2,6 +2,7 @@ import Trajectories from '@/components/trajectories/Trajectories.vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { CoordinateFactory } from '@/factories/CoordinateFactory';
+import { TableImage } from '@/types/tableImage';
 
 Vue.use(Vuex);
 
@@ -19,10 +20,14 @@ const Template = (args: any) => ({
 });
 
 const plannedTrajectory = CoordinateFactory.make(4);
+const simplifyTableImage = (tableImage: string): TableImage => ({
+  current: tableImage,
+  previous: tableImage,
+});
 
 export const WithCurrentTrajectorySameAsPlanned = Template.bind({}) as any;
 WithCurrentTrajectorySameAsPlanned.args = {
-  tableImage: '/stub_table_image.jpg',
+  tableImage: simplifyTableImage('/stub_table_image.jpg'),
   plannedTrajectory,
   currentPlannedTrajectory: plannedTrajectory,
   realTrajectory: [],
@@ -30,7 +35,7 @@ WithCurrentTrajectorySameAsPlanned.args = {
 
 export const WithCurrentTrajectoryPartOfPlanned = Template.bind({}) as any;
 WithCurrentTrajectoryPartOfPlanned.args = {
-  tableImage: '/stub_table_image.jpg',
+  tableImage: simplifyTableImage('/stub_table_image.jpg'),
   plannedTrajectory,
   currentPlannedTrajectory: plannedTrajectory.slice(0, 2),
   realTrajectory: [],
@@ -38,7 +43,7 @@ WithCurrentTrajectoryPartOfPlanned.args = {
 
 export const withoutTrajectories = Template.bind({}) as any;
 withoutTrajectories.args = {
-  tableImage: '/stub_table_image.jpg',
+  tableImage: simplifyTableImage('/stub_table_image.jpg'),
   plannedTrajectory: [],
   currentPlannedTrajectory: [],
   realTrajectory: [],
@@ -82,7 +87,7 @@ const plannedTrajectoryToYellowPuck = [
 
 export const TrajectoryToYellowPuck = Template.bind({}) as any;
 TrajectoryToYellowPuck.args = {
-  tableImage: '/stub_table_image1.jpg',
+  tableImage: simplifyTableImage('/stub_table_image1.jpg'),
   plannedTrajectory: plannedTrajectoryToYellowPuck,
   currentPlannedTrajectory: plannedTrajectoryToYellowPuck,
   realTrajectory: [],
@@ -100,7 +105,7 @@ const realTrajectoryToYellowPuck = [
 
 export const RealTrajectoryToYellowPuck = Template.bind({}) as any;
 RealTrajectoryToYellowPuck.args = {
-  tableImage: '/stub_table_image1.jpg',
+  tableImage: simplifyTableImage('/stub_table_image1.jpg'),
   plannedTrajectory: plannedTrajectoryToYellowPuck,
   currentPlannedTrajectory: plannedTrajectoryToYellowPuck,
   realTrajectory: realTrajectoryToYellowPuck,
