@@ -64,16 +64,15 @@ class Map:
     def add_bottom_wall(self, width):
         end_wall_bot = min(len(self.node_matrix), (self.table_walls_end_y // self.node_size)+1)
         for row in range(
-                (self.table_walls_end_y - width) // self.node_size,
+                (self.table_walls_end_y - width - 30) // self.node_size,
                 end_wall_bot):
             for node in self.node_matrix[row]:
                 node.role = TileRole.OBSTACLE
 
     def add_right_wall(self, width):
-        end_wall_right = min(len(self.node_matrix[0]), (self.table_walls_end_x//self.node_size)+1)
         for column in range(
-                (self.table_walls_end_x - width) // self.node_size,
-                end_wall_right):
+                self.table_walls_end_x // self.node_size,
+                self.table_walls_end_x + width):
             for row in range(len(self.node_matrix)):
                 node = self.get_node_from_matrix_coordinates((column, row))
                 node.role = TileRole.OBSTACLE
