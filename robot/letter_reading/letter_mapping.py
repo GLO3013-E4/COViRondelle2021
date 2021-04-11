@@ -5,25 +5,54 @@ from map_letters import map_letters
 from process_image_to_grayscale import process_image_to_grayscale
 
 
-def letter_mapping():
-    GPIO.setmode(GPIO.BOARD)
+class Mapping:
+    def __init__(self):
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)
 
-    GPIO.setup(12, GPIO.OUT)
-    servo1 = GPIO.PWM(12, 50)
-    GPIO.setup(13, GPIO.OUT)
-    servo2 = GPIO.PWM(13, 50)
+        GPIO.setup(11, GPIO.OUT)
+        self.servo1 = GPIO.PWM(11, 50)
+        GPIO.setup(12, GPIO.OUT)
+        self.servo2 = GPIO.PWM(12, 50)
 
-    servo1.start(0)
-    servo2.start(0)
-    x_position = 7
-    y_position = 6
-    servo2.ChangeDutyCycle(x_position)
-    servo1.ChangeDutyCycle(y_position)
+        self.servo1.start(0)
+        self.servo2.start(0)
 
-    image = capture_image_from_embed_camera()
+    def stop_servos(self):
+        self.servo1.stop()
+        self.servo2.stop()
+        GPIO.cleanup()
 
-    grayscale = process_image_to_grayscale(image)
+    def letter_mapping(self):
+        letters = self.camera_panning(7.3)
+        if len(letters) == 9:
+            self.stop_servos()
+            return letters
+        letters = self.camera_panning(4)
+        if len(letters) == 9:
+            self.stop_servos()
+            return letters
+        letters = self.camera_panning(10)
+        if len(letters) == 9:
+            self.stop_servos()
+            return letters
 
-    letters = map_letters(grayscale)
+        if letters == []:
+            return letters
 
-    return letters
+        return letters
+
+    def camera_panning(self, x_position):
+        self.servo1.start(0)
+        self.servo2.start(0)
+        self.servo2.ChangeDutyCycle(x_position)
+        self.servo1.ChangeDutyCycle(7.5)
+        #on peut mettre un sleep pour donner du temps aux servos :
+        #time.sleep(1)
+        self.servo2.stop()
+        self.servo1.stop()
+
+        image = capture_image_from_embed_camera()
+        grayscale = process_image_to_grayscale(image)
+        letters = map_letters(grayscale)
+        return letters
