@@ -9,7 +9,6 @@ from flask import Flask
 from flask_socketio import SocketIO
 from std_msgs.msg import Bool, String
 from sensor_msgs.msg import Image
-from geometry_msgs.msg import Pose
 from nav_msgs.msg import Path
 
 app = Flask(__name__)
@@ -38,8 +37,9 @@ def handle_world_cam_image_raw(image):
     socket.emit("table_image", json_data)
 
 
-def handle_robot(pose):
-    json_data = to_json({"realTrajectoryCoordinate": {"x": pose.pose.position.x, "y": pose.pose.position.y}})
+def handle_robot(robot):
+    data = json.loads(robot.data)["robot"]
+    json_data = to_json({"realTrajectoryCoordinate": {"x": data[0], "y": data[1]}})
     socket.emit("real_trajectory_coordinate", json_data)
 
 
@@ -75,7 +75,6 @@ def handle_movement_vectors_string(movement_vectors_string):
 
 
 def handle_resistance(resistance):
-    print(resistance)
     json_data = to_json({"resistance": int(resistance.data)})
     socket.emit("resistance", json_data)
 
@@ -85,8 +84,9 @@ def handle_puck_colors(puck_colors):
     socket.emit("puck_colors", json_data)
 
 
-def handle_puck_corners(puck_corners):
-    json_data = to_json({"puckFirstCorner": puck_corners.data.split(",")[0]})
+def handle_letters(letters):
+    first_letter = json.loads(letters.data)[0]
+    json_data = to_json({"puckFirstCorner": first_letter})
     socket.emit("puck_first_corner", json_data)
 
 
@@ -96,12 +96,12 @@ def websockets():
 
     rospy.Subscriber("robot_consumption", String, handle_robot_consumption)
     rospy.Subscriber("world_cam/image_raw", Image, handle_world_cam_image_raw, queue_size=1, buff_size=52428800)
-    rospy.Subscriber("robot", Pose, handle_robot)  # TODO : Fix this
+    rospy.Subscriber("robot", String, handle_robot)
     rospy.Subscriber("path", Path, handle_path)
     rospy.Subscriber("movement_vectors_string", String, handle_movement_vectors_string)
     rospy.Subscriber("resistance", String, handle_resistance)
     rospy.Subscriber("puck_colors", String, handle_puck_colors)  # TODO : Fix this with new controller logic
-    rospy.Subscriber("puck_corners", String, handle_puck_corners)  # TODO : Fix this with new controller logic
+    rospy.Subscriber("letters", String, handle_letters)
 
     # TODO : Implement cycle steps
 
