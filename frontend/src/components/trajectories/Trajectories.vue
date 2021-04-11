@@ -33,23 +33,23 @@
                 :points="this.realTrajectoryPoints"
                 style="fill: none; stroke: red; stroke-width: 2"
               />
-              <circle
-                class="start"
-                :cx="this.startPointX"
-                :cy="this.startPointY"
-                r="2"
-                stroke="red"
-                stroke-width="2"
-                fill="none"
+              <font-awesome-icon
+                :icon="['fas', 'map-marker-alt']"
+                :height="40"
+                :width="40"
+                :x="this.startPointX"
+                :y="this.startPointY"
+                :viewBox="`200 ${this.rescaledWidth} ${this.rescaledWidth} ${this.rescaledHeight}`"
+                style="color: blue"
               />
-              <circle
-                class="destination"
-                :cx="this.destinationPointX"
-                :cy="this.destinationPointY"
-                r="2"
-                stroke="green"
-                stroke-width="2"
-                fill="none"
+              <font-awesome-icon
+                :icon="['fas', 'map-marker-alt']"
+                :height="40"
+                :width="40"
+                :x="this.destinationPointX"
+                :y="this.destinationPointY"
+                :viewBox="`200 ${this.rescaledWidth} ${this.rescaledWidth} ${this.rescaledHeight}`"
+                style="color: red"
               />
             </svg>
           </div>
