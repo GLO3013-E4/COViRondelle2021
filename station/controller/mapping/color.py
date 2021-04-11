@@ -10,5 +10,5 @@ class Color(Enum):
     GREEN = "green"
     BLUE = "blue"
     VIOLET = "purple"
-    GREY = "grey" 
+    GREY = "grey"
     WHITE = "white"
