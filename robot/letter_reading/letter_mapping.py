@@ -1,5 +1,4 @@
 import RPi.GPIO as GPIO
-import time
 
 from capture_image_from_embed_camera import capture_image_from_embed_camera
 from map_letters import map_letters
@@ -58,7 +57,6 @@ class Mapping:
         self.servo2.start(0)
         self.servo2.ChangeDutyCycle(x_position)
         self.servo1.ChangeDutyCycle(7.5)
-        
         #on peut mettre un sleep pour donner du temps aux servos :
         #time.sleep(1)
         self.servo2.stop()
@@ -71,4 +69,4 @@ class Mapping:
         letters = map_letters(grayscale)
 
         return letters
-
+        
