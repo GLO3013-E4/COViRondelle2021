@@ -1,8 +1,4 @@
-import json
 import math
-
-import rospy
-from std_msgs.msg import String
 
 from path_following.config import NODE_SIZE
 from path_following.destination import Destination
@@ -62,6 +58,8 @@ class Vectorizer:
     def minimize_path(self, path: [[float, float]]):
         if path and len(path) > 1:
             minimized_path = [path[0]]
+        elif len(path) == 1:
+            path = [self.robot_position, path[0]]
         current_angle = math.atan2(path[1][1] - path[0][1], path[1][0] - path[0][0])
         for i, node in enumerate(path[2:-1]):
             x, y = node

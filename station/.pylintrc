@@ -27,6 +27,8 @@ disable=
     W0511, # fixme
     W0612, # unused-variable
     E0611, # no name in module
+    R0915, # too many statements
+    E1133, # non iterable value
 ignore=
     Dockerfile,
     README.md,

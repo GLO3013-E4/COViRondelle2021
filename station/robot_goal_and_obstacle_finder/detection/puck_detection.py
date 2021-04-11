@@ -53,21 +53,7 @@ class PuckDetection:
             puck["radius"] = radius
             puck_positions[hsv_color].append(puck)
 
-        grey_pucks = puck_positions["grey"]
-
-        if len(grey_pucks) == 2:
-            black_puck_array = []
-            black_puck = {}
-            for i, puck in enumerate(grey_pucks):
-                if (puck["center_position"][0]) < 1100 and int(puck["center_position"][1]) > 450:
-                    black_puck = puck
-                    del grey_pucks[i]
-            puck_positions["grey"] = grey_pucks
-            black_puck_array.append(black_puck)
-            puck_positions["black"] = black_puck_array
-
-        pucks_sorted = self.sort_pucks(puck_positions)
-        return pucks_sorted
+        return puck_positions
 
     def sort_pucks(self, puck_positions):
         for key, pucks in puck_positions.items():

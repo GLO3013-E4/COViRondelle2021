@@ -10,6 +10,9 @@
     "storybook": "start-storybook -p 9001 -c .storybook -s public"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/vue-fontawesome": "^2.0.2",
     "core-js": "^3.10.0",
     "socket.io-client": "^4.0.1",
     "vue": "^2.6.11",
@@ -22,8 +25,9 @@
     "vuex": "^3.6.2"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^6.1.21",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@storybook/addon-controls": "6.2.3",
+    "@storybook/addon-essentials": "^6.1.21",
     "@storybook/vue": "^6.2.2",
     "@types/jest": "^26.0.22",
     "@typescript-eslint/eslint-plugin": "^2.33.0",

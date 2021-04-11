@@ -1,4 +1,4 @@
-from enum import Enum, auto
+from enum import Enum
 
 
 class Color(Enum):
@@ -10,5 +10,5 @@ class Color(Enum):
     GREEN = "green"
     BLUE = "blue"
     VIOLET = "purple"
-    GREY = "grey" #TODO: check si c'est pas 'gray'?
+    GREY = "grey"
     WHITE = "white"

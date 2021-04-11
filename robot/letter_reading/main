@@ -11,6 +11,7 @@ class LetterReading:
         self.pub = rospy.Publisher('letters', String, queue_size=1)
         self.sub = rospy.Subscriber('read_letters',Bool ,self.callback, queue_size=1)
         self.mapping = Mapping()
+
     def callback(self, data):
         if(data.data):
             self.pub.publish(json.dumps(self.mapping.letter_mapping()))

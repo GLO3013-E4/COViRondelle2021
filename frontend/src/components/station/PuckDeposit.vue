@@ -10,12 +10,12 @@
             <v-avatar
               ref="puckDeposited"
               size="30"
-              v-for="(puck, i) in depositedPucks"
+              v-for="(puck, i) in releasedPucks"
               :key="i"
-              :color="puck.toString()"
+              :color="puck.color.toString()"
               class="lighten3--text font-weight-bold"
             >
-              {{ i + 1 }}
+              {{ puck.number }}
             </v-avatar>
           </div>
         </v-col>
@@ -28,70 +28,19 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import { Color } from '@/types/color';
-import { Step } from '@/types/step';
+import { PuckList } from '@/types/puckList';
 
 @Component({
   computed: {
-    ...mapState(['puckColors', 'puckInGrip', 'currentStep', 'depositedPuck']),
+    ...mapState(['puckList']),
   },
 })
 export default class PuckDeposit extends Vue {
-  public puckColors!: Array<Color>;
-  public puckInGrip!: boolean;
-  public currentStep!: Step;
+  public puckList!: PuckList;
   public deposited: Array<Color> = [];
 
-  get noPuckYet(): boolean {
-    return (
-      this.currentStep < Step.ToFirstCornerAndReleaseFirstPuck ||
-      (this.currentStep == Step.ToFirstCornerAndReleaseFirstPuck &&
-        this.puckInGrip)
-    );
-  }
-
-  get firstPuckDeposited(): boolean {
-    return (
-      (this.currentStep == Step.ToFirstCornerAndReleaseFirstPuck &&
-        !this.puckInGrip) ||
-      (this.currentStep > Step.ToFirstCornerAndReleaseFirstPuck &&
-        this.currentStep < Step.ToSecondCornerAndReleaseSecondPuck) ||
-      (this.currentStep == Step.ToSecondCornerAndReleaseSecondPuck &&
-        this.puckInGrip)
-    );
-  }
-
-  get secondPuckDeposited(): boolean {
-    return (
-      (this.currentStep == Step.ToSecondCornerAndReleaseSecondPuck &&
-        !this.puckInGrip) ||
-      (this.currentStep > Step.ToSecondCornerAndReleaseSecondPuck &&
-        this.currentStep < Step.ToThirdCornerAndReleaseThirdPuck) ||
-      (this.currentStep == Step.ToThirdCornerAndReleaseThirdPuck &&
-        this.puckInGrip)
-    );
-  }
-
-  get thirdPuckDeposited(): boolean {
-    return (
-      (this.currentStep == Step.ToThirdCornerAndReleaseThirdPuck &&
-        !this.puckInGrip) ||
-      this.currentStep > Step.ToThirdCornerAndReleaseThirdPuck
-    );
-  }
-
-  get depositedPucks(): Array<Color> {
-    if (this.noPuckYet) {
-      return this.deposited;
-    } else if (this.firstPuckDeposited) {
-      this.deposited.push(this.puckColors[0]);
-      return this.deposited;
-    } else if (this.secondPuckDeposited) {
-      this.deposited.push(this.puckColors[0], this.puckColors[1]);
-      return this.deposited;
-    } else if (this.thirdPuckDeposited) {
-      return this.puckColors;
-    }
-    return this.puckColors;
+  get releasedPucks() {
+    return this.puckList.releasedPucks;
   }
 }
 </script>

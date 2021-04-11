@@ -48,17 +48,12 @@ class PathFollower:
 
     def move_robot_to_goal(self):
         if self.destination == "PUCK":
-            self.get_close_to_goal("prehenseur", 200, MovementMode.GRIP)
+            self.get_close_to_goal("prehenseur", 150, MovementMode.GRIP)
             self.align_robot_angle_towards_goal(MovementMode.GRIP)
             self.pub.publish("FINISHED")
 
-        elif self.destination == "RESISTANCE":
-            self.get_close_to_goal("robot", 200, MovementMode.OHMMETER)
-            self.align_robot_angle_towards_goal(MovementMode.OHMMETER)
-            self.pub.publish("FINISHED")
-
         elif self.destination == "CENTER":
-            self.get_close_to_goal("robot", 50, MovementMode.GRIP)
+            self.get_close_to_goal("robot", 120, MovementMode.GRIP)
             self.align_robot_towards_right_wall()
             self.pub.publish("FINISHED")
 
@@ -91,9 +86,16 @@ class PathFollower:
     def align_robot_towards_right_wall(self):
         angle = -self.robot_dict["angle"]
 
-        published_vector = (0, self.convert_angle_to_driver_angle(angle), MovementMode.GRIP.value)
-        self.pub.publish(json.dumps(published_vector))
-        self.angle_rate.sleep()
+        angle_in_radians = 0.1
+        while not (-angle_in_radians <= angle <= angle_in_radians):
+            angle = -self.robot_dict["angle"]
+            if angle >= math.pi:
+                angle= angle - 2*math.pi
+            published_vector = (0, self.convert_angle_to_driver_angle(angle), MovementMode.GRIP.value)
+            self.pub.publish(json.dumps(published_vector))
+            self.angle_rate.sleep()
+
+        self.pub.publish("FINISHED")
 
     def callback_path(self, data):
         nodes = []

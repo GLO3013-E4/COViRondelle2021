@@ -1,6 +1,14 @@
 import GripState from '@/components/station/GripState.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import { State } from '@/store/state';
+import { PuckListFactory } from '@/factories/PuckListFactory';
+import { PuckState } from '@/types/puckState';
+
+const mockState = (puckStates: Array<PuckState>): State => {
+  return {
+    puckList: PuckListFactory.makeWithStates(puckStates),
+  } as State;
+};
 
 describe('When mounting GripState component', () => {
   const wrapper = wrapWithVuetifyAndStore(GripState);
@@ -11,9 +19,11 @@ describe('When mounting GripState component', () => {
 });
 
 describe('Given puck in grip', () => {
-  const state = {
-    puckInGrip: true,
-  } as State;
+  const state = mockState([
+    PuckState.GRIPPED,
+    PuckState.UNTOUCHED,
+    PuckState.UNTOUCHED,
+  ]);
 
   describe('When mounting GripState', () => {
     const wrapper = wrapWithVuetifyAndStore(GripState, state);
@@ -28,9 +38,11 @@ describe('Given puck in grip', () => {
 });
 
 describe('Given puck released', () => {
-  const state = {
-    puckInGrip: false,
-  } as State;
+  const state = mockState([
+    PuckState.RELEASED,
+    PuckState.UNTOUCHED,
+    PuckState.UNTOUCHED,
+  ]);
 
   describe('When mounting GripState', () => {
     const wrapper = wrapWithVuetifyAndStore(GripState, state);
