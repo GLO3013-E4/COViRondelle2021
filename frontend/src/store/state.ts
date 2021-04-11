@@ -1,13 +1,12 @@
-import { Color } from '@/types/color';
-import { Corner } from '@/types/corner';
 import { Coordinate } from '@/types/coordinate';
 import { Step } from '@/types/step';
 import { RobotConsumption } from '@/types/robotConsumption';
+import { PuckList } from '@/types/puckList';
 
 export const defaultState = {
   cycleReady: false,
   cycleStarted: false,
-  tableImage: '', // TODO : Table image most likely won't be a string, this is temporary
+  tableImage: '',
   resistance: 0,
   robotConsumption: {
     wheel1: 0,
@@ -18,13 +17,11 @@ export const defaultState = {
     remainingTime: 0,
     batteryCharge: 0,
   } as RobotConsumption,
-  puckColors: [] as Array<Color>,
-  puckFirstCorner: null as Corner | unknown,
   plannedTrajectory: [] as Array<Coordinate>,
   currentPlannedTrajectory: [] as Array<Coordinate>,
   realTrajectory: [] as Array<Coordinate>,
-  puckInGrip: false,
   currentStep: Step.CycleNotStarted,
+  puckList: new PuckList(),
 };
 
 export const state = {
@@ -33,13 +30,11 @@ export const state = {
   tableImage: defaultState.tableImage,
   resistance: defaultState.resistance,
   robotConsumption: defaultState.robotConsumption,
-  puckColors: defaultState.puckColors,
-  puckFirstCorner: defaultState.puckFirstCorner,
   plannedTrajectory: defaultState.plannedTrajectory,
   currentPlannedTrajectory: defaultState.currentPlannedTrajectory,
   realTrajectory: defaultState.realTrajectory,
-  puckInGrip: defaultState.puckInGrip,
   currentStep: defaultState.currentStep,
+  puckList: defaultState.puckList,
 };
 
 export type State = typeof state;

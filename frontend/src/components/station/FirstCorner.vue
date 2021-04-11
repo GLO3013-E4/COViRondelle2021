@@ -11,9 +11,9 @@
               dot
               :bottom="this.placementBottom"
               :left="this.placementLeft"
-              :color="firstPuckColor"
+              :color="this.firstPuckColor"
             >
-              {{ this.puckFirstCorner }}
+              {{ this.firstPuckCorner }}
             </v-badge>
           </div>
         </v-col>
@@ -26,29 +26,34 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import { Corner } from '@/types/corner';
-import { Color } from '@/types/color';
+import { PuckList } from '@/types/puckList';
 
 @Component({
   computed: {
-    ...mapState(['puckFirstCorner', 'puckColors']),
+    ...mapState(['puckList']),
   },
 })
 export default class FirstCorner extends Vue {
-  private puckFirstCorner!: Corner;
-  private puckColors!: Array<Color>;
+  private puckList!: PuckList;
 
   private get placementLeft(): boolean {
-    return this.puckFirstCorner == Corner.A || this.puckFirstCorner == Corner.D;
+    return (
+      this.firstPuckCorner === Corner.A || this.firstPuckCorner === Corner.D
+    );
   }
 
   private get placementBottom(): boolean {
-    return this.puckFirstCorner == Corner.C || this.puckFirstCorner == Corner.D;
+    return (
+      this.firstPuckCorner === Corner.C || this.firstPuckCorner === Corner.D
+    );
   }
 
   private get firstPuckColor(): string {
-    return this.puckColors && this.puckColors.length > 0
-      ? this.puckColors[0]
-      : '';
+    return this.puckList.first ? this.puckList.first.color : '';
+  }
+
+  private get firstPuckCorner(): string {
+    return this.puckList.first ? this.puckList.first.corner : '';
   }
 }
 </script>

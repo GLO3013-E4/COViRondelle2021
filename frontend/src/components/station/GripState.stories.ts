@@ -1,6 +1,9 @@
 import GripState from '@/components/station/GripState.vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { PuckState } from '@/types/puckState';
+import { PuckListFactory } from '@/factories/PuckListFactory';
+import { PuckList } from '@/types/puckList';
 
 Vue.use(Vuex);
 
@@ -19,10 +22,16 @@ const Template = (args: any) => ({
 
 export const WithPuckInGrip = Template.bind({}) as any;
 WithPuckInGrip.args = {
-  puckInGrip: true,
+  puckList: PuckListFactory.makeWithStates(
+    Array(PuckList.PUCKS_COUNT).fill(PuckState.UNTOUCHED)
+  ),
 };
 
 export const WithoutPuckInGrip = Template.bind({}) as any;
 WithoutPuckInGrip.args = {
-  puckInGrip: false,
+  puckList: PuckListFactory.makeWithStates([
+    PuckState.GRIPPED,
+    PuckState.UNTOUCHED,
+    PuckState.UNTOUCHED,
+  ]),
 };
