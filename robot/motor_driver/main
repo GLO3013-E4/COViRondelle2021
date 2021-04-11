@@ -14,7 +14,6 @@ class MotorDriver:
         self.min_angle_rotation_correction = 2 
         self.ser = serial.Serial('/dev/ttyACM0',115200, timeout=0.01)
         self.ser.flush()
-        print("init: " + self.ser.name)
         time.sleep(1)
         while not self.ser.isOpen():
             pass
@@ -23,7 +22,6 @@ class MotorDriver:
         self.pub = rospy.Publisher("resistance", String, queue_size=1)
 
     def callback(self, data):
-        print(data)
         if data.data != "FINISHED":
             movement = json.loads(data.data)
             distance, angle, mode = movement
@@ -62,7 +60,6 @@ class MotorDriver:
         while not ackReceived:
             while self.ser.in_waiting == 0:
                 if time.time() - writeStart >= 1000:  #a enlevé si superflue
-                    print("ACK EXPIRED")
                     ackReceived = True
                     return
             
@@ -71,12 +68,9 @@ class MotorDriver:
             if 'res' in line:
                 line = line.strip('res')
                 line = line.strip('\r\n')
-                print("RECEIVED RESISTANCE : " + line)
                 return line
             if 'ack' in line:
                 ackReceived = True
-                print("ACK RECEIVED")
-            print("Réponse===" + line)
 
 if __name__ == "__main__":
     try:

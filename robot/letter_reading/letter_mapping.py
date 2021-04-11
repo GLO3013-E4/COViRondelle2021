@@ -24,7 +24,6 @@ class Mapping:
         GPIO.cleanup()
 
     def letter_mapping(self):
-        letters = []
         letters = self.camera_panning(7.3)
         if len(letters) == 9:
             self.stop_servos()
@@ -38,19 +37,10 @@ class Mapping:
             self.stop_servos()
             return letters
 
-        #peut etre pas une bonne idée une exception
         if letters == []:
             return letters
 
-        #retirer le code en bas?, on le fait deja dans camera_panning
-        image = capture_image_from_embed_camera()
-
-        grayscale = process_image_to_grayscale(image)
-
-        letters = map_letters(grayscale)
-
         return letters
-
 
     def camera_panning(self, x_position):
         self.servo1.start(0)
@@ -63,10 +53,6 @@ class Mapping:
         self.servo1.stop()
 
         image = capture_image_from_embed_camera()
-
         grayscale = process_image_to_grayscale(image)
-
         letters = map_letters(grayscale)
-
         return letters
-        
