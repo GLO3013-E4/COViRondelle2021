@@ -282,4 +282,3 @@ class TestResistance:
     #     resistance = Resistance(self.A_RESISTANCE_7)
     #     exponent = resistance.get_exponent()
     #     assert exponent == self.EXPECTED_EXPONENT_7
-
