@@ -17,9 +17,5 @@ class ResistanceMapper:
             9: Color.WHITE.value
         }
 
-    def find_colors(self, resistance):
-        return [
-            self.number_to_color[resistance.get_first_digit()],
-            self.number_to_color[resistance.get_second_digit()],
-            self.number_to_color[resistance.get_exponent()]
-        ]
+    def find_exponent_color(self, resistance):
+        return self.number_to_color[resistance.get_exponent()]
