@@ -7,29 +7,11 @@ from geometry_msgs.msg import PoseStamped
 from commands.chain_of_commands_factory import ChainOfCommandsFactory
 from commands.command_builder import CommandBuilder
 from commands.step import Step
+from commands.cycle_steps import cycle_steps
 
-steps = [
-        Step.MOVE_ROBOT_TO_RESISTANCE_STATION,
-        Step.READ_RESISTANCE,
-        Step.MOVE_ROBOT_TO_COMMAND_PANEL,
-        Step.READ_LETTERS,
-        Step.MOVE_ROBOT_TO_NEXT_PUCK,
-        Step.GRIP_PUCK, 
-        Step.MOVE_ROBOT_TO_NEXT_CORNER,
-        Step.RELEASE_PUCK,
-        Step.MOVE_ROBOT_TO_NEXT_PUCK,
-        Step.GRIP_PUCK,
-        Step.MOVE_ROBOT_TO_NEXT_CORNER,
-        Step.RELEASE_PUCK,
-        Step.MOVE_ROBOT_TO_NEXT_PUCK,
-        Step.GRIP_PUCK,
-        Step.MOVE_ROBOT_TO_NEXT_CORNER,
-        Step.RELEASE_PUCK,
-        Step.MOVE_ROBOT_TO_SQUARE_CENTER
-        ]
-    
+
 def create_chain_of_commands():
-    # steps = [
+    # cycle_steps = [
     #         Step.MOVE_ROBOT_TO_RESISTANCE_STATION,
     #         Step.READ_RESISTANCE,
     #         Step.MOVE_ROBOT_TO_COMMAND_PANEL,
@@ -48,27 +30,31 @@ def create_chain_of_commands():
     #         Step.RELEASE_PUCK,
     #         Step.MOVE_ROBOT_TO_SQUARE_CENTER
     #         ]
-    steps = [Step.MOVE_ROBOT_TO_RESISTANCE_STATION, Step.READ_RESISTANCE]
+    #cycle_steps = [Step.MOVE_ROBOT_TO_RESISTANCE_STATION, Step.READ_RESISTANCE]
 
     command_builder = CommandBuilder()
     chain_of_commands_factory = ChainOfCommandsFactory(command_builder)
 
-    return chain_of_commands_factory.create(steps)
+    #TODO: si on a le truc de next_command, on a juste a lier la derniere commande a la premiere et il devrait le faire a l'infini
+    return chain_of_commands_factory.create(cycle_steps*100)
+
 
 def initialize_handled_data():
-    return {"puck_colors": ["purple", "orange", "yellow"],
-     "corners": ["D", "C", "A"],
-      "movement_vectors_string_pub": rospy.Publisher('movement_vectors_string', String, queue_size=1),
-      "goal_pub":rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=1),
-      "calculate_pucks_pub": rospy.Publisher("calculate_pucks", Bool, queue_size=1),
-      "read_letters_pub": rospy.Publisher("read_letters", Bool, queue_size=1),
-      "path_following_mode_pub": rospy.Publisher("following_mode", String, queue_size=1),
-      "RESISTANCE_STATION": (170, 755),
-      "COMMAND_PANEL": (1200, 430),
-      "convertion_to_cm": 6.882391855,
-      "resistance_y_dist": 15,
-      "resistance_x_dist": 15
-      }
+    return {
+        #"puck_colors": ["purple", "orange", "yellow"],
+        #"corners": ["D", "C", "A"],
+        "movement_vectors_string_pub": rospy.Publisher('movement_vectors_string', String, queue_size=1),
+        "goal_pub": rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=1),
+        "calculate_pucks_pub": rospy.Publisher("calculate_pucks", Bool, queue_size=1),
+        "read_letters_pub": rospy.Publisher("read_letters", Bool, queue_size=1),
+        "path_following_mode_pub": rospy.Publisher("following_mode", String, queue_size=1),
+        "RESISTANCE_STATION": (170, 755),
+        "COMMAND_PANEL": (1200, 430),
+        "convertion_to_cm": 6.882391855,
+        "resistance_y_dist": 15,
+        "resistance_x_dist": 15
+    }
+
 
 def controller():
     commands = create_chain_of_commands()
