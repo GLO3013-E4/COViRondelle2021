@@ -8,12 +8,13 @@ class RedLight:
     def __init__(self):
         rospy.init_node('red_light', anonymous=True)
         rospy.Subscriber('red_light',Bool ,self.callback)
-        RLD = RedLightDriver()
+        self.RLD = RedLightDriver()
+        self.RLD.off()
     def callback(self, data):
         if(data.data):
-            RLD.on()
+            self.RLD.on()
         else:
-            RLD.off()
+            self.RLD.off()
 
 if __name__ == '__main__':
     try:
