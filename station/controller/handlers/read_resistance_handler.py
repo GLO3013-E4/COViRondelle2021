@@ -37,7 +37,7 @@ class ReadResistanceHandler(Handler):
     def read_resistance(self, data):
         resistance = json.loads(data.data)
         self.resistance = resistance
-        self.is_finished = resistance != 0
+        self.is_finished = resistance != -1
 
     def unregister(self):
         self.sub.unregister()

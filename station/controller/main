@@ -36,7 +36,7 @@ def create_chain_of_commands():
     chain_of_commands_factory = ChainOfCommandsFactory(command_builder)
 
     #TODO: si on a le truc de next_command, on a juste a lier la derniere commande a la premiere et il devrait le faire a l'infini
-    return chain_of_commands_factory.create(cycle_steps*1)
+    return chain_of_commands_factory.create(cycle_steps*3)
 
 
 def initialize_handled_data():
