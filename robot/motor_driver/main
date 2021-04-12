@@ -28,6 +28,14 @@ class MotorDriver:
             self.move_robot(distance, angle, mode)
 
     def move_robot(self, module, angle, mode):
+        #correction angle
+
+
+        #mouvement
+            #mouvement normal (angle, module)
+            #mouvement lent a droite
+
+
         if abs(angle) >= self.min_angle_rotation:
             if angle >= 0:
                 self.writeStringWithAck(f"4:{angle}")
