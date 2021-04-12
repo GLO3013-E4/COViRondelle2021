@@ -81,7 +81,8 @@ def handle_resistance(resistance):
 
 
 def handle_puck_colors(puck_colors):
-    json_data = to_json({"puckColors": puck_colors.data.split(",")})
+    json_data = to_json({"puckColors": json.loads(puck_colors.data)})
+    rospy.logerr(json_data)
     socket.emit("puck_colors", json_data)
 
 

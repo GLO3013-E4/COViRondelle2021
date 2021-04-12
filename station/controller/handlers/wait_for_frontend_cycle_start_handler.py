@@ -14,11 +14,11 @@ class WaitForFrontendCycleStartHandler(Handler):
     def handle(self, handled_data):
         self.initialize()
 
-        handled_data["red_light_pub"].publish(False)
         while not self.is_finished:
             rospy.logerr("waiting for frontend start cycle")
             self.rate.sleep()
 
+        handled_data["red_light_pub"].publish(False)
         return handled_data
 
     def handle_start_cycle(self, _):
