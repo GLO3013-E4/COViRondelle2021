@@ -30,7 +30,7 @@ def create_chain_of_commands():
     # #         # Step.RELEASE_PUCK,
     # #         Step.MOVE_ROBOT_TO_SQUARE_CENTER
     #         ]
-    #cycle_steps = [Step.MOVE_ROBOT_TO_RESISTANCE_STATION, Step.READ_RESISTANCE]
+    # cycle_steps = [Step.MOVE_ROBOT_TO_RESISTANCE_STATION, Step.READ_RESISTANCE]
 
     command_builder = CommandBuilder()
     chain_of_commands_factory = ChainOfCommandsFactory(command_builder)
