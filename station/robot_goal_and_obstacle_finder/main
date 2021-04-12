@@ -57,7 +57,7 @@ class RobotGoalAndObstacleFinder:
         self.robot_publisher.publish(json.dumps(self.find_robot_and_angle(cv2_array), default=self.convert))
         self.obstacles = json.dumps(self.find_obstacles(cv2_array), default=self.convert)
         self.obstacles_publisher.publish(self.obstacles)
-        self.square = json.dumps(self.find_square(), default=self.convert)
+        self.square = json.dumps(self.find_square(cv2_array), default=self.convert)
         self.square_publisher.publish(self.square)
         if self.calculate_pucks:
             self.pucks = json.dumps(self.find_pucks(cv2_array), default=self.convert)

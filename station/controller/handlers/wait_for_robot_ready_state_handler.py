@@ -4,6 +4,9 @@ from handlers.handler import Handler
 
 
 class WaitForRobotReadyStateHandler(Handler):
+    def __init__(self):
+        self.rate = rospy.Rate(1)
+
     def initialize(self):
         self.sub = rospy.Subscriber("robot", String, self.handle_ready)
         self.is_finished = False
@@ -11,8 +14,9 @@ class WaitForRobotReadyStateHandler(Handler):
     def handle(self, handled_data):
         self.initialize()
 
-        if not self.is_finished:
-            pass
+        while not self.is_finished:
+            rospy.logerr("waiting for robot ready")
+            self.rate.sleep()
 
         return handled_data
 

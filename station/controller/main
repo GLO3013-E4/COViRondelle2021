@@ -12,23 +12,23 @@ from commands.cycle_steps import cycle_steps
 
 def create_chain_of_commands():
     # cycle_steps = [
-    #         Step.MOVE_ROBOT_TO_RESISTANCE_STATION,
-    #         Step.READ_RESISTANCE,
-    #         Step.MOVE_ROBOT_TO_COMMAND_PANEL,
-    #         Step.READ_LETTERS,
-    #         Step.MOVE_ROBOT_TO_NEXT_PUCK,
-    #         Step.GRIP_PUCK, 
-    #         Step.MOVE_ROBOT_TO_NEXT_CORNER,
-    #         Step.RELEASE_PUCK,
-    #         Step.MOVE_ROBOT_TO_NEXT_PUCK,
-    #         Step.GRIP_PUCK,
-    #         Step.MOVE_ROBOT_TO_NEXT_CORNER,
-    #         Step.RELEASE_PUCK,
-    #         Step.MOVE_ROBOT_TO_NEXT_PUCK,
-    #         Step.GRIP_PUCK,
-    #         Step.MOVE_ROBOT_TO_NEXT_CORNER,
-    #         Step.RELEASE_PUCK,
-    #         Step.MOVE_ROBOT_TO_SQUARE_CENTER
+    #          Step.MOVE_ROBOT_TO_RESISTANCE_STATION,
+    #        Step.READ_RESISTANCE,
+    # #         Step.MOVE_ROBOT_TO_COMMAND_PANEL,
+    # #         Step.READ_LETTERS,
+    # #         # Step.MOVE_ROBOT_TO_NEXT_PUCK,
+    # #         # Step.GRIP_PUCK,
+    # #         # Step.MOVE_ROBOT_TO_NEXT_CORNER,
+    # #         # Step.RELEASE_PUCK,
+    # #         # Step.MOVE_ROBOT_TO_NEXT_PUCK,
+    # #         # Step.GRIP_PUCK,
+    # #         # Step.MOVE_ROBOT_TO_NEXT_CORNER,
+    # #         # Step.RELEASE_PUCK,
+    # #         # Step.MOVE_ROBOT_TO_NEXT_PUCK,
+    # #         # Step.GRIP_PUCK,
+    # #         # Step.MOVE_ROBOT_TO_NEXT_CORNER,
+    # #         # Step.RELEASE_PUCK,
+    # #         Step.MOVE_ROBOT_TO_SQUARE_CENTER
     #         ]
     #cycle_steps = [Step.MOVE_ROBOT_TO_RESISTANCE_STATION, Step.READ_RESISTANCE]
 
@@ -36,13 +36,14 @@ def create_chain_of_commands():
     chain_of_commands_factory = ChainOfCommandsFactory(command_builder)
 
     #TODO: si on a le truc de next_command, on a juste a lier la derniere commande a la premiere et il devrait le faire a l'infini
-    return chain_of_commands_factory.create(cycle_steps*100)
+    return chain_of_commands_factory.create(cycle_steps*1)
 
 
 def initialize_handled_data():
     return {
-        #"puck_colors": ["purple", "orange", "yellow"],
-        #"corners": ["D", "C", "A"],
+        # "puck_colors": ["purple", "orange", "yellow"],
+        #"corners": ["D", "A", "B"],
+        #"resistance": 270000,
         "movement_vectors_string_pub": rospy.Publisher('movement_vectors_string', String, queue_size=1),
         "goal_pub": rospy.Publisher('move_base_simple/goal', PoseStamped, queue_size=1),
         "calculate_pucks_pub": rospy.Publisher("calculate_pucks", Bool, queue_size=1),
