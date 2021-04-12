@@ -16,6 +16,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update
+RUN apt-get install ffmpeg libsm6 libxext6  -y
+
 RUN tesseract --version
 
 RUN mkdir -p /home/app/scripts

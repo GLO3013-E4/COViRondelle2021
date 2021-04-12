@@ -1,4 +1,4 @@
-from scripts.src.mapping.resistance import Resistance
+from mapping.resistance import Resistance
 
 
 class TestResistance:

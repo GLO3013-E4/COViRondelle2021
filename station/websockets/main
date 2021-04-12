@@ -2,14 +2,15 @@
 import base64
 import json
 import threading
-import rospy
-import numpy as np
+
 import cv2
+import numpy as np
+import rospy
 from flask import Flask
 from flask_socketio import SocketIO
-from std_msgs.msg import Bool, String
-from sensor_msgs.msg import Image
 from nav_msgs.msg import Path
+from sensor_msgs.msg import Image
+from std_msgs.msg import Bool, Float32, String
 
 app = Flask(__name__)
 socket = SocketIO(app, cors_allowed_origins="*")

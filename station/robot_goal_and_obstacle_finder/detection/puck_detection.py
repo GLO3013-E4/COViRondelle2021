@@ -55,6 +55,13 @@ class PuckDetection:
 
         return puck_positions
 
+    def sort_pucks(self, puck_positions):
+        for key, pucks in puck_positions.items():
+            if len(pucks) >= 2:
+                sorted_pucks = sorted(pucks, key=lambda k: k['center_position'][0], reverse=True)
+                puck_positions[key] = sorted_pucks
+        return puck_positions
+
     def remove_glare(self, image):
         GLARE_MIN = np.array([0, 0, 20], np.uint8)
         GLARE_MAX = np.array([0, 0, 255], np.uint8)

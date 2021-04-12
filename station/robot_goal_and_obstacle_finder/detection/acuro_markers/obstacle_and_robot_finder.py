@@ -24,7 +24,7 @@ class ObstacleRobotFinder:
         self.aruco_robot_marker_width = 143
         #pixel
         self.obstacle_radius = 42
-        self.distance_between_center_and_prehenseur = 112
+        self.distance_between_center_and_prehenseur = 130
         self.distortion_coefficients = np.array(
             [
                 [
