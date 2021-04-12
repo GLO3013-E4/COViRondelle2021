@@ -4,20 +4,20 @@ from handlers.handler import Handler
 
 
 class WaitForFrontendCycleStartHandler(Handler):
-    is_finished = False
-    start_cycle_subscriber = None
+    def initialize(self):
+        self.sub = rospy.Subscriber("start_cycle", Bool, self.handle_start_cycle)
+        self.is_finished = False
 
-    def handle_start_cycle(self, start):
-        print('Finished : wait for frontend cycle start handler')  # TODO : Remove print
-        self.is_finished = start
+    def handle(self, handled_data):
+        self.initialize()
 
-    def handle(self, handled_data=None):
-        print('Looping in wait for frontend cycle start handler')  # TODO : Remove print
+        if not self.is_finished:
+            pass
 
-        if not self.start_cycle_subscriber:
-            self.start_cycle_subscriber = rospy.Subscriber("start_cycle", Bool, self.handle_start_cycle)
+        return handled_data
 
-        return handled_data, self.is_finished
+    def handle_start_cycle(self, _):
+        self.is_finished = True
 
     def unregister(self):
-        self.start_cycle_subscriber.unregister()
+        self.sub.unregister()
