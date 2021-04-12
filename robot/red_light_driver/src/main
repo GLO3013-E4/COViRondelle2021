@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+import rospy
+from std_msgs.msg import String, Bool
+from led import RedLightDriver
+
+
+class RedLight:
+    def __init__(self):
+        rospy.init_node('red_light', anonymous=True)
+        rospy.Subscriber('red_light',Bool ,self.callback)
+        RLD = RedLightDriver()
+    def callback(self, data):
+        if(data.data):
+            RLD.on()
+        else:
+            RLD.off()
+
+if __name__ == '__main__':
+    try:
+        RedLight()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass
