@@ -32,6 +32,7 @@ const toMessage = (data: string): Message => JSON.parse(data);
 export const mutations: MutationTree<State> & Mutations = {
   [START_CYCLE](state: State) {
     state.currentStep = Step.CycleStarted;
+    state.cycleStarted = true;
   },
   [SOCKET_ROBOT_CONSUMPTION](state: State, data: string) {
     const message = toMessage(data);
