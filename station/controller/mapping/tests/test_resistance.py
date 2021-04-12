@@ -61,11 +61,11 @@ class TestResistance:
         cls.EXPECTED_RESISTANCE_26 = 33000
         cls.EXPECTED_RESISTANCE_27 = 1200
 
-        cls.EXPECTED_EXPONENT_1 = 2
-        cls.EXPECTED_EXPONENT_2 = 3
-        cls.EXPECTED_EXPONENT_3 = 4
-        cls.EXPECTED_EXPONENT_4 = 5
-        cls.EXPECTED_EXPONENT_5 = 6
+        cls.EXPECTED_EXPONENT_1 = 1
+        cls.EXPECTED_EXPONENT_2 = 2
+        cls.EXPECTED_EXPONENT_3 = 3
+        cls.EXPECTED_EXPONENT_4 = 4
+        cls.EXPECTED_EXPONENT_5 = 5
 
     def test_when_round_then_resistance_is_as_expected_1(self):
         resistance = Resistance(self.A_RESISTANCE_1)

@@ -31,4 +31,4 @@ class Resistance:
         return self.find_first_digits()[1]
 
     def get_exponent(self):
-        return max(0, math.floor(math.log10(self.resistance)))
+        return max(0, math.floor(math.log10(self.resistance))-1)
