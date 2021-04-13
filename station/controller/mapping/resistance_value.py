@@ -1,6 +1,6 @@
 class ResistanceValue:
     RESISTANCE_VALUES = [
-        (10, ["brown", "black", "black"]),
+        (10, ["brown", "black"]),
         (12, ["brown", "red"]),
         (15, ["brown", "green"]),
         (18, ["brown", "grey"]),
