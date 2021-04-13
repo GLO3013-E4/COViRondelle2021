@@ -29,11 +29,11 @@ class Mapping:
         GPIO.cleanup()
 
     def letter_mapping(self):
-        letters = self.camera_panning(10)
+        letters = self.camera_panning(9.5)
         if len(letters) == 9:
             self.stop_servos()
             return letters
-        letters = self.camera_panning(6)
+        letters = self.camera_panning(7)
         if len(letters) == 9:
             self.stop_servos()
             return letters
