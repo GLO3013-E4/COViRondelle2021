@@ -73,8 +73,7 @@ def check_map_state_on_image(image, color, position):
 
     open_cv_image = np.array(image.convert('RGB'))
     open_cv_image = open_cv_image[:, :, ::-1].copy()
-    cv2.imshow('', open_cv_image)
-    cv2.waitKey(0)
+    return open_cv_image
 
 
 def check_map_state_on_a_stream(color, position):
@@ -87,7 +86,7 @@ def check_map_state_on_a_stream(color, position):
         while image is None:
             ret, image = cap.read()
 
-        check_map_state_on_image(image, color, position)
+        image = check_map_state_on_image(image, color, position)
 
         cv2.imshow('', image)
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -105,7 +104,10 @@ if __name__ == '__main__':
 
     image_path = "WIN_20210302_12_53_39_Pro.jpg"
     image = cv2.imread(image_path)
-    check_map_state_on_image(image, color, position)
+    image = check_map_state_on_image(image, color, position)
+    cv2.imshow('', image)
+    cv2.waitKey(0)
+
 
     #check_map_state_on_a_stream(color, position)
 
