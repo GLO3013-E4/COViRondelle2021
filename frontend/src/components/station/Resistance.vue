@@ -34,8 +34,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import { PuckList } from '@/types/puckList';
-import {Puck} from "@/types/puck";
-import {Color} from "@/types/color";
+import { Color } from '@/types/color';
 
 @Component({
   computed: {
@@ -47,7 +46,7 @@ export default class Resistance extends Vue {
   public puckList!: PuckList;
 
   get pucksToDisplay() {
-    return this.puckList.pucks.filter(puck => puck.color !== Color.Unset);
+    return this.puckList.pucks.filter((puck) => puck.color !== Color.Unset);
   }
 }
 </script>
