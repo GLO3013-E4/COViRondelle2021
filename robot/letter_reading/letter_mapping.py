@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import time
 
 from capture_image_from_embed_camera import capture_image_from_embed_camera
 from map_letters import map_letters
@@ -16,23 +17,27 @@ class Mapping:
         self.servo2 = GPIO.PWM(12, 50)
 
         self.servo1.start(0)
-        self.servo2.start(0)
-
+        self.servo1.ChangeDutyCycle(7)
+        time.sleep(0.5)
+        self.servo1.stop()
+        
+        
+        
     def stop_servos(self):
         self.servo1.stop()
         self.servo2.stop()
         GPIO.cleanup()
 
     def letter_mapping(self):
-        letters = self.camera_panning(7.3)
-        if len(letters) == 9:
-            self.stop_servos()
-            return letters
-        letters = self.camera_panning(4)
-        if len(letters) == 9:
-            self.stop_servos()
-            return letters
         letters = self.camera_panning(10)
+        if len(letters) == 9:
+            self.stop_servos()
+            return letters
+        letters = self.camera_panning(6)
+        if len(letters) == 9:
+            self.stop_servos()
+            return letters
+        letters = self.camera_panning(2)
         if len(letters) == 9:
             self.stop_servos()
             return letters
@@ -43,16 +48,13 @@ class Mapping:
         return letters
 
     def camera_panning(self, x_position):
-        self.servo1.start(0)
         self.servo2.start(0)
         self.servo2.ChangeDutyCycle(x_position)
-        self.servo1.ChangeDutyCycle(7.5)
-        #on peut mettre un sleep pour donner du temps aux servos :
-        #time.sleep(1)
+        time.sleep(0.5)
         self.servo2.stop()
-        self.servo1.stop()
 
         image = capture_image_from_embed_camera()
         grayscale = process_image_to_grayscale(image)
         letters = map_letters(grayscale)
+
         return letters
