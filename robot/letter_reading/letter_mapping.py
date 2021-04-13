@@ -38,8 +38,10 @@ class Mapping:
             return letters
 
         if letters == []:
+            self.stop_servos()
             return letters
 
+        self.stop_servos()
         return letters
 
     def camera_panning(self, x_position):
@@ -47,10 +49,6 @@ class Mapping:
         self.servo2.start(0)
         self.servo2.ChangeDutyCycle(x_position)
         self.servo1.ChangeDutyCycle(7.5)
-        #on peut mettre un sleep pour donner du temps aux servos :
-        #time.sleep(1)
-        self.servo2.stop()
-        self.servo1.stop()
 
         image = capture_image_from_embed_camera()
         grayscale = process_image_to_grayscale(image)
