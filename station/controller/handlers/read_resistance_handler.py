@@ -23,8 +23,9 @@ class ReadResistanceHandler(Handler):
         handled_data['resistance'] = self.resistance
         resistance_object = Resistance(self.resistance)
         rounded_resistance, colors = resistance_object.get_resistance_and_colors()
+        colors = colors +[ResistanceMapper().find_exponent_color(resistance_object)]
         rospy.logerr([rounded_resistance, colors])
-        handled_data["puck_colors"] = colors + [ResistanceMapper.find_exponent_color(resistance_object)]
+        handled_data["puck_colors"] = colors
         handled_data["puck_colors_pub"].publish(json.dumps(colors))
 
         self.rate.sleep()
