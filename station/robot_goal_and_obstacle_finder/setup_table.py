@@ -8,7 +8,7 @@ from detection.puck_detection import PuckDetection
 from detection.hard_code_position.square_corner_detection import \
     SquareCornerDetection
 
-PIXEL_TO_CM = 6.8
+PIXEL_TO_CM = 6.882391855
 
 
 robot_and_obstacle_finder = ObstacleRobotFinder()
@@ -25,7 +25,7 @@ def distance(item1, item2):
     if item_type1 == "puck":
         dist -= 25
     elif item_type1 == "corner":
-        pass
+        dist -= 10
     elif item_type1 == "wall":
         pass
     elif item_type1 == "obstacle":
@@ -34,7 +34,7 @@ def distance(item1, item2):
     if item_type2 == "puck":
         dist -= 25
     elif item_type2 == "corner":
-        pass
+        dist -= 10
     elif item_type2 == "wall":
         pass
     elif item_type2 == "obstacle":

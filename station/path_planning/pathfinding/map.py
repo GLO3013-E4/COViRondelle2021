@@ -48,8 +48,6 @@ class Map:
         self.add_table_walls()
         self.create_obstacles()
         self.create_pucks()
-        self.create_start_node()
-        self.create_end_node()
 
     def add_top_wall(self, width):
         start_wall_top = max(0, self.table_walls_start_y // self.node_size)
@@ -254,29 +252,6 @@ class Map:
             self.create_square_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK)
         else:
             self.create_round_obstacle(puck, self.obstacle_puck_width, TileRole.PUCK)
-
-    def create_start_node(self):
-        """Specifies which node should be considered as the starting node."""
-        start = self.get_start_node()
-        start.role = TileRole.START
-
-    def create_end_node(self):
-        """Specifies which node should be considered as the end node and then
-        adds padding to it. The padding part is there because in some configurations
-        where the pucks were close to each other, sometimes their cushions were overlapping
-        which was putting the end node out of reach when in reality it should be able to be
-        picked up by the robot. Thus, the end node has the same padding as the obstacles,
-        which should put the robot next to the end node at the end of its path
-        (instead of blindly running into the puck to get to where we identified
-        the center of the puck was)."""
-        end = self.get_end_node()
-        end.role = TileRole.END
-
-        # distance = (self.obstacle_puck_width // self.node_size) + 1
-        # self.add_cushion_in_direction(end, distance, TileRole.END, Direction.DOWN)
-        # self.add_cushion_in_direction(end, distance, TileRole.END, Direction.LEFT)
-        # self.add_cushion_in_direction(end, distance, TileRole.END, Direction.UP)
-        # self.add_cushion_in_direction(end, distance, TileRole.END, Direction.RIGHT)
 
     def get_start_node(self):
         """Gets the starting node"""
