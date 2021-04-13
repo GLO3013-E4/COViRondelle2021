@@ -29,7 +29,6 @@ export type Mutations<S = State> = {
 
 const toMessage = (data: string): Message => JSON.parse(data);
 
-// TODO : Remove all console logs
 export const mutations: MutationTree<State> & Mutations = {
   [START_CYCLE](state: State) {
     state.currentStep = Step.CycleStarted;
@@ -56,9 +55,7 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [SOCKET_PUCK_COLORS](state: State, data: string) {
     const message = toMessage(data);
-    console.log(state.puckList);
     state.puckList.colors = message.puckColors || defaultState.puckList.colors;
-    console.log(state.puckList);
   },
   [SOCKET_PUCK_FIRST_CORNER](state: State, data: string) {
     const message = toMessage(data);
