@@ -5,7 +5,7 @@ from std_msgs.msg import String
 
 
 def create_resistance():
-    resistance = random.uniform(100, 1000000)
+    resistance = random.randint(100, 1000000)
     return str(resistance)
 
 

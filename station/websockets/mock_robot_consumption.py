@@ -4,19 +4,16 @@ import rospy
 from std_msgs.msg import String
 
 
-class MockRobotConsumption:
-    def __init__(self):
-        self.wheel1 = random.randint(0, 10)
-        self.wheel2 = random.randint(0, 10)
-        self.wheel3 = random.randint(0, 10)
-        self.wheel4 = random.randint(0, 10)
-        self.total = self.wheel1 + self.wheel2 + self.wheel3 + self.wheel4
-        self.remainingTime = random.randint(0, 600)
-        self.batteryCharge = random.uniform(0, 8)
-
-
 def create_robot_consumption():
-    robot_consumption = MockRobotConsumption()
+    robot_consumption = {
+        "wheel1": random.randint(0, 10),
+        "wheel2": random.randint(0, 10),
+        "wheel3": random.randint(0, 10),
+        "wheel4": random.randint(0, 10),
+        "total": random.randint(0, 40),
+        "remainingTime": random.randint(0, 600),
+        "batteryCharge": random.uniform(0, 8)
+    }
     return json.dumps(robot_consumption)
 
 
