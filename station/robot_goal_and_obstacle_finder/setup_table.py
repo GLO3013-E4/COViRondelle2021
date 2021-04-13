@@ -87,10 +87,8 @@ def take_new_reference_image_from_camera_stream():
 
 def write_distances_on_image(image, walls):
     pucks_dict = puck_finder.detect_pucks(image)
-    obstacles_list = robot_and_obstacle_finder.detect_obstacle_position(image)
-    corners_dict = square_corner_detection.detect_square_position(image)
-
-    print(obstacles_list)
+    obstacles_list = robot_and_obstacle_finder.detect_obstacle_position(image, DEBUG=False)
+    corners_dict = square_corner_detection.detect_square_position(image, DEBUG=False)
 
     pucks = [(tuple(single["center_position"]), "puck") for color in pucks_dict for single in pucks_dict[color]]
     obstacles = [(tuple(single["center_of_obstacle"]), "obstacle") for single in obstacles_list]
@@ -140,7 +138,7 @@ def verify_distance_on_live_stream():
     LEFT_WALL_X = 10
     walls = [TOP_WALL_Y, BOT_WALL_Y, RIGHT_WALL_X, LEFT_WALL_X]
 
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1600)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 904)
 
@@ -199,7 +197,7 @@ def verify_distances_on_video(video_path):
 
 
 if __name__ == '__main__':
-    video_path = ""
+    video_path = "deplacement_table_de_jeux.mkv"
     #verify_distances_on_video(video_path)
 
     #image_path = "monde8.jpg"
