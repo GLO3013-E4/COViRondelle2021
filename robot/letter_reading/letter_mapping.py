@@ -1,5 +1,5 @@
-import RPi.GPIO as GPIO
 import time
+import RPi.GPIO as GPIO
 
 from capture_image_from_embed_camera import capture_image_from_embed_camera
 from map_letters import map_letters
@@ -20,28 +20,18 @@ class Mapping:
         self.servo1.ChangeDutyCycle(7)
         time.sleep(0.5)
         self.servo1.stop()
-        
-        
-        
+
     def stop_servos(self):
         self.servo1.stop()
         self.servo2.stop()
         GPIO.cleanup()
 
     def letter_mapping(self):
-        letters = self.camera_panning(9.5)
-        if len(letters) == 9:
-            self.stop_servos()
-            return letters
-        letters = self.camera_panning(7)
-        if len(letters) == 9:
-            self.stop_servos()
-            return letters
-        letters = self.camera_panning(2)
-        if len(letters) == 9:
-            self.stop_servos()
-            return letters
-
+        for i in range(2,12):
+            letters = self.camera_panning(i)
+            if len(letters) == 9:
+                self.stop_servos()
+                return letters
         if letters == []:
             return letters
 
