@@ -32,8 +32,6 @@ class Mapping:
             if len(letters) == 9:
                 self.stop_servos()
                 return letters
-        if letters == []:
-            return letters
 
         return letters
 
