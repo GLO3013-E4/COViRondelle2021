@@ -47,4 +47,3 @@ class ReadLettersHandler(Handler):
 
     def unregister(self):
         self.sub.unregister()
-        

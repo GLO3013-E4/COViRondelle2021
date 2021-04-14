@@ -9,8 +9,8 @@ export class Puck {
   number = 0;
 
   constructor(
-    color: Color = Color.White,
-    corner: Corner = Corner.A,
+    color: Color = Color.Unset,
+    corner: Corner = Corner.UNSET,
     state: PuckState = PuckState.UNTOUCHED
   ) {
     this.color = color;
