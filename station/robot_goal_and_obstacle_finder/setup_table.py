@@ -16,11 +16,11 @@ puck_finder = PuckDetection()
 square_corner_detection = SquareCornerDetection()
 
 
-def distance(item1, item2):
+def distance_item(item1, item2):
     (x1, y1), item_type1 = item1
     (x2, y2), item_type2 = item2
 
-    dist = math.sqrt(pow(x2-x1, 2) + pow(y2-y1, 2))
+    dist = distance(x1, y1, x2, y2)
 
     if item_type1 == "puck":
         dist -= 25
@@ -41,6 +41,35 @@ def distance(item1, item2):
         dist -= 42.5
 
     return dist / PIXEL_TO_CM
+
+
+def get_edge_position(item, angle):
+    (x1, y1), item_type = item
+
+    if item_type == "puck":
+        radius = 25
+    elif item_type == "corner":
+        radius = 10
+    elif item_type == "wall":
+        radius = 0
+    elif item_type == "obstacle":
+        radius = 42.5
+    else:
+        raise Exception(f"item_type pas dans puck, wall, corner, obstacle. pas suppose. item_type={item_type}")
+
+    x1 = x1 + math.cos(angle)*radius
+    y1 = y1 - math.sin(angle)*radius
+    return x1, y1
+
+
+def get_angle_between_two_positions(pos1, pos2):
+    x1, y1 = pos1
+    x2, y2 = pos2
+    return -math.atan2(y2 - y1, x2 - x1)
+
+
+def distance(x1, y1, x2, y2):
+    return math.sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2))
 
 
 def draw_line(image, position1, position2, color):
@@ -113,16 +142,24 @@ def write_distances_on_image(image, walls):
 
         # calculate distances
         other_items = all_items[:i] + all_items[i + 1:] + wall_positions
-        distance_from_item = [(distance(other_item, item), i) for i, other_item in enumerate(other_items)]
+        distance_from_item = [(distance_item(other_item, item), i) for i, other_item in enumerate(other_items)]
         distance_from_item = [other_item for other_item in distance_from_item if other_item[0] <= 20]
 
         for dist, i in distance_from_item:
             other_item = other_items[i]
             other_item, other_item_type = other_item
+
+            # Pour que la ligne parte de la bordure de l'objet
+            angle_from_item = get_angle_between_two_positions(item[0], other_item)
+            angle_from_other_item = get_angle_between_two_positions(other_item, item[0])
+            item_edge_position = get_edge_position(item, angle_from_item)
+            other_item_edge_position = get_edge_position((other_item, other_item_type), angle_from_other_item)
+            assert int(distance(*item_edge_position, *other_item_edge_position)/PIXEL_TO_CM) == int(dist)
+
             if dist < 10:
-                draw_line(image, item[0], other_item, "red")
+                draw_line(image, item_edge_position, other_item_edge_position, "red")
             else:
-                draw_line(image, item[0], other_item, "green")
+                draw_line(image, item_edge_position, other_item_edge_position, "green")
 
             middle_y = min(other_item[1], item[0][1])
             middle_x = min(other_item[0], item[0][0])
