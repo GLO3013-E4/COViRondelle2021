@@ -8,6 +8,7 @@ from pathfinding.node import Node
 from pathfinding.tile_role import TileRole
 from pathfinding.direction import Direction
 from pathfinding.obstacle_representation import ObstacleRepresentation
+from pathfinding.config import NODE_SIZE, SAFETY_CUSHION, ROBOT_WIDTH, OBSTACLE_WIDTH, PUCK_WIDTH, WALL_WIDTH
 
 
 class Map:
@@ -15,17 +16,17 @@ class Map:
     Class that represents where the robot can move and where the
     different obstacles and objects laying on the table are.
     """
-    def __init__(self, image_width, image_height, obstacles, pucks, start, end, node_size=25,
-                 safety_cushion=10, robot_width=80, obstacle_width=100, puck_width=45,
+    def __init__(self, image_width, image_height, obstacles, pucks, start, end, node_size=NODE_SIZE,
+                 safety_cushion=SAFETY_CUSHION, obstacle_width=OBSTACLE_WIDTH, puck_width=PUCK_WIDTH, wall_width=WALL_WIDTH,
                  obstacle_representation=ObstacleRepresentation.SQUARE,
                  puck_representation=ObstacleRepresentation.RADIUS):
         self.node_size = node_size
         self.safety_cushion = safety_cushion
-        self.robot_width = robot_width
         self.obstacle_width = obstacle_width
         self.puck_width = puck_width
-        self.obstacle_cushion_width = self.safety_cushion + self.robot_width + self.obstacle_width
-        self.obstacle_puck_width = self.safety_cushion + self.robot_width + self.puck_width
+        self.wall_width = wall_width
+        self.obstacle_cushion_width = self.safety_cushion + self.obstacle_width
+        self.obstacle_puck_width = self.safety_cushion + self.puck_width
         self.obstacle_representation = obstacle_representation
         self.puck_representation = puck_representation
 
@@ -85,11 +86,11 @@ class Map:
                 node.role = TileRole.OBSTACLE
 
     def add_table_walls(self):
-        width = self.robot_width + self.safety_cushion
+        width = self.wall_width + self.safety_cushion
         self.add_top_wall(width)
         self.add_bottom_wall(width)
         self.add_left_wall(width)
-        self.add_right_wall(width)
+        #self.add_right_wall(width)
 
     def create_nodes(self):
         """Creates the matrix containing the nodes."""
@@ -208,7 +209,7 @@ class Map:
                 distance = get_distance(obstacle.pixel_coordinates_center,
                                         node.pixel_coordinates_center)
                 if distance < radius:
-                    node.role = TileRole.CUSHION
+                    node.role = role
         obstacle.role = role
 
     def create_square_obstacle(self, obstacle, length, role):
@@ -223,7 +224,7 @@ class Map:
         for column in range(lower_range_column, higher_range_column):
             for row in range(lower_range_row, higher_range_row):
                 node = self.get_node_from_matrix_coordinates((row, column))
-                node.role = TileRole.CUSHION
+                node.role = role
         obstacle.role = role
 
     def create_diagonal_obstacle(self, obstacle, cushion, role):

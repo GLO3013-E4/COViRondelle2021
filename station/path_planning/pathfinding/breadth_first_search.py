@@ -35,3 +35,22 @@ class BreadthFirstSearch(PathfindingAlgorithm):
                     visited.add(neighbor)
 
         raise PathNotFoundException()
+
+    def find_path_to_empty_space(self, start):
+        queue = deque()
+        visited = {start}
+
+        queue.append([start])
+
+        while queue:
+            path = queue.popleft()
+            node = path[-1]
+
+            if node.role is TileRole.EMPTY:
+                return path
+
+            for neighbor, _ in node.neighbors:
+                queue.append(path + [neighbor])
+                visited.add(neighbor)
+
+        raise Exception("find path to empty space exception, what the actual fuck")
