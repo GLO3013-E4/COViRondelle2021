@@ -4,6 +4,7 @@ import rospy
 from std_msgs.msg import String
 from handlers.handler import Handler
 from mapping.resistance import Resistance
+from mapping.resistance_mapper import ResistanceMapper
 
 
 class ReadResistanceHandler(Handler):
@@ -22,7 +23,7 @@ class ReadResistanceHandler(Handler):
         handled_data['resistance'] = self.resistance
         resistance_object = Resistance(self.resistance)
         rounded_resistance, colors = resistance_object.get_resistance_and_colors()
-        colors = colors +[ResistanceMapper().find_exponent_color(resistance_object)]
+        colors = colors + [ResistanceMapper().find_exponent_color(resistance_object)]
         rospy.logerr([rounded_resistance, colors])
         handled_data["puck_colors"] = colors
         handled_data["puck_colors_pub"].publish(json.dumps(colors))
