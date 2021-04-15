@@ -58,7 +58,7 @@ class PathFollower:
             self.pub.publish("FINISHED")
 
     def get_close_to_goal(self, reference_point_on_robot, stop_threshold, mode):
-        while self.distance(reference_point_on_robot, self.goal) >= stop_threshold:
+        while self.distance(self.robot_dict[reference_point_on_robot], self.goal) >= stop_threshold:
             vectors = self.vectorizer.path_to_vectors()
             try:
                 distance, angle, _ = vectors[0]
@@ -84,16 +84,22 @@ class PathFollower:
             self.angle_rate.sleep()
 
     def align_robot_towards_right_wall(self):
-        angle = -self.robot_dict["angle"]
+        goal = (10000, self.robot_dict["robot"][1])
+        angle = self.vectorizer.find_goal_angle(goal[1] - self.robot_dict["robot"][1],
+                                                goal[0] - self.robot_dict["robot"][0], self.destination)
+
 
         angle_in_radians = 0.1
         while not (-angle_in_radians <= angle <= angle_in_radians):
-            angle = -self.robot_dict["angle"]
-            if angle >= math.pi:
-                angle= angle - 2*math.pi
+            angle = self.vectorizer.find_goal_angle(goal[1] - self.robot_dict["robot"][1],
+                                                    goal[0] - self.robot_dict["robot"][0], self.destination)
             published_vector = (0, self.convert_angle_to_driver_angle(angle), MovementMode.GRIP.value)
+            rospy.logerr(self.convert_angle_to_driver_angle(angle))
             self.pub.publish(json.dumps(published_vector))
-            self.angle_rate.sleep()
+
+            for i in range(3):
+                self.angle_rate.sleep()
+            
 
     def callback_path(self, data):
         nodes = []

@@ -34,7 +34,6 @@ class ReleasePuckHandler(Handler):
         while self.distance(self.position_tuple, (handled_data["goal"].pose.position.x, handled_data["goal"].pose.position.y)) > 20:
             sauce = self.distance(self.position_tuple, (handled_data["goal"].pose.position.x, handled_data["goal"].pose.position.y))
 
-
             vector_angle = self.get_angle_between_two_points(handled_data["goal"].pose.position.x, handled_data["goal"].pose.position.y, *self.position_tuple)
             correction_angle = self.get_angle_correction(self.robot_angle, vector_angle)
 

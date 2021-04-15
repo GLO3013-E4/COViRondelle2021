@@ -218,7 +218,7 @@ class Vectorizer:
 
             length = ((xg-xp)**2 + (yg-yp)**2)**0.5
 
-            angle_correction = self.find_goal_angle(yg - yp, xg- xp)
+            angle_correction = self.find_goal_angle(yg - yp, xg- xp, self.destination)
 
             return length, angle_correction
         else:
