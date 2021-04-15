@@ -34,6 +34,8 @@ class PathFinder:
 
         self.pub = rospy.Publisher('path', Path, queue_size=1)
         self.pub_string = rospy.Publisher('path_string', String, queue_size=1)
+        self.pub_vector = rospy.Publisher('movement_vectors_string', String, queue_size=1)
+
         rospy.Subscriber('move_base_simple/goal', PoseStamped, self.callback_goal)
         rospy.Subscriber('pucks', String, self.callback_pucks)
         rospy.Subscriber('obstacles', String, self.callback_obstacles)
@@ -98,6 +100,7 @@ class PathFinder:
                 pathfinder.find_square_matrix_path()
                 found_path = True
             except PathNotFoundException:
+                rospy.logerr("path not found")
                 if puck_width == 0 and obstacle_width == 0:
                     rospy.logerr("path not found meme avec puck et obstacle a 0")
                     rospy.logerr("checker walls et wall_width??")
@@ -105,13 +108,16 @@ class PathFinder:
                 if self.robot_is_in_obstacle(board_map):
                     # the robot sees itself in an obstacle
                     self.move_robot_to_safe_and_empty_space(pathfinder)
+                    rospy.logerr("move robot to empty space")
 
                 elif self.goal_is_in_puck(board_map):
                     # two pucks are overlapping over the goal
                     puck_width = max(0, puck_width - self.node_size)
+                    rospy.logerr("goal is in puck")
 
                 elif self.goal_is_in_obstacle(board_map):
                     obstacle_width = max(0, obstacle_width - self.node_size)
+                    rospy.logerr("goal is in obstacle")
 
                 else:
                     # there is something blocking the robot from the goal.
@@ -124,7 +130,7 @@ class PathFinder:
         path_to_empty_space = pathfinder.find_path_to_empty_space()
         goal = path_to_empty_space[-1]
 
-        angle = self.get_angle_between_two_points(*self.robot, *goal)
+        angle = self.get_angle_between_two_points(*self.robot, *goal.pixel_coordinates_center)
 
         sins_and_cosines = {
             mode: (math.sin(mode.value + self.angle), math.cos(mode.value + self.angle))
@@ -143,10 +149,10 @@ class PathFinder:
         min_mode_angle = min_mode.value + self.angle
 
         angle_correction = self.get_angle_correction(min_mode_angle, angle)
-        length = self.distance(self.robot, goal) + 15# length + 15 pour s'assurer qu'il sort vraiment dans une case vide?
+        length = self.distance(self.robot, goal.pixel_coordinates_center) + 15# length + 15 pour s'assurer qu'il sort vraiment dans une case vide?
 
-        published_vector = (length/self.cm_to_pixel, math.degrees(angle_correction), min_mode)
-        self.pub.publish(json.dumps(published_vector))
+        published_vector = (length/self.cm_to_pixel, math.degrees(angle_correction), min_mode.value)
+        self.pub_vector.publish(json.dumps(published_vector))
         self.rate.sleep()
 
     def get_angle_between_two_points(self, x1, y1, x2, y2):
