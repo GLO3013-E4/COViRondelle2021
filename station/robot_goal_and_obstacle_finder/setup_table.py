@@ -238,11 +238,13 @@ if __name__ == '__main__':
     #verify_distances_on_video(video_path)
 
     #image_path = "monde8.jpg"
-    image_path = "WIN_20210301_14_58_08_Pro.jpg"
+    #image_path = "WIN_20210301_14_58_08_Pro.jpg"
     #image_path = "WIN_20210302_12_53_39_Pro.jpg"
-    verify_distances_on_image(image_path)
+    #verify_distances_on_image(image_path)
 
-    #verify_distance_on_live_stream()
+    verify_distance_on_live_stream()
+    #take_new_reference_image_from_camera_stream()
+
 
 
 

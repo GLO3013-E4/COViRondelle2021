@@ -97,17 +97,17 @@ def check_map_state_on_a_stream(color, position):
 
 
 if __name__ == '__main__':
-    color = "grey"
+    color = "red"
     position = None
     #color = None
     #position = (400, 400)
 
-    image_path = "WIN_20210302_12_53_39_Pro.jpg"
-    image = cv2.imread(image_path)
-    image = check_map_state_on_image(image, color, position)
-    cv2.imshow('', image)
-    cv2.waitKey(0)
+    #image_path = "WIN_20210302_12_53_39_Pro.jpg"
+    #image = cv2.imread(image_path)
+    #image = check_map_state_on_image(image, color, position)
+    #cv2.imshow('', image)
+    #cv2.waitKey(0)
 
 
-    #check_map_state_on_a_stream(color, position)
+    check_map_state_on_a_stream(color, position)
 
