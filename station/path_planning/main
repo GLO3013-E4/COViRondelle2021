@@ -29,6 +29,8 @@ class PathFinder:
         self.node_size = NODE_SIZE
         self.algorithm = PathfindingAlgorithms.BREADTH_FIRST_SEARCH
         self.image_width, self.image_height = (1600, 904)
+        self.cm_to_pixel = 6.882391855
+        self.rate = rospy.Rate(1)
 
         self.pub = rospy.Publisher('path', Path, queue_size=1)
         self.pub_string = rospy.Publisher('path_string', String, queue_size=1)
@@ -141,11 +143,11 @@ class PathFinder:
         min_mode_angle = min_mode.value + self.angle
 
         angle_correction = self.get_angle_correction(min_mode_angle, angle)
-        length = self.distance(self.robot, goal) # length + 15 pour s'assurer qu'il ressort vraiment?
+        length = self.distance(self.robot, goal) + 15# length + 15 pour s'assurer qu'il sort vraiment dans une case vide?
 
-        published_vector = (length, angle_correction, min_mode)
+        published_vector = (length/self.cm_to_pixel, math.degrees(angle_correction), min_mode)
         self.pub.publish(json.dumps(published_vector))
-        #self.rate.sleep #maybe
+        self.rate.sleep()
 
     def get_angle_between_two_points(self, x1, y1, x2, y2):
         angle = -math.atan2(y2 - y1, x2 - x1)
