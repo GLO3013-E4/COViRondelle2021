@@ -11,25 +11,25 @@ from commands.cycle_steps import cycle_steps
 
 
 def create_chain_of_commands():
-    # cycle_steps = [
-    #          Step.MOVE_ROBOT_TO_RESISTANCE_STATION,
-    #        Step.READ_RESISTANCE,
-    # #         Step.MOVE_ROBOT_TO_COMMAND_PANEL,
-    # #         Step.READ_LETTERS,
-    # #         # Step.MOVE_ROBOT_TO_NEXT_PUCK,
-    # #         # Step.GRIP_PUCK,
-    # #         # Step.MOVE_ROBOT_TO_NEXT_CORNER,
-    # #         # Step.RELEASE_PUCK,
-    # #         # Step.MOVE_ROBOT_TO_NEXT_PUCK,
-    # #         # Step.GRIP_PUCK,
-    # #         # Step.MOVE_ROBOT_TO_NEXT_CORNER,
-    # #         # Step.RELEASE_PUCK,
-    # #         # Step.MOVE_ROBOT_TO_NEXT_PUCK,
-    # #         # Step.GRIP_PUCK,
-    # #         # Step.MOVE_ROBOT_TO_NEXT_CORNER,
-    # #         # Step.RELEASE_PUCK,
-    # #         Step.MOVE_ROBOT_TO_SQUARE_CENTER
-    #         ]
+    cycle_steps = [
+            Step.MOVE_ROBOT_TO_RESISTANCE_STATION,
+            Step.READ_RESISTANCE,
+            Step.MOVE_ROBOT_TO_COMMAND_PANEL,
+            Step.READ_LETTERS,
+            Step.MOVE_ROBOT_TO_NEXT_PUCK,
+            Step.GRIP_PUCK,
+            Step.MOVE_ROBOT_TO_NEXT_CORNER,
+            Step.RELEASE_PUCK,
+            Step.MOVE_ROBOT_TO_NEXT_PUCK,
+            Step.GRIP_PUCK,
+            Step.MOVE_ROBOT_TO_NEXT_CORNER,
+            Step.RELEASE_PUCK,
+            Step.MOVE_ROBOT_TO_NEXT_PUCK,
+            Step.GRIP_PUCK,
+            Step.MOVE_ROBOT_TO_NEXT_CORNER,
+            Step.RELEASE_PUCK,
+            Step.MOVE_ROBOT_TO_SQUARE_CENTER
+            ]
     # cycle_steps = [Step.MOVE_ROBOT_TO_RESISTANCE_STATION, Step.READ_RESISTANCE]
 
     command_builder = CommandBuilder()

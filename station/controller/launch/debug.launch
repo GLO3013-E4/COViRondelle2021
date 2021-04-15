@@ -1,5 +1,5 @@
 <launch>
-    <include file="$(find websockets)/launch/websocket.launch" />
+<!--     <include file="$(find websockets)/launch/websocket.launch" /> -->
     <include file="$(find world_camera_driver)/launch/camera.launch" />
     <include file="$(find robot_goal_and_obstacle_finder)/launch/finder.launch" />
     <include file="$(find path_planning)/launch/planning.launch" />

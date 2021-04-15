@@ -16,7 +16,7 @@ class ReadLettersHandler(Handler):
         self.initialize()
         command_panel = CommandPanel()
         command_panel.set_resistance(handled_data['resistance'])
-
+        # handled_data["calculate_pucks_pub"].publish(True)
         self.handled_data = handled_data
         handled_data["read_letters_pub"].publish(True)
 
