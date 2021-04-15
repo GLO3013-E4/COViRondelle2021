@@ -68,11 +68,27 @@ class PathFollower:
                 distance = max(min(self.distance(self.robot_dict[reference_point_on_robot], self.goal) - stop_threshold, 70, distance), 0)
                 published_vector = (
                     distance / self.cm_to_pixel, self.convert_angle_to_driver_angle(angle), mode.value)
+
+                if self.robot_is_close_to_more_than_one_obstacle():
+                    if angle >= 0:
+                        backwards_angle = angle - math.pi
+                    else:
+                        backwards_angle = angle + math.pi
+
+                    if abs(angle) >= abs(backwards_angle):
+                        published_vector = (
+                            distance / self.cm_to_pixel, self.convert_angle_to_driver_angle(backwards_angle), MovementMode.BACKWARDS.value
+                        )
+
             except IndexError:
                 rospy.logerr("Could not follow path")
                 break
             self.pub.publish(json.dumps(published_vector))
             self.rate.sleep()
+
+    def robot_is_close_to_more_than_one_obstacle(self):
+        number_of_nearby_obstacles = sum([1 for obstacle in self.obstacles if self.distance(self.robot_dict["robot"], obstacle) <= 150])
+        return number_of_nearby_obstacles >= 2
 
     def align_robot_angle_towards_goal(self, mode):
         angle = self.vectorizer.find_goal_angle(self.goal[1] - self.robot_dict["robot"][1],
