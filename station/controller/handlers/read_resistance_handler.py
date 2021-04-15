@@ -20,9 +20,12 @@ class ReadResistanceHandler(Handler):
             self.rate.sleep()
 
         handled_data['resistance'] = self.resistance
-        rounded_resistance, colors = Resistance(self.resistance).get_resistance_and_colors()
+        resistance_object = Resistance(self.resistance)
+        rounded_resistance, colors = resistance_object.get_resistance_and_colors()
+        colors = colors + [ResistanceMapper().find_exponent_color(resistance_object)]
         rospy.logerr([rounded_resistance, colors])
         handled_data["puck_colors"] = colors
+        handled_data["puck_colors_pub"].publish(json.dumps(colors))
 
         self.rate.sleep()
         handled_data["movement_vectors_string_pub"].publish(json.dumps((handled_data["resistance_y_dist"], 0, 3)))
@@ -35,7 +38,7 @@ class ReadResistanceHandler(Handler):
     def read_resistance(self, data):
         resistance = json.loads(data.data)
         self.resistance = resistance
-        self.is_finished = resistance != 0
+        self.is_finished = resistance != -1
 
     def unregister(self):
         self.sub.unregister()

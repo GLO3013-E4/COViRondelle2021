@@ -50,10 +50,12 @@ export const mutations: MutationTree<State> & Mutations = {
       defaultState.tableImage.current;
   },
   [SOCKET_RESISTANCE](state: State, data: string) {
+    console.log("resistence"+ data)
     const message = toMessage(data);
     state.resistance = message.resistance || defaultState.resistance;
   },
   [SOCKET_PUCK_COLORS](state: State, data: string) {
+    console.log(data)
     const message = toMessage(data);
     state.puckList.colors = message.puckColors || defaultState.puckList.colors;
   },
