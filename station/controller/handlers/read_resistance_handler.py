@@ -4,6 +4,7 @@ import rospy
 from std_msgs.msg import String
 from handlers.handler import Handler
 from mapping.resistance import Resistance
+from mapping.resistance_mapper import ResistanceMapper
 
 
 class ReadResistanceHandler(Handler):
