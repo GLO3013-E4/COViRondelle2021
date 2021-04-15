@@ -2,11 +2,15 @@ import { Coordinate } from '@/types/coordinate';
 import { Step } from '@/types/step';
 import { RobotConsumption } from '@/types/robotConsumption';
 import { PuckList } from '@/types/puckList';
+import { TableImage } from '@/types/tableImage';
 
 export const defaultState = {
   cycleReady: false,
   cycleStarted: false,
-  tableImage: '',
+  tableImage: {
+    previous: '',
+    current: '',
+  } as TableImage,
   resistance: 0,
   robotConsumption: {
     wheel1: 0,
