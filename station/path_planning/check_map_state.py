@@ -97,7 +97,7 @@ def check_map_state_on_a_stream(color, position):
 
 
 if __name__ == '__main__':
-    color = "red"
+    color = "yellow"
     position = None
     #color = None
     #position = (400, 400)
