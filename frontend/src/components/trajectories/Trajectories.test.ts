@@ -5,7 +5,10 @@ import { CoordinateFactory } from '@/factories/CoordinateFactory';
 
 describe('When mounting Trajectories', () => {
   const state = {
-    tableImage: '/stub_table_image.jpg',
+    tableImage: {
+      previous: '/stub_table_image.jpg',
+      current: '/stub_table_image.jpg',
+    },
     plannedTrajectory: CoordinateFactory.make(4),
     currentPlannedTrajectory: CoordinateFactory.make(4),
     realTrajectory: CoordinateFactory.make(4),

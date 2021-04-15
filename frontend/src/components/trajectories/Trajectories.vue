@@ -15,7 +15,7 @@
             v-bind:style="{
               backgroundSize: `${this.rescaledWidth}px ${this.rescaledHeight}px`,
               backgroundRepeat: 'no-repeat',
-              backgroundImage: `url('${this.tableImage}')`,
+              backgroundImage: `url('${this.tableImage.current}'), url('${this.tableImage.previous}')`,
             }"
           >
             <svg
@@ -67,6 +67,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { Coordinate } from '@/types/coordinate';
 import { mapState } from 'vuex';
 import Legend from './Legend.vue';
+import { TableImage } from '@/types/tableImage';
 
 @Component({
   components: {
@@ -80,7 +81,7 @@ import Legend from './Legend.vue';
   ]),
 })
 export default class Trajectories extends Vue {
-  private tableImage!: string;
+  private tableImage!: TableImage;
   private plannedTrajectory!: Array<Coordinate>;
   private currentPlannedTrajectory!: Array<Coordinate>;
   private realTrajectory!: Array<Coordinate>;

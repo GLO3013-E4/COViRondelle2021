@@ -32,7 +32,8 @@ class RobotGoalAndObstacleFinder:
     def find_pucks(self, image):
         return self.puck_finder.detect_pucks(image)
 
-    def callback_calculate_puck(self):
+    def callback_calculate_puck(self, data):
+        rospy.logerr("RECALCULATING PUCKS")
         self.calculate_pucks = True
 
     def find_robot_and_angle(self, image):
@@ -57,10 +58,12 @@ class RobotGoalAndObstacleFinder:
         self.robot_publisher.publish(json.dumps(self.find_robot_and_angle(cv2_array), default=self.convert))
         self.obstacles = json.dumps(self.find_obstacles(cv2_array), default=self.convert)
         self.obstacles_publisher.publish(self.obstacles)
-        self.square = json.dumps(self.find_square(), default=self.convert)
+        self.square = json.dumps(self.find_square(cv2_array), default=self.convert)
         self.square_publisher.publish(self.square)
         if self.calculate_pucks:
+            rospy.logerr("RECALCULATING PUCKS LIVE")
             self.pucks = json.dumps(self.find_pucks(cv2_array), default=self.convert)
+            rospy.logerr("RECALCULATING PUCKS FINISHED")
             self.calculate_pucks = False
         self.pucks_publisher.publish(self.pucks)
 
