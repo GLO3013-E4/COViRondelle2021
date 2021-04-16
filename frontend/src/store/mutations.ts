@@ -80,8 +80,7 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [SOCKET_GRIP_STATE](state: State, data: string) {
     const message = toMessage(data);
-    state.puckList.hasOneGripped =
-      message.puckInGrip || defaultState.puckList.hasOneGripped;
+    state.puckList.hasOneGripped = message.puckInGrip || false;
   },
   [SOCKET_CURRENT_STEP](state: State, data: string) {
     const message = toMessage(data);

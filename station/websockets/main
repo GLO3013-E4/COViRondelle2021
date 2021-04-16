@@ -10,14 +10,10 @@ from flask import Flask
 from flask_socketio import SocketIO
 from nav_msgs.msg import Path
 from sensor_msgs.msg import Image
-from std_msgs.msg import Bool, Float32, String
+from std_msgs.msg import Bool, String
 
 app = Flask(__name__)
 socket = SocketIO(app, cors_allowed_origins="*")
-
-
-def to_json(data):
-    return json.dumps(data)
 
 
 def to_base64(image):
@@ -29,18 +25,19 @@ def to_base64(image):
 
 
 def handle_robot_consumption(robot_consumption):
-    socket.emit("robot_consumption", robot_consumption.data)
+    json_data = json.dumps({"robotConsumption": json.loads(robot_consumption.data)})
+    socket.emit("robot_consumption", json_data)
 
 
 def handle_world_cam_image_raw(image):
     image_base64 = to_base64(image)
-    json_data = to_json({"tableImage": image_base64})
+    json_data = json.dumps({"tableImage": image_base64})
     socket.emit("table_image", json_data)
 
 
 def handle_robot(robot):
     data = json.loads(robot.data)["robot"]
-    json_data = to_json({"realTrajectoryCoordinate": {"x": data[0], "y": data[1]}})
+    json_data = json.dumps({"realTrajectoryCoordinate": {"x": data[0], "y": data[1]}})
     socket.emit("real_trajectory_coordinate", json_data)
 
 
@@ -50,7 +47,7 @@ def handle_path(path):
     for pose in path.poses:
         poses.append({"x": pose.pose.position.x, "y": pose.pose.position.y})
 
-    json_data = to_json({"plannedTrajectoryCoordinates": poses})
+    json_data = json.dumps({"plannedTrajectoryCoordinates": poses})
     socket.emit("planned_trajectory_coordinates", json_data)
 
 
@@ -71,24 +68,23 @@ def handle_movement_vectors_string(movement_vectors_string):
     if movement_vectors_string.data != "FINISHED":
         data = json.loads(movement_vectors_string.data)
         if should_emit_puck_in_grip(data):
-            json_data = to_json({"puckInGrip": is_puck_in_grip(data)})
+            json_data = json.dumps({"puckInGrip": is_puck_in_grip(data)})
             socket.emit("grip_state", json_data)
 
 
 def handle_resistance(resistance):
-    json_data = to_json({"resistance": int(resistance.data)})
+    json_data = json.dumps({"resistance": int(resistance.data)})
     socket.emit("resistance", json_data)
 
 
 def handle_puck_colors(puck_colors):
-    json_data = to_json({"puckColors": json.loads(puck_colors.data)})
-    rospy.logerr(json_data)
+    json_data = json.dumps({"puckColors": json.loads(puck_colors.data)})
     socket.emit("puck_colors", json_data)
 
 
 def handle_letters(letters):
     first_letter = json.loads(letters.data)[0]
-    json_data = to_json({"puckFirstCorner": first_letter})
+    json_data = json.dumps({"puckFirstCorner": first_letter})
     socket.emit("puck_first_corner", json_data)
 
 
@@ -102,7 +98,7 @@ def websockets():
     rospy.Subscriber("path", Path, handle_path)
     rospy.Subscriber("movement_vectors_string", String, handle_movement_vectors_string)
     rospy.Subscriber("resistance", String, handle_resistance)
-    rospy.Subscriber("puck_colors", String, handle_puck_colors)  # TODO : Fix this with new controller logic
+    rospy.Subscriber("puck_colors", String, handle_puck_colors)
     rospy.Subscriber("letters", String, handle_letters)
 
     # TODO : Implement cycle steps
