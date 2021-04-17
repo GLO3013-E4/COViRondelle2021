@@ -18,6 +18,7 @@ class MotorDriver:
         while not self.ser.isOpen():
             pass
 
+        print("started motors")
         rospy.Subscriber("movement_vectors_string", String, self.callback, queue_size=1)
         self.pub = rospy.Publisher("resistance", String, queue_size=1)
 
