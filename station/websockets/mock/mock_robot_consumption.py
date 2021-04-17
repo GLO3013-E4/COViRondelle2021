@@ -3,8 +3,6 @@ import random
 import rospy
 from std_msgs.msg import String
 
-rospy.init_node('mock_robot_consumption', anonymous=True)
-
 
 def create_robot_consumption():
     robot_consumption = {

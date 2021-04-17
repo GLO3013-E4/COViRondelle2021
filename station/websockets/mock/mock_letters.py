@@ -4,8 +4,6 @@ from enum import Enum
 import rospy
 from std_msgs.msg import String
 
-rospy.init_node('mock_letters', anonymous=True)
-
 
 class Corner(Enum):
     A = 'A'

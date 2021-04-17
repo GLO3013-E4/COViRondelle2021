@@ -47,6 +47,8 @@ def mock_full_cycle():
 
     rospy.Subscriber("start_cycle", Bool, handle_start_cycle)
 
+    rospy.spin()
+
 
 if __name__ == '__main__':
     mock_full_cycle()

@@ -3,8 +3,6 @@ import random
 import rospy
 from std_msgs.msg import String
 
-rospy.init_node('mock_resistance', anonymous=True)
-
 
 def create_resistance():
     resistance = random.randint(100, 1000000)

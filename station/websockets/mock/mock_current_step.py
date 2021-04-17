@@ -4,8 +4,6 @@ from enum import Enum
 import rospy
 from std_msgs.msg import String
 
-rospy.init_node('mock_current_step', anonymous=True)
-
 
 class Step(Enum):
     CycleNotStarted = 'CycleNotStarted'
@@ -32,7 +30,7 @@ def create_current_step():
 def mock_current_step(step=create_current_step()):
     current_step_publisher = rospy.Publisher('current_step', String, queue_size=10)
 
-    rospy.loginfo(f'Mocking current_step: {step}')
+    rospy.loginfo('Mocking current_step: {}'.format(step))
     current_step_publisher.publish(step)
 
 
