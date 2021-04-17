@@ -9,12 +9,14 @@ def create_puck_is_not_in_grip():
     return json.dumps(movement_vectors_string)
 
 
-def mock_puck_is_not_in_grip():
-    puck_colors_publisher = rospy.Publisher('movement_vectors_string', String, queue_size=10)
-
+def mock_puck_is_not_in_grip(pub):
     rospy.loginfo('Mocking movement_vectors_string (puck not in grip)')
-    puck_colors_publisher.publish(create_puck_is_not_in_grip())
+    pub.publish(create_puck_is_not_in_grip())
 
 
 if __name__ == '__main__':
-    mock_puck_is_not_in_grip()
+    rospy.init_node('mock_puck_is_not_in_grip', anonymous=True)
+
+    movement_publisher = rospy.Publisher('movement_vectors_string', String, queue_size=10)
+
+    mock_puck_is_not_in_grip(movement_publisher)

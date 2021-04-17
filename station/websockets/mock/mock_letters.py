@@ -21,12 +21,14 @@ def create_letters():
     return json.dumps(letters)
 
 
-def mock_letters():
-    puck_colors_publisher = rospy.Publisher('letters', String, queue_size=10)
-
+def mock_letters(pub):
     rospy.loginfo('Mocking letters')
-    puck_colors_publisher.publish(create_letters())
+    pub.publish(create_letters())
 
 
 if __name__ == '__main__':
-    mock_letters()
+    rospy.init_node('mock_letters', anonymous=True)
+
+    letters_publisher = rospy.Publisher('letters', String, queue_size=10)
+
+    mock_letters(letters_publisher)

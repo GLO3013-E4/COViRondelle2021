@@ -28,6 +28,7 @@ def to_base64(image):
 
 
 def handle_robot_consumption(robot_consumption):
+    print('finally')
     json_data = json.dumps({"robotConsumption": json.loads(robot_consumption.data)})
     socket.emit("robot_consumption", json_data)
 

@@ -41,6 +41,7 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [SOCKET_ROBOT_CONSUMPTION](state: State, data: string) {
     const message = toMessage(data);
+    console.log(message);
     state.cycleReady = true;
     state.robotConsumption =
       message.robotConsumption || defaultState.robotConsumption;

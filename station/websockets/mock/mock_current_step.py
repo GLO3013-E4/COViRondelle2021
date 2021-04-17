@@ -27,12 +27,14 @@ def create_current_step():
     return random.choice(list(Step)).name
 
 
-def mock_current_step(step=create_current_step()):
-    current_step_publisher = rospy.Publisher('current_step', String, queue_size=10)
-
+def mock_current_step(pub, step=create_current_step()):
     rospy.loginfo('Mocking current_step: {}'.format(step))
-    current_step_publisher.publish(step)
+    pub.publish(step)
 
 
 if __name__ == '__main__':
-    mock_current_step()
+    rospy.init_node('mock_current_step', anonymous=True)
+
+    current_step_publisher = rospy.Publisher('current_step', String, queue_size=10)
+
+    mock_current_step(current_step_publisher)
