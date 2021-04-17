@@ -18,8 +18,11 @@ def create_robot_consumption():
 
 
 def mock_robot_consumption(pub):
-    rospy.loginfo('Mocking robot_consumption')
-    pub.publish(create_robot_consumption())
+    rate = rospy.Rate(1)
+    while not rospy.is_shutdown():
+        rospy.loginfo('Mocking robot_consumption')
+        pub.publish(create_robot_consumption())
+        rate.sleep()
 
 
 if __name__ == '__main__':

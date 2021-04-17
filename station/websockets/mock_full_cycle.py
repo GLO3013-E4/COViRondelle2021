@@ -1,4 +1,5 @@
 import rospy
+import threading
 import time
 from std_msgs.msg import String, Bool
 
@@ -20,37 +21,38 @@ letters_publisher = rospy.Publisher('letters', String, queue_size=10)
 movement_publisher = rospy.Publisher('movement_vectors_string', String, queue_size=10)
 
 
-def handle_start_cycle():
-    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToResistanceStation)
-    execute_then_sleep(mock_current_step, current_step_publisher, Step.ReadResistance)
+def handle_start_cycle(_):
+    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToResistanceStation.name)
+    execute_then_sleep(mock_current_step, current_step_publisher, Step.ReadResistance.name)
     execute_then_sleep(mock_resistance, resistance_publisher)
     execute_then_sleep(mock_puck_colors, puck_colors_publisher)
-    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToControlPanel)
-    execute_then_sleep(mock_current_step, current_step_publisher, Step.ReadControlPanel)
+    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToControlPanel.name)
+    execute_then_sleep(mock_current_step, current_step_publisher, Step.ReadControlPanel.name)
     execute_then_sleep(mock_letters, letters_publisher)
-    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToFirstPuckAndGrabFirstPuck)
+    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToFirstPuckAndGrabFirstPuck.name)
     execute_then_sleep(mock_puck_is_in_grip, movement_publisher)
-    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToFirstCornerAndReleaseFirstPuck)
+    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToFirstCornerAndReleaseFirstPuck.name)
     execute_then_sleep(mock_puck_is_not_in_grip, movement_publisher)
-    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToSecondPuckAndGrabSecondPuck)
+    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToSecondPuckAndGrabSecondPuck.name)
     execute_then_sleep(mock_puck_is_in_grip, movement_publisher)
-    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToSecondCornerAndReleaseSecondPuck)
+    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToSecondCornerAndReleaseSecondPuck.name)
     execute_then_sleep(mock_puck_is_not_in_grip, movement_publisher)
-    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToThirdPuckAndGrabThirdPuck)
+    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToThirdPuckAndGrabThirdPuck.name)
     execute_then_sleep(mock_puck_is_in_grip, movement_publisher)
-    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToThirdCornerAndReleaseThirdPuck)
+    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToThirdCornerAndReleaseThirdPuck.name)
     execute_then_sleep(mock_puck_is_not_in_grip, movement_publisher)
-    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToSquareCenter)
-    execute_then_sleep(mock_current_step, current_step_publisher, Step.CycleEndedAndRedLedOn)
+    execute_then_sleep(mock_current_step, current_step_publisher, Step.ToSquareCenter.name)
+    execute_then_sleep(mock_current_step, current_step_publisher, Step.CycleEndedAndRedLedOn.name)
 
 
 def execute_then_sleep(execute, *args):
     execute(*args)
     time.sleep(1)
+    print('yo')
 
 
 def mock_full_cycle():
-    mock_robot_consumption(robot_consumption_publisher)
+    threading.Thread(target=lambda: mock_robot_consumption(robot_consumption_publisher)).start()
 
     rospy.Subscriber("start_cycle", Bool, handle_start_cycle)
 
