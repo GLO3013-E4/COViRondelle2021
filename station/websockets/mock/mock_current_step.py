@@ -32,6 +32,7 @@ def create_current_step():
 def mock_current_step(step=create_current_step()):
     current_step_publisher = rospy.Publisher('current_step', String, queue_size=10)
 
+    rospy.loginfo(f'Mocking current_step: {step}')
     current_step_publisher.publish(step)
 
 

@@ -22,6 +22,7 @@ def create_robot_consumption():
 def mock_robot_consumption():
     puck_colors_publisher = rospy.Publisher('robot_consumption', String, queue_size=10)
 
+    rospy.loginfo('Mocking robot_consumption')
     puck_colors_publisher.publish(create_robot_consumption())
 
 

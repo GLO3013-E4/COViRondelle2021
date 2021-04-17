@@ -2,7 +2,6 @@ import rospy
 import time
 from std_msgs.msg import Bool
 
-# TODO : Fix imports
 from mock.mock_robot_consumption import mock_robot_consumption
 from mock.mock_current_step import mock_current_step, Step
 from mock.mock_resistance import mock_resistance
@@ -44,9 +43,9 @@ def execute_then_sleep(execute, args=None):
 
 
 def mock_full_cycle():
-    rospy.Subscriber("start_cycle", Bool, handle_start_cycle)
-
     mock_robot_consumption()
+
+    rospy.Subscriber("start_cycle", Bool, handle_start_cycle)
 
 
 if __name__ == '__main__':

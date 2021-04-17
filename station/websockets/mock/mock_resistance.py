@@ -14,6 +14,7 @@ def create_resistance():
 def mock_resistance():
     puck_colors_publisher = rospy.Publisher('resistance', String, queue_size=10)
 
+    rospy.loginfo('Mocking resistance')
     puck_colors_publisher.publish(create_resistance())
 
 

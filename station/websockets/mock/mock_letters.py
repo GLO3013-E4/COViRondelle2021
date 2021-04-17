@@ -26,6 +26,7 @@ def create_letters():
 def mock_letters():
     puck_colors_publisher = rospy.Publisher('letters', String, queue_size=10)
 
+    rospy.loginfo('Mocking letters')
     puck_colors_publisher.publish(create_letters())
 
 

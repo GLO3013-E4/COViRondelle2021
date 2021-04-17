@@ -33,6 +33,7 @@ def create_puck_colors():
 def mock_puck_colors():
     puck_colors_publisher = rospy.Publisher('puck_colors', String, queue_size=10)
 
+    rospy.loginfo('Mocking puck_colors')
     puck_colors_publisher.publish(create_puck_colors())
 
 

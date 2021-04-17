@@ -14,6 +14,7 @@ def create_puck_is_not_in_grip():
 def mock_puck_is_not_in_grip():
     puck_colors_publisher = rospy.Publisher('movement_vectors_string', String, queue_size=10)
 
+    rospy.loginfo('Mocking movement_vectors_string (puck not in grip)')
     puck_colors_publisher.publish(create_puck_is_not_in_grip())
 
 
