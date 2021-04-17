@@ -92,6 +92,11 @@ def handle_letters(letters):
     socket.emit("puck_first_corner", json_data)
 
 
+def handle_current_step(current_step):
+    json_data = json.dumps({"currentStep": current_step.data})
+    socket.emit("current_step", json_data)
+
+
 def websockets():
     start_cycle_publisher = rospy.Publisher("start_cycle", Bool, queue_size=10)
 
@@ -103,8 +108,7 @@ def websockets():
     rospy.Subscriber("resistance", String, handle_resistance)
     rospy.Subscriber("puck_colors", String, handle_puck_colors)
     rospy.Subscriber("letters", String, handle_letters)
-
-    # TODO : Implement cycle steps
+    rospy.Subscriber("current_step", String, handle_current_step)
 
     @socket.on('start_cycle')
     def handle_start_cycle():
