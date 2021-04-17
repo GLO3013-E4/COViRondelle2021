@@ -2,6 +2,7 @@ import FirstCorner from '@/components/station/FirstCorner.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import { State } from '@/store/state';
 import { PuckListFactory } from '@/factories/PuckListFactory';
+import { Corner } from '@/types/corner';
 
 describe('When mounting FirstCorner component', () => {
   const wrapper = wrapWithVuetifyAndStore(FirstCorner);
@@ -20,10 +21,15 @@ describe('Given state', () => {
     const wrapper = wrapWithVuetifyAndStore(FirstCorner, state);
 
     it('Should contains the right letter of corner', () => {
+      const expectedCorner =
+        state.puckList.first.corner === Corner.UNSET
+          ? ''
+          : state.puckList.first.corner;
+
       const letterCorner = wrapper.findComponent({ ref: 'corner' });
 
       expect(letterCorner.exists()).toBe(true);
-      expect(letterCorner.text()).toBe(state.puckList.first.corner);
+      expect(letterCorner.text()).toBe(expectedCorner);
     });
   });
 });

@@ -21,17 +21,20 @@ const Template = (args: any) => ({
 export const WhenCycleNotStartedAndCycleReady = Template.bind({}) as any;
 WhenCycleNotStartedAndCycleReady.args = {
   currentStep: Step.CycleNotStarted,
+  cycleStarted: false,
   cycleReady: true,
 };
 
 export const WhenCycleNotStartedAndCycleNotReady = Template.bind({}) as any;
 WhenCycleNotStartedAndCycleNotReady.args = {
   currentStep: Step.CycleNotStarted,
+  cycleStarted: false,
   cycleReady: false,
 };
 
 export const WhenCycleEnds = Template.bind({}) as any;
 WhenCycleEnds.args = {
   currentStep: Step.CycleEndedAndRedLedOn,
+  cycleStarted: true,
   cycleReady: true,
 };

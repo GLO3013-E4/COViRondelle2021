@@ -41,7 +41,6 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [SOCKET_ROBOT_CONSUMPTION](state: State, data: string) {
     const message = toMessage(data);
-    console.log(message);
     state.cycleReady = true;
     state.robotConsumption =
       message.robotConsumption || defaultState.robotConsumption;
@@ -56,12 +55,10 @@ export const mutations: MutationTree<State> & Mutations = {
       defaultState.tableImage.current;
   },
   [SOCKET_RESISTANCE](state: State, data: string) {
-    console.log("resistence"+ data)
     const message = toMessage(data);
     state.resistance = message.resistance || defaultState.resistance;
   },
   [SOCKET_PUCK_COLORS](state: State, data: string) {
-    console.log(data)
     const message = toMessage(data);
     state.puckList.colors = message.puckColors || defaultState.puckList.colors;
   },

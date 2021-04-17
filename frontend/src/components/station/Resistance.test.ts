@@ -2,6 +2,7 @@ import Resistance from '@/components/station/Resistance.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import { State } from '@/store/state';
 import { PuckListFactory } from '@/factories/PuckListFactory';
+import { Color } from '@/types/color';
 
 describe('When mounting Resistance component', () => {
   const wrapper = wrapWithVuetifyAndStore(Resistance);
@@ -31,7 +32,9 @@ describe('Given state', () => {
       const pucks = wrapper.findAllComponents({ ref: 'pucks' });
 
       expect(pucks.exists()).toBe(true);
-      expect(pucks).toHaveLength(state.puckList.pucks.length);
+      expect(pucks).toHaveLength(
+        state.puckList.pucks.filter((puck) => puck.color !== Color.Unset).length
+      );
     });
   });
 });

@@ -3,18 +3,17 @@
     <v-card class="lighten1 d-flex justify-center" ref="time">
       <h2>{{ this.updatedTime }}</h2>
     </v-card>
-    <!-- TODO : Change ref of start button -->
-    <StartButton ref="button" @start="start"/>
-    <ResetButton ref="resetButton" @reset="reset"/>
+    <StartButton ref="button" @start="start" />
+    <ResetButton ref="resetButton" @reset="reset" />
   </div>
 </template>
 
 <script lang="ts">
-import {Step} from '@/types/step';
-import {Component, Vue} from 'vue-property-decorator';
-import {mapState, mapActions, mapMutations} from 'vuex';
+import { Step } from '@/types/step';
+import { Component, Vue } from 'vue-property-decorator';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import StartButton from './StartButton.vue';
-import ResetButton from "@/components/cycles/ResetButton.vue";
+import ResetButton from '@/components/cycles/ResetButton.vue';
 
 @Component({
   components: {
@@ -23,7 +22,7 @@ import ResetButton from "@/components/cycles/ResetButton.vue";
   },
   methods: {
     ...mapActions(['emitSocketStartCycle']),
-    ...mapMutations(['resetCycle']),
+    ...mapMutations(['RESET_CYCLE']),
   },
   computed: {
     ...mapState(['cycleReady', 'currentStep']),
@@ -31,7 +30,7 @@ import ResetButton from "@/components/cycles/ResetButton.vue";
 })
 export default class Chronometer extends Vue {
   public emitSocketStartCycle!: () => void;
-  public resetCycle!: () => void;
+  public RESET_CYCLE!: () => void;
   public cycleReady!: boolean;
   public currentStep!: Step;
 
@@ -71,7 +70,7 @@ export default class Chronometer extends Vue {
   }
 
   public reset() {
-    this.resetCycle()
+    this.RESET_CYCLE();
   }
 
   get updatedTime() {
