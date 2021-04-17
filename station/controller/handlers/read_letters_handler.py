@@ -23,9 +23,8 @@ class ReadLettersHandler(Handler):
         while not self.is_finished:
             pass
 
-        rounded_resistance, colors = Resistance(handled_data["resistance"]).get_resistance_and_colors()
+        rounded_resistance, _ = Resistance(handled_data["resistance"]).get_resistance_and_colors()
         handled_data["letters"] = self.letters
-        handled_data["puck_colors"] = colors
         command_panel.set_mapped_letters(self.letters)
         command_panel.set_resistance(rounded_resistance)
 
@@ -47,4 +46,3 @@ class ReadLettersHandler(Handler):
 
     def unregister(self):
         self.sub.unregister()
-        

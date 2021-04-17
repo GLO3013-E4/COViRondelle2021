@@ -1,4 +1,5 @@
 export enum Corner {
+  UNSET = 'X',
   A = 'A',
   B = 'B',
   C = 'C',
@@ -15,6 +16,7 @@ export const getNextCorner = (corner: Corner): Corner => {
     case Corner.C:
       return Corner.D;
     case Corner.D:
+    default:
       return Corner.A;
   }
 };

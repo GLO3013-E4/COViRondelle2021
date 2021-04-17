@@ -1,3 +1,4 @@
+import json
 import random
 from enum import Enum
 import rospy
@@ -24,7 +25,7 @@ def create_puck_colors():
         random.choice(list(Color)).name,
         random.choice(list(Color)).name
     ]
-    return ','.join(puck_colors)
+    return json.dumps(puck_colors)
 
 
 # TODO : Remove this mock
@@ -32,8 +33,5 @@ if __name__ == '__main__':
     puck_colors_publisher = rospy.Publisher('puck_colors', String, queue_size=10)
 
     rospy.init_node('mock_puck_colors', anonymous=True)
-    rate = rospy.Rate(1)
 
-    while not rospy.is_shutdown():
-        puck_colors_publisher.publish(create_puck_colors())
-        rate.sleep()
+    puck_colors_publisher.publish(create_puck_colors())

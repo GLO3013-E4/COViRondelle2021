@@ -27,7 +27,7 @@ class MoveRobotToNextPuckHandler(Handler):
         self.sub.unregister()
 
     def handle(self, handled_data=None):
-        handled_data["calculate_pucks_pub"].publish(True)
+        #handled_data["calculate_pucks_pub"].publish(True)
         self.handled_data = handled_data
         if not self.initialized:
             self.initialize()
