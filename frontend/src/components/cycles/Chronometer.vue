@@ -1,24 +1,29 @@
 <template>
   <div>
-    <v-card class="lighten1 d-flex justify-center" ref="time"
-      ><h2>{{ this.updatedTime }}</h2></v-card
-    >
-    <StartButton ref="button" @start="start" />
+    <v-card class="lighten1 d-flex justify-center" ref="time">
+      <h2>{{ this.updatedTime }}</h2>
+    </v-card>
+    <!-- TODO : Change ref of start button -->
+    <StartButton ref="button" @start="start"/>
+    <ResetButton ref="resetButton" @reset="reset"/>
   </div>
 </template>
 
 <script lang="ts">
-import { Step } from '@/types/step';
-import { Component, Vue } from 'vue-property-decorator';
-import { mapState, mapActions } from 'vuex';
+import {Step} from '@/types/step';
+import {Component, Vue} from 'vue-property-decorator';
+import {mapState, mapActions, mapMutations} from 'vuex';
 import StartButton from './StartButton.vue';
+import ResetButton from "@/components/cycles/ResetButton.vue";
 
 @Component({
   components: {
-    StartButton: StartButton,
+    StartButton,
+    ResetButton,
   },
   methods: {
     ...mapActions(['emitSocketStartCycle']),
+    ...mapMutations(['resetCycle']),
   },
   computed: {
     ...mapState(['cycleReady', 'currentStep']),
@@ -26,6 +31,7 @@ import StartButton from './StartButton.vue';
 })
 export default class Chronometer extends Vue {
   public emitSocketStartCycle!: () => void;
+  public resetCycle!: () => void;
   public cycleReady!: boolean;
   public currentStep!: Step;
 
@@ -34,13 +40,13 @@ export default class Chronometer extends Vue {
   public prevTime: number | null = 0;
 
   public start() {
-    if (this.cycleReady || this.currentStep == Step.CycleEndedAndRedLedOn) {
+    if (this.cycleReady || this.currentStep === Step.CycleEndedAndRedLedOn) {
       this.emitSocketStartCycle();
 
       if (!this.interval) {
         this.interval = setInterval(() => {
           if (this.currentStep === Step.CycleEndedAndRedLedOn) {
-            this.stop();
+            this.stop(); // TODO : Pause instead of stop
           } else {
             if (!this.prevTime) {
               this.prevTime = Date.now();
@@ -62,6 +68,10 @@ export default class Chronometer extends Vue {
       this.interval = null;
     }
     this.prevTime = null;
+  }
+
+  public reset() {
+    this.resetCycle()
   }
 
   get updatedTime() {

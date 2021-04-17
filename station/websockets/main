@@ -12,11 +12,11 @@ from nav_msgs.msg import Path
 from sensor_msgs.msg import Image
 from std_msgs.msg import Bool, String
 
-rospy.init_node("websockets", anonymous=True)
-rate = rospy.Rate(1)
-
 app = Flask(__name__)
 socket = SocketIO(app, cors_allowed_origins="*")
+
+rospy.init_node("websockets", anonymous=True)
+rate = rospy.Rate(1)
 
 
 def to_base64(image):
@@ -114,7 +114,9 @@ def websockets():
     def handle_start_cycle():
         start_cycle_publisher.publish(True)
 
-    threading.Thread(target=lambda: socket.run(app, host='192.168.0.49', port=4000)).start()
+    # TODO : Add back correct IP address
+    # threading.Thread(target=lambda: socket.run(app, host='192.168.0.49', port=4000)).start()
+    threading.Thread(target=lambda: socket.run(app, host='127.0.0.1', port=4000)).start()
 
 
 if __name__ == '__main__':

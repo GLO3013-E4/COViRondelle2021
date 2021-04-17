@@ -1,5 +1,6 @@
 import { MutationTree } from 'vuex/types';
 import {
+  RESET_CYCLE,
   SOCKET_CURRENT_STEP,
   SOCKET_GRIP_STATE,
   SOCKET_PLANNED_TRAJECTORY_COORDINATES,
@@ -17,6 +18,7 @@ import { Step } from '@/types/step';
 
 export type Mutations<S = State> = {
   [START_CYCLE](state: S): void;
+  [RESET_CYCLE](state: S): void;
   [SOCKET_ROBOT_CONSUMPTION](state: S, data: string): void;
   [SOCKET_RESISTANCE](state: S, data: string): void;
   [SOCKET_PUCK_COLORS](state: S, data: string): void;
@@ -33,6 +35,9 @@ export const mutations: MutationTree<State> & Mutations = {
   [START_CYCLE](state: State) {
     state.currentStep = Step.CycleStarted;
     state.cycleStarted = true;
+  },
+  [RESET_CYCLE](state: State) {
+    state = defaultState;
   },
   [SOCKET_ROBOT_CONSUMPTION](state: State, data: string) {
     const message = toMessage(data);

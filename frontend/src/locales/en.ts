@@ -37,6 +37,7 @@ export const en = {
       CycleEndedAndRedLedOn: 'Cycle ended and red DEL on',
     },
     start: 'Start',
+    reset: 'Reset',
     modes: {
       booting: 'Booting',
       started: 'Started',

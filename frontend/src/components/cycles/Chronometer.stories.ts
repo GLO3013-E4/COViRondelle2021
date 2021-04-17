@@ -30,8 +30,6 @@ WhenCycleNotStartedAndCycleNotReady.args = {
   cycleReady: false,
 };
 
-//aint working because it probably does not consider the change in state
-//But tests were done manually and it works.
 export const WhenCycleEnds = Template.bind({}) as any;
 WhenCycleEnds.args = {
   currentStep: Step.CycleEndedAndRedLedOn,
