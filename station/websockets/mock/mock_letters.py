@@ -4,6 +4,8 @@ from enum import Enum
 import rospy
 from std_msgs.msg import String
 
+rospy.init_node('mock_letters', anonymous=True)
+
 
 class Corner(Enum):
     A = 'A'
@@ -21,10 +23,11 @@ def create_letters():
     return json.dumps(letters)
 
 
-# TODO : Remove this mock
-if __name__ == '__main__':
+def mock_letters():
     puck_colors_publisher = rospy.Publisher('letters', String, queue_size=10)
 
-    rospy.init_node('mock_letters', anonymous=True)
-
     puck_colors_publisher.publish(create_letters())
+
+
+if __name__ == '__main__':
+    mock_letters()

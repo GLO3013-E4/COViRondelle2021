@@ -4,6 +4,8 @@ from enum import Enum
 import rospy
 from std_msgs.msg import String
 
+rospy.init_node('mock_puck_colors', anonymous=True)
+
 
 class Color(Enum):
     yellow = 0
@@ -28,10 +30,11 @@ def create_puck_colors():
     return json.dumps(puck_colors)
 
 
-# TODO : Remove this mock
-if __name__ == '__main__':
+def mock_puck_colors():
     puck_colors_publisher = rospy.Publisher('puck_colors', String, queue_size=10)
 
-    rospy.init_node('mock_puck_colors', anonymous=True)
-
     puck_colors_publisher.publish(create_puck_colors())
+
+
+if __name__ == '__main__':
+    mock_puck_colors()

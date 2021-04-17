@@ -3,6 +3,8 @@ import random
 import rospy
 from std_msgs.msg import String
 
+rospy.init_node('mock_robot_consumption', anonymous=True)
+
 
 def create_robot_consumption():
     robot_consumption = {
@@ -17,10 +19,11 @@ def create_robot_consumption():
     return json.dumps(robot_consumption)
 
 
-# TODO : Remove this mock
-if __name__ == '__main__':
+def mock_robot_consumption():
     puck_colors_publisher = rospy.Publisher('robot_consumption', String, queue_size=10)
 
-    rospy.init_node('mock_robot_consumption', anonymous=True)
-
     puck_colors_publisher.publish(create_robot_consumption())
+
+
+if __name__ == '__main__':
+    mock_robot_consumption()

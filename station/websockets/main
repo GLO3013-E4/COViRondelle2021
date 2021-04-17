@@ -12,6 +12,9 @@ from nav_msgs.msg import Path
 from sensor_msgs.msg import Image
 from std_msgs.msg import Bool, String
 
+rospy.init_node("websockets", anonymous=True)
+rate = rospy.Rate(1)
+
 app = Flask(__name__)
 socket = SocketIO(app, cors_allowed_origins="*")
 
@@ -33,6 +36,7 @@ def handle_world_cam_image_raw(image):
     image_base64 = to_base64(image)
     json_data = json.dumps({"tableImage": image_base64})
     socket.emit("table_image", json_data)
+    rate.sleep()
 
 
 def handle_robot(robot):
@@ -90,7 +94,6 @@ def handle_letters(letters):
 
 def websockets():
     start_cycle_publisher = rospy.Publisher("start_cycle", Bool, queue_size=10)
-    rospy.init_node("websockets", anonymous=True)
 
     rospy.Subscriber("robot_consumption", String, handle_robot_consumption)
     rospy.Subscriber("world_cam/image_raw", Image, handle_world_cam_image_raw, queue_size=1, buff_size=52428800)
@@ -108,7 +111,6 @@ def websockets():
         start_cycle_publisher.publish(True)
 
     threading.Thread(target=lambda: socket.run(app, host='192.168.0.49', port=4000)).start()
-    rospy.spin()
 
 
 if __name__ == '__main__':
