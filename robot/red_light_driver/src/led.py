@@ -1,4 +1,3 @@
-import time
 import RPi.GPIO as GPIO
 
 class RedLightDriver:
@@ -12,10 +11,10 @@ class RedLightDriver:
 
     def on(self):
         GPIO.output(self.LED, GPIO.HIGH)
-    
+
     def off(self):
         GPIO.output(self.LED, GPIO.LOW)
-    
+
 
 if __name__ == "__main__":
     s = RedLightDriver()

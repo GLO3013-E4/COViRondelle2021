@@ -7,3 +7,4 @@ disable=
     E1101, # no-member
     R0903, # too-few-public-methods
     W0511, # fixme
+    C0103, # snake case
