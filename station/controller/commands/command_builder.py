@@ -37,29 +37,29 @@ class CommandBuilder:
 
     def _with_step(self, step):
         if step == Step.WAIT_FOR_ROBOT_READY_STATE:
-            self._commands.append(Command([WaitForRobotReadyStateHandler()]))
+            self._commands.append(Command([WaitForRobotReadyStateHandler()], step))
         elif step == Step.WAIT_FOR_FRONTEND_CYCLE_START:
-            self._commands.append(Command([WaitForFrontendCycleStartHandler()]))
+            self._commands.append(Command([WaitForFrontendCycleStartHandler()], step))
         elif step == Step.MOVE_ROBOT_TO_RESISTANCE_STATION:
-            self._commands.append(Command([MoveRobotToResistanceStationHandler()]))
+            self._commands.append(Command([MoveRobotToResistanceStationHandler()], step))
         elif step == Step.READ_RESISTANCE:
-            self._commands.append(Command([ReadResistanceHandler()]))
+            self._commands.append(Command([ReadResistanceHandler()], step))
         elif step == Step.MOVE_ROBOT_TO_COMMAND_PANEL:
-            self._commands.append(Command([MoveRobotToCommandPanelHandler()]))
+            self._commands.append(Command([MoveRobotToCommandPanelHandler()], step))
         elif step == Step.READ_LETTERS:
-            self._commands.append(Command([ReadLettersHandler()]))
-        elif step == Step.MOVE_ROBOT_TO_NEXT_PUCK:
-            self._commands.append(Command([MoveRobotToNextPuckHandler()]))
+            self._commands.append(Command([ReadLettersHandler()], step))
+        elif step in (Step.TO_FIRST_PUCK_AND_GRAB_FIRST_PUCK_FIRST_PUCK, Step.TO_SECOND_PUCK_AND_GRAB_SECOND_PUCK, Step.TO_THIRD_PUCK_AND_GRAB_THIRD_PUCK):
+            self._commands.append(Command([MoveRobotToNextPuckHandler()], step))
         elif step == Step.GRIP_PUCK:
             self._commands.append(Command([GripPuckHandler()]))
-        elif step == Step.MOVE_ROBOT_TO_NEXT_CORNER:
-            self._commands.append(Command([MoveRobotToNextCornerHandler()]))
+        elif step in (Step.TO_FIRST_CORNER_AND_RELEASE_FIRST_PUCK, Step.TO_SECOND_CORNER_AND_RELEASE_SECOND_PUCK, Step.TO_THIRD_CORNER_AND_RELEASE_THIRD_PUCK):
+            self._commands.append(Command([MoveRobotToNextCornerHandler()], step))
         elif step == Step.RELEASE_PUCK:
             self._commands.append(Command([ReleasePuckHandler()]))
         elif step == Step.MOVE_ROBOT_TO_SQUARE_CENTER:
-            self._commands.append(Command([MoveRobotToSquareCenterHandler()]))
+            self._commands.append(Command([MoveRobotToSquareCenterHandler()], step))
         elif step == Step.END_CYCLE:
-            self._commands.append(Command([EndCycleHandler()]))
+            self._commands.append(Command([EndCycleHandler()], step))
 
     def build_many(self):
         return self._commands
