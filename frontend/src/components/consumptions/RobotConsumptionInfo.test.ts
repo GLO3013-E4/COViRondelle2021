@@ -1,5 +1,5 @@
 import RobotConsumptionInfo from '@/components/consumptions/RobotConsumptionInfo.vue';
-import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
+import wrapComponentForTest from '../../util/wrapComponentForTest';
 import { State } from '@/store/state';
 import { RobotConsumption } from '@/types/robotConsumption';
 
@@ -17,7 +17,7 @@ describe('Given state', () => {
   } as State;
 
   describe('When mounting RobotConsumptionInfo', () => {
-    const wrapper = wrapWithVuetifyAndStore(RobotConsumptionInfo, state);
+    const wrapper = wrapComponentForTest(RobotConsumptionInfo, state);
 
     it('Should contains the right number of consumptions details', () => {
       const consumptions = wrapper.findComponent({ ref: 'consumptions' });

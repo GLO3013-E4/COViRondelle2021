@@ -1,36 +1,23 @@
-import Mode from '@/components/cycles/Mode.vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
+import CycleNumber from "@/components/cycles/CycleNumber.vue";
 
 Vue.use(Vuex);
 
 export default {
-  title: 'components/cycles/Mode',
-  component: Mode,
+  title: 'components/cycles/CycleNumber',
+  component: CycleNumber,
 };
 
 const Template = (args: any) => ({
-  components: { Mode },
+  components: { CycleNumber },
   store: new Vuex.Store({
     state: args,
   }),
-  template: '<Mode />',
+  template: '<CycleNumber />',
 });
 
-export const cycleReadyInWaitingMode = Template.bind({}) as any;
-cycleReadyInWaitingMode.args = {
-  cycleReady: true,
-  cycleStarted: false,
-};
-
-export const cycleStarted = Template.bind({}) as any;
-cycleStarted.args = {
-  cycleReady: true,
-  cycleStarted: true,
-};
-
-export const cycleNotStartedAndRobotStillBooting = Template.bind({}) as any;
-cycleNotStartedAndRobotStillBooting.args = {
-  cycleReady: false,
-  cycleStarted: false,
+export const Basic = Template.bind({}) as any;
+Basic.args = {
+  cycleNumber: 88,
 };

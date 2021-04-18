@@ -1,7 +1,7 @@
 import ObjectivesInformation from '@/components/objectives/ObjectivesInformation.vue';
-import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
+import wrapComponentForTest from '../../util/wrapComponentForTest';
 
-const wrapper = wrapWithVuetifyAndStore(ObjectivesInformation);
+const wrapper = wrapComponentForTest(ObjectivesInformation);
 
 describe('When mounting objectives information', () => {
   it('Should mount', () => {

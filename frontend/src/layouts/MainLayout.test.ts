@@ -3,9 +3,9 @@ import ConsumptionInformation from '@/components/consumptions/ConsumptionInforma
 import CycleInformation from '@/components/cycles/CycleInformation.vue';
 import StationInformation from '@/components/objectives/ObjectivesInformation.vue';
 import Trajectories from '@/components/trajectories/Trajectories.vue';
-import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
+import wrapComponentForTest from '../util/wrapComponentForTest';
 
-const wrapper = wrapWithVuetifyAndStore(MainLayout);
+const wrapper = wrapComponentForTest(MainLayout);
 
 describe('When mounting main layout', () => {
   it('Should mount', () => {

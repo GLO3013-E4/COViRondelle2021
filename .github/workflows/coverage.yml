@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: objectives
+        working-directory: station
     strategy:
       matrix:
         node-version: [ 15.x ]
@@ -53,16 +53,16 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: objectives
+        working-directory: station
     strategy:
       matrix:
         node-version: [ 15.x ]
     steps:
       - uses: actions/checkout@v2
       - name: Build docker image
-        run: docker build -t objectives .
+        run: docker build -t station .
       - name: Run tests with coverage
-        run: docker run -i -v $PWD:/output objectives pytest --cov=./ --cov-report xml:/output/coverage.xml
+        run: docker run -i -v $PWD:/output station pytest --cov=./ --cov-report xml:/output/coverage.xml
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v1
         with:

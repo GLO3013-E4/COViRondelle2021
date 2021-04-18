@@ -1,5 +1,5 @@
 import PuckDeposit from '@/components/objectives/PuckDeposit.vue';
-import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
+import wrapComponentForTest from '../../util/wrapComponentForTest';
 import { State } from '@/store/state';
 import { PuckList } from '@/types/puckList';
 import { PuckListFactory } from '@/factories/PuckListFactory';
@@ -12,7 +12,7 @@ const mockState = (puckStates: Array<PuckState>): State => {
 };
 
 describe('When mounting PuckDeposit component', () => {
-  const wrapper = wrapWithVuetifyAndStore(PuckDeposit);
+  const wrapper = wrapComponentForTest(PuckDeposit);
 
   it('Should mount', () => {
     expect(wrapper.vm).toBeTruthy();
@@ -25,7 +25,7 @@ describe('Given all pucks untouched yet', () => {
   );
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
+    const wrapper = wrapComponentForTest(PuckDeposit, state);
 
     it('Should not have any puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -43,7 +43,7 @@ describe('Given first puck gripped', () => {
   ]);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
+    const wrapper = wrapComponentForTest(PuckDeposit, state);
 
     it('Should not have any puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -62,7 +62,7 @@ describe('Given first puck released', () => {
   ]);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
+    const wrapper = wrapComponentForTest(PuckDeposit, state);
 
     it('Should have first puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -81,7 +81,7 @@ describe('Given second puck gripped', () => {
   ]);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
+    const wrapper = wrapComponentForTest(PuckDeposit, state);
 
     it('Should have first puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -100,7 +100,7 @@ describe('Given second puck released', () => {
   ]);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
+    const wrapper = wrapComponentForTest(PuckDeposit, state);
 
     it('Should have first and second puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -119,7 +119,7 @@ describe('Given third puck gripped', () => {
   ]);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
+    const wrapper = wrapComponentForTest(PuckDeposit, state);
 
     it('Should have first and second puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });
@@ -138,7 +138,7 @@ describe('Given third puck released', () => {
   ]);
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = wrapWithVuetifyAndStore(PuckDeposit, state);
+    const wrapper = wrapComponentForTest(PuckDeposit, state);
 
     it('Should have all puck released', () => {
       const pucks = wrapper.findAllComponents({ ref: 'puckDeposited' });

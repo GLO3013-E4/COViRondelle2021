@@ -1,10 +1,10 @@
 import StepList from '@/components/cycles/StepList.vue';
-import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
+import wrapComponentForTest from '../../util/wrapComponentForTest';
 import { Step } from '@/types/step';
 import { State } from '@/store/state';
 
 describe('When mounting StepList component', () => {
-  const wrapper = wrapWithVuetifyAndStore(StepList);
+  const wrapper = wrapComponentForTest(StepList);
 
   it('Should mount', () => {
     expect(wrapper.vm).toBeTruthy();
@@ -17,7 +17,7 @@ describe('Given state', () => {
   } as State;
 
   describe('When mounting StepList', () => {
-    const wrapper = wrapWithVuetifyAndStore(StepList, state);
+    const wrapper = wrapComponentForTest(StepList, state);
 
     it('Should contains the right amount of steps', () => {
       const steps = wrapper.findAllComponents({ ref: 'step' });

@@ -1,10 +1,10 @@
 import Chronometer from '@/components/cycles/Chronometer.vue';
 import { Step } from '@/types/step';
-import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
+import wrapComponentForTest from '../../util/wrapComponentForTest';
 import { State } from '@/store/state';
 
 describe('When mounting Chronometer component', () => {
-  const wrapper = wrapWithVuetifyAndStore(Chronometer);
+  const wrapper = wrapComponentForTest(Chronometer);
 
   it('Should mount', () => {
     expect(wrapper.vm).toBeTruthy();
@@ -18,7 +18,7 @@ describe('Given no puck released yet', () => {
   } as State;
 
   describe('When mounting PuckDeposit', () => {
-    const wrapper = wrapWithVuetifyAndStore(Chronometer, state);
+    const wrapper = wrapComponentForTest(Chronometer, state);
 
     it('Should have button and time', () => {
       const button = wrapper.findAllComponents({ ref: 'button' });

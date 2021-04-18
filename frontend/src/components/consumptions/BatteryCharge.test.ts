@@ -1,5 +1,5 @@
 import BatteryCharge from '@/components/consumptions/BatteryCharge.vue';
-import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
+import wrapComponentForTest from '../../util/wrapComponentForTest';
 import { State } from '@/store/state';
 import { RobotConsumption } from '@/types/robotConsumption';
 
@@ -17,7 +17,7 @@ describe('Given state', () => {
   } as State;
 
   describe('When mounting BatteryCharge', () => {
-    const wrapper = wrapWithVuetifyAndStore(BatteryCharge, state);
+    const wrapper = wrapComponentForTest(BatteryCharge, state);
 
     it('Should contains the right letter of corner', () => {
       const batteryCharge = wrapper.findComponent({ ref: 'batteryCharge' });

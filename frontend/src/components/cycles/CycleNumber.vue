@@ -1,5 +1,5 @@
 <template>
-  <div class="cycleNumber">
+  <div class="cycleNumber" ref="cycleNumber">
     <h3>{{ displayText }}</h3>
   </div>
 </template>
