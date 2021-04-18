@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>websockets</name>
-  <version>2.0.1</version>
+  <version>3.0.0</version>
   <description>The websockets package</description>
 
   <maintainer email="fabienroy28@gmail.com">Fabien Roy</maintainer>
