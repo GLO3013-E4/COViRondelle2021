@@ -1,10 +1,23 @@
 <template>
   <div>
-    <v-card class="lighten1 d-flex justify-center" ref="time">
-      <h2>{{ this.updatedTime }}</h2>
-    </v-card>
-    <StartButton ref="button" @start="start" />
-    <ResetButton ref="resetButton" @reset="reset" />
+    <!-- TODO : v-row and v-col logic should be contained in CycleInformation -->
+    <v-row>
+      <v-col>
+        <v-card class="lighten1 d-flex justify-center" ref="time">
+          <h2>{{ this.updatedTime }}</h2>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <StartButton ref="button" @start="start" />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <ResetButton ref="resetButton" @reset="reset" />
+      </v-col>
+    </v-row>
   </div>
 </template>
 

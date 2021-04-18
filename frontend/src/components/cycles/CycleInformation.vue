@@ -14,9 +14,23 @@
         </v-col>
         <v-spacer></v-spacer>
         <v-col sm="4">
-          <CycleNumber />
-          <Mode />
-          <Chronometer />
+          <v-container>
+            <v-row>
+              <v-col class="cycleNumberCol">
+                <CycleNumber />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <Mode />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <Chronometer />
+              </v-col>
+            </v-row>
+          </v-container>
         </v-col>
       </v-row>
     </v-container>
@@ -44,5 +58,8 @@ export default class CycleInformation extends Vue {}
 <style>
 .stepList {
   padding-right: 1em !important;
+}
+.cycleNumberCol {
+  padding-top: 0 !important;
 }
 </style>
