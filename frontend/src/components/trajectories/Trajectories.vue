@@ -1,13 +1,9 @@
 <template>
-  <v-card class="d-flex justify-center mb-10" color="base">
+  <v-card color="base">
+    <v-card-title sm="12" class="trajectories-title d-flex justify-center">
+      <h3 class="white--text">{{ $t('trajectories.trajectories') }}</h3>
+    </v-card-title>
     <v-container>
-      <v-row>
-        <v-col sm="12">
-          <v-card class="d-flex justify-center">
-            <h3>{{ $t('trajectories.trajectories') }}</h3>
-          </v-card>
-        </v-col>
-      </v-row>
       <v-row>
         <v-spacer>
           <div
@@ -148,3 +144,13 @@ export default class Trajectories extends Vue {
   }
 }
 </script>
+
+<style>
+.trajectories-title {
+  padding: 0 !important;
+  background: #1e1e1e;
+}
+.trajectories-title > h3 {
+  font-size: 1.1rem;
+}
+</style>

@@ -65,6 +65,6 @@ export default class FirstCorner extends Vue {
 
 <style scoped>
 .v-card__title {
-  padding: 0px;
+  padding: 0;
 }
 </style>

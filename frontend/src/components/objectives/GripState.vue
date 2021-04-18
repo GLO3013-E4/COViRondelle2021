@@ -11,7 +11,9 @@
       <!-- TODO : Do not change color/opacity on hover -->
       <v-chip :color="puckInGrip ? 'green' : 'red'">
         <h3 class="white--text">
-          {{ puckInGrip ? $t('objectives.puckInGrip') : $t('objectives.noPuck') }}
+          {{
+            puckInGrip ? $t('objectives.puckInGrip') : $t('objectives.noPuck')
+          }}
         </h3></v-chip
       >
     </div>

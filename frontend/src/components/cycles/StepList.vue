@@ -16,9 +16,9 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
-import {mapState} from 'vuex';
-import {Step} from '@/types/step';
+import { Component, Vue } from 'vue-property-decorator';
+import { mapState } from 'vuex';
+import { Step } from '@/types/step';
 
 @Component({
   components: {},
@@ -49,7 +49,10 @@ export default class StepList extends Vue {
   }
 
   isCurrent(index: number) {
-    return this.currentStepNumber === index + 1 && this.currentStep !== Step.CycleEndedAndRedLedOn;
+    return (
+      this.currentStepNumber === index + 1 &&
+      this.currentStep !== Step.CycleEndedAndRedLedOn
+    );
   }
 }
 </script>

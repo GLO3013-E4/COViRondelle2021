@@ -2,7 +2,7 @@
   <div>
     <v-btn
       :disabled="this.isDisabled"
-      color="secondary"
+      color="success"
       @click="reset"
       width="100%"
       elevation="6"

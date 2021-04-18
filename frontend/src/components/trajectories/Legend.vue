@@ -1,13 +1,9 @@
 <template>
   <v-card color="lighten2" elevation="5">
+    <v-card-title sm="6" class="lighten1 d-flex justify-center">
+      <h5 class="white--text">{{ $t('trajectories.legend') }}</h5>
+    </v-card-title>
     <v-container>
-      <v-row>
-        <v-col sm="12">
-          <v-card class="d-flex justify-center lighten1" elevation="6">
-            <h3>{{ $t('trajectories.legend') }}</h3>
-          </v-card>
-        </v-col>
-      </v-row>
       <v-row>
         <svg height="120" width="400" id="legend">
           <text :x="xInitialPlacement" :y="yInitialPlacement" fill="white">
@@ -87,3 +83,9 @@ export default class Legend extends Vue {
   public deltaEndingPoint = 90;
 }
 </script>
+
+<style>
+.v-card__title {
+  padding: 0;
+}
+</style>
