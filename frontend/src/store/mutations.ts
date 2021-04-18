@@ -37,7 +37,7 @@ export const mutations: MutationTree<State> & Mutations = {
     state.cycleStarted = true;
   },
   [RESET_CYCLE](state: State) {
-    state = { ...defaultState };
+    Object.assign(state, defaultState);
   },
   [SOCKET_ROBOT_CONSUMPTION](state: State, data: string) {
     const message = toMessage(data);
