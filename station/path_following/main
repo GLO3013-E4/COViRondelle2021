@@ -64,21 +64,21 @@ class PathFollower:
             vectors = self.vectorizer.path_to_vectors()
             try:
                 distance, angle, _ = vectors[0]
-                angle = self.angle_away_from_obstacle(angle)
+                #angle = self.angle_away_from_obstacle(angle)
                 distance = max(min(self.distance(self.robot_dict[reference_point_on_robot], self.goal) - stop_threshold, 70, distance), 0)
                 published_vector = (
                     distance / self.cm_to_pixel, self.convert_angle_to_driver_angle(angle), mode.value)
 
-                if self.robot_is_close_to_more_than_one_obstacle():
-                    if angle >= 0:
-                        backwards_angle = angle - math.pi
-                    else:
-                        backwards_angle = angle + math.pi
-
-                    if abs(angle) >= abs(backwards_angle):
-                        published_vector = (
-                            distance / self.cm_to_pixel, self.convert_angle_to_driver_angle(backwards_angle), MovementMode.BACKWARDS.value
-                        )
+                #if self.robot_is_close_to_more_than_one_obstacle():
+                #    if angle >= 0:
+                #        backwards_angle = angle - math.pi
+                #    else:
+                #        backwards_angle = angle + math.pi
+                #
+                #    if abs(angle) >= abs(backwards_angle):
+                #        published_vector = (
+                #            distance / self.cm_to_pixel, self.convert_angle_to_driver_angle(backwards_angle), MovementMode.BACKWARDS.value
+                #        )
 
             except IndexError:
                 rospy.logerr("Could not follow path")
@@ -93,11 +93,13 @@ class PathFollower:
     def align_robot_angle_towards_goal(self, mode):
         angle = self.vectorizer.find_goal_angle(self.goal[1] - self.robot_dict["robot"][1],
                                                 self.goal[0] - self.robot_dict["robot"][0], self.destination)
+        #angle = self.angle_away_from_obstacle(angle)
 
         while not (-0.05 <= angle <= 0.05):
             angle = self.vectorizer.find_goal_angle(self.goal[1] - self.robot_dict["robot"][1],
                                                     self.goal[0] - self.robot_dict["robot"][0], self.destination)
 
+            #angle = self.angle_away_from_obstacle(angle)
             published_vector = (0, self.convert_angle_to_driver_angle(angle), mode.value)
             self.pub.publish(json.dumps(published_vector))
             self.angle_rate.sleep()
@@ -107,17 +109,17 @@ class PathFollower:
         angle = self.vectorizer.find_goal_angle(goal[1] - self.robot_dict["robot"][1],
                                                 goal[0] - self.robot_dict["robot"][0], self.destination)
 
-
+        #angle = self.angle_away_from_obstacle(angle)
         angle_in_radians = 0.1
         while not (-angle_in_radians <= angle <= angle_in_radians):
             angle = self.vectorizer.find_goal_angle(goal[1] - self.robot_dict["robot"][1],
                                                     goal[0] - self.robot_dict["robot"][0], self.destination)
+            #angle = self.angle_away_from_obstacle(angle)
             published_vector = (0, self.convert_angle_to_driver_angle(angle), MovementMode.GRIP.value)
             rospy.logerr(self.convert_angle_to_driver_angle(angle))
             self.pub.publish(json.dumps(published_vector))
 
-            for i in range(3):
-                self.angle_rate.sleep()
+            self.angle_rate.sleep()
             
 
     def callback_path(self, data):

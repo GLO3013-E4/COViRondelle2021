@@ -26,7 +26,7 @@ class GripPuckHandler(Handler):
         handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0 ,self.GRAB)))
         self.rate.sleep()
 
-        handled_data["movement_vectors_string_pub"].publish(json.dumps((20, 0 , 1)))
+        handled_data["movement_vectors_string_pub"].publish(json.dumps((20, 0 , 1))) #TODO: ici il recule de 5 de plus qu'il avance
         self.rate.sleep()
         return handled_data
 
