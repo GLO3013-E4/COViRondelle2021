@@ -1,18 +1,18 @@
-import ResetButton from '@/components/cycles/ResetButton.vue';
+import NextCycleButton from '@/components/cycles/NextCycleButton.vue';
 import Vuex from 'vuex';
 import { Step } from '@/types/step';
 
 export default {
-  title: 'components/cycles/ResetButton',
-  component: ResetButton,
+  title: 'components/cycles/NextCycleButton',
+  component: NextCycleButton,
 };
 
 const Template = (args: any) => ({
-  components: { ResetButton },
+  components: { NextCycleButton },
   store: new Vuex.Store({
     state: args,
   }),
-  template: '<ResetButton  v-bind="$props" />',
+  template: '<NextCycleButton  v-bind="$props" />',
 });
 
 export const CycleNotEnded = Template.bind({}) as any;

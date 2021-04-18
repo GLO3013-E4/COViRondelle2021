@@ -19,6 +19,7 @@ export const en = {
   },
   cycles: {
     cycle: 'Cycle',
+    nextCycle: 'Next cycle',
     cycleInformation: 'Cycle information',
     steps: {
       CycleNotStarted: 'Cycle not started',
@@ -38,7 +39,6 @@ export const en = {
       CycleEndedAndRedLedOn: 'Cycle ended and red DEL on',
     },
     start: 'Start',
-    reset: 'Reset',
     modes: {
       booting: 'Booting',
       started: 'Started',

@@ -7,14 +7,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState} from 'vuex';
-import StartButton from './StartButton.vue';
-import ResetButton from '@/components/cycles/ResetButton.vue';
 
 @Component({
-  components: {
-    StartButton,
-    ResetButton,
-  },
   computed: {
     ...mapState(['cycleNumber']),
   },

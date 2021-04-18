@@ -7,7 +7,7 @@
       width="100%"
       elevation="6"
     >
-      {{ $t('cycles.reset') }}
+      {{ $t('cycles.nextCycle') }}
     </v-btn>
   </div>
 </template>
@@ -22,7 +22,7 @@ import { Step } from '@/types/step';
     ...mapState(['currentStep']),
   },
 })
-export default class ResetButton extends Vue {
+export default class NextCycleButton extends Vue {
   public currentStep!: Step;
 
   public reset() {

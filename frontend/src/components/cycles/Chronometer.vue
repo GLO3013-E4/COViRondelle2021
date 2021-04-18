@@ -15,7 +15,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <ResetButton ref="resetButton" @reset="reset" />
+        <NextCycleButton ref="resetButton" @reset="reset" />
       </v-col>
     </v-row>
   </div>
@@ -26,12 +26,12 @@ import { Step } from '@/types/step';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState, mapActions, mapMutations } from 'vuex';
 import StartButton from './StartButton.vue';
-import ResetButton from '@/components/cycles/ResetButton.vue';
+import NextCycleButton from '@/components/cycles/NextCycleButton.vue';
 
 @Component({
   components: {
     StartButton,
-    ResetButton,
+    NextCycleButton,
   },
   methods: {
     ...mapActions(['emitSocketStartCycle']),
