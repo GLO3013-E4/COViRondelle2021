@@ -1,8 +1,5 @@
 <template>
-  <h2
-    class="light-blue--text"
-    ref="time"
-  >
+  <h2 class="primary--text" ref="time">
     {{ formatedTime }}
   </h2>
 </template>
@@ -21,7 +18,7 @@ export default class RemainingTime extends Vue {
   public robotConsumption!: RobotConsumption;
 
   private get timeInSeconds() {
-    return this.robotConsumption.batteryRemainingTimeInSeconds;
+    return this.robotConsumption.remainingTime;
   }
 
   private get formatedTime() {

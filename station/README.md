@@ -92,21 +92,21 @@ Terminal 3
 ```shell
 docker exec -it covirondelle2021_station_1 /bin/bash
 cd src/websockets
-python3 main.py
+python3 main
 ```
 
 Terminal 4
 ```shell
 docker exec -it covirondelle2021_station_1 /bin/bash
 cd src/controller
-python main.py
+python main
 ```
 
 Terminal 5
 ```shell
 docker exec -it covirondelle2021_station_1 /bin/bash
 cd src/controller
-python mock_ready.py
+python mock_robot_consumption.py
 ```
 
 Then, you can print in the required handler that the topic was received. You can also test "start_cycle" reception by pressing the button in the frontend, which will be handled by the websocket and will publish the correct topic.

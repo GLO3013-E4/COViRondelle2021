@@ -6,9 +6,10 @@ export const fr = {
     realTrajectory: 'Trajectoire réelle',
     startingPoint: 'Point de départ',
     destinationPoint: 'Point de destination',
+    legend: 'Légende',
   },
-  station: {
-    stationInformation: 'Information de la station',
+  objectives: {
+    objectivesInformation: 'Information des objectifs',
     resistance: 'Résistance',
     gripState: 'État du préhenseur',
     puckInGrip: 'Rondelle présente',
@@ -17,12 +18,14 @@ export const fr = {
     firstCorner: 'Premier coin',
   },
   cycles: {
+    cycle: 'Cycle',
+    nextCycle: 'Cycle suivant',
     cycleInformation: 'Information du cycle',
     steps: {
       CycleNotStarted: 'Cycle non débuté',
       CycleReadyInWaitingMode: 'Cycle prêt, en attente',
       CycleStarted: 'Cycle débuté',
-      ToResistanceStation: 'Vers la station de résistance',
+      ToResistanceStation: 'Vers la objectives de résistance',
       ReadResistance: 'Lecture de la résistance',
       ToControlPanel: 'Vers le panneau de contrôle',
       ReadControlPanel: 'Lecture du panneau de contrôle',
@@ -46,5 +49,13 @@ export const fr = {
   },
   consumptions: {
     consumptionInformation: 'Information de la consommation',
+    currentBatteryCharge: 'Charge courante de la batterie',
+    robotConsumption: 'Consommation du robot',
+    wheel1: 'Roue 1',
+    wheel2: 'Roue 2',
+    wheel3: 'Roue 3',
+    wheel4: 'Roue 4',
+    servoMotor: 'Tourelle',
+    total: 'Total',
   },
 };

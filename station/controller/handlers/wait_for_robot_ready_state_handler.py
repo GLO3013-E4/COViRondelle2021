@@ -1,23 +1,27 @@
 import rospy
-from std_msgs.msg import Bool
+from std_msgs.msg import String
 from handlers.handler import Handler
 
 
 class WaitForRobotReadyStateHandler(Handler):
-    is_finished = False
-    ready_subscriber = None
+    def __init__(self):
+        self.rate = rospy.Rate(1)
 
-    def handle_ready(self, ready):
-        print('Finished : wait for robot ready state handler')  # TODO : Remove print
-        self.is_finished = ready
+    def initialize(self):
+        self.sub = rospy.Subscriber("robot", String, self.handle_ready)
+        self.is_finished = False
 
-    def handle(self, handled_data=None):
-        print('Looping in wait for robot ready state handler')  # TODO : Remove print
+    def handle(self, handled_data):
+        self.initialize()
 
-        if not self.ready_subscriber:
-            self.ready_subscriber = rospy.Subscriber("ready", Bool, self.handle_ready)
+        while not self.is_finished:
+            rospy.logerr("waiting for robot ready")
+            self.rate.sleep()
 
-        return handled_data, self.is_finished
+        return handled_data
 
-    def unsubscribe(self):
-        self.ready_subscriber.unsubscribe()
+    def handle_ready(self, _):
+        self.is_finished = True
+
+    def unregister(self):
+        self.sub.unregister()

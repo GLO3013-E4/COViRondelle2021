@@ -1,6 +1,5 @@
 import StartButton from '@/components/cycles/StartButton.vue';
 import Vuex from 'vuex';
-import { Step } from '@/types/step';
 
 export default {
   title: 'components/cycles/StartButton',
@@ -15,14 +14,20 @@ const Template = (args: any) => ({
   template: '<StartButton  v-bind="$props" />',
 });
 
-export const WithCycleNotReady = Template.bind({}) as any;
-WithCycleNotReady.args = {
+export const CycleNotReady = Template.bind({}) as any;
+CycleNotReady.args = {
   cycleReady: false,
-  currentStep: Step.CycleNotStarted,
+  cycleStarted: false,
 };
 
-export const WithCycleReady = Template.bind({}) as any;
-WithCycleReady.args = {
+export const CycleReady = Template.bind({}) as any;
+CycleReady.args = {
   cycleReady: true,
-  currentStep: Step.CycleReadyInWaitingMode,
+  cycleStarted: false,
+};
+
+export const CycleStarted = Template.bind({}) as any;
+CycleStarted.args = {
+  cycleReady: true,
+  cycleStarted: true,
 };

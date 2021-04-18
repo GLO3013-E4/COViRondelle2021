@@ -1,27 +1,36 @@
 <template>
   <div>
-    <v-btn @click="start" width="100%" elevation="3">{{
-      $t('cycles.start')
-    }}</v-btn>
+    <v-btn
+      :disabled="this.isDisabled"
+      color="accent"
+      @click="start"
+      width="100%"
+      elevation="6"
+    >
+      {{ $t('cycles.start') }}
+    </v-btn>
   </div>
 </template>
 
 <script lang="ts">
-import { Step } from '@/types/step';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 
 @Component({
   computed: {
-    ...mapState(['cycleReady', 'currentStep']),
+    ...mapState(['cycleReady', 'cycleStarted']),
   },
 })
 export default class StartButton extends Vue {
   public cycleReady!: boolean;
-  public currentStep!: Step;
+  public cycleStarted!: boolean;
 
   public start() {
     this.$emit('start');
+  }
+
+  get isDisabled() {
+    return !this.cycleReady || this.cycleStarted;
   }
 }
 </script>

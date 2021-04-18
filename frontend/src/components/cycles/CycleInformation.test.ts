@@ -1,7 +1,7 @@
 import CycleInformation from '@/components/cycles/CycleInformation.vue';
-import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
+import wrapComponentForTest from '../../util/wrapComponentForTest';
 
-const wrapper = wrapWithVuetifyAndStore(CycleInformation);
+const wrapper = wrapComponentForTest(CycleInformation);
 
 describe('When mounting cycle information', () => {
   it('Should mount', () => {

@@ -1,6 +1,7 @@
 export enum Color {
+  Unset = 'transparent',
   Yellow = 'yellow',
-  Brown = 'brown',
+  Brown = 'brown lighten-1',
   Red = 'red',
   Pink = 'pink',
   Orange = 'orange',

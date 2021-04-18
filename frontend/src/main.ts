@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import VueI18n from 'vue-i18n';
 import App from './App.vue';
 import vuetify from '@/plugins/vuetify';
+import '@/plugins/font-awesome';
 import store from './store';
 import { io } from 'socket.io-client';
 import VueSocketIOExt from 'vue-socket.io-extended';
@@ -24,12 +25,25 @@ const i18n = new VueI18n({
   messages,
 });
 
-const routes = [{ path: '/', component: require('./views/Main') }];
+const routes = [
+  {
+    path: '/',
+    component: require('./views/Main'),
+    meta: {
+      title: i18n.t('appName'),
+    },
+  },
+];
 
 const router = new VueRouter({
   base: locale.trim().length && locale != '/' ? '/' + locale : undefined,
   mode: 'history',
-  routes: routes,
+  routes,
+});
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
+  next();
 });
 
 new Vue({

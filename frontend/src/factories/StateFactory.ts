@@ -1,21 +1,43 @@
 import { factory } from 'node-factory';
 import { defaultState, State } from '@/store/state';
-import { ColorFactory } from '@/factories/ColorFactory';
-import { CornerFactory } from '@/factories/CornerFactory';
 import { CoordinateFactory } from '@/factories/CoordinateFactory';
+import { Coordinate } from '@/types/coordinate';
+import { PuckListFactory } from '@/factories/PuckListFactory';
 
-export const StateFactory = factory<State>((fake) => ({
-  // TODO : Fake what isn't faked when implementing
-  cycleReady: defaultState.cycleReady,
-  cycleStarted: defaultState.cycleStarted,
-  tableImage: defaultState.tableImage,
-  // TODO : Find a way to implement ResistanceFactory
-  resistance: fake.random.number(10000),
-  robotConsumption: defaultState.robotConsumption,
-  puckColors: ColorFactory.get(3),
-  puckFirstCorner: CornerFactory.get(),
-  plannedTrajectory: CoordinateFactory.make(fake.random.number(20)),
-  realTrajectory: CoordinateFactory.make(fake.random.number(20)),
-  puckInGrip: fake.random.boolean(),
-  currentStep: defaultState.currentStep,
-}));
+const TRAJECTORY_POINTS = 20;
+const CURRENT_TRAJECTORY_POINTS = TRAJECTORY_POINTS / 2;
+
+export const StateFactory = factory<State>((fake) => {
+  const plannedTrajectory = CoordinateFactory.make(TRAJECTORY_POINTS);
+
+  const fakeRealPoints = (coordinates: Array<Coordinate>) => {
+    return coordinates.map((coordinate) => {
+      const fakeFactor =
+        (fake.random.boolean() ? -1 : 1) * fake.random.number(20);
+      return {
+        x: coordinate.x + fakeFactor,
+        y: coordinate.y + fakeFactor,
+      } as Coordinate;
+    });
+  };
+
+  return {
+    cycleNumber: fake.random.number(10),
+    cycleReady: defaultState.cycleReady,
+    cycleStarted: defaultState.cycleStarted,
+    tableImage: {
+      current: '/stub_table_image.jpg',
+      previous: '',
+    },
+    resistance: fake.random.number(10000),
+    robotConsumption: defaultState.robotConsumption,
+    plannedTrajectory,
+    currentPlannedTrajectory: plannedTrajectory.slice(
+      0,
+      CURRENT_TRAJECTORY_POINTS
+    ),
+    realTrajectory: fakeRealPoints(plannedTrajectory),
+    currentStep: defaultState.currentStep,
+    puckList: PuckListFactory.make(),
+  };
+});
