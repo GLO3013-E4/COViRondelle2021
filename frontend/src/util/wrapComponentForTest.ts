@@ -5,7 +5,7 @@ import VueI18n from 'vue-i18n';
 import { defaultLocale, messages } from '@/i18n';
 import { defaultState, State } from '@/store/state';
 
-const wrapWithVuetifyAndStore = (
+const wrapComponentForTest = (
   component: VueClass<any>,
   state: State = defaultState
 ) => {
@@ -28,4 +28,4 @@ const wrapWithVuetifyAndStore = (
   return shallowMount(component, { vuetify, store, i18n, localVue });
 };
 
-export default wrapWithVuetifyAndStore;
+export default wrapComponentForTest;

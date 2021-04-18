@@ -17,20 +17,20 @@ const Template = (args: any) => ({
   template: '<Mode />',
 });
 
-export const cycleReadyInWaitingMode = Template.bind({}) as any;
-cycleReadyInWaitingMode.args = {
+export const CycleReadyInWaitingMode = Template.bind({}) as any;
+CycleReadyInWaitingMode.args = {
   cycleReady: true,
   cycleStarted: false,
 };
 
-export const cycleStarted = Template.bind({}) as any;
-cycleStarted.args = {
+export const CycleStarted = Template.bind({}) as any;
+CycleStarted.args = {
   cycleReady: true,
   cycleStarted: true,
 };
 
-export const cycleNotStartedAndRobotStillBooting = Template.bind({}) as any;
-cycleNotStartedAndRobotStillBooting.args = {
+export const CycleNotStartedAndRobotStillBooting = Template.bind({}) as any;
+CycleNotStartedAndRobotStillBooting.args = {
   cycleReady: false,
   cycleStarted: false,
 };

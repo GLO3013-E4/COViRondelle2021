@@ -1,4 +1,4 @@
-import Resistance from '@/components/station/Resistance.vue';
+import Resistance from '@/components/objectives/Resistance.vue';
 import Vuex from 'vuex';
 import Vue from 'vue';
 import { PuckListFactory } from '@/factories/PuckListFactory';
@@ -6,7 +6,7 @@ import { PuckListFactory } from '@/factories/PuckListFactory';
 Vue.use(Vuex);
 
 export default {
-  title: 'components/station/Resistance',
+  title: 'components/objectives/Resistance',
   component: Resistance,
 };
 

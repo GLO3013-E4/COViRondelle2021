@@ -8,7 +8,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row no-gutters>
+      <v-row>
         <v-spacer>
           <div
             class="path"

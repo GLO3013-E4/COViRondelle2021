@@ -28,10 +28,14 @@ def create_puck_colors():
     return json.dumps(puck_colors)
 
 
-# TODO : Remove this mock
-if __name__ == '__main__':
-    puck_colors_publisher = rospy.Publisher('puck_colors', String, queue_size=10)
+def mock_puck_colors(pub):
+    rospy.loginfo('Mocking puck_colors')
+    pub.publish(create_puck_colors())
 
+
+if __name__ == '__main__':
     rospy.init_node('mock_puck_colors', anonymous=True)
 
-    puck_colors_publisher.publish(create_puck_colors())
+    puck_colors_publisher = rospy.Publisher('puck_colors', String, queue_size=10)
+
+    mock_puck_colors(puck_colors_publisher)

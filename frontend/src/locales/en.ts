@@ -8,8 +8,8 @@ export const en = {
     destinationPoint: 'Destination point',
     legend: 'Legend',
   },
-  station: {
-    stationInformation: 'Station information',
+  objectives: {
+    objectivesInformation: 'Objectives information',
     resistance: 'Resistance',
     gripState: 'Grip state',
     puckInGrip: 'Puck in grip',
@@ -18,12 +18,13 @@ export const en = {
     firstCorner: 'First corner',
   },
   cycles: {
+    cycle: 'Cycle',
     cycleInformation: 'Cycle information',
     steps: {
       CycleNotStarted: 'Cycle not started',
       CycleReadyInWaitingMode: 'Cycle ready in waiting mode',
       CycleStarted: 'Cycle started',
-      ToResistanceStation: 'To resistance station',
+      ToResistanceStation: 'To resistance objectives',
       ReadResistance: 'Reading resistance',
       ToControlPanel: 'To control panel',
       ReadControlPanel: 'Reading control panel',
@@ -37,6 +38,7 @@ export const en = {
       CycleEndedAndRedLedOn: 'Cycle ended and red DEL on',
     },
     start: 'Start',
+    reset: 'Reset',
     modes: {
       booting: 'Booting',
       started: 'Started',

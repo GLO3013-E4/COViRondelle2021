@@ -1,4 +1,4 @@
-import FirstCorner from '@/components/station/FirstCorner.vue';
+import FirstCorner from '@/components/objectives/FirstCorner.vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { Corner } from '@/types/corner';
@@ -7,7 +7,7 @@ import { PuckListFactory } from '@/factories/PuckListFactory';
 Vue.use(Vuex);
 
 export default {
-  title: 'components/station/FirstCorner',
+  title: 'components/objectives/FirstCorner',
   component: FirstCorner,
 };
 

@@ -1,7 +1,7 @@
 <template>
   <v-card class="lighten2">
     <v-card-title sm="6" class="lighten1 d-flex justify-center">
-      <h5 class="white--text">{{ $t('station.resistance') }}</h5>
+      <h5 class="white--text">{{ $t('objectives.resistance') }}</h5>
     </v-card-title>
     <v-container>
       <v-row align="center">

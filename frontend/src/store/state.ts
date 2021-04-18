@@ -5,7 +5,8 @@ import { PuckList } from '@/types/puckList';
 import { TableImage } from '@/types/tableImage';
 
 export const defaultState = {
-  cycleReady: true,
+  cycleNumber: 1,
+  cycleReady: false,
   cycleStarted: false,
   tableImage: {
     previous: '',
@@ -24,11 +25,12 @@ export const defaultState = {
   plannedTrajectory: [] as Array<Coordinate>,
   currentPlannedTrajectory: [] as Array<Coordinate>,
   realTrajectory: [] as Array<Coordinate>,
-  currentStep: Step.CycleNotStarted,
+  currentStep: Step.CycleNotStarted as number,
   puckList: new PuckList(),
 };
 
 export const state = {
+  cycleNumber: defaultState.cycleNumber,
   cycleReady: defaultState.cycleReady,
   cycleStarted: defaultState.cycleStarted,
   tableImage: defaultState.tableImage,

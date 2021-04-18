@@ -15,6 +15,9 @@ from std_msgs.msg import Bool, String
 app = Flask(__name__)
 socket = SocketIO(app, cors_allowed_origins="*")
 
+rospy.init_node("websockets", anonymous=True)
+rate = rospy.Rate(1)
+
 
 def to_base64(image):
     image_array = np.frombuffer(image.data, dtype=np.uint8).reshape(image.height, image.width, -1)
@@ -33,6 +36,7 @@ def handle_world_cam_image_raw(image):
     image_base64 = to_base64(image)
     json_data = json.dumps({"tableImage": image_base64})
     socket.emit("table_image", json_data)
+    rate.sleep()
 
 
 def handle_robot(robot):
@@ -88,9 +92,13 @@ def handle_letters(letters):
     socket.emit("puck_first_corner", json_data)
 
 
+def handle_current_step(current_step):
+    json_data = json.dumps({"currentStep": current_step.data})
+    socket.emit("current_step", json_data)
+
+
 def websockets():
     start_cycle_publisher = rospy.Publisher("start_cycle", Bool, queue_size=10)
-    rospy.init_node("websockets", anonymous=True)
 
     rospy.Subscriber("robot_consumption", String, handle_robot_consumption)
     rospy.Subscriber("world_cam/image_raw", Image, handle_world_cam_image_raw, queue_size=1, buff_size=52428800)
@@ -100,14 +108,16 @@ def websockets():
     rospy.Subscriber("resistance", String, handle_resistance)
     rospy.Subscriber("puck_colors", String, handle_puck_colors)
     rospy.Subscriber("letters", String, handle_letters)
-
-    # TODO : Implement cycle steps
+    rospy.Subscriber("current_step", String, handle_current_step)
 
     @socket.on('start_cycle')
     def handle_start_cycle():
         start_cycle_publisher.publish(True)
 
-    threading.Thread(target=lambda: socket.run(app, host='192.168.0.49', port=4000)).start()
+    # TODO : IP address should come from env vars
+    # threading.Thread(target=lambda: socket.run(app, host='192.168.0.49', port=4000)).start()
+    threading.Thread(target=lambda: socket.run(app, host='0.0.0.0', port=4000)).start()
+
     rospy.spin()
 
 

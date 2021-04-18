@@ -1,4 +1,4 @@
-import PuckDeposit from '@/components/station/PuckDeposit.vue';
+import PuckDeposit from '@/components/objectives/PuckDeposit.vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { PuckListFactory } from '@/factories/PuckListFactory';
@@ -7,7 +7,7 @@ import { PuckState } from '@/types/puckState';
 Vue.use(Vuex);
 
 export default {
-  title: 'components/station/PuckDeposit',
+  title: 'components/objectives/PuckDeposit',
   component: PuckDeposit,
 };
 
