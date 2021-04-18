@@ -6,8 +6,16 @@
         <cycle-information />
       </v-col>
       <v-col sm="6">
-        <station-information />
-        <consumption-information />
+        <v-row>
+          <v-col>
+            <station-information />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <consumption-information />
+          </v-col>
+        </v-row>
       </v-col>
       <v-col>
         <trajectories />

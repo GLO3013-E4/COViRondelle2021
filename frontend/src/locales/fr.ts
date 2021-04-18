@@ -19,6 +19,7 @@ export const fr = {
   },
   cycles: {
     cycle: 'Cycle',
+    nextCycle: 'Cycle suivant',
     cycleInformation: 'Information du cycle',
     steps: {
       CycleNotStarted: 'Cycle non débuté',
@@ -39,7 +40,6 @@ export const fr = {
       CycleEndedAndRedLedOn: 'Fin du cycle et activation du LED rouge',
     },
     start: 'Commencer',
-    reset: 'Réinitialiser',
     modes: {
       booting: 'Démarrage',
       started: 'Débuté',

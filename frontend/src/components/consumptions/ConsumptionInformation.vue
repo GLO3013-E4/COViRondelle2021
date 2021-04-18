@@ -1,13 +1,11 @@
 <template>
-  <v-card class="d-flex justify-center" color="base" height="245">
+  <v-card color="base">
+    <v-card-title sm="12" class="consumption-title d-flex justify-center">
+      <h3 class="white--text">
+        {{ $t('consumptions.consumptionInformation') }}
+      </h3>
+    </v-card-title>
     <v-container>
-      <v-row>
-        <v-col sm="12">
-          <v-card class="d-flex justify-center">
-            <h3>{{ $t('consumptions.consumptionInformation') }}</h3>
-          </v-card>
-        </v-col>
-      </v-row>
       <v-row>
         <v-col sm="6">
           <BatteryCharge />
@@ -34,4 +32,12 @@ import RobotConsumptionInfo from './RobotConsumptionInfo.vue';
 export default class ConsumptionInformation extends Vue {}
 </script>
 
-<style></style>
+<style>
+.consumption-title {
+  padding: 4px !important;
+  background: #1e1e1e;
+}
+.consumption-title > h3 {
+  font-size: 1.1rem;
+}
+</style>

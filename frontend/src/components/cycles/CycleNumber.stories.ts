@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import CycleNumber from "@/components/cycles/CycleNumber.vue";
+import CycleNumber from '@/components/cycles/CycleNumber.vue';
 
 Vue.use(Vuex);
 

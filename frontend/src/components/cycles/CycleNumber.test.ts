@@ -1,6 +1,6 @@
 import wrapComponentForTest from '../../util/wrapComponentForTest';
 import { State } from '@/store/state';
-import CycleNumber from "@/components/cycles/CycleNumber.vue";
+import CycleNumber from '@/components/cycles/CycleNumber.vue';
 
 describe('When mounting CycleNumber component', () => {
   const wrapper = wrapComponentForTest(CycleNumber);
