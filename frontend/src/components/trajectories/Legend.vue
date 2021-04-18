@@ -86,6 +86,6 @@ export default class Legend extends Vue {
 
 <style>
 .v-card__title {
-  padding: 0;
+  padding: 0 !important;
 }
 </style>
