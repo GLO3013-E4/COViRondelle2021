@@ -58,7 +58,7 @@ export default class Chronometer extends Vue {
       if (!this.interval) {
         this.interval = setInterval(() => {
           if (this.currentStep === Step.CycleEndedAndRedLedOn) {
-            this.stop(); // TODO : Pause instead of stop
+            this.stop();
           } else {
             if (!this.prevTime) {
               this.prevTime = Date.now();
