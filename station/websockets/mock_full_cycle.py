@@ -1,6 +1,6 @@
-import rospy
 import threading
 import time
+import rospy
 from std_msgs.msg import String, Bool
 
 from mock.mock_robot_consumption import mock_robot_consumption
