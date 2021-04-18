@@ -30,16 +30,15 @@ export default class StepList extends Vue {
   public currentStep!: Step;
 
   get currentStepNumber(): number {
-    return this.currentStep + 1;
+    return this.currentStep.valueOf() + 1;
   }
 
   get steps(): Array<string> {
     const result = [];
     for (const step in Step) {
-      const isValueProperty = parseInt(step, 10) >= 0;
+      const isValueProperty = parseInt(step.valueOf(), 10) >= 0;
       if (isValueProperty) {
-        const stepName: string = Step[step];
-        result.push(stepName);
+        result.push(Step[step]);
       }
     }
     return result;

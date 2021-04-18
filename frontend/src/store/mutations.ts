@@ -37,7 +37,7 @@ export const mutations: MutationTree<State> & Mutations = {
     state.cycleStarted = true;
   },
   [RESET_CYCLE](state: State) {
-    state = defaultState;
+    state = { ...defaultState };
   },
   [SOCKET_ROBOT_CONSUMPTION](state: State, data: string) {
     const message = toMessage(data);
@@ -88,7 +88,7 @@ export const mutations: MutationTree<State> & Mutations = {
   [SOCKET_CURRENT_STEP](state: State, data: string) {
     const message = toMessage(data);
     state.currentStep = message.currentStep
-      ? Step[message.currentStep]
+      ? Step[message.currentStep as keyof typeof Step]
       : defaultState.currentStep;
   },
 };
