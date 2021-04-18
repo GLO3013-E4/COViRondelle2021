@@ -1,4 +1,4 @@
-import GripState from '@/components/station/GripState.vue';
+import GripState from '@/components/objectives/GripState.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import { State } from '@/store/state';
 import { PuckListFactory } from '@/factories/PuckListFactory';
@@ -32,7 +32,7 @@ describe('Given puck in grip', () => {
       const grip = wrapper.findComponent({ ref: 'gripState' });
 
       expect(grip.exists()).toBe(true);
-      expect(grip.text()).toBe(wrapper.vm.$t('station.puckInGrip'));
+      expect(grip.text()).toBe(wrapper.vm.$t('objectives.puckInGrip'));
     });
   });
 });
@@ -51,7 +51,7 @@ describe('Given puck released', () => {
       const grip = wrapper.findComponent({ ref: 'gripState' });
 
       expect(grip.exists()).toBe(true);
-      expect(grip.text()).toBe(wrapper.vm.$t('station.noPuck'));
+      expect(grip.text()).toBe(wrapper.vm.$t('objectives.noPuck'));
     });
   });
 });

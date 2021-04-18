@@ -18,7 +18,7 @@ Otherwise, here are some links for UNIX-based OS :
 
 With Docker :
 ```shell
-docker build -t station .
+docker build -t objectives .
 ```
 
 Without Docker :
@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 With Docker :
 ```shell
-docker run station
+docker run objectives
 ```
 
 Without Docker : 

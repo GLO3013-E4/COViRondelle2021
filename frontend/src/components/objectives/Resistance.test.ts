@@ -1,4 +1,4 @@
-import Resistance from '@/components/station/Resistance.vue';
+import Resistance from '@/components/objectives/Resistance.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import { State } from '@/store/state';
 import { PuckListFactory } from '@/factories/PuckListFactory';

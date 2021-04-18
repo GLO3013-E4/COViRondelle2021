@@ -18,7 +18,7 @@ services:
       ros:
         ipv4_address: 172.18.1.4
     environment:
-      - "ROS_MASTER_URI=http://station:11311"
+      - "ROS_MASTER_URI=http://objectives:11311"
       - "ROS_HOSTNAME=robot"
     extra_hosts:
       station: 172.18.1.2
@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
     build: ./station
     volumes:
-      - ./station:/root/catkin_ws/src
+      - ./objectives:/root/catkin_ws/src
     links:
       - robot
     ports:
@@ -37,8 +37,8 @@ services:
       ros:
         ipv4_address: 172.18.1.2
     environment:
-      - "ROS_MASTER_URI=http://station:11311"
-      - "ROS_HOSTNAME=station"
+      - "ROS_MASTER_URI=http://objectives:11311"
+      - "ROS_HOSTNAME=objectives"
     extra_hosts:
       station: 172.18.1.2
       robot: 172.18.1.4

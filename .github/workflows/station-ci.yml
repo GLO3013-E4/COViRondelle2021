@@ -5,16 +5,16 @@ on:
     branches:
       - develop
     paths:
-      - 'station/**'
+      - 'objectives/**'
   pull_request:
     branches:
       - develop
     paths:
-      - 'station/**'
+      - 'objectives/**'
 
 defaults:
   run:
-    working-directory: station
+    working-directory: objectives
 
 jobs:
   build:
@@ -22,8 +22,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build docker image
-        run: docker build -t station .
+        run: docker build -t objectives .
       - name: Lint application
-        run: docker run station pylint src
+        run: docker run objectives pylint src
       - name: Test application
-        run: docker run station pytest
+        run: docker run objectives pytest

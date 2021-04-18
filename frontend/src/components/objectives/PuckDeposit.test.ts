@@ -1,4 +1,4 @@
-import PuckDeposit from '@/components/station/PuckDeposit.vue';
+import PuckDeposit from '@/components/objectives/PuckDeposit.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import { State } from '@/store/state';
 import { PuckList } from '@/types/puckList';

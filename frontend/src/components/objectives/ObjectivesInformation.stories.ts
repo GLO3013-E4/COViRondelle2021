@@ -1,4 +1,4 @@
-import StationInformation from '@/components/station/StationInformation.vue';
+import ObjectivesInformation from '@/components/objectives/ObjectivesInformation.vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { StateFactory } from '@/factories/StateFactory';
@@ -6,12 +6,12 @@ import { StateFactory } from '@/factories/StateFactory';
 Vue.use(Vuex);
 
 export default {
-  title: 'components/station/StationInformation',
-  component: StationInformation,
+  title: 'components/objectives/ObjectivesInformation',
+  component: ObjectivesInformation,
 };
 
 export const Default = () => ({
-  components: { StationInformation },
+  components: { StationInformation: ObjectivesInformation },
   store: new Vuex.Store({
     state: StateFactory.make(),
   }),

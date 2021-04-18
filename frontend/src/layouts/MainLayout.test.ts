@@ -1,7 +1,7 @@
 import MainLayout from '@/layouts/MainLayout.vue';
 import ConsumptionInformation from '@/components/consumptions/ConsumptionInformation.vue';
 import CycleInformation from '@/components/cycles/CycleInformation.vue';
-import StationInformation from '@/components/station/StationInformation.vue';
+import StationInformation from '@/components/objectives/ObjectivesInformation.vue';
 import Trajectories from '@/components/trajectories/Trajectories.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 
@@ -20,7 +20,7 @@ describe('When mounting main layout', () => {
     expect(wrapper.findComponent(CycleInformation).vm).toBeTruthy();
   });
 
-  it('Should contain station information', () => {
+  it('Should contain objectives information', () => {
     expect(wrapper.findComponent(StationInformation).vm).toBeTruthy();
   });
 

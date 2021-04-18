@@ -1,4 +1,4 @@
-import FirstCorner from '@/components/station/FirstCorner.vue';
+import FirstCorner from '@/components/objectives/FirstCorner.vue';
 import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
 import { State } from '@/store/state';
 import { PuckListFactory } from '@/factories/PuckListFactory';

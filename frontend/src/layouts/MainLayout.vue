@@ -20,7 +20,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import ConsumptionInformation from '../components/consumptions/ConsumptionInformation.vue';
 import CycleInformation from '../components/cycles/CycleInformation.vue';
-import StationInformation from '../components/station/StationInformation.vue';
+import StationInformation from '../components/objectives/ObjectivesInformation.vue';
 import Trajectories from '../components/trajectories/Trajectories.vue';
 
 @Component({
