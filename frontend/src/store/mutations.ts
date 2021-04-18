@@ -87,6 +87,8 @@ export const mutations: MutationTree<State> & Mutations = {
   },
   [SOCKET_CURRENT_STEP](state: State, data: string) {
     const message = toMessage(data);
-    state.currentStep = message.currentStep || defaultState.currentStep;
+    state.currentStep = message.currentStep
+      ? Step[message.currentStep]
+      : defaultState.currentStep;
   },
 };

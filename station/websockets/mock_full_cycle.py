@@ -48,7 +48,6 @@ def handle_start_cycle(_):
 def execute_then_sleep(execute, *args):
     execute(*args)
     time.sleep(1)
-    print('yo')
 
 
 def mock_full_cycle():

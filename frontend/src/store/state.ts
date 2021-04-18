@@ -24,7 +24,7 @@ export const defaultState = {
   plannedTrajectory: [] as Array<Coordinate>,
   currentPlannedTrajectory: [] as Array<Coordinate>,
   realTrajectory: [] as Array<Coordinate>,
-  currentStep: Step.CycleNotStarted,
+  currentStep: Step.CycleNotStarted as number,
   puckList: new PuckList(),
 };
 
