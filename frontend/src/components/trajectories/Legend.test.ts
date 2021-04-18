@@ -1,8 +1,8 @@
 import Legend from '@/components/trajectories/Legend.vue';
-import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
+import wrapComponentForTest from '../../util/wrapComponentForTest';
 
 describe('When mounting Legend', () => {
-  const wrapper = wrapWithVuetifyAndStore(Legend);
+  const wrapper = wrapComponentForTest(Legend);
 
   it('Should mount', () => {
     expect(wrapper.vm).toBeTruthy();

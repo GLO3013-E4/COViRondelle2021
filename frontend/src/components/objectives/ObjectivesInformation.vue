@@ -1,14 +1,14 @@
 <template>
-  <v-card color="base" height="230">
+  <v-card color="base">
     <v-container>
       <v-row>
         <v-col sm="12">
           <v-card class="d-flex justify-center">
-            <h3>{{ $t('station.stationInformation') }}</h3>
+            <h3>{{ $t('objectives.objectivesInformation') }}</h3>
           </v-card>
         </v-col>
       </v-row>
-      <v-row no-gutters>
+      <v-row>
         <v-col sm="6">
           <Resistance />
         </v-col>
@@ -28,10 +28,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import Resistance from '../station/Resistance.vue';
+import Resistance from './/Resistance.vue';
 import FirstCorner from './FirstCorner.vue';
 import GripState from './GripState.vue';
-import PuckDeposit from '../station/PuckDeposit.vue';
+import PuckDeposit from './/PuckDeposit.vue';
 
 @Component({
   components: {
@@ -41,5 +41,5 @@ import PuckDeposit from '../station/PuckDeposit.vue';
     PuckDeposit: PuckDeposit,
   },
 })
-export default class StationInformation extends Vue {}
+export default class ObjectivesInformation extends Vue {}
 </script>

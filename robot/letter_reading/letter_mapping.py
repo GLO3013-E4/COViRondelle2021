@@ -33,6 +33,7 @@ class Mapping:
                 self.stop_servos()
                 return letters
 
+        self.stop_servos()
         return letters
 
     def camera_panning(self, x_position):

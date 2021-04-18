@@ -8,7 +8,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row no-gutters>
+      <v-row>
         <svg height="120" width="400" id="legend">
           <text :x="xInitialPlacement" :y="yInitialPlacement" fill="white">
             {{ `${$t('trajectories.plannedTrajectory')} :` }}

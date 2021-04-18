@@ -1,24 +1,41 @@
 <template>
   <div>
-    <v-card class="lighten1 d-flex justify-center" ref="time"
-      ><h2>{{ this.updatedTime }}</h2></v-card
-    >
-    <StartButton ref="button" @start="start" />
+    <!-- TODO : v-row and v-col logic should be contained in CycleInformation -->
+    <v-row>
+      <v-col>
+        <v-card class="lighten1 d-flex justify-center" ref="time">
+          <h2>{{ this.updatedTime }}</h2>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <StartButton ref="button" @start="start" />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <ResetButton ref="resetButton" @reset="reset" />
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script lang="ts">
 import { Step } from '@/types/step';
 import { Component, Vue } from 'vue-property-decorator';
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import StartButton from './StartButton.vue';
+import ResetButton from '@/components/cycles/ResetButton.vue';
 
 @Component({
   components: {
-    StartButton: StartButton,
+    StartButton,
+    ResetButton,
   },
   methods: {
     ...mapActions(['emitSocketStartCycle']),
+    ...mapMutations(['RESET_CYCLE']),
   },
   computed: {
     ...mapState(['cycleReady', 'currentStep']),
@@ -26,6 +43,7 @@ import StartButton from './StartButton.vue';
 })
 export default class Chronometer extends Vue {
   public emitSocketStartCycle!: () => void;
+  public RESET_CYCLE!: () => void;
   public cycleReady!: boolean;
   public currentStep!: Step;
 
@@ -34,7 +52,7 @@ export default class Chronometer extends Vue {
   public prevTime: number | null = 0;
 
   public start() {
-    if (this.cycleReady || this.currentStep == Step.CycleEndedAndRedLedOn) {
+    if (this.cycleReady || this.currentStep === Step.CycleEndedAndRedLedOn) {
       this.emitSocketStartCycle();
 
       if (!this.interval) {
@@ -62,6 +80,10 @@ export default class Chronometer extends Vue {
       this.interval = null;
     }
     this.prevTime = null;
+  }
+
+  public reset() {
+    this.RESET_CYCLE();
   }
 
   get updatedTime() {

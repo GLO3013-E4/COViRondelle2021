@@ -1,7 +1,7 @@
 <template>
   <v-card class="lighten2">
     <v-card-title sm="6" class="lighten1 d-flex justify-center">
-      <h5 class="white--text">{{ $t('station.resistance') }}</h5>
+      <h5 class="white--text">{{ $t('objectives.resistance') }}</h5>
     </v-card-title>
     <v-container>
       <v-row align="center">
@@ -17,7 +17,7 @@
           <v-avatar
             ref="pucks"
             size="30"
-            v-for="(puck, i) in pucks"
+            v-for="(puck, i) in this.pucksToDisplay"
             :key="i"
             :color="puck.color.toString()"
             class="lighten3--text font-weight-bold"
@@ -34,6 +34,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import { PuckList } from '@/types/puckList';
+import { Color } from '@/types/color';
 
 @Component({
   computed: {
@@ -44,8 +45,8 @@ export default class Resistance extends Vue {
   public resistance!: number;
   public puckList!: PuckList;
 
-  get pucks() {
-    return this.puckList.pucks;
+  get pucksToDisplay() {
+    return this.puckList.pucks.filter((puck) => puck.color !== Color.Unset);
   }
 }
 </script>

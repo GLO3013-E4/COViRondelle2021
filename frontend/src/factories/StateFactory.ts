@@ -22,14 +22,13 @@ export const StateFactory = factory<State>((fake) => {
   };
 
   return {
-    // TODO : Fake what isn't faked when implementing
+    cycleNumber: fake.random.number(10),
     cycleReady: defaultState.cycleReady,
     cycleStarted: defaultState.cycleStarted,
     tableImage: {
       current: '/stub_table_image.jpg',
       previous: '',
     },
-    // TODO : Find a way to implement ResistanceFactory
     resistance: fake.random.number(10000),
     robotConsumption: defaultState.robotConsumption,
     plannedTrajectory,

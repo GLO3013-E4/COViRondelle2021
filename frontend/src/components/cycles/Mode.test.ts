@@ -1,5 +1,5 @@
 import Mode from '@/components/cycles/Mode.vue';
-import wrapWithVuetifyAndStore from '@/util/wrapWithVuetifyAndStore';
+import wrapComponentForTest from '../../util/wrapComponentForTest';
 import { State } from '@/store/state';
 
 const mockState = (cycleReady: boolean, cycleStarted: boolean) =>
@@ -9,7 +9,7 @@ const mockState = (cycleReady: boolean, cycleStarted: boolean) =>
   } as State);
 
 describe('When mounting Mode component', () => {
-  const wrapper = wrapWithVuetifyAndStore(Mode);
+  const wrapper = wrapComponentForTest(Mode);
 
   it('Should mount', () => {
     expect(wrapper.vm).toBeTruthy();
@@ -20,7 +20,7 @@ describe('Given booting state', () => {
   const state = mockState(false, false);
 
   describe('When mounting Mode', () => {
-    const wrapper = wrapWithVuetifyAndStore(Mode, state);
+    const wrapper = wrapComponentForTest(Mode, state);
 
     it('Should be booting mode', () => {
       const mode = wrapper.findComponent({ ref: 'mode' });
@@ -35,7 +35,7 @@ describe('Given waiting state', () => {
   const state = mockState(true, false);
 
   describe('When mounting Mode', () => {
-    const wrapper = wrapWithVuetifyAndStore(Mode, state);
+    const wrapper = wrapComponentForTest(Mode, state);
 
     it('Should be booting mode', () => {
       const mode = wrapper.findComponent({ ref: 'mode' });
@@ -50,7 +50,7 @@ describe('Given started state', () => {
   const state = mockState(true, true);
 
   describe('When mounting Mode', () => {
-    const wrapper = wrapWithVuetifyAndStore(Mode, state);
+    const wrapper = wrapComponentForTest(Mode, state);
 
     it('Should be started mode', () => {
       const mode = wrapper.findComponent({ ref: 'mode' });

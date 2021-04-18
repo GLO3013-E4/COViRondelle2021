@@ -2,12 +2,12 @@
   <div>
     <v-btn
       :disabled="this.isDisabled"
-      color="accent"
-      @click="start"
+      color="secondary"
+      @click="reset"
       width="100%"
       elevation="6"
     >
-      {{ $t('cycles.start') }}
+      {{ $t('cycles.reset') }}
     </v-btn>
   </div>
 </template>
@@ -15,22 +15,22 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
+import { Step } from '@/types/step';
 
 @Component({
   computed: {
-    ...mapState(['cycleReady', 'cycleStarted']),
+    ...mapState(['currentStep']),
   },
 })
-export default class StartButton extends Vue {
-  public cycleReady!: boolean;
-  public cycleStarted!: boolean;
+export default class ResetButton extends Vue {
+  public currentStep!: Step;
 
-  public start() {
-    this.$emit('start');
+  public reset() {
+    this.$emit('reset');
   }
 
   get isDisabled() {
-    return !this.cycleReady || this.cycleStarted;
+    return this.currentStep !== Step.CycleEndedAndRedLedOn;
   }
 }
 </script>

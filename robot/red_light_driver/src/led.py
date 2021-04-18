@@ -1,17 +1,21 @@
-import time
 import RPi.GPIO as GPIO
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
+class RedLightDriver:
+    def __init__(self):
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)
 
-LED = 15
+        self.LED = 15
 
-GPIO.setup(LED, GPIO.OUT)
+        GPIO.setup(self.LED, GPIO.OUT)
 
-state = GPIO.input(LED)
-while True:
-    GPIO.output(LED, GPIO.HIGH)
-    time.sleep(3)
-    GPIO.output(LED, GPIO.LOW)
-    time.sleep(3)
-    
+    def on(self):
+        GPIO.output(self.LED, GPIO.HIGH)
+
+    def off(self):
+        GPIO.output(self.LED, GPIO.LOW)
+
+
+if __name__ == "__main__":
+    s = RedLightDriver()
+    s.off()

@@ -7,8 +7,14 @@ export class PuckList {
   static readonly PUCKS_COUNT = 3;
   pucks: Array<Puck>;
 
-  constructor(pucks: Array<Puck> = []) {
+  constructor(
+    pucks: Array<Puck> = Array.from(
+      { length: PuckList.PUCKS_COUNT },
+      () => new Puck()
+    )
+  ) {
     pucks.forEach((puck, index) => (puck.number = index + 1));
+
     this.pucks = pucks;
   }
 

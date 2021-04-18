@@ -1,7 +1,7 @@
 <template>
   <v-card class="lighten2" height="100%">
     <v-card-title sm="6" class="lighten1 d-flex justify-center">
-      <h5 class="white--text">{{ $t('station.firstCorner') }}</h5>
+      <h5 class="white--text">{{ $t('objectives.firstCorner') }}</h5>
     </v-card-title>
     <v-container height="100%">
       <v-row align="center">
@@ -9,6 +9,7 @@
           <div ref="corner" class="d-flex justify-center font-weight-bold">
             <v-badge
               dot
+              v-if="this.isFirstCornerSet"
               :bottom="this.placementBottom"
               :left="this.placementLeft"
               :color="this.firstPuckColor"
@@ -53,7 +54,11 @@ export default class FirstCorner extends Vue {
   }
 
   private get firstPuckCorner(): string {
-    return this.puckList.first ? this.puckList.first.corner : '';
+    return this.puckList.first.corner;
+  }
+
+  private get isFirstCornerSet(): boolean {
+    return this.puckList.first && this.puckList.first.corner != Corner.UNSET;
   }
 }
 </script>

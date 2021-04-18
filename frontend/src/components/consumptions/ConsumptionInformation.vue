@@ -8,7 +8,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row no-gutters>
+      <v-row>
         <v-col sm="6">
           <BatteryCharge />
         </v-col>
