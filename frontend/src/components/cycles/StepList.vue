@@ -5,9 +5,9 @@
         ref="step"
         v-for="(step, i) in steps"
         :key="i"
-        :complete="currentStepNumber > i + 1"
+        :complete="isComplete(i)"
         :step="i + 1"
-        :color="currentStepNumber === i + 1 ? 'blue' : 'green'"
+        :color="isCurrent(i) ? 'blue' : 'green'"
       >
         {{ $t(`cycles.steps.${step}`) }}
       </v-stepper-step>
@@ -16,9 +16,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { mapState } from 'vuex';
-import { Step } from '@/types/step';
+import {Component, Vue} from 'vue-property-decorator';
+import {mapState} from 'vuex';
+import {Step} from '@/types/step';
 
 @Component({
   components: {},
@@ -42,6 +42,14 @@ export default class StepList extends Vue {
       }
     }
     return result;
+  }
+
+  isComplete(index: number) {
+    return this.currentStepNumber > index + 1;
+  }
+
+  isCurrent(index: number) {
+    return this.currentStepNumber === index + 1 && this.currentStep !== Step.CycleEndedAndRedLedOn;
   }
 }
 </script>
