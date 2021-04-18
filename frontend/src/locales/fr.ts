@@ -18,6 +18,7 @@ export const fr = {
     firstCorner: 'Premier coin',
   },
   cycles: {
+    cycle: 'Cycle',
     cycleInformation: 'Information du cycle',
     steps: {
       CycleNotStarted: 'Cycle non débuté',

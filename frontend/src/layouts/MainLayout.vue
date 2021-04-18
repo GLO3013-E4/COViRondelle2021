@@ -1,5 +1,5 @@
 <template>
-  <v-card width="100%" height="100%">
+  <v-card class="mainLayout">
     <v-row>
       <v-col sm="6">
         <!-- TODO : Layout should have components injected. The main view should add these components -->
@@ -34,4 +34,8 @@ import Trajectories from '../components/trajectories/Trajectories.vue';
 export default class MainLayout extends Vue {}
 </script>
 
-<style></style>
+<style>
+.mainLayout {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+</style>

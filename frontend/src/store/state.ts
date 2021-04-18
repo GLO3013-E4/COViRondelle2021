@@ -5,6 +5,7 @@ import { PuckList } from '@/types/puckList';
 import { TableImage } from '@/types/tableImage';
 
 export const defaultState = {
+  cycleNumber: 1,
   cycleReady: false,
   cycleStarted: false,
   tableImage: {
@@ -29,6 +30,7 @@ export const defaultState = {
 };
 
 export const state = {
+  cycleNumber: defaultState.cycleNumber,
   cycleReady: defaultState.cycleReady,
   cycleStarted: defaultState.cycleStarted,
   tableImage: defaultState.tableImage,

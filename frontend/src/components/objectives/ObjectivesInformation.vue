@@ -1,5 +1,5 @@
 <template>
-  <v-card color="base" height="230">
+  <v-card color="base">
     <v-container>
       <v-row>
         <v-col sm="12">
@@ -8,7 +8,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row no-gutters>
+      <v-row>
         <v-col sm="6">
           <Resistance />
         </v-col>

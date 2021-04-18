@@ -1,5 +1,5 @@
 <template>
-  <v-card color="base" height="475">
+  <v-card color="base">
     <v-container>
       <v-row>
         <v-col sm="12">
@@ -14,6 +14,7 @@
         </v-col>
         <v-spacer></v-spacer>
         <v-col sm="4">
+          <CycleNumber />
           <Mode />
           <Chronometer />
         </v-col>
@@ -24,15 +25,17 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import CycleNumber from "@/components/cycles/CycleNumber.vue";
 import StepList from '../cycles/StepList.vue';
 import Mode from '../cycles/Mode.vue';
 import Chronometer from '../cycles/Chronometer.vue';
 
 @Component({
   components: {
-    StepList: StepList,
-    Mode: Mode,
-    Chronometer: Chronometer,
+    CycleNumber,
+    StepList,
+    Mode,
+    Chronometer,
   },
 })
 export default class CycleInformation extends Vue {}
@@ -41,6 +44,5 @@ export default class CycleInformation extends Vue {}
 <style>
 .stepList {
   padding-right: 1em !important;
-  padding-top: 0em !important;
 }
 </style>
