@@ -21,8 +21,9 @@ class Mapping:
         self.servo1.stop()
 
     def stop_servos(self):
-        self.servo2.stop()
-        GPIO.cleanup()
+        pass
+        #self.servo2.stop()
+        #GPIO.cleanup()
 
     def letter_mapping(self):
         self.start_servos()
