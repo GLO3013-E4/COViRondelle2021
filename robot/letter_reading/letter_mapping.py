@@ -12,13 +12,13 @@ class Mapping:
         GPIO.setwarnings(False)
 
         GPIO.setup(11, GPIO.OUT)
-        self.servo1 = GPIO.PWM(11, 50)
+        self.servo_y = GPIO.PWM(11, 50)
         GPIO.setup(12, GPIO.OUT)
-        self.servo2 = GPIO.PWM(12, 50)
+        self.servo_x = GPIO.PWM(12, 50)
 
-        self.servo1.start(7.5)
+        self.servo_y.start(7.5)
         time.sleep(0.5)
-        self.servo1.stop()
+        self.servo_y.stop()
 
     def stop_servos(self):
         pass
@@ -43,13 +43,12 @@ class Mapping:
         return letters
 
     def camera_panning(self, x_position):
-        self.servo2.start(x_position)
+        self.servo_x.start(x_position)
         time.sleep(1)
-        self.servo2.stop()
+        self.servo_x.stop()
         time.sleep(2)
 
         image = capture_image_from_embed_camera()
         grayscale = process_image_to_grayscale(image)
         letters = map_letters(grayscale)
-
         return letters
