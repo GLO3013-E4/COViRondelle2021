@@ -48,7 +48,7 @@ class CommandBuilder:
             self._commands.append(Command([MoveRobotToCommandPanelHandler()], step))
         elif step == Step.READ_LETTERS:
             self._commands.append(Command([ReadLettersHandler()], step))
-        elif step in (Step.TO_FIRST_PUCK_AND_GRAB_FIRST_PUCK_FIRST_PUCK, Step.TO_SECOND_PUCK_AND_GRAB_SECOND_PUCK, Step.TO_THIRD_PUCK_AND_GRAB_THIRD_PUCK):
+        elif step in (Step.TO_FIRST_PUCK_AND_GRAB_FIRST_PUCK, Step.TO_SECOND_PUCK_AND_GRAB_SECOND_PUCK, Step.TO_THIRD_PUCK_AND_GRAB_THIRD_PUCK):
             self._commands.append(Command([MoveRobotToNextPuckHandler()], step))
         elif step == Step.GRIP_PUCK:
             self._commands.append(Command([GripPuckHandler()]))
