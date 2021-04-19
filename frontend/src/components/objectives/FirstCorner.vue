@@ -1,7 +1,7 @@
 <template>
   <v-card class="lighten2" height="100%">
     <v-card-title sm="6" class="lighten1 d-flex justify-center">
-      <h5 class="white--text">{{ $t('station.firstCorner') }}</h5>
+      <h5 class="white--text">{{ $t('objectives.firstCorner') }}</h5>
     </v-card-title>
     <v-container height="100%">
       <v-row align="center">
@@ -65,6 +65,6 @@ export default class FirstCorner extends Vue {
 
 <style scoped>
 .v-card__title {
-  padding: 0px;
+  padding: 0;
 }
 </style>

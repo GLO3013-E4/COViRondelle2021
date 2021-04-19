@@ -25,12 +25,25 @@ const i18n = new VueI18n({
   messages,
 });
 
-const routes = [{ path: '/', component: require('./views/Main') }];
+const routes = [
+  {
+    path: '/',
+    component: require('./views/Main'),
+    meta: {
+      title: i18n.t('appName'),
+    },
+  },
+];
 
 const router = new VueRouter({
   base: locale.trim().length && locale != '/' ? '/' + locale : undefined,
   mode: 'history',
-  routes: routes,
+  routes,
+});
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
+  next();
 });
 
 new Vue({

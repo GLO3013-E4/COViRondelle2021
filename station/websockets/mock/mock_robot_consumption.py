@@ -17,10 +17,17 @@ def create_robot_consumption():
     return json.dumps(robot_consumption)
 
 
-# TODO : Remove this mock
-if __name__ == '__main__':
-    puck_colors_publisher = rospy.Publisher('robot_consumption', String, queue_size=10)
+def mock_robot_consumption(pub):
+    rate = rospy.Rate(1)
+    while not rospy.is_shutdown():
+        rospy.loginfo('Mocking robot_consumption')
+        pub.publish(create_robot_consumption())
+        rate.sleep()
 
+
+if __name__ == '__main__':
     rospy.init_node('mock_robot_consumption', anonymous=True)
 
-    puck_colors_publisher.publish(create_robot_consumption())
+    robot_consumption_publisher = rospy.Publisher('robot_consumption', String, queue_size=10)
+
+    mock_robot_consumption(robot_consumption_publisher)

@@ -1,14 +1,10 @@
 <template>
-  <v-card color="base" height="230">
+  <v-card color="base">
+    <v-card-title sm="12" class="objectives-title d-flex justify-center">
+      <h3 class="white--text">{{ $t('objectives.objectivesInformation') }}</h3>
+    </v-card-title>
     <v-container>
       <v-row>
-        <v-col sm="12">
-          <v-card class="d-flex justify-center">
-            <h3>{{ $t('station.stationInformation') }}</h3>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-row no-gutters>
         <v-col sm="6">
           <Resistance />
         </v-col>
@@ -28,10 +24,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import Resistance from '../station/Resistance.vue';
+import Resistance from './/Resistance.vue';
 import FirstCorner from './FirstCorner.vue';
 import GripState from './GripState.vue';
-import PuckDeposit from '../station/PuckDeposit.vue';
+import PuckDeposit from './/PuckDeposit.vue';
 
 @Component({
   components: {
@@ -41,5 +37,16 @@ import PuckDeposit from '../station/PuckDeposit.vue';
     PuckDeposit: PuckDeposit,
   },
 })
-export default class StationInformation extends Vue {}
+export default class ObjectivesInformation extends Vue {}
 </script>
+
+<style>
+/* TODO : All card titles should use the same CSS logic */
+.objectives-title {
+  padding: 4px !important;
+  background: #1e1e1e;
+}
+.objectives-title > h3 {
+  font-size: 1.1rem;
+}
+</style>

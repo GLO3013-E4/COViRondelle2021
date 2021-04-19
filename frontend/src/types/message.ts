@@ -1,7 +1,6 @@
 import { Color } from '@/types/color';
 import { Corner } from '@/types/corner';
 import { Coordinate } from '@/types/coordinate';
-import { Step } from '@/types/step';
 import { RobotConsumption } from './robotConsumption';
 
 export interface Message {
@@ -13,5 +12,5 @@ export interface Message {
   plannedTrajectoryCoordinates?: Array<Coordinate>;
   realTrajectoryCoordinate?: Coordinate;
   puckInGrip?: boolean;
-  currentStep?: Step;
+  currentStep?: string;
 }

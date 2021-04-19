@@ -1,4 +1,4 @@
-import GripState from '@/components/station/GripState.vue';
+import GripState from '@/components/objectives/GripState.vue';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { PuckState } from '@/types/puckState';
@@ -8,7 +8,7 @@ import { PuckList } from '@/types/puckList';
 Vue.use(Vuex);
 
 export default {
-  title: 'components/station/GripState',
+  title: 'components/objectives/GripState',
   component: GripState,
 };
 

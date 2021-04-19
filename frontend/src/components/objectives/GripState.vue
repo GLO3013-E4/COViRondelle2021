@@ -1,7 +1,7 @@
 <template>
   <v-card class="lighten2">
     <v-card-title sm="6" class="lighten1 d-flex justify-center">
-      <h5 class="white--text">{{ $t('station.gripState') }}</h5>
+      <h5 class="white--text">{{ $t('objectives.gripState') }}</h5>
     </v-card-title>
     <div
       ref="gripState"
@@ -11,7 +11,9 @@
       <!-- TODO : Do not change color/opacity on hover -->
       <v-chip :color="puckInGrip ? 'green' : 'red'">
         <h3 class="white--text">
-          {{ puckInGrip ? $t('station.puckInGrip') : $t('station.noPuck') }}
+          {{
+            puckInGrip ? $t('objectives.puckInGrip') : $t('objectives.noPuck')
+          }}
         </h3></v-chip
       >
     </div>

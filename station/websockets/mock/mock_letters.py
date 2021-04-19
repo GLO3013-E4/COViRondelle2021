@@ -21,10 +21,14 @@ def create_letters():
     return json.dumps(letters)
 
 
-# TODO : Remove this mock
-if __name__ == '__main__':
-    puck_colors_publisher = rospy.Publisher('letters', String, queue_size=10)
+def mock_letters(pub):
+    rospy.loginfo('Mocking letters')
+    pub.publish(create_letters())
 
+
+if __name__ == '__main__':
     rospy.init_node('mock_letters', anonymous=True)
 
-    puck_colors_publisher.publish(create_letters())
+    letters_publisher = rospy.Publisher('letters', String, queue_size=10)
+
+    mock_letters(letters_publisher)
