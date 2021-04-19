@@ -33,9 +33,6 @@ class Mapping:
             letters = self.camera_panning(angle)
             if len(letters) == 9:
                 return letters
-            else:
-                continue
-
         return []
 
     def fonction_a_oli(self):
