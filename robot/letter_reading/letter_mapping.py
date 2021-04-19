@@ -44,9 +44,9 @@ class Mapping:
 
     def camera_panning(self, x_position):
         self.servo2.start(x_position)
-        time.sleep(0.5)
+        time.sleep(1)
         self.servo2.stop()
-        time.sleep(0.25)
+        time.sleep(2)
 
         image = capture_image_from_embed_camera()
         grayscale = process_image_to_grayscale(image)
