@@ -7,7 +7,8 @@ from process_image_to_grayscale import process_image_to_grayscale
 
 
 class Mapping:
-    def start_servos(self):
+
+    def __init__(self):
         GPIO.setmode(GPIO.BOARD)
         GPIO.setwarnings(False)
 
@@ -16,8 +17,9 @@ class Mapping:
         GPIO.setup(12, GPIO.OUT)
         self.servo_x = GPIO.PWM(12, 50)
 
-        self.servo_y.start(7.5)
-        time.sleep(0.5)
+        self.servo_y.start(0)
+        self.servo_y.ChangeDutyCycle(7.5)
+        time.sleep(1)
         self.servo_y.stop()
 
     def stop_servos(self):
@@ -26,7 +28,6 @@ class Mapping:
         #GPIO.cleanup()
 
     def letter_mapping(self):
-        self.start_servos()
         letters = self.camera_panning(7)
         if len(letters) == 9:
             self.stop_servos()
@@ -43,7 +44,9 @@ class Mapping:
         return letters
 
     def camera_panning(self, x_position):
-        self.servo_x.start(x_position)
+
+        self.servo_x.start(0)
+        self.servo_x.ChangeDutyCycle(x_position)
         time.sleep(1)
         self.servo_x.stop()
         time.sleep(2)
