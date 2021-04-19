@@ -1,5 +1,5 @@
-import RPi.GPIO as GPIO
 import time
+import RPi.GPIO as GPIO
 
 from capture_image_from_embed_camera import capture_image_from_embed_camera
 from map_letters import map_letters
@@ -24,10 +24,19 @@ class Mapping:
 
     def stop_servos(self):
         pass
-        #self.servo2.stop()
-        #GPIO.cleanup()
+        # self.servo2.stop()
+        # GPIO.cleanup()
 
     def letter_mapping(self):
+        servo_x_angle = [7, 6, 5, 8, 9]
+        for angle in servo_x_angle:
+            letters = self.camera_panning(angle)
+            if len(letters) == 9:
+                return letters
+            else:
+                continue
+
+    def fonction_a_oli(self):
         letters = self.camera_panning(7)
         if len(letters) == 9:
             self.stop_servos()
@@ -40,7 +49,6 @@ class Mapping:
         if len(letters) == 9:
             self.stop_servos()
             return letters
-
         return letters
 
     def camera_panning(self, x_position):
