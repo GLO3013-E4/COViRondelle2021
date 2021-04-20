@@ -30,7 +30,8 @@ class RobotGoalAndObstacleFinder:
         self.square_corner_detection = SquareCornerDetection()
 
     def find_pucks(self, image):
-        return self.puck_finder.detect_pucks(image)
+        pucks = self.puck_finder.detect_pucks(image)
+        return self.puck_finder.sort_pucks(pucks)
 
     def callback_calculate_puck(self, data):
         rospy.logerr("RECALCULATING PUCKS")

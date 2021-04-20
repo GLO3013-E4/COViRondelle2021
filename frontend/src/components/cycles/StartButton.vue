@@ -30,7 +30,7 @@ export default class StartButton extends Vue {
   }
 
   get isDisabled() {
-    return !this.cycleReady || this.cycleStarted;
+    return !this.cycleReady;
   }
 }
 </script>

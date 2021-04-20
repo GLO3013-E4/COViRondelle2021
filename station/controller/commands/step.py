@@ -12,7 +12,7 @@ class Step(Enum):
     GRIP_PUCK = 'GripPuck'
     RELEASE_PUCK = 'ReleasePuck'
     MOVE_ROBOT_TO_SQUARE_CENTER = 'ToSquareCenter'
-    END_CYCLE = 'CycleEndedRedLedOn'
+    END_CYCLE = 'CycleEndedAndRedLedOn'
     TO_FIRST_PUCK_AND_GRAB_FIRST_PUCK = "ToFirstPuckAndGrabFirstPuck"
     TO_SECOND_PUCK_AND_GRAB_SECOND_PUCK = "ToSecondPuckAndGrabSecondPuck"
     TO_THIRD_PUCK_AND_GRAB_THIRD_PUCK = "ToThirdPuckAndGrabThirdPuck"

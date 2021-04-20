@@ -33,6 +33,7 @@ class ReadLettersHandler(Handler):
         third_corner = second_corner.get_next_letter()
 
         handled_data["corners"] = [first_corner.value, second_corner.value, third_corner.value]
+        handled_data["corner_letters_pub"].publish(json.dumps(handled_data["corners"]))
 
         return handled_data
 

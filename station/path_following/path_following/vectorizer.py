@@ -60,6 +60,7 @@ class Vectorizer:
             minimized_path = [path[0]]
         elif len(path) == 1:
             path = [self.robot_position, path[0]]
+            minimized_path = path
         current_angle = math.atan2(path[1][1] - path[0][1], path[1][0] - path[0][0])
         for i, node in enumerate(path[2:-1]):
             x, y = node

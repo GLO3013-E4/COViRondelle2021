@@ -112,7 +112,7 @@ def websockets():
     rospy.Subscriber("movement_vectors_string", String, handle_movement_vectors_string)
     rospy.Subscriber("resistance", String, handle_resistance)
     rospy.Subscriber("puck_colors", String, handle_puck_colors)
-    rospy.Subscriber("letters", String, handle_letters)
+    rospy.Subscriber("corner_letters", String, handle_letters)
     rospy.Subscriber("current_step", String, handle_current_step)
 
     @socket.on('start_cycle')

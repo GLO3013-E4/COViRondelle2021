@@ -17,6 +17,7 @@ class ReleasePuckHandler(Handler):
         self.BRAKES = 11
         self.position_tuple = None
         self.robot_angle = None
+        self.juste_backed_up = False
 
     def initialize(self):
         self.sub = rospy.Subscriber("robot", String, self.callback, queue_size=1)
@@ -29,13 +30,21 @@ class ReleasePuckHandler(Handler):
 
     def handle(self, handled_data=None):
         self.initialize()
+        handled_data["calculate_pucks_pub"].publish(True)
         while self.position_tuple is None:
             pass
+        sauce = self.distance(self.position_tuple, (handled_data["goal"].pose.position.x, handled_data["goal"].pose.position.y))
         while self.distance(self.position_tuple, (handled_data["goal"].pose.position.x, handled_data["goal"].pose.position.y)) > 20:
-            sauce = self.distance(self.position_tuple, (handled_data["goal"].pose.position.x, handled_data["goal"].pose.position.y))
+            # if diff < -10 and not self.juste_backed_up:
+            #     handled_data["movement_vectors_string_pub"].publish(json.dumps((30, 0 ,1)))
+            #     self.juste_backed_up = True
+            #     rospy.sleep(2)
+            #     continue
+
 
             vector_angle = self.get_angle_between_two_points(handled_data["goal"].pose.position.x, handled_data["goal"].pose.position.y, *self.position_tuple)
             correction_angle = self.get_angle_correction(self.robot_angle, vector_angle)
+            rospy.logerr(f"angle : {math.degrees(correction_angle)}")
 
             if abs(correction_angle) > math.radians(5):
                 correction_angle = 0
@@ -43,6 +52,7 @@ class ReleasePuckHandler(Handler):
             handled_data["movement_vectors_string_pub"].publish(json.dumps((1, math.degrees(correction_angle), 0)))
             self.forwards_rate.sleep()
             handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0, 11)))
+            self.juste_backed_up = False
 
         self.rate.sleep()
         handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0 ,self.DROP)))

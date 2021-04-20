@@ -34,6 +34,7 @@ def get_map_and_pathfinder(node_size, algorithm, obstacles, start, end, pucks, i
 def check_map_state_on_image(image, color, position):
     height, width, channels = image.shape
     pucks_dict = puck_finder.detect_pucks(image)
+    print(pucks_dict)
     obstacles_list = robot_and_obstacle_finder.detect_obstacle_position(image, DEBUG=False)
     center_of_bottom_robot, prehenseur_position, angle_robot = robot_and_obstacle_finder.detect_robot(image)
 
@@ -77,7 +78,7 @@ def check_map_state_on_image(image, color, position):
 
 
 def check_map_state_on_a_stream(color, position):
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(2)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1600)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 904)
 
