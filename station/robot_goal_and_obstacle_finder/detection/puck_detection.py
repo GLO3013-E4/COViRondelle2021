@@ -3,7 +3,6 @@ from collections import Counter
 
 import cv2
 import numpy as np
-
 from sklearn.cluster import KMeans
 from detection.color_boundaries import ColorBoundaries
 
@@ -46,21 +45,36 @@ class PuckDetection:
             dominant_color_np = np.uint8([[dominant_color]])
             hsv_dominant_color = cv2.cvtColor(dominant_color_np, cv2.COLOR_BGR2HSV)
             hsv_color = self.find_hsv_color(hsv_dominant_color[0][0])
+            self.draw_on_image(hsv_color, image, radius, x, y)
 
             puck_positions[hsv_color] = [] if puck_positions.get(hsv_color) is None else puck_positions.get(hsv_color)
             puck = dict()
             puck["center_position"] = (x, y)
             puck["radius"] = radius
             puck_positions[hsv_color].append(puck)
+        self.show_image(image)
+        grey_puck = puck_positions["grey"]
+
+        if len(grey_puck) == 2:
+            black_puck_array = []
+            black_puck = {}
+            for i, puck in enumerate(grey_puck):
+                if (puck["center_position"][0]) < 1100 and int(puck["center_position"][1]) > 450:
+                    black_puck = puck
+                    del grey_puck[i]
+            puck_positions["grey"] = grey_puck
+            black_puck_array.append(black_puck)
+            puck_positions["black"] = black_puck_array
 
         return puck_positions
 
     def sort_pucks(self, puck_positions):
-        for key, pucks in puck_positions.items():
+        positions = puck_positions
+        for key, pucks in positions.items():
             if len(pucks) >= 2:
                 sorted_pucks = sorted(pucks, key=lambda k: k['center_position'][0], reverse=True)
-                puck_positions[key] = sorted_pucks
-        return puck_positions
+                positions[key] = sorted_pucks
+        return positions
 
     def remove_glare(self, image):
         GLARE_MIN = np.array([0, 0, 20], np.uint8)
@@ -117,10 +131,23 @@ class PuckDetection:
 
     def find_hsv_color(self, hsv):
         colors = self.color_boundaries.get_boundaries_dict()
+        hsv_colors_found = []
         for color, boundaries in colors.items():
             if boundaries["lower"][0] <= hsv[0] <= boundaries["upper"][0] and \
                     boundaries["lower"][1] <= hsv[1] <= \
                     boundaries["upper"][1] and boundaries["lower"][2] <= hsv[2] \
                     <= boundaries["upper"][2]:
-                return color
-        return "None"
+                hsv_colors_found.append((color, hsv))
+
+        found_closest_color = ()
+        print(hsv_colors_found)
+        for color in hsv_colors_found:
+            h_difference = abs(colors[color[0]]["lower"][0] - color[1][0])
+            s_difference = abs(colors[color[0]]["lower"][1] - color[1][1])
+            v_difference = abs(colors[color[0]]["lower"][2] - color[1][2])
+            total_difference = h_difference + s_difference + v_difference
+            if len(found_closest_color) == 0:
+                found_closest_color = (color, int(total_difference))
+            if total_difference < int(found_closest_color[1]):
+                found_closest_color = (color, total_difference)
+            return found_closest_color[0][0]
