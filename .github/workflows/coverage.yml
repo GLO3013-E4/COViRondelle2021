@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: station
+        working-directory: robot
     strategy:
       matrix:
         node-version: [ 15.x ]
