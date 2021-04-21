@@ -41,7 +41,7 @@ class ReleasePuckHandler(Handler):
             #     rospy.sleep(2)
             #     continue
 
-            vector_angle = get_angle_between_two_points(handled_data["goal"].pose.position.x, handled_data["goal"].pose.position.y, *self.position_tuple)
+            vector_angle = get_angle_between_two_points(*self.position_tuple, handled_data["goal"].pose.position.x, handled_data["goal"].pose.position.y)
 
             correction_angle = get_angle_correction(self.robot_angle, vector_angle)
 
