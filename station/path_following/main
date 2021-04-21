@@ -125,7 +125,6 @@ class PathFollower:
 
             self.angle_rate.sleep()
             
-
     def callback_path(self, data):
         nodes = []
         for coordinate in data.poses:
