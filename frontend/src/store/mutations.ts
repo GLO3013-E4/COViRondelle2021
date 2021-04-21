@@ -38,9 +38,11 @@ export const mutations: MutationTree<State> & Mutations = {
     state.cycleStarted = true;
   },
   [RESET_CYCLE](state: State) {
-    const cycleNumber = state.cycleNumber + 1;
-    Object.assign(state, { ...defaultState, cycleNumber });
-    state.puckList = new PuckList();
+    Object.assign(state, {
+      ...defaultState,
+      cycleNumber: state.cycleNumber + 1,
+      puckList: new PuckList(),
+    });
   },
   [SOCKET_ROBOT_CONSUMPTION](state: State, data: string) {
     const message = toMessage(data);
