@@ -15,7 +15,7 @@ import {
 import { defaultState, State } from './state';
 import { Message } from '@/types/message';
 import { Step } from '@/types/step';
-import {PuckList} from "@/types/puckList";
+import { PuckList } from '@/types/puckList';
 
 export type Mutations<S = State> = {
   [START_CYCLE](state: S): void;
