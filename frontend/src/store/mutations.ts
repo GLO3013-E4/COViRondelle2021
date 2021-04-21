@@ -15,6 +15,7 @@ import {
 import { defaultState, State } from './state';
 import { Message } from '@/types/message';
 import { Step } from '@/types/step';
+import {PuckList} from "@/types/puckList";
 
 export type Mutations<S = State> = {
   [START_CYCLE](state: S): void;
@@ -39,6 +40,7 @@ export const mutations: MutationTree<State> & Mutations = {
   [RESET_CYCLE](state: State) {
     const cycleNumber = state.cycleNumber + 1;
     Object.assign(state, { ...defaultState, cycleNumber });
+    state.puckList = new PuckList();
   },
   [SOCKET_ROBOT_CONSUMPTION](state: State, data: string) {
     const message = toMessage(data);
