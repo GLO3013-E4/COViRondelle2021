@@ -19,7 +19,8 @@ class Map:
     def __init__(self, image_width, image_height, obstacles, pucks, start, end, node_size=NODE_SIZE,
                  safety_cushion=SAFETY_CUSHION, obstacle_width=OBSTACLE_WIDTH, puck_width=PUCK_WIDTH, wall_width=WALL_WIDTH,
                  obstacle_representation=ObstacleRepresentation.SQUARE,
-                 puck_representation=ObstacleRepresentation.RADIUS):
+                 puck_representation=ObstacleRepresentation.RADIUS,
+                 puck_goal_coordinates=False):
         self.node_size = node_size
         self.safety_cushion = safety_cushion
         self.obstacle_width = obstacle_width
@@ -29,6 +30,7 @@ class Map:
         self.obstacle_puck_width = self.safety_cushion + self.puck_width
         self.obstacle_representation = obstacle_representation
         self.puck_representation = puck_representation
+        self.puck_goal_coordinates = puck_goal_coordinates
 
         self.width, self.height = image_width, image_height
 
@@ -50,7 +52,15 @@ class Map:
         self.connect_nodes()
         self.add_table_walls()
         self.create_obstacles()
+
+        if self.puck_goal_coordinates:
+            self.clear_puck_goal()
+
         self.create_pucks()
+
+    def clear_puck_goal(self):
+        node = self.get_node_from_pixel(self.puck_goal_coordinates)
+        self.create_round_obstacle(node, self.obstacle_puck_width, TileRole.EMPTY)
 
     def add_top_wall(self, width):
         start_wall_top = max(0, self.table_walls_start_y // self.node_size)
@@ -70,8 +80,8 @@ class Map:
 
     def add_right_wall(self, width):
         for column in range(
-                self.table_walls_end_x // self.node_size,
-                self.table_walls_end_x + width):
+                (self.table_walls_end_x) // self.node_size,
+                min(len(self.node_matrix[0]), (self.table_walls_end_x + width) // self.node_size)):
             for row in range(len(self.node_matrix)):
                 node = self.get_node_from_matrix_coordinates((column, row))
                 node.role = TileRole.OBSTACLE
@@ -90,7 +100,7 @@ class Map:
         self.add_top_wall(width)
         self.add_bottom_wall(width)
         self.add_left_wall(width)
-        #self.add_right_wall(width)
+        self.add_right_wall(width)
 
     def create_nodes(self):
         """Creates the matrix containing the nodes."""

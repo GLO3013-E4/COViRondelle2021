@@ -95,13 +95,13 @@ class PathFollower:
         self.angle_rate.sleep()
         angle = self.vectorizer.find_goal_angle(self.goal[1] - self.robot_dict["robot"][1],
                                                 self.goal[0] - self.robot_dict["robot"][0], self.destination)
-        angle = self.angle_away_from_obstacle(angle)
+        #angle = self.angle_away_from_obstacle(angle)
 
         while not (-0.05 <= angle <= 0.05):
             angle = self.vectorizer.find_goal_angle(self.goal[1] - self.robot_dict["robot"][1],
                                                     self.goal[0] - self.robot_dict["robot"][0], self.destination)
 
-            angle = self.angle_away_from_obstacle(angle)
+            #angle = self.angle_away_from_obstacle(angle)
             published_vector = (0, self.convert_angle_to_driver_angle(angle), mode.value)
             self.pub.publish(json.dumps(published_vector))
             self.angle_rate.sleep()
@@ -113,19 +113,18 @@ class PathFollower:
         angle = self.vectorizer.find_goal_angle(goal[1] - self.robot_dict["robot"][1],
                                                 goal[0] - self.robot_dict["robot"][0], self.destination)
 
-        angle = self.angle_away_from_obstacle(angle)
+        #angle = self.angle_away_from_obstacle(angle)
         angle_in_radians = 0.05
         while not (-angle_in_radians <= angle <= angle_in_radians):
             angle = self.vectorizer.find_goal_angle(goal[1] - self.robot_dict["robot"][1],
                                                     goal[0] - self.robot_dict["robot"][0], self.destination)
-            angle = self.angle_away_from_obstacle(angle)
+            #angle = self.angle_away_from_obstacle(angle)
             published_vector = (0, self.convert_angle_to_driver_angle(angle), MovementMode.GRIP.value)
             rospy.logerr(self.convert_angle_to_driver_angle(angle))
             self.pub.publish(json.dumps(published_vector))
 
             self.angle_rate.sleep()
             
-
     def callback_path(self, data):
         nodes = []
         for coordinate in data.poses:

@@ -8,7 +8,7 @@ class WaitForRobotReadyStateHandler(Handler):
         self.rate = rospy.Rate(1)
 
     def initialize(self):
-        self.sub = rospy.Subscriber("robot", String, self.handle_ready)
+        self.sub = rospy.Subscriber("robot_consumption", String, self.handle_ready)
         self.is_finished = False
 
     def handle(self, handled_data):

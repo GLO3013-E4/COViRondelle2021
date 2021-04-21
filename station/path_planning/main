@@ -93,7 +93,7 @@ class PathFinder:
             board_map = Map(self.image_width, self.image_height, self.obstacles, pucks, self.robot, self.goal,
                             node_size=self.node_size,
                             safety_cushion=safety_cushion, puck_width=puck_width,
-                            obstacle_width=obstacle_width)
+                            obstacle_width=obstacle_width, puck_goal_coordinates=self.goal)
             board_map.render_map()
             pathfinder = Pathfinder(board_map, pathfinding_algorithm)
 
