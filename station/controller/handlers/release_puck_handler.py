@@ -87,7 +87,7 @@ def get_angle_correction(robot_angle, vector_angle):
 
     if angle_correction > math.pi:
         angle_correction -= 2 * math.pi
-    elif angle_correction < -math.pi:
+    elif angle_correction <= -math.pi:
         angle_correction += 2 * math.pi
     return angle_correction
 
