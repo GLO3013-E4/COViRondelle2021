@@ -22,11 +22,11 @@ class ReleasePuckHandler(Handler):
     def initialize(self):
         self.sub = rospy.Subscriber("robot", String, self.callback, queue_size=1)
         self.initialized = True
+
     def callback(self, data):
         robot_dict = json.loads(data.data)
         self.position_tuple = robot_dict["prehenseur"]
         self.robot_angle = robot_dict["angle"]
-
 
     def handle(self, handled_data=None):
         self.initialize()
@@ -41,10 +41,11 @@ class ReleasePuckHandler(Handler):
             #     rospy.sleep(2)
             #     continue
 
+            vector_angle = get_angle_between_two_points(handled_data["goal"].pose.position.x, handled_data["goal"].pose.position.y, *self.position_tuple)
 
-            vector_angle = self.get_angle_between_two_points(handled_data["goal"].pose.position.x, handled_data["goal"].pose.position.y, *self.position_tuple)
-            correction_angle = self.get_angle_correction(self.robot_angle, vector_angle)
-            rospy.logerr(f"angle : {math.degrees(correction_angle)}")
+            correction_angle = get_angle_correction(self.robot_angle, vector_angle)
+
+            rospy.logerr(f"robot_angle : {math.degrees(self.robot_angle)} / {self.robot_angle}, vector_angle : {math.degrees(vector_angle)} / {vector_angle}, correction_angle : {math.degrees(correction_angle)} / {correction_angle}")
 
             if abs(correction_angle) > math.radians(5):
                 correction_angle = 0
@@ -52,6 +53,7 @@ class ReleasePuckHandler(Handler):
             handled_data["movement_vectors_string_pub"].publish(json.dumps((1, math.degrees(correction_angle), 0)))
             self.forwards_rate.sleep()
             handled_data["movement_vectors_string_pub"].publish(json.dumps((0, 0, 11)))
+            self.forwards_rate.sleep()
             self.juste_backed_up = False
 
         self.rate.sleep()
@@ -66,34 +68,6 @@ class ReleasePuckHandler(Handler):
 
         return handled_data
 
-    def get_angle_correction(self, robot_angle, vector_angle):
-        """
-        Changes the vector orientation from the absolute value from the top camera
-        to the angle the robot will need to use to align itself with the vector.
-        (For one vector)
-        """
-        if vector_angle < 0:
-            vector_angle = 2 * math.pi + vector_angle
-        if robot_angle < 0:
-            robot_angle = 2 * math.pi + robot_angle
-
-        angle_correction = vector_angle - robot_angle
-
-        if angle_correction > math.pi:
-            angle_correction -= 2 * math.pi
-        elif angle_correction < -math.pi:
-            angle_correction += 2 * math.pi
-        return angle_correction
-
-    def get_angle_between_two_points(self, x1, y1, x2, y2):
-        angle = -math.atan2(y2 - y1, x2 - x1)
-
-        if angle == -0:
-            angle = 0
-        elif angle == -math.pi:
-            angle = math.pi
-        return angle
-
     def distance(self, point1, point2):
         x1, y1 = point1
         x2, y2 = point2
@@ -101,3 +75,28 @@ class ReleasePuckHandler(Handler):
 
     def unregister(self):
         self.sub.unregister()
+
+
+def get_angle_correction(robot_angle, vector_angle):
+    if vector_angle < 0:
+        vector_angle = 2 * math.pi + vector_angle
+    if robot_angle < 0:
+        robot_angle = 2 * math.pi + robot_angle
+
+    angle_correction = vector_angle - robot_angle
+
+    if angle_correction > math.pi:
+        angle_correction -= 2 * math.pi
+    elif angle_correction < -math.pi:
+        angle_correction += 2 * math.pi
+    return angle_correction
+
+
+def get_angle_between_two_points(x1, y1, x2, y2):
+    angle = -math.atan2(y2 - y1, x2 - x1)
+
+    if angle == -0:
+        angle = 0
+    elif angle == -math.pi:
+        angle = math.pi
+    return angle
