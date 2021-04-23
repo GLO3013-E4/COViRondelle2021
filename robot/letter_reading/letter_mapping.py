@@ -37,21 +37,6 @@ class Mapping:
                 return letters
         return []
 
-    def fonction_a_oli(self):
-        letters = self.camera_panning(7)
-        if len(letters) == 9:
-            self.stop_servos()
-            return letters
-        letters = self.camera_panning(5)
-        if len(letters) == 9:
-            self.stop_servos()
-            return letters
-        letters = self.camera_panning(9)
-        if len(letters) == 9:
-            self.stop_servos()
-            return letters
-        return letters
-
     def camera_panning(self, x_position):
 
         self.servo_x.ChangeDutyCycle(x_position)
