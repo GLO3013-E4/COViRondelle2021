@@ -27,7 +27,6 @@ class Mapping:
         self.servo_y.stop()
         self.servo_x.start(0)
 
-
     def letter_mapping(self):
         servo_x_angle = [5, 6.5, 7, 8, 9, 10]
         self.start_y_servo()
@@ -65,11 +64,8 @@ class Mapping:
 
 
 if __name__ == "__main__":
-    
+
     mapping = Mapping()
     while True:
         mapping.letter_mapping()
         input()
-
-
-
