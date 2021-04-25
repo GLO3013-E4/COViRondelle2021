@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>path_following</name>
-  <version>3.0.0</version>
+  <version>4.0.0</version>
   <description>The path_following package</description>
 
   <maintainer email="fabienroy28@gmail.com">Fabien Roy</maintainer>

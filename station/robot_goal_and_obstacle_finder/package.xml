@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>robot_goal_and_obstacle_finder</name>
-  <version>3.0.0</version>
+  <version>4.0.0</version>
   <description>The robot_goal_and_obstacle_finder package</description>
 
   <maintainer email="fabienroy28@gmail.com">Fabien Roy</maintainer>
