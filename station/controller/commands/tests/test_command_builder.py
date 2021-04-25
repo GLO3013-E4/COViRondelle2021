@@ -84,7 +84,7 @@ def test_given_read_letters_step_when_building_then_return_associated_command():
 
 
 def test_given_move_robot_to_next_puck_step_when_building_then_return_associated_command():
-    step = Step.MOVE_ROBOT_TO_NEXT_PUCK
+    step = Step.TO_FIRST_PUCK_AND_GRAB_FIRST_PUCK
     handler_classes = [MoveRobotToNextPuckHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)
@@ -101,7 +101,7 @@ def test_given_grip_puck_step_when_building_then_return_associated_command():
 
 
 def test_given_move_robot_to_next_corner_step_when_building_then_return_associated_command():
-    step = Step.MOVE_ROBOT_TO_NEXT_CORNER
+    step = Step.TO_FIRST_CORNER_AND_RELEASE_FIRST_PUCK
     handler_classes = [MoveRobotToNextCornerHandler]
 
     given_single_step_when_building_then_return_associated_command(step, handler_classes)

@@ -21,6 +21,7 @@ class MotorDriver:
         print("started motors")
         rospy.Subscriber("movement_vectors_string", String, self.callback, queue_size=1)
         self.pub = rospy.Publisher("resistance", String, queue_size=1)
+        self.pub_line = rospy.Publisher("line", String, queue_size=1)
 
     def callback(self, data):
         if data.data != "FINISHED":
@@ -29,29 +30,23 @@ class MotorDriver:
             self.move_robot(distance, angle, mode)
 
     def move_robot(self, module, angle, mode):
-        if angle > self.min_angle_rotation and angle < 360 - self.min_angle_rotation:
-       	    if angle <= 180:
-                self.writeStringWithAck("4:" + str(angle))
+        if abs(angle) > self.min_angle_rotation and angle != 0:
+            if angle > 0:
+                self.writeStringWithAck(f"4:{angle}")
             else:
-                self.writeStringWithAck("5:" + str(360 - angle))
-        if angle < self.min_angle_rotation_correction and angle > 360 - self.min_angle_rotation_correction:
-             if angle < self.min_angle_rotation:
-                 self.writeStringWithAck("17:" + "5")
-             else:
-                 self.writeStringWithAck("16:" + "5")
-
-        if module > 0:
-            self.writeStringWithAck(f"{mode}:{module}")
+                self.writeStringWithAck(f"5:{abs(angle)}")
 
         if mode == 6:
             res = self.writeStringWithAck(f"{mode}:")
             if res is not None:
                 self.pub.publish(res)
 
-        if mode > 6:
+        elif mode > 6:
             self.writeStringWithAck(f"{mode}:")
 
-        
+        elif module > 0:
+            self.writeStringWithAck(f"{mode}:{module}")
+
     def writeStringWithAck(self, data):
         self.ser.flush()
         writeStart = time.time()
@@ -65,6 +60,7 @@ class MotorDriver:
                     return
             
             line = self.ser.readline().decode('utf-8')
+            self.pub_line.publish(line)
 
             if 'res' in line:
                 line = line.strip('res')
@@ -72,6 +68,7 @@ class MotorDriver:
                 return line
             if 'ack' in line:
                 ackReceived = True
+
 
 if __name__ == "__main__":
     try:

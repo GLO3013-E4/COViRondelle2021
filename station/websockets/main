@@ -91,6 +91,11 @@ def handle_letters(letters):
     json_data = json.dumps({"puckFirstCorner": first_letter})
     socket.emit("puck_first_corner", json_data)
 
+def handle_current_step(step):
+    step_bro = step.data
+    json_data = json.dumps({"currentStep": step_bro})
+    socket.emit("current_step", json_data)
+
 
 def handle_current_step(current_step):
     json_data = json.dumps({"currentStep": current_step.data})
